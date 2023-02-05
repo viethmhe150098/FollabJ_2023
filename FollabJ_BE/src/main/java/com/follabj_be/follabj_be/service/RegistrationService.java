@@ -4,8 +4,11 @@ import com.follabj_be.follabj_be.entity.AppUser;
 import com.follabj_be.follabj_be.entity.AppUserRole;
 import com.follabj_be.follabj_be.entity.ConfirmToken;
 import com.follabj_be.follabj_be.entity.Role;
-import com.follabj_be.follabj_be.repository.EmailSender;
+import com.follabj_be.follabj_be.service.dependency.EmailSender;
 import com.follabj_be.follabj_be.requestModel.RegistrationRequest;
+import com.follabj_be.follabj_be.service.dependency.RegistrationInterface;
+import com.follabj_be.follabj_be.service.dependency.TokenInterface;
+import com.follabj_be.follabj_be.service.dependency.UserInterface;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -14,22 +17,22 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 @Service
-public class RegistrationService {
-    private final UserService userService;
-    private final TokenService tokenService;
+public class RegistrationService implements RegistrationInterface {
+    private final UserInterface userInterface;
+    private final TokenInterface tokenInterface;
     private final EmailSender emailSender;
 
 
-    public RegistrationService(UserService userService, TokenService tokenService, EmailSender emailSender) {
-        this.userService = userService;
-        this.tokenService = tokenService;
+    public RegistrationService(UserInterface userInterface, TokenInterface tokenInterface, EmailSender emailSender) {
+        this.userInterface = userInterface;
+        this.tokenInterface = tokenInterface;
         this.emailSender = emailSender;
     }
-
+    @Override
     public String register(RegistrationRequest request) {
         Set<Role> roles = new HashSet<>();
         roles.add(new Role(0L, AppUserRole.INACTIVE_USER.toString()));
-            String tokenForNewUser = userService.signUpUser(new AppUser(
+            String tokenForNewUser = userInterface.signUpUser(new AppUser(
                     request.getUsername(),
                     request.getEmail(),
                     request.getPassword(),
@@ -43,10 +46,10 @@ public class RegistrationService {
             emailSender.sendEmail(request.getEmail(), buildEmail(request.getUsername(), link));
             return tokenForNewUser;
     }
-
+    @Override
     @Transactional
     public String confirmToken(String token) {
-        Optional<ConfirmToken> confirmToken = tokenService.getToken(token);
+        Optional<ConfirmToken> confirmToken = tokenInterface.getToken(token);
 
         if (confirmToken.isEmpty()) {
             throw new IllegalStateException("Token not found!");
@@ -62,14 +65,15 @@ public class RegistrationService {
             throw new IllegalStateException("Token is already expired!");
         }
 
-        tokenService.setConfirmedAt(token);
-        userService.enableAppUser(confirmToken.get().getAppUser().getEmail(),1);
-        userService.activeUser(confirmToken.get().getAppUser().getId());
+        tokenInterface.setConfirmedAt(token);
+        userInterface.enableAppUser(confirmToken.get().getAppUser().getEmail(),1);
+        userInterface.activeUser(confirmToken.get().getAppUser().getId());
         //Returning confirmation message if the token matches
         return "Your email is confirmed. Thank you for using our service!";
     }
 
-    private String buildEmail(String name, String link) {
+    @Override
+    public String buildEmail(String name, String link) {
         return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
                 "\n" +
                 "<span style=\"display:none;font-size:1px;color:#fff;max-height:0\"></span>\n" +

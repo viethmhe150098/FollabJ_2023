@@ -1,25 +1,26 @@
 package com.follabj_be.follabj_be.controller;
 
 import com.follabj_be.follabj_be.requestModel.RegistrationRequest;
-import com.follabj_be.follabj_be.service.RegistrationService;
+import com.follabj_be.follabj_be.service.dependency.RegistrationInterface;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class RegistrationController {
-    private final RegistrationService registrationService;
+    private final RegistrationInterface registrationInterface;
 
-    public RegistrationController(RegistrationService registrationService) {
-        this.registrationService = registrationService;
+    public RegistrationController(RegistrationInterface registrationInterface) {
+        this.registrationInterface = registrationInterface;
     }
+
 
     @PostMapping(path = "signup")
     public String register(@RequestBody RegistrationRequest request) {
-        return registrationService.register(request);
+        return registrationInterface.register(request);
         //return "registered";
     }
 
     @GetMapping(path = "confirm")
     public String confirm(@RequestParam("token") String token) {
-        return registrationService.confirmToken(token);
+        return registrationInterface.confirmToken(token);
     }
 }

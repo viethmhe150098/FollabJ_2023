@@ -4,6 +4,8 @@ import com.follabj_be.follabj_be.config.securityConfig.PasswordEncoder;
 import com.follabj_be.follabj_be.entity.AppUser;
 import com.follabj_be.follabj_be.entity.ConfirmToken;
 import com.follabj_be.follabj_be.repository.UserRepository;
+import com.follabj_be.follabj_be.service.dependency.TokenInterface;
+import com.follabj_be.follabj_be.service.dependency.UserInterface;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -19,18 +21,16 @@ import java.util.UUID;
 
 @Service
 @Slf4j
-public class UserService implements UserDetailsService {
+public class UserService implements UserDetailsService, UserInterface {
 
     private final UserRepository userRepository;
-
-    private final TokenService tokenService;
-
+    private final TokenInterface tokenInterface;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, TokenService tokenService, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, TokenInterface tokenInterface, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.tokenService = tokenService;
         this.passwordEncoder = passwordEncoder;
+        this.tokenInterface = tokenInterface;
     }
 
     @Override
@@ -47,6 +47,7 @@ public class UserService implements UserDetailsService {
         return new User(user.getEmail(), user.getPassword(), authorities);
     }
 
+    @Override
     public String signUpUser(AppUser appUser) {
         boolean userExists = userRepository.findAppUserByEmail(appUser.getEmail()).isPresent();
 
@@ -84,13 +85,14 @@ public class UserService implements UserDetailsService {
         return token;
     }
 
-
-    private void saveConfirmationToken(AppUser appUser, String token) {
+    @Override
+    public void saveConfirmationToken(AppUser appUser, String token) {
         ConfirmToken confirmationToken = new ConfirmToken(token, LocalDateTime.now(),
                 LocalDateTime.now().plusMinutes(15), appUser);
-        tokenService.saveConfirmationToken(confirmationToken);
+        tokenInterface.saveConfirmationToken(confirmationToken);
     }
 
+    @Override
     public void enableAppUser(String email, int status) {
         userRepository.enableAppUser(status, email);
     }
