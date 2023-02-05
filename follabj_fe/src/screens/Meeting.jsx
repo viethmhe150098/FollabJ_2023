@@ -1,57 +1,75 @@
+import React, { useState, useEffect } from 'react';
 import Sidebar from "../components/Nav/Sidebar";
+import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 
-function generateToken(tokenServerUrl, userID, channelId) {
-    // Obtain the token interface provided by the App Server
-    return fetch(
-        `${tokenServerUrl}/?channelId=${channelId}&userId=${userID}&expired_ts=7200`,
-        {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': 'Bearer '+localStorage.getItem('access_token')
+const generateToken = async (tokenServerUrl, userID, channelId) => {
+    try {
+        const res = await fetch(
+            `${tokenServerUrl}/?channelId=${channelId}&userID=${userID}&expired_ts=7200`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+                },
             }
-        }
-    ).then((res) => {
-        if (res.status == 200) {
-            return res.json()
-        } else {
-            return new Error("Failed to fetch comment: " + res.statusText);
-        }
-    });
+        );
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message);
+        return data;
+    } catch (error) {
+        console.error(error);
+    }
+};
+function randomID(len) {
+    let result = '';
+    if (result) return result;
+    var chars = '12345qwertyuiopasdfgh67890jklmnbvcxzMNBVCZXASDQWERTYHGFUIOLKJP',
+        maxPos = chars.length,
+        i;
+    len = len || 5;
+    for (i = 0; i < len; i++) {
+        result += chars.charAt(Math.floor(Math.random() * maxPos));
+    }
+    return result;
 }
 
-export function getUrlParams(
-    url = window.location.href
-) {
-    let urlStr = url.split('?')[1];
+const getUrlParams = (url = window.location.href) => {
+    const urlStr = url.split('?')[1];
     return new URLSearchParams(urlStr);
-}
+};
 
 const Meeting = () => {
-    const roomID = getUrlParams().get('roomID') || randomID(5);
-    const userID = randomID(5);
-    const userName = randomID(5);
-    let myMeeting = async (element) => {
-        // generate token
-        const token = await generateToken(
-            'http://localhost:8080/rtctoken',
-            userID,
-            roomID
+    const [roomID, setRoomID] = useState(getUrlParams().get('roomID') || randomID(5));
+    const [userID, setUserID] = useState(randomID(5));
+    const [userName, setUserName] = useState(randomID(5));
+    const [token, setToken] = useState(null);
+
+    useEffect(() => {
+        (async () => {
+            const tokenData = await generateToken(
+                'http://localhost:8080/rtctoken',
+                userID,
+                roomID
+            );
+            setToken(tokenData.token);
+        })();
+    }, [roomID, userID]);
+
+    useEffect(() => {
+        if (!token) return;
+        const zp = ZegoUIKitPrebuilt.create(
+            ZegoUIKitPrebuilt.generateKitTokenForProduction(
+                1770178411,
+                token,
+                roomID,
+                userID,
+                userName
+            )
         );
-        console.log(token.token)
-        const kitToken = ZegoUIKitPrebuilt.generateKitTokenForProduction(
-            1770178411,
-            token.token,
-            roomID,
-            userID,
-            userName
-        );
-        // create instance object from token
-        const zp = ZegoUIKitPrebuilt.create(kitToken);
-        // start the call
         zp.joinRoom({
-            container: element,
+            container: elementRef.current,
             sharedLinks: [
                 {
                     name: 'Personal link',
@@ -63,17 +81,20 @@ const Meeting = () => {
                 },
             ],
             scenario: {
-                mode: ZegoUIKitPrebuilt.GroupCall, // To implement 1-on-1 calls, modify the parameter here to [ZegoUIKitPrebuilt.OneONoneCall].
+                mode: ZegoUIKitPrebuilt.GroupCall,
             },
         });
-    };
+    }, [token]);
+
+    const elementRef = React.useRef(null);
+
     return (
-        <Sidebar>
             <div
                 className="myCallContainer"
-                ref={myMeeting}
+                ref={elementRef}
                 style={{ width: '100vw', height: '100vh' }}
             ></div>
-        </Sidebar>
-    )
-}
+    );
+};
+
+export default Meeting;

@@ -23,17 +23,17 @@ const Sidebar = ({ children }) => {
             icon: <FaTh />
         },
         {
-            path: "/about",
+            path: "/chat",
             name: "Chat",
             icon: <FaRegCommentAlt />
         },
         {
-            path: "/analytics",
+            path: "/events",
             name: "Event",
             icon: <FaRegChartBar />
         },
         {
-            path: "/comment",
+            path: "/meeting",
             name: "Meeting",
             icon: <FaVideo />
         },
@@ -43,12 +43,12 @@ const Sidebar = ({ children }) => {
             icon: <FaPencilAlt />
         },
         {
-            path: "/product",
+            path: "/files",
             name: "Files",
             icon: <FaFolder />
         },
         {
-            path: "/productList",
+            path: "/about",
             name: "About Project",
             icon: <FaUserAlt />
         }

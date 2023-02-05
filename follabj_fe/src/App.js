@@ -5,6 +5,7 @@ import React from "react";
 import Landing from "./screens/Landing.jsx";
 import Login from "./screens/Login.jsx";
 import Register from "./screens/Register.jsx";
+import Meeting from "./screens/Meeting";
 
 //Library
 import {
@@ -37,6 +38,11 @@ export default function App() {
           {/* Register */}
           <Route path="/register">
             <Register />
+          </Route>
+
+          {/* Meeting */}
+          <Route path="/meeting">
+            <Meeting />
           </Route>
 
 
