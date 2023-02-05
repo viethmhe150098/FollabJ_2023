@@ -62,8 +62,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .sign(algorithm);
         //send token back to user as JSON
         Map<String, String> tokens = new HashMap<>();
-        tokens.put("access token", access_token);
-        tokens.put("refresh token", refresh_token);
+        tokens.put("access_token", access_token);
+        tokens.put("refresh_token", refresh_token);
         tokens.put("email", user.getUsername());
         response.setContentType(APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
