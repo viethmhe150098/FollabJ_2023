@@ -110,11 +110,9 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }) {
         <li className="semiBold font15 pointer">
           <RouterLink
             onClick={() => toggleSidebar(!sidebarOpen)}
-            activeClass="active"
             className="whiteColor"
             style={{ padding: "10px 15px" }}
             to="login"
-            offset={-60}
           >
             Login
           </RouterLink>
