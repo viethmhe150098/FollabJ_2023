@@ -27,7 +27,7 @@ export default function Login(props) {
 
   const Validation = () => {
     const emailregEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
-    const passwordRegEx = "^(?=.*[a-z])(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{6,16}";
+    const passwordRegEx = /^(?=.*[a-z])(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{6,16}/;
     if (emailregEx.test(values.email)&&passwordRegEx.test(values.password)) {
       setMessage("Email is Valid");
     } else if ((!emailregEx.test(values.email) && values.email !== "")||(!passwordRegEx.test(values.password) && values.password !== "")) {
@@ -44,13 +44,20 @@ export default function Login(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     Validation();
-
+    console.log(values.email)
+    console.log(values.password)
     axios.post('http://localhost:8080/login', {
       'username' : values.email,
-      'password' : values.pass
+      'password' : values.password
+    }, 
+    {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
     })
       .then(function (response) {
-        console.log(response);
+        localStorage.setItem("accessToken", response.data.access_token)
+        localStorage.setItem("refresh_token", response.data.refresh_token)
       })
       .catch(function (error) {
         console.log(error);
