@@ -114,8 +114,6 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }) {
             className="whiteColor"
             style={{ padding: "10px 15px" }}
             to="login"
-            spy={true}
-            smooth={true}
             offset={-60}
           >
             Login
