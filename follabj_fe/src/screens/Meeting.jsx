@@ -64,15 +64,7 @@ const Meeting = () => {
             userID,
             userName)
 
-        const zp = ZegoUIKitPrebuilt.create(
-            ZegoUIKitPrebuilt.generateKitTokenForProduction(
-                1770178411,
-                token,
-                roomID,
-                userID,
-                userName
-            )
-        );
+        const zp = ZegoUIKitPrebuilt.create(kitToken);
         zp.joinRoom({
             container: element,
             sharedLinks: [
