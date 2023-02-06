@@ -355,7 +355,7 @@ body {
 }
 main{
   width: 100%;
-  padding: 20px;
+  padding: 100px;
 }
 .sidebar_sidebar{
   background: #F5B17B;
@@ -411,3 +411,48 @@ main{
   font-weight: bold;
   font-family: monospace;
 }
+
+.modal {
+  font-size: 16px;
+  min-height: 500px;
+  min-width: 400px;
+  width: 700px;
+  background: #F2EEE5;
+  border-radius: 15px;
+  box-shadow:  1px 1px 4px 4px #ded5c1;
+}
+.modal > .header {
+  width: 100%;
+  font-size: 26px;
+  text-align: center;
+  padding: 30px;
+}
+.modal  input {
+  width: 100%;
+}
+.modal > .content {
+  width: 100%;
+  padding: 30px 25px;
+}
+.modal > .actions {
+  margin: auto;
+}
+.modal > .actions {
+  width: 100%;
+  padding: 10px 5px;
+  text-align: center;
+}
+.modal > .close {
+  cursor: pointer;
+  position: absolute;
+  display: block;
+  padding: 2px 5px;
+  line-height: 20px;
+  right: -10px;
+  top: -10px;
+  font-size: 24px;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #cfcece;
+}
+

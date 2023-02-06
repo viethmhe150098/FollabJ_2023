@@ -3,6 +3,8 @@ import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
+import Popup from "reactjs-popup";
+import Content from "../Sections/Modal";
 
 // function fetchData() {
 //     // Obtain the token interface provided by the App Server
@@ -25,49 +27,49 @@ import styled from "styled-components";
 //     });
 //   }
 
-// const mockData = [
-//     {
-//         id: uuid(),
-//         title: 'To do',
-//         tasks: [
-//             {
-//                 id: uuid(),
-//                 title: 'create report 4',
-//                 assignee: 'John'
-//             }
-//         ]
-//     },
-//     {
-//         id: uuid(),
-//         title: 'In progress',
-//         tasks: [
-//             {
-//                 id: uuid(),
-//                 title: 'Developing frontend',
-//                 assignee: 'John'
-//             },
-//             {
-//                 id: uuid(),
-//                 title: 'Creating report 2',
-//                 assignee: 'Bill'
-//             },
-//             {
-//                 id: uuid(),
-//                 title: 'Creating report 3',
-//                 assignee: 'Zack'
-//             },
-//         ]
-//     },
-//     {
-//         id: uuid(),
-//         title: 'Done',
-//         tasks: [
-//         ]
-//     }
-// ];
+const mockData = [
+    {
+        id: uuid(),
+        title: 'To do',
+        tasks: [
+            {
+                id: uuid(),
+                title: 'create report 4',
+                assignee: 'John'
+            }
+        ]
+    },
+    {
+        id: uuid(),
+        title: 'In progress',
+        tasks: [
+            {
+                id: uuid(),
+                title: 'Developing frontend',
+                assignee: 'John'
+            },
+            {
+                id: uuid(),
+                title: 'Creating report 2',
+                assignee: 'Bill'
+            },
+            {
+                id: uuid(),
+                title: 'Creating report 3',
+                assignee: 'Zack'
+            },
+        ]
+    },
+    {
+        id: uuid(),
+        title: 'Done',
+        tasks: [
+        ]
+    }
+];
 
 export default function Kanban() {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(mockData);
     useEffect(() => {
         const fetchData = async () => {
             const result = await fetch(
@@ -111,6 +113,7 @@ export default function Kanban() {
             data[sourceColIndex].tasks = sourceTasks
             data[destinationColIndex].tasks = destinationTasks
 
+
             setData(data)
         } else { //move task in the one column
             const columnIndex = data.findIndex(e => e.id === destination.droppableId);
@@ -121,6 +124,7 @@ export default function Kanban() {
             console.log(tasks)
 
             const [removed] = tasks.splice(source.index, 1)
+            tasks.splice(destination.index, 0, removed)
             tasks.splice(destination.index, 0, removed)
             console.log(tasks)
 
@@ -133,7 +137,9 @@ export default function Kanban() {
 
     return (
         <Wrapper id='tasks'>
-            <h1>Kanban UI</h1>
+            <HeaderInfo>
+                <h1 className="font40 extraBold">Kanban Board</h1>
+            </HeaderInfo>
             <DragDropContext onDragEnd={onDragEnd}>
                 <KanbanBoard >
                     {
@@ -148,7 +154,9 @@ export default function Kanban() {
                                         {...provided.droppableProps}
                                     >
                                         <SectionTitle>{section.title}</SectionTitle>
-
+                                        <Popup modal trigger={<Card style={{ cursor: "pointer" }}><p className="extraBold" style={{ color: "#434242" }}>+ Add issue</p></Card>}>
+                                            {close => <Content close={close} />}
+                                        </Popup>
                                         <SectionContent>
                                             {
                                                 section.tasks.map((task, index) => (
@@ -190,7 +198,7 @@ export default function Kanban() {
 }
 
 const Wrapper = styled.section`
-  color: #716F81;
+  color: black;
   font-family: 'Lato', sans-serif;
   line-height: 1.5;
 `;
@@ -223,7 +231,15 @@ const SectionContent = styled.div`
 
 const Card = styled.div`
     padding: 30px;
+    color: #716F81;
     background-color: #F2EEE5;
     border-radius: 10px;
     margin-top: 10px;
 `
+const HeaderInfo = styled.div`
+  margin-bottom: 30px;
+  margin-left: 5px;
+  @media (max-width: 860px) {
+    text-align: center;
+  }
+`;
