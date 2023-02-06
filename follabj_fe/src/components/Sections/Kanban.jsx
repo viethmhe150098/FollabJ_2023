@@ -70,24 +70,24 @@ const mockData = [
 
 export default function Kanban() {
     const [data, setData] = useState(mockData);
-    useEffect(() => {
-        const fetchData = async () => {
-            const result = await fetch(
-                "http://localhost:8080/task",
-                {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
-                    },
-                }
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         const result = await fetch(
+    //             "http://localhost:8080/task",
+    //             {
+    //                 method: 'GET',
+    //                 headers: {
+    //                     'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+    //                 },
+    //             }
 
-            );
-            console.log(result)
-            setData(result)
-        }
+    //         );
+    //         console.log(result)
+    //         setData(result)
+    //     }
 
-        fetchData()
-    }, [])
+    //     fetchData()
+    // }, [])
 
     console.log(data)
     const onDragEnd = result => {
