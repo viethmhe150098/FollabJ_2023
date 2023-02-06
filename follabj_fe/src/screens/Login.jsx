@@ -56,7 +56,8 @@ export default function Login(props) {
       }
     })
       .then(function (response) {
-        localStorage.setItem("accessToken", response.data.access_token)
+        console.log(response)
+        localStorage.setItem("access_token", response.data.access_token)
         localStorage.setItem("refresh_token", response.data.refresh_token)
       })
       .catch(function (error) {
