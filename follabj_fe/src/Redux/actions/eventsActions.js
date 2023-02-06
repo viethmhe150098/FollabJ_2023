@@ -44,7 +44,7 @@ export const ShowEventsApi = () => async dispatch => {
      console.log("started fetching the api")
     //i won't get the event from redux store as it is safer to
     //keep updated with db.
-    const result = await event.get("/event");
+    const result = await event.get("/");
     console.log(result.data.events)
     try{
         const convertedDates = await result.data.events.map(event=>{
