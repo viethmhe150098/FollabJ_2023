@@ -2,6 +2,8 @@ import Kanban from "../components/Sections/Kanban";
 import Sidebar from "../components/Nav/Sidebar";
 import Note from "../components/Sections/Note";
 import Meeting from "../screens/Meeting";
+import Calendar from "../screens/Calendar";
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -25,6 +27,11 @@ export default function TaskManagement() {
           {/* Notes */}
           <Route path="/notes">
             <Note />
+          </Route>
+          
+          {/* Notes */}
+          <Route path="/events">
+            <Calendar />
           </Route>
 
           {/* Meeting */}
