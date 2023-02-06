@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import Sidebar from "../components/Nav/Sidebar";
+import React from 'react';
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 
 const generateToken = async (tokenServerUrl, userID, channelId) => {

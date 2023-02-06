@@ -1,57 +1,97 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
 
-const mockData = [
-    {
-        id: uuid(),
-        title: 'To do',
-        tasks: [
-            {
-                id: uuid(),
-                title: 'create report 4',
-                assignee: 'John'
-            }
-        ]
-    },
-    {
-        id: uuid(),
-        title: 'In progress',
-        tasks: [
-            {
-                id: uuid(),
-                title: 'Developing frontend',
-                assignee: 'John'
-            },
-            {
-                id: uuid(),
-                title: 'Creating report 2',
-                assignee: 'Bill'
-            },
-            {
-                id: uuid(),
-                title: 'Creating report 3',
-                assignee: 'Zack'
-            },
-        ]
-    },
-    {
-        id: uuid(),
-        title: 'Done',
-        tasks: [
-        ]
-    }
-];
+// function fetchData() {
+//     // Obtain the token interface provided by the App Server
+//     return fetch(
+//       "http://localhost:8080/task",
+//       {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Accept': 'application/json',
+//             'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+//         },
+//       }
+//     ).then((res) => {
+//       if(res.status == 200){
+//         return res.json()
+//       }else{
+//         return new Error("Failed to fetch comment: " + res.statusText);
+//       }
+//     });
+//   }
+
+// const mockData = [
+//     {
+//         id: uuid(),
+//         title: 'To do',
+//         tasks: [
+//             {
+//                 id: uuid(),
+//                 title: 'create report 4',
+//                 assignee: 'John'
+//             }
+//         ]
+//     },
+//     {
+//         id: uuid(),
+//         title: 'In progress',
+//         tasks: [
+//             {
+//                 id: uuid(),
+//                 title: 'Developing frontend',
+//                 assignee: 'John'
+//             },
+//             {
+//                 id: uuid(),
+//                 title: 'Creating report 2',
+//                 assignee: 'Bill'
+//             },
+//             {
+//                 id: uuid(),
+//                 title: 'Creating report 3',
+//                 assignee: 'Zack'
+//             },
+//         ]
+//     },
+//     {
+//         id: uuid(),
+//         title: 'Done',
+//         tasks: [
+//         ]
+//     }
+// ];
 
 export default function Kanban() {
-    const [data, setData] = useState(mockData);
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await fetch(
+                "http://localhost:8080/task",
+                {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+                    },
+                }
 
+            );
+            console.log(result)
+            setData(result)
+        }
+
+        fetchData()
+    }, [])
+
+    console.log(data)
     const onDragEnd = result => {
         console.log(result);
 
-        if(!result.destination) return;
+        if (!result.destination) return;
         const { source, destination } = result;
 
         //move to task to other column
@@ -70,9 +110,9 @@ export default function Kanban() {
 
             data[sourceColIndex].tasks = sourceTasks
             data[destinationColIndex].tasks = destinationTasks
-            
+
             setData(data)
-        }    else { //move task in the one column
+        } else { //move task in the one column
             const columnIndex = data.findIndex(e => e.id === destination.droppableId);
 
             const column = data[columnIndex]
@@ -81,7 +121,7 @@ export default function Kanban() {
             console.log(tasks)
 
             const [removed] = tasks.splice(source.index, 1)
-            tasks.splice(destination.index,0, removed)
+            tasks.splice(destination.index, 0, removed)
             console.log(tasks)
 
             data[columnIndex].tasks = tasks
@@ -108,7 +148,7 @@ export default function Kanban() {
                                         {...provided.droppableProps}
                                     >
                                         <SectionTitle>{section.title}</SectionTitle>
-                                       
+
                                         <SectionContent>
                                             {
                                                 section.tasks.map((task, index) => (
