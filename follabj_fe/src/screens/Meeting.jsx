@@ -5,7 +5,7 @@ import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 const generateToken = async (tokenServerUrl, userID, channelId) => {
     try {
         const res = await fetch(
-            `${tokenServerUrl}/?channelId=${channelId}&userID=${userID}&expired_ts=7200`,
+            `${tokenServerUrl}/?channelId=${channelId}&userId=${userID}&expired_ts=7200`,
             {
                 method: 'GET',
                 headers: {
@@ -41,24 +41,29 @@ const getUrlParams = (url = window.location.href) => {
 };
 
 const Meeting = () => {
-    const [roomID, setRoomID] = useState(getUrlParams().get('roomID') || randomID(5));
-    const [userID, setUserID] = useState(randomID(5));
-    const [userName, setUserName] = useState(randomID(5));
-    const [token, setToken] = useState(null);
+    // const [roomID, setRoomID] = useState(getUrlParams().get('roomID') || randomID(5));
+    // const [userID, setUserID] = useState(randomID(5));
+    // const [userName, setUserName] = useState(randomID(5));
+    // const [token, setToken] = useState(null);
+    const roomID = getUrlParams().get('roomID') || randomID(5);
+    const userID = randomID(5);
+    const userName = randomID(5);
+        let myMeeting = async (element) => {
+            
+        // generate token
+        const token = await generateToken(
+            'http://localhost:8080/rtctoken',
+            userID,
+            roomID
+        );
+        console.log(token.token)
+        const kitToken = ZegoUIKitPrebuilt.generateKitTokenForProduction(
+            1770178411,
+            token.token,
+            roomID,
+            userID,
+            userName)
 
-    useEffect(() => {
-        (async () => {
-            const tokenData = await generateToken(
-                'http://localhost:8080/rtctoken',
-                userID,
-                roomID
-            );
-            setToken(tokenData.token);
-        })();
-    }, [roomID, userID]);
-
-    useEffect(() => {
-        if (!token) return;
         const zp = ZegoUIKitPrebuilt.create(
             ZegoUIKitPrebuilt.generateKitTokenForProduction(
                 1770178411,
@@ -69,7 +74,7 @@ const Meeting = () => {
             )
         );
         zp.joinRoom({
-            container: elementRef.current,
+            container: element,
             sharedLinks: [
                 {
                     name: 'Personal link',
@@ -84,14 +89,15 @@ const Meeting = () => {
                 mode: ZegoUIKitPrebuilt.GroupCall,
             },
         });
-    }, [token]);
-
-    const elementRef = React.useRef(null);
+        
+        }
+        
+    //const elementRef = React.useRef(myMeeting);
 
     return (
             <div
                 className="myCallContainer"
-                ref={elementRef}
+                ref={myMeeting}
                 style={{ width: '100vw', height: '100vh' }}
             ></div>
     );
