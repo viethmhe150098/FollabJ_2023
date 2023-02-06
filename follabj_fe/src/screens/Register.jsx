@@ -69,6 +69,21 @@ export default function Register(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        axios.post('http://localhost:8080/signup', {
+      'username' : value.username,
+      'email' : value.email,
+      'password' : value.password,
+      'confirmPassword': value.confirmPassword
+    })
+      .then(function (response) {
+        // localStorage.setItem("accessToken", response.data.access_token)
+        // localStorage.setItem("refresh_token", response.data.refresh_token)
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     }
     const onChange = (e) => {
         setValues({ ...value, [e.target.name]: e.target.value })
