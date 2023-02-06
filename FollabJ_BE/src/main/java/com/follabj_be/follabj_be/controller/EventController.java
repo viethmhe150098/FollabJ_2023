@@ -44,7 +44,7 @@ public class EventController {
             return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
         }
     }
-    @GetMapping("/")
+    @GetMapping("/event")
     public ResponseEntity<Map<String, Object>> getAllEvent(){
         List<Event> events = eventInterface.getAllEvent();
         Map<String, Object> response = new HashMap<>();
