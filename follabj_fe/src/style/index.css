@@ -432,7 +432,7 @@ main{
 }
 .modal > .content {
   width: 100%;
-  padding: 30px 25px;
+  padding: 40px 40px;
 }
 .modal > .actions {
   margin: auto;

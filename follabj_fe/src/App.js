@@ -5,7 +5,7 @@ import React from "react";
 import Landing from "./screens/Landing.jsx";
 import Login from "./screens/Login.jsx";
 import Register from "./screens/Register.jsx";
-import Meeting from "./screens/Meeting";
+
 
 //Library
 import {
@@ -42,7 +42,11 @@ export default function App() {
 
           {/* Meeting */}
           <Route path="/meeting">
-            <Meeting />
+            <TaskManagement />
+          </Route>
+            {/* Meeting */}
+          <Route path="/events">
+          <TaskManagement />
           </Route>
 
 

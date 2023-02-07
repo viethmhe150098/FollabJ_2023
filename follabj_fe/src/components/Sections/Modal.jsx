@@ -20,7 +20,6 @@ const CreateTaskForm = ({close}) => {
             <a className="close" onClick={close}>
                 &times;
             </a>
-            <div className="header semiBold">Add Task</div>
             <div className="content">
                 <form onSubmit={handleSubmit}>
                     <div>

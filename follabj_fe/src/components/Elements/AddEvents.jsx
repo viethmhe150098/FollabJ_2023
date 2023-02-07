@@ -7,6 +7,7 @@ import { addEventApi } from "../../Redux/actions";
 import { connect } from "react-redux";
 import "react-datepicker/dist/react-datepicker.css";
 import { useHistory } from "react-router-dom";
+import FullButton from "../Buttons/FullButton"
 import { set } from "date-fns";
 
 //schema to validate event inputs 
@@ -55,7 +56,7 @@ const AddEvents = ({ addEventApi, error }) => {
     //this form is in bootstrab
     <div className="modal">
      
-      <form onSubmit={handleSubmit(onSubmit)} className=" align-content-center m-5">
+      <form onSubmit={handleSubmit(onSubmit)} className=" align-content-center m-5 content">
         <div className="mb-4">
           <label htmlFor="title" className="form-label">Event Title</label>
           <input {...register("title")} type="text" placeholder="title" className="form-control" id="title" aria-describedby="title" />
@@ -116,6 +117,7 @@ const AddEvents = ({ addEventApi, error }) => {
           <input {...register("describe")} type="text" placeholder="describe your event" className="form-control" id="describe" aria-describedby="describe" />
         </div>
         <button type="submit" className="btn btn-success">Create</button>
+        <FullButton title="Create Event" action={"submit"}/>
       </form>
     </div>
   )
