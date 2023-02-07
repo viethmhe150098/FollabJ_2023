@@ -19,6 +19,9 @@ public class Task {
     @Column
     String title;
 
+    @Column
+    String assignee;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "task_status_id")
     @JsonBackReference

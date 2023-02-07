@@ -69,27 +69,31 @@ const mockData = [
 ];
 
 export default function Kanban() {
-    const [data, setData] = useState(mockData);
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const result = await fetch(
-    //             "http://localhost:8080/task",
-    //             {
-    //                 method: 'GET',
-    //                 headers: {
-    //                     'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
-    //                 },
-    //             }
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await fetch(
+                "http://localhost:8080/task",
+                {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+                    },
+                }
 
-    //         );
-    //         console.log(result)
-    //         setData(result)
-    //     }
+            );
+            
+            //console.log(result)
 
-    //     fetchData()
-    // }, [])
+            const json = await result.json();
+            //console.log(json)
+            setData(json.list)
+        }
 
-    console.log(data)
+        fetchData()
+    }, [])
+
+    //console.log(data)
     const onDragEnd = result => {
         console.log(result);
 
@@ -145,8 +149,8 @@ export default function Kanban() {
                     {
                         data.map(section => (
                             <Droppable
-                                key={section.id}
-                                droppableId={section.id}
+                                key={String(section.id)}
+                                droppableId={String(section.id)}
                             >
                                 {(provided) => (
                                     <BoardSection
@@ -161,8 +165,8 @@ export default function Kanban() {
                                             {
                                                 section.tasks.map((task, index) => (
                                                     <Draggable
-                                                        key={task.id}
-                                                        draggableId={task.id}
+                                                        key={String(task.id)}
+                                                        draggableId={String(task.id)}
                                                         index={index}
                                                     >
                                                         {(provided, snapshot) => (
