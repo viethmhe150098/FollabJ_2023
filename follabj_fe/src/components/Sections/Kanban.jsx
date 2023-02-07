@@ -101,7 +101,7 @@ export default function Kanban() {
         const { source, destination } = result;
 
         //move to task to other column
-        if (source.droppableId !== destination.droppableId) {
+        if (source.droppableId != destination.droppableId) {
             const sourceColIndex = data.findIndex(e => e.id == source.droppableId)
             const destinationColIndex = data.findIndex(e => e.id == destination.droppableId)
 
@@ -131,7 +131,7 @@ export default function Kanban() {
             console.log(tasks)
 
             const [removed] = tasks.splice(source.index, 1)
-            tasks.splice(destination.index, 0, removed)
+            //tasks.splice(destination.index, 0, removed)
             tasks.splice(destination.index, 0, removed)
             console.log(tasks)
 
