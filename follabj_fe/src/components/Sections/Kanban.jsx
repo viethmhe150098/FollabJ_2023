@@ -102,11 +102,14 @@ export default function Kanban() {
 
         //move to task to other column
         if (source.droppableId !== destination.droppableId) {
-            const sourceColIndex = data.findIndex(e => e.id === source.droppableId)
-            const destinationColIndex = data.findIndex(e => e.id === destination.droppableId)
+            const sourceColIndex = data.findIndex(e => e.id == source.droppableId)
+            const destinationColIndex = data.findIndex(e => e.id == destination.droppableId)
 
             const sourceCol = data[sourceColIndex]
             const destinationCol = data[destinationColIndex]
+            
+            // console.log(sourceCol)
+            // console.log(destinationCol)
 
             const sourceTasks = [...sourceCol.tasks]
             const destinationTasks = [...destinationCol.tasks]
