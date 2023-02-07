@@ -123,7 +123,7 @@ export default function Kanban() {
 
             setData(data)
         } else { //move task in the one column
-            const columnIndex = data.findIndex(e => e.id === destination.droppableId);
+            const columnIndex = data.findIndex(e => e.id == destination.droppableId);
 
             const column = data[columnIndex]
 
