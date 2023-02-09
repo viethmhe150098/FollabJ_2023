@@ -33,7 +33,6 @@ public class FileMetaService implements FileMetaInterface {
         metadata.put("Content-Length", String.valueOf(file.getSize()));
 
         String path = String.format("%s/%s", bucketName, UUID.randomUUID());
-//        String path = String.format("%s/%s", bucketName, file.getOriginalFilename());
         String fileName = String.format("%s", file.getOriginalFilename());
 
         // Uploading file to s3
