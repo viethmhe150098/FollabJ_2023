@@ -1,0 +1,75 @@
+package com.follabj_be.follabj_be.config.filter;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.follabj_be.follabj_be.repository.ProjectRepository;
+import com.follabj_be.follabj_be.service.ProjectService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.web.filter.GenericFilterBean;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+@Slf4j
+@Component
+public class GroupCustomFilter extends GenericFilterBean {
+    @Autowired
+    private ProjectRepository projectRepository;
+
+
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+        if(request.getRequestURI().equals("/project")){
+            String project_id = request.getParameter("id");
+            String authorizationHeader = request.getHeader("AUTHORIZATION");
+            if(authorizationHeader!=null && authorizationHeader.startsWith("Bearer ")){
+                try{
+                    String access_token = authorizationHeader.substring("Bearer ".length());
+                    Algorithm algorithm = Algorithm.HMAC256("viet".getBytes());
+                    JWTVerifier verifier = JWT.require(algorithm).build();
+                    //decoded token from header
+                    DecodedJWT decodedJWT = verifier.verify(access_token);
+                    String username = decodedJWT.getSubject();
+                    log.info(projectRepository.getLeader("1").getUsername());
+                    if(username.equals(projectRepository.getLeader(project_id).getEmail())){
+                        filterChain.doFilter(request, response);
+                    }else{
+                        response.setStatus(401);
+                        Map<String,String> res = new HashMap<>();
+                        res.put("error", "You can not access this resource");
+                        res.put("status", "401");
+                        response.setContentType(APPLICATION_JSON_VALUE);
+                        new ObjectMapper().writeValue(response.getOutputStream(), res);
+                    }
+                }catch (Exception e){
+                    log.error("Error logging in: {}", e.getMessage());
+                    response.setStatus(401);
+                    Map<String, String> tokens = new HashMap<>();
+                    tokens.put("error", e.getMessage());
+                    response.setContentType(APPLICATION_JSON_VALUE);
+                    new ObjectMapper().writeValue(response.getOutputStream(), tokens);
+                }
+            }
+        }else{
+            filterChain.doFilter(request,response);
+        }
+    }
+}

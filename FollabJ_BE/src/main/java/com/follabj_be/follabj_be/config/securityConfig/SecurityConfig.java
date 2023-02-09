@@ -2,6 +2,8 @@ package com.follabj_be.follabj_be.config.securityConfig;
 
 import com.follabj_be.follabj_be.config.filter.CustomAuthenticationFilter;
 import com.follabj_be.follabj_be.config.filter.CustomAuthorizationFilter;
+import com.follabj_be.follabj_be.config.filter.GroupCustomFilter;
+import com.follabj_be.follabj_be.service.ProjectService;
 import com.follabj_be.follabj_be.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +19,7 @@ import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -29,6 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManager();
     }
 
+    @Autowired
+    private ProjectService projectService;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -41,7 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/rtctoken").hasAuthority("ACTIVE_USER");
         http
                 .addFilter(new CustomAuthenticationFilter(authenticationManager()));
-
+        http
+                .addFilterAfter(new GroupCustomFilter(), UsernamePasswordAuthenticationFilter.class);
         http
                 .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
         http.logout();

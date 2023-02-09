@@ -1,6 +1,7 @@
 package com.follabj_be.follabj_be.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,13 +11,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-@ToString
+
 public class AppUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,6 +27,10 @@ public class AppUser implements UserDetails {
     private String email;
     private String password;
     private int status;
+
+    @OneToMany(mappedBy = "leader", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    public List<Project> projects;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
