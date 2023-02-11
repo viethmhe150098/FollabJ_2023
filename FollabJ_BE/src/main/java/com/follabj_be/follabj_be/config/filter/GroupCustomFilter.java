@@ -6,14 +6,10 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.follabj_be.follabj_be.repository.ProjectRepository;
-import com.follabj_be.follabj_be.service.ProjectService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.filter.GenericFilterBean;
-import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -31,7 +27,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class GroupCustomFilter extends GenericFilterBean {
     @Autowired
     private ProjectRepository projectRepository;
-
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -67,6 +62,8 @@ public class GroupCustomFilter extends GenericFilterBean {
                     response.setContentType(APPLICATION_JSON_VALUE);
                     new ObjectMapper().writeValue(response.getOutputStream(), tokens);
                 }
+            }else{
+                filterChain.doFilter(request,response);
             }
         }else{
             filterChain.doFilter(request,response);

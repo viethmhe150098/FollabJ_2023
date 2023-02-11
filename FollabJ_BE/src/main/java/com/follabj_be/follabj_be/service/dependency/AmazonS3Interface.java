@@ -1,5 +1,6 @@
 package com.follabj_be.follabj_be.service.dependency;
 
+import com.amazonaws.services.s3.model.DeleteObjectsResult;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.services.s3.model.S3Object;
 
@@ -15,4 +16,5 @@ public interface AmazonS3Interface {
             InputStream inputStream);
 
     S3Object download(String path, String fileName);
+    void delete(String fileName);
 }

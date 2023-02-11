@@ -2,7 +2,6 @@ package com.follabj_be.follabj_be.service;
 
 import com.follabj_be.follabj_be.repository.EmailSender;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;

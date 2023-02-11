@@ -3,7 +3,6 @@ package com.follabj_be.follabj_be.service;
 import com.follabj_be.follabj_be.entity.AppUser;
 import com.follabj_be.follabj_be.repository.ProjectRepository;
 import com.follabj_be.follabj_be.service.dependency.ProjectInterface;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service

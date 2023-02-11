@@ -13,10 +13,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Slf4j
 public class AmazonConfig {
-    @Value("${aws.access.key.id}")
-    private String access_key;
-    @Value("${aws.access.key.id}")
-    private String secret_key;
     @Value("${aws.s3.region}")
     private String region;
 

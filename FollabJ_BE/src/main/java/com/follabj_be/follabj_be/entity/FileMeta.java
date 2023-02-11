@@ -23,9 +23,11 @@ public class FileMeta {
     @Column(name = "VERSION")
     private String version;
 
-    public FileMeta(String fileName, String filePath, String version) {
+    private String uploadDate;
+    public FileMeta(String fileName, String filePath, String version, String uploadDate) {
         this.fileName = fileName;
         this.filePath = filePath;
         this.version = version;
+        this.uploadDate = uploadDate;
     }
 }

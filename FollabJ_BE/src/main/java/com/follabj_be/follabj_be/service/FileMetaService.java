@@ -12,6 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -38,9 +41,11 @@ public class FileMetaService implements FileMetaInterface {
         // Uploading file to s3
         PutObjectResult putObjectResult = amazonS3Service.upload(
                 path, fileName, Optional.of(metadata), file.getInputStream());
-
+        Date local = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        String uploadDate = dateFormat.format(local);
         // Saving metadata to db
-        fileMetaRepository.save(new FileMeta(fileName, path, putObjectResult.getMetadata().getVersionId()));
+        fileMetaRepository.save(new FileMeta(fileName, path, putObjectResult.getMetadata().getVersionId(), uploadDate));
     }
 
     @Override
@@ -54,5 +59,13 @@ public class FileMetaService implements FileMetaInterface {
         List<FileMeta> metas = new ArrayList<>();
         fileMetaRepository.findAll().forEach(metas::add);
         return metas;
+    }
+
+    @Override
+    public void delete(Long id) {
+
+            FileMeta fileMeta = fileMetaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+            String fileName = fileMeta.getFileName();
+            amazonS3Service.delete(fileName);
     }
 }

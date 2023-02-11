@@ -11,4 +11,6 @@ public interface FileMetaInterface {
     public void upload(MultipartFile file) throws IOException;
     public S3Object download(Long id);
     public List<FileMeta> list();
+
+    void delete(Long id);
 }

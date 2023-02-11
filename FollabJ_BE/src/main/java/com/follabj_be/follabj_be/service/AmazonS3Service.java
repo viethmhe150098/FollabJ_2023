@@ -1,11 +1,10 @@
 package com.follabj_be.follabj_be.service;
 
-import com.amazonaws.services.connect.model.S3Config;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.services.s3.model.S3Object;
-import com.follabj_be.follabj_be.config.awsconfig.AmazonConfig;
+
 import com.follabj_be.follabj_be.service.dependency.AmazonS3Interface;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,4 +35,13 @@ public class AmazonS3Service implements AmazonS3Interface {
     public S3Object download(String path, String fileName) {
         return amazonS3.getObject(path, fileName);
     }
+
+    @Override
+    public void delete(String fileName) {
+
+            amazonS3.deleteObject(System.getenv("S3_BUCKET_NAME"), fileName);
+
+    }
+
+
 }
