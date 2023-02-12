@@ -44,8 +44,8 @@ export default function Login(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     Validation();
-    console.log(values.email)
-    console.log(values.password)
+    // console.log(values.email)
+    // console.log(values.password)
     axios.post('http://localhost:8080/login', {
       'username' : values.email,
       'password' : values.password

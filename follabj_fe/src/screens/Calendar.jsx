@@ -1,12 +1,9 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom"
 import CalendarView from "../components/Elements/CalendarView";
 import FullButton from "../components/Buttons/FullButton";
 //import "../style/global.scss"
 import AddEvents from "../components/Elements/AddEvents";
-import UpdateEvent from "../components/Elements/UpdateEvent";
 import Popup from "reactjs-popup";
-import Content from "../components/Sections/Modal";
 
 export default function Calendar() {
 

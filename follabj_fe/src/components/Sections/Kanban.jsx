@@ -1,96 +1,17 @@
 import React, { useEffect } from "react";
-import { useState } from "react";
-import { v4 as uuid } from "uuid";
+
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import Popup from "reactjs-popup";
-import Content from "../Sections/Modal";
+import Content from "./AddTask";
+import { connect } from 'react-redux'
+import { ShowTasksApi} from "../../Redux/actions"
 
-// function fetchData() {
-//     // Obtain the token interface provided by the App Server
-//     return fetch(
-//       "http://localhost:8080/task",
-//       {
-//         method: 'GET',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'Accept': 'application/json',
-//             'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
-//         },
-//       }
-//     ).then((res) => {
-//       if(res.status == 200){
-//         return res.json()
-//       }else{
-//         return new Error("Failed to fetch comment: " + res.statusText);
-//       }
-//     });
-//   }
 
-const mockData = [
-    {
-        id: uuid(),
-        title: 'To do',
-        tasks: [
-            {
-                id: uuid(),
-                title: 'create report 4',
-                assignee: 'John'
-            }
-        ]
-    },
-    {
-        id: uuid(),
-        title: 'In progress',
-        tasks: [
-            {
-                id: uuid(),
-                title: 'Developing frontend',
-                assignee: 'John'
-            },
-            {
-                id: uuid(),
-                title: 'Creating report 2',
-                assignee: 'Bill'
-            },
-            {
-                id: uuid(),
-                title: 'Creating report 3',
-                assignee: 'Zack'
-            },
-        ]
-    },
-    {
-        id: uuid(),
-        title: 'Done',
-        tasks: [
-        ]
-    }
-];
-
-export default function Kanban() {
-    const [data, setData] = useState([]);
+const Kanban = ({tasks, ShowTasksApi}) => {
+    
     useEffect(() => {
-        const fetchData = async () => {
-            const result = await fetch(
-                "http://localhost:8080/task",
-                {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
-                    },
-                }
-
-            );
-            
-            //console.log(result)
-
-            const json = await result.json();
-            //console.log(json)
-            setData(json.list)
-        }
-
-        fetchData()
+        ShowTasksApi()
     }, [])
 
     //console.log(data)
@@ -102,11 +23,11 @@ export default function Kanban() {
 
         //move to task to other column
         if (source.droppableId != destination.droppableId) {
-            const sourceColIndex = data.findIndex(e => e.id == source.droppableId)
-            const destinationColIndex = data.findIndex(e => e.id == destination.droppableId)
+            const sourceColIndex = tasks.findIndex(e => e.id == source.droppableId)
+            const destinationColIndex = tasks.findIndex(e => e.id == destination.droppableId)
 
-            const sourceCol = data[sourceColIndex]
-            const destinationCol = data[destinationColIndex]
+            const sourceCol = tasks[sourceColIndex]
+            const destinationCol = tasks[destinationColIndex]
             
             // console.log(sourceCol)
             // console.log(destinationCol)
@@ -117,27 +38,24 @@ export default function Kanban() {
             const [removed] = sourceTasks.splice(source.index, 1)
             destinationTasks.splice(destination.index, 0, removed)
 
-            data[sourceColIndex].tasks = sourceTasks
-            data[destinationColIndex].tasks = destinationTasks
+            tasks[sourceColIndex].tasks = sourceTasks
+            tasks[destinationColIndex].tasks = destinationTasks
 
 
-            setData(data)
         } else { //move task in the one column
-            const columnIndex = data.findIndex(e => e.id == destination.droppableId);
+            const columnIndex = tasks.findIndex(e => e.id == destination.droppableId);
 
-            const column = data[columnIndex]
+            const column = tasks[columnIndex]
 
-            const tasks = [...column.tasks]
-            console.log(tasks)
+            const columnTasks = [...column.tasks]
+            //console.log(columnTasks)
 
-            const [removed] = tasks.splice(source.index, 1)
+            const [removed] = columnTasks.splice(source.index, 1)
             //tasks.splice(destination.index, 0, removed)
-            tasks.splice(destination.index, 0, removed)
-            console.log(tasks)
+            columnTasks.splice(destination.index, 0, removed)
+            //console.log(columnTasks)
 
-            data[columnIndex].tasks = tasks
-
-            setData(data)
+            tasks[columnIndex].columnTasks = columnTasks
         }
 
     }
@@ -150,7 +68,7 @@ export default function Kanban() {
             <DragDropContext onDragEnd={onDragEnd}>
                 <KanbanBoard >
                     {
-                        data.map(section => (
+                        tasks.map(section => (
                             <Droppable
                                 key={String(section.id)}
                                 droppableId={String(section.id)}
@@ -204,10 +122,20 @@ export default function Kanban() {
     )
 }
 
+const mapStateToProps = ({tasks}) => {
+    return {
+        tasks
+    }
+}
+
+export default connect(mapStateToProps, {ShowTasksApi})(Kanban)
+
 const Wrapper = styled.section`
   color: black;
   font-family: 'Lato', sans-serif;
   line-height: 1.5;
+  width: 80%;
+  overflow: auto
 `;
 
 const KanbanBoard = styled.div`
