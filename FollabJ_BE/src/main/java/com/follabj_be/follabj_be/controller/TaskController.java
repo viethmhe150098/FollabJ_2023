@@ -28,7 +28,7 @@ public class TaskController {
     @PostMapping("/task")
     public ResponseEntity<Task> addTask(@RequestBody TaskRequest taskRequest){
         Long task_status_id = taskRequest.getTask_status_id();
-        Task task = taskService.insertTask(new Task(taskRequest.getTask_title(), taskStatusService.getName(task_status_id)));
+        Task task = taskService.insertTask(new Task(taskRequest.getTask_title(),taskRequest.getAssignee(), taskStatusService.getName(task_status_id)));
         return new ResponseEntity<>(task, HttpStatus.CREATED);
     }
 

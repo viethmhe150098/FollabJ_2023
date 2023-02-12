@@ -27,8 +27,9 @@ public class Task {
     @JsonBackReference
     public TaskStatus status;
 
-    public Task(String title, TaskStatus status) {
+    public Task(String title, String assignee, TaskStatus status) {
         this.title = title;
+        this.assignee = assignee;
         this.status = status;
     }
 }

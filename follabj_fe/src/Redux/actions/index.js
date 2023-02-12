@@ -1,4 +1,9 @@
 
+import {
+    ShowTasksApi, 
+    addTaskApi
+} from "./tasksActions"
+
 import {ShowEventApi,
         ShowEventsApi ,
         addEventApi,
@@ -20,6 +25,8 @@ import {
 } from "./errorsAction"
 
 export  {
+    ShowTasksApi, 
+    addTaskApi,
     ShowEventApi,
     ShowEventsApi,
     addEventApi,
