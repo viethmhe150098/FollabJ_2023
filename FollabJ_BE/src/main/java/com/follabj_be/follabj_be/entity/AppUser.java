@@ -20,6 +20,7 @@ import java.util.Set;
 public class AppUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
     private Long id;
     private String username;
     private String email;
