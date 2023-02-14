@@ -2,6 +2,7 @@ package com.follabj_be.follabj_be.service;
 
 import com.follabj_be.follabj_be.entity.Event;
 import com.follabj_be.follabj_be.repository.EventRepository;
+import com.follabj_be.follabj_be.requestModel.EventRequest;
 import com.follabj_be.follabj_be.service.dependency.EventInterface;
 import org.springframework.stereotype.Service;
 
