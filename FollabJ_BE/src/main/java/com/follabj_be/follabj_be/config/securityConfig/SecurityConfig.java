@@ -2,8 +2,6 @@ package com.follabj_be.follabj_be.config.securityConfig;
 
 import com.follabj_be.follabj_be.config.filter.CustomAuthenticationFilter;
 import com.follabj_be.follabj_be.config.filter.CustomAuthorizationFilter;
-import com.follabj_be.follabj_be.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,12 +15,9 @@ import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private UserService userService;
     @Bean
     @Override
     protected AuthenticationManager authenticationManager() throws Exception {
