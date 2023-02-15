@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,7 +21,6 @@ import java.util.Set;
 public class AppUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id")
     private Long id;
     private String username;
     private String email;
@@ -34,6 +34,12 @@ public class AppUser implements UserDetails {
     )
     public Set<Role> roles = new HashSet<>();
 
+    @OneToOne
+    @JoinColumn(
+            name = "project_id",
+            referencedColumnName = "id"
+    )
+    public Project project;
     public AppUser(String username, String email, String password, int status, Set<Role> roles) {
         this.username = username;
         this.email = email;

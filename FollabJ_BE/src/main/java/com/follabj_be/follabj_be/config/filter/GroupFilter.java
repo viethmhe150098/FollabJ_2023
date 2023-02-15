@@ -50,7 +50,7 @@ public class GroupFilter extends GenericFilterBean {
                     //decoded token from header
                     DecodedJWT decodedJWT = verifier.verify(access_token);
                     String username = decodedJWT.getSubject();
-                    List<AppUser> members_list = projectRepository.getMembersByPid(project_id);
+                    List<AppUser> members_list = projectRepository.getMembersById(project_id);
                     Optional<AppUser> member = members_list.stream().filter(user -> user.getEmail().equals(username)).findAny();
                     member.orElseThrow(()-> new GroupPermissionException("You don't permission"));
                     filterChain.doFilter(request, response);
