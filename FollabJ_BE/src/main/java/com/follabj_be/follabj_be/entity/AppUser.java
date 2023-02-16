@@ -8,16 +8,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-@ToString
 public class AppUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,12 +30,11 @@ public class AppUser implements UserDetails {
     )
     public Set<Role> roles = new HashSet<>();
 
-    @OneToOne
-    @JoinColumn(
-            name = "project_id",
-            referencedColumnName = "id"
-    )
-    public Project project;
+    @OneToMany(mappedBy = "leader", cascade = CascadeType.ALL)
+    private List<Project> leaded_project;
+
+    @ManyToMany(mappedBy = "members")
+    private List<Project> projects;
     public AppUser(String username, String email, String password, int status, Set<Role> roles) {
         this.username = username;
         this.email = email;

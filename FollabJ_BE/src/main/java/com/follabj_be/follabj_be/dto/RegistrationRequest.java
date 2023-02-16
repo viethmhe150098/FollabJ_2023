@@ -1,4 +1,4 @@
-package com.follabj_be.follabj_be.requestModel;
+package com.follabj_be.follabj_be.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

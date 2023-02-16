@@ -1,25 +1,42 @@
 package com.follabj_be.follabj_be.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@Getter @Setter
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-//    @OneToOne(cascade = CascadeType.ALL, mappedBy = "project_lead")
-//    @JoinColumn(name = "user_id")
-//    private AppUser leader;
-    private String project_name;
-    private String project_des;
+    private String name;
+    private String des;
+    private String createdDate;
 
-//    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "projects")
-//    public List<AppUser> member_id;
+    @ManyToOne
+    @JoinColumn(
+            name = "leader_id"
+    )
+    private AppUser leader;
 
-    @OneToOne(mappedBy = "project")
-    public AppUser user;
+    @ManyToMany
+    @JoinTable(
+            name = "project_members",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<AppUser> members;
+
+    public Project(String name, String des, String createdDate, AppUser leader) {
+        this.name = name;
+        this.des = des;
+        this.createdDate = createdDate;
+        this.leader = leader;
+    }
 }

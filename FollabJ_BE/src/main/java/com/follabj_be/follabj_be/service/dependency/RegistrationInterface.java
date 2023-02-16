@@ -1,6 +1,6 @@
 package com.follabj_be.follabj_be.service.dependency;
 
-import com.follabj_be.follabj_be.requestModel.RegistrationRequest;
+import com.follabj_be.follabj_be.dto.RegistrationRequest;
 
 public interface RegistrationInterface {
     String register(RegistrationRequest request);

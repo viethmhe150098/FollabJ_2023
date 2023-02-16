@@ -5,7 +5,7 @@ import com.follabj_be.follabj_be.entity.AppUserRole;
 import com.follabj_be.follabj_be.entity.ConfirmToken;
 import com.follabj_be.follabj_be.entity.Role;
 import com.follabj_be.follabj_be.service.dependency.EmailSender;
-import com.follabj_be.follabj_be.requestModel.RegistrationRequest;
+import com.follabj_be.follabj_be.dto.RegistrationRequest;
 import com.follabj_be.follabj_be.service.dependency.RegistrationInterface;
 import com.follabj_be.follabj_be.service.dependency.TokenInterface;
 import com.follabj_be.follabj_be.service.dependency.UserInterface;
