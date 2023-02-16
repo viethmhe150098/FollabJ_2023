@@ -1,6 +1,7 @@
 package com.follabj_be.follabj_be.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,9 +32,11 @@ public class AppUser implements UserDetails {
     public Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "leader", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Project> leaded_project;
 
     @ManyToMany(mappedBy = "members")
+    @JsonIgnore
     private List<Project> projects;
     public AppUser(String username, String email, String password, int status, Set<Role> roles) {
         this.username = username;

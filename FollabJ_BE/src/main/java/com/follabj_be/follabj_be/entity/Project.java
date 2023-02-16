@@ -1,5 +1,6 @@
 package com.follabj_be.follabj_be.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class Project {
     @JoinColumn(
             name = "leader_id"
     )
+    @JsonIgnore
     private AppUser leader;
 
     @ManyToMany
@@ -31,12 +33,14 @@ public class Project {
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
+    @JsonIgnore
     private List<AppUser> members;
 
-    public Project(String name, String des, String createdDate, AppUser leader) {
+    public Project(String name, String des, String createdDate, AppUser leader, List<AppUser> members) {
         this.name = name;
         this.des = des;
         this.createdDate = createdDate;
         this.leader = leader;
+        this.members = members;
     }
 }

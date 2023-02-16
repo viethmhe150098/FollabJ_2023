@@ -1,5 +1,7 @@
 package com.follabj_be.follabj_be.handler;
 
+import com.follabj_be.follabj_be.errorMessge.ErrorMessage;
+import com.follabj_be.follabj_be.exception.GroupException;
 import com.follabj_be.follabj_be.exception.GroupPermissionException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,6 +20,15 @@ public class HandleGroupException {
         Map<String, String> res = new HashMap<>();
         res.put("status", HttpStatus.FORBIDDEN.toString());
         res.put("message", ex.getMessage());
+        return res;
+    }
+
+    @ExceptionHandler(GroupException.class)
+    @ResponseStatus(value =  HttpStatus.CONFLICT)
+    public Map<String, String> handleGroupException(GroupException ex, WebRequest request){
+        Map<String, String> res = new HashMap<>();
+        res.put("code", ErrorMessage.PROJECT_DUPLICATE.getCode());
+        res.put("message", ErrorMessage.PROJECT_DUPLICATE.getMessage());
         return res;
     }
 }
