@@ -27,8 +27,7 @@ public class HandleGroupException {
     @ResponseStatus(value =  HttpStatus.CONFLICT)
     public Map<String, String> handleGroupException(GroupException ex, WebRequest request){
         Map<String, String> res = new HashMap<>();
-        res.put("code", ErrorMessage.PROJECT_DUPLICATE.getCode());
-        res.put("message", ErrorMessage.PROJECT_DUPLICATE.getMessage());
+        res.put("message", ex.getLocalizedMessage());
         return res;
     }
 }
