@@ -1,25 +1,64 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
 
-function App() {
+// Screens
+import Landing from "./screens/Landing.jsx";
+// import Login from "./screens/Login.jsx";
+// import Register from "./screens/Register.jsx";
+
+
+//Library
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+
+// import TaskManagement from "./screens/TaskManagement.jsx";
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+        <Switch>
+
+          {/* Task */}
+          {/* <Route path="/task">
+            <TaskManagement />
+          </Route> */}
+          {/* Task */}
+          {/* <Route path="/notes">
+            <TaskManagement />
+          </Route>
+
+          <Route path="/login">
+            <Login />
+          </Route> */}
+
+          {/* Register */}
+          {/* <Route path="/register">
+            <Register />
+          </Route> */}
+
+          {/* Meeting */}
+          {/* <Route path="/meeting">
+            <TaskManagement />
+          </Route> */}
+            {/* Meeting */}
+          {/* <Route path="/events">
+          <TaskManagement />
+          </Route> */}
+
+
+          {/* Landing */}
+          <Route exact path="/">
+            <Landing />
+          </Route>
+
+
+        </Switch>
+      </Router>
+    </>
+
   );
 }
 
-export default App;
