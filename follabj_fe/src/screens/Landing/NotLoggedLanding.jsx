@@ -8,7 +8,7 @@ import Pricing from "../../components/Sections/Pricing";
 import Contact from "../../components/Sections/Contact";
 import Footer from "../../components/Sections/Footer"
 
-export default function Landing() {
+export default function NotLoggedLanding() {
   return (
     <>
       <TopNavbar />

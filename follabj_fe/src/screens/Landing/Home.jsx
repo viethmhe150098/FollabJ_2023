@@ -1,10 +1,10 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { isLoggedIn } from './auth';
+import { isLoggedIn } from '../../Redux/actions/auth';
 
 //sreens
-import LoggedLanding from LoggedLanding;
-import NotLoggedLanding from NotLoggedLanding;
+import LoggedLanding from './LoggedLanding.jsx';
+import NotLoggedLanding from './NotLoggedLanding.jsx';
 function Home() {
     if (isLoggedIn()) {
         return (

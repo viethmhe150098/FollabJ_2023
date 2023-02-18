@@ -10,7 +10,7 @@ import ProjectImg3 from "../../assets/img/projects/3.png";
 import ProjectImg4 from "../../assets/img/projects/4.png";
 import ProjectImg5 from "../../assets/img/projects/5.png";
 import ProjectImg6 from "../../assets/img/projects/6.png";
-import AboutImg from "../../assets/img/add/about.png";
+// import AboutImg from "../../assets/img/add/about.png";
 
 export default function Projects() {
   return (
@@ -79,7 +79,7 @@ export default function Projects() {
             <AddLeft>
               <AddLeftInner>
                 <ImgWrapper className="flexCenter">
-                  <img className="radius8" src={AboutImg} alt="add" />
+                  {/* <img className="radius8" src={AboutImg} alt="add" /> */}
                 </ImgWrapper>
               </AddLeftInner>
             </AddLeft>
