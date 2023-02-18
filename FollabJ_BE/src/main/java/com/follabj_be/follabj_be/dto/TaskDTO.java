@@ -29,6 +29,7 @@ public class TaskDTO {
 
     private Date endDate;
 
+    private UserDTO reporter;
     private List<UserDTO> assigneeList;
 
 }

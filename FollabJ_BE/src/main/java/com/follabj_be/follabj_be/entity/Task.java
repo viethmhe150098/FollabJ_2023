@@ -34,7 +34,6 @@ public class Task {
     private Date endDate;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
     @JoinColumn(name="reporter_id",referencedColumnName = "id")
     private AppUser reporter;
 

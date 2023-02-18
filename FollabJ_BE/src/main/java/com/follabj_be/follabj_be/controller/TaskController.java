@@ -26,8 +26,15 @@ public class TaskController {
     private ModelMapper modelMapper;
 
     @GetMapping("/project/{project_id}/tasks")
-    public List<Task> getTasksByProjectId(@PathVariable Long project_id) {
-        return taskService.getTasksByProjectId(project_id);
+    public List<TaskDTO> getTasksByProjectId(@PathVariable Long project_id) {
+        List<Task> taskList = taskService.getTasksByProjectId(project_id);
+        List<TaskDTO> taskDTOList = new ArrayList<>();
+        for (Task task: taskList) {
+            TaskDTO taskDTO = modelMapper.map(task, TaskDTO.class);
+            taskDTOList.add(taskDTO);
+        }
+
+        return taskDTOList;
     }
 
     @GetMapping("/task")
