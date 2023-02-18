@@ -1,12 +1,16 @@
 package com.follabj_be.follabj_be.service;
 
 import com.follabj_be.follabj_be.config.securityConfig.PasswordEncoder;
+import com.follabj_be.follabj_be.dto.UserDTO;
 import com.follabj_be.follabj_be.entity.AppUser;
 import com.follabj_be.follabj_be.entity.ConfirmToken;
+import com.follabj_be.follabj_be.entity.Invitation;
+import com.follabj_be.follabj_be.repository.InvitationRepository;
 import com.follabj_be.follabj_be.repository.UserRepository;
 import com.follabj_be.follabj_be.service.dependency.TokenInterface;
 import com.follabj_be.follabj_be.service.dependency.UserInterface;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -26,11 +31,13 @@ public class UserService implements UserDetailsService, UserInterface {
     private final UserRepository userRepository;
     private final TokenInterface tokenInterface;
     private final PasswordEncoder passwordEncoder;
+    private final InvitationRepository invitationRepository;
 
-    public UserService(UserRepository userRepository, TokenInterface tokenInterface, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, TokenInterface tokenInterface, PasswordEncoder passwordEncoder, InvitationRepository invitationRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.tokenInterface = tokenInterface;
+        this.invitationRepository = invitationRepository;
     }
 
     @Override
@@ -99,5 +106,17 @@ public class UserService implements UserDetailsService, UserInterface {
 
     public void activeUser(Long user_id){
         userRepository.updateRole(user_id);
+    }
+
+    @Override
+    public List<UserDTO> findUsersByEmail(String email_cha) {
+        List<UserDTO> foundUser = userRepository.findByEmailLike(email_cha);
+        return foundUser;
+    }
+
+    @Override
+    public List<Invitation> getAllInvitation(Long user_id) {
+        userRepository.findById(user_id).orElseThrow(()-> new ObjectNotFoundException("Not found user", user_id.toString()));
+        return invitationRepository.findByUserId(user_id);
     }
 }

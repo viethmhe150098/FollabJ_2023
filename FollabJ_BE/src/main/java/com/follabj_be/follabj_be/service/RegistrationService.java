@@ -46,6 +46,7 @@ public class RegistrationService implements RegistrationInterface {
             emailSender.sendEmail(request.getEmail(), buildEmail(request.getUsername(), link));
             return tokenForNewUser;
     }
+
     @Override
     @Transactional
     public String confirmToken(String token) {

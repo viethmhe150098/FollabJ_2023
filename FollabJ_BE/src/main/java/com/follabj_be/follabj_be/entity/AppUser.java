@@ -36,13 +36,19 @@ public class AppUser implements UserDetails {
 
     @ManyToMany(mappedBy = "members")
     @JsonIgnore
-    private List<Project> projects;
+    private Set<Project> projects;
     public AppUser(String username, String email, String password, int status, Set<Role> roles) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.status = status;
         this.roles = roles;
+    }
+
+    public AppUser(Long id, String username, String email) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
     }
 
     @Override
