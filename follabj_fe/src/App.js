@@ -1,7 +1,7 @@
 import React from "react";
 
 // Screens
-import Landing from "./screens/Landing.jsx";
+import Home from "./screens/Landing/Home"
 // import Login from "./screens/Login.jsx";
 // import Register from "./screens/Register.jsx";
 
@@ -51,7 +51,7 @@ export default function App() {
 
           {/* Landing */}
           <Route exact path="/">
-            <Landing />
+            <Home />
           </Route>
 
 
