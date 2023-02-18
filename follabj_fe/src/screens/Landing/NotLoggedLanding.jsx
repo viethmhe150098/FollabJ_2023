@@ -11,7 +11,7 @@ import Footer from "../../components/Sections/Footer"
 export default function NotLoggedLanding() {
   return (
     <>
-      <TopNavbar />
+      <TopNavbar/>
       <Header />
       <Services />
       <Pricing />

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from 'react';
 
 // Screens
 import Home from "./screens/Landing/Home"
+import ProjectList from "./screens/ProjectList/ProjectList"
 // import Login from "./screens/Login.jsx";
 // import Register from "./screens/Register.jsx";
 
@@ -16,6 +17,7 @@ import {
 // import TaskManagement from "./screens/TaskManagement.jsx";
 
 export default function App() {
+  const [isOnProjectsPage, setIsOnProjectsPage] = useState(false);
   return (
     <>
       <Router>
@@ -43,12 +45,15 @@ export default function App() {
           {/* <Route path="/meeting">
             <TaskManagement />
           </Route> */}
-            {/* Meeting */}
+          {/* Meeting */}
           {/* <Route path="/events">
           <TaskManagement />
           </Route> */}
 
-
+          {/* <Route path="/projects">
+            <ProjectList />
+          </Route> */}
+          <Route path="/projects" render={() => <ProjectList setIsOnProjectsPage={setIsOnProjectsPage} />} />
           {/* Landing */}
           <Route exact path="/">
             <Home />
