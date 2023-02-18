@@ -40,4 +40,5 @@ public class ConfirmToken {
         this.expiresAt = expiresAt;
         this.appUser = appUser;
     }
+
 }

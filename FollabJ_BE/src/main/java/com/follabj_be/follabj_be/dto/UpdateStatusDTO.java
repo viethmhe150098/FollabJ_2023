@@ -5,14 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class UserDTO {
-    private Long id;
-    private String email;
-    private String username;
+public class UpdateStatusDTO {
+    private Long i_id;
+    private int status;
 }

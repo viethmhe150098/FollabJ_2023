@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -33,9 +34,9 @@ public class Project {
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     @JsonIgnore
-    private List<AppUser> members;
+    private Set<AppUser> members;
 
-    public Project(String name, String des, String createdDate, AppUser leader, List<AppUser> members) {
+    public Project(String name, String des, String createdDate, AppUser leader, Set<AppUser> members) {
         this.name = name;
         this.des = des;
         this.createdDate = createdDate;
