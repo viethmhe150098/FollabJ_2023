@@ -20,6 +20,4 @@ public class EventDTO {
     private Date startDate;
 
     private Date endDate;
-
-    private Project project;
 }
