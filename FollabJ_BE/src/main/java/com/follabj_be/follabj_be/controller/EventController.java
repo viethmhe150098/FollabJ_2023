@@ -1,5 +1,6 @@
 package com.follabj_be.follabj_be.controller;
 
+import com.follabj_be.follabj_be.dto.CreateEventDTO;
 import com.follabj_be.follabj_be.dto.EventDTO;
 import com.follabj_be.follabj_be.entity.Event;
 import com.follabj_be.follabj_be.entity.Project;
@@ -31,10 +32,9 @@ public class EventController {
     }
 
     @PostMapping("/project/{project_id}/events/add")
-    public Event addEvent(@RequestBody Event event, @PathVariable Long project_id) {
-        event.setProject(new Project());
-        event.getProject().setId(project_id);
-        return eventService.addEvent(event);
+    public Event addEvent(@RequestBody CreateEventDTO createEventDTO, @PathVariable Long project_id) {
+        createEventDTO.setProjectId(project_id);
+        return eventService.addEvent(createEventDTO);
     }
 
     @GetMapping("/project/{project_id}/events/{event_id}")

@@ -1,6 +1,8 @@
 package com.follabj_be.follabj_be.service;
 
+import com.follabj_be.follabj_be.dto.CreateEventDTO;
 import com.follabj_be.follabj_be.entity.Event;
+import com.follabj_be.follabj_be.entity.Project;
 import com.follabj_be.follabj_be.repository.EventRepository;
 import com.follabj_be.follabj_be.service.dependency.EventInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,16 @@ public class EventService implements EventInterface {
     }
 
     @Override
-    public Event addEvent(Event event) {
+    public Event addEvent(CreateEventDTO createEventDTO) {
+        Event event = new Event();
+
+        event.setTitle(createEventDTO.getTitle());
+        event.setDescription(createEventDTO.getDescription());
+        event.setStartDate(createEventDTO.getStartDate());
+        event.setEndDate(createEventDTO.getEndDate());
+        event.setProject(new Project());
+        event.getProject().setId(createEventDTO.getProjectId());
+
         return eventRepository.save(event);
     }
 

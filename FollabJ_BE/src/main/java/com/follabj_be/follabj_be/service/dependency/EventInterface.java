@@ -1,5 +1,7 @@
 package com.follabj_be.follabj_be.service.dependency;
 
+import com.follabj_be.follabj_be.dto.CreateEventDTO;
+import com.follabj_be.follabj_be.dto.EventDTO;
 import com.follabj_be.follabj_be.entity.Event;
 
 import java.util.List;
@@ -11,7 +13,7 @@ public interface EventInterface {
 
     Optional<Event> getEventById(Long event_id);
 
-    Event addEvent(Event event);
+    Event addEvent(CreateEventDTO createEventDTO);
 
     Event updateEvent(Long event_id, Event event);
 
