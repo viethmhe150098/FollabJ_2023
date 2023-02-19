@@ -1,8 +1,8 @@
 package com.follabj_be.follabj_be.handler;
 
-import com.follabj_be.follabj_be.errorMessge.ErrorMessage;
 import com.follabj_be.follabj_be.exception.GroupException;
 import com.follabj_be.follabj_be.exception.GroupPermissionException;
+import com.follabj_be.follabj_be.exception.NoTypeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -30,4 +30,6 @@ public class HandleGroupException {
         res.put("message", ex.getLocalizedMessage());
         return res;
     }
+
+
 }

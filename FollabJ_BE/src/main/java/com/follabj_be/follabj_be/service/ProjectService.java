@@ -5,7 +5,7 @@ import com.follabj_be.follabj_be.dto.UserDTO;
 import com.follabj_be.follabj_be.entity.AppUser;
 import com.follabj_be.follabj_be.entity.Invitation;
 import com.follabj_be.follabj_be.entity.Project;
-import com.follabj_be.follabj_be.errorMessge.ErrorMessage;
+import com.follabj_be.follabj_be.errorMessge.CustomErrorMessage;
 import com.follabj_be.follabj_be.exception.GroupException;
 import com.follabj_be.follabj_be.repository.InvitationRepository;
 import com.follabj_be.follabj_be.repository.ProjectRepository;
@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -46,7 +45,7 @@ public class ProjectService implements ProjectInterface {
         Set<AppUser> member = new HashSet<>();
         member.add(app_user);
         if(projectRepository.findByNameLike(p_name).isPresent()){
-            throw new GroupException(ErrorMessage.PROJECT_DUPLICATE);
+            throw new GroupException(CustomErrorMessage.PRJ01);
         }
         Project p = new Project(p_name, p_des, create_date, app_user, member);
         return projectRepository.save(p);
