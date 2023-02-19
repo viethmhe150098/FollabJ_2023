@@ -13,11 +13,12 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import AboutProject from './screens/ProjectWorkspace/AboutProject/AboutProject';
 
 // import TaskManagement from "./screens/TaskManagement.jsx";
 
 export default function App() {
-  const [isOnProjectsPage, setIsOnProjectsPage] = useState(false);
+ 
   return (
     <>
       <Router>
@@ -53,7 +54,12 @@ export default function App() {
           {/* <Route path="/projects">
             <ProjectList />
           </Route> */}
-          <Route path="/projects" render={() => <ProjectList setIsOnProjectsPage={setIsOnProjectsPage} />} />
+          <Route path="/aboutProject" >
+            <AboutProject/>
+          </Route>
+          <Route path="/projects">
+            <ProjectList/>
+          </Route>
           {/* Landing */}
           <Route exact path="/">
             <Home />
