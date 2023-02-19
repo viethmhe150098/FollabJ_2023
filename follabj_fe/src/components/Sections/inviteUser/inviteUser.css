@@ -23,11 +23,12 @@
 
 .invite-button {
   background-color: #f58025;
-  border: none;
   color: white;
   border-radius: 5px;
   height: 40px;
-  padding: 10px;
+  line-height: 40px;
+  text-align: center;
+  padding: 0 9px;
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.2s ease;
