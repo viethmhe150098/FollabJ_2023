@@ -18,4 +18,8 @@ public interface EventInterface {
     Event updateEvent(Long event_id, Event event);
 
     void deleteEvent(Long event_id);
+
+    void addParticipantToEvent(Long event_id, Long participant_id);
+
+    void removeParticipantFromEvent(Long event_id, Long participant_id);
 }

@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,4 +33,12 @@ public class Event {
     @JsonIgnore
     @JoinColumn(name="project_id",referencedColumnName = "id")
     private Project project;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name="event_participant",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<AppUser> participantList;
 }

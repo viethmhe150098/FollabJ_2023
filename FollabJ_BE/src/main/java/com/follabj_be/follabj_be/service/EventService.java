@@ -3,6 +3,7 @@ package com.follabj_be.follabj_be.service;
 import com.follabj_be.follabj_be.dto.CreateEventDTO;
 import com.follabj_be.follabj_be.entity.Event;
 import com.follabj_be.follabj_be.entity.Project;
+import com.follabj_be.follabj_be.repository.EventParticipantRepository;
 import com.follabj_be.follabj_be.repository.EventRepository;
 import com.follabj_be.follabj_be.service.dependency.EventInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,10 @@ public class EventService implements EventInterface {
 
     @Autowired
     EventRepository eventRepository;
+
+    @Autowired
+    EventParticipantRepository eventParticipantRepository;
+
     @Override
     public List<Event> getEventsByProjectId(Long project_id) {
         return eventRepository.findAll();
@@ -47,5 +52,15 @@ public class EventService implements EventInterface {
     @Override
     public void deleteEvent(Long event_id) {
         eventRepository.deleteById(event_id);
+    }
+
+    @Override
+    public void addParticipantToEvent(Long event_id, Long participant_id) {
+        eventParticipantRepository.addParticipantToEvent(event_id, participant_id);
+    }
+
+    @Override
+    public void removeParticipantFromEvent(Long event_id, Long participant_id) {
+        eventParticipantRepository.removeParticipantFromEvent(event_id, participant_id);
     }
 }

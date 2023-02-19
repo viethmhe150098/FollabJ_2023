@@ -24,11 +24,17 @@ public class EventController {
     private ModelMapper modelMapper;
 
     @GetMapping("/project/{project_id}/events")
-    public List<Event> getEventsByProjectId(@PathVariable Long project_id) {
+    public List<EventDTO> getEventsByProjectId(@PathVariable Long project_id) {
         List<Event> eventList = eventService.getEventsByProjectId(project_id);
 
+        List<EventDTO> eventDTOList = new ArrayList<>();
 
-        return eventList;
+        for(Event event: eventList) {
+            EventDTO eventDTO = modelMapper.map(event, EventDTO.class);
+            eventDTOList.add(eventDTO);
+        }
+
+        return eventDTOList;
     }
 
     @PostMapping("/project/{project_id}/events/add")
@@ -66,4 +72,19 @@ public class EventController {
         eventService.deleteEvent(event_id);
     }
 
+    @RequestMapping(
+            method=RequestMethod.POST,
+            path = "/project/{project_id}/events/{event_id}/add"
+    )
+    public void addParticipantToEvent(@PathVariable Long event_id, @RequestParam Long participant_id) {
+        eventService.addParticipantToEvent(event_id, participant_id);
+    }
+
+    @RequestMapping(
+            method=RequestMethod.DELETE,
+            path = "/project/{project_id}/events/{event_id}/remove"
+    )
+    public void removeAssigneeFromTask(@PathVariable Long event_id, @RequestParam Long participant_id) {
+        eventService.removeParticipantFromEvent(event_id, participant_id);
+    }
 }
