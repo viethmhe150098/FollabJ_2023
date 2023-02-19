@@ -23,15 +23,11 @@ public class EventController {
     private ModelMapper modelMapper;
 
     @GetMapping("/project/{project_id}/events")
-    public List<EventDTO> getEventsByProjectId(@PathVariable Long project_id) {
+    public List<Event> getEventsByProjectId(@PathVariable Long project_id) {
         List<Event> eventList = eventService.getEventsByProjectId(project_id);
-        List<EventDTO> eventDTOList = new ArrayList<>();
-        for (Event event: eventList) {
-            EventDTO eventDTO = modelMapper.map(event, EventDTO.class);
-            eventDTOList.add(eventDTO);
-        }
 
-        return eventDTOList;
+
+        return eventList;
     }
 
     @PostMapping("/project/{project_id}/events/add")
