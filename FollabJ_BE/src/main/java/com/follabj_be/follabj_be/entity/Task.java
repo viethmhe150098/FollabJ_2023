@@ -45,7 +45,7 @@ public class Task {
     )
     private List<AppUser> assigneeList;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="project_id",referencedColumnName = "id")
     private Project project;
 }
