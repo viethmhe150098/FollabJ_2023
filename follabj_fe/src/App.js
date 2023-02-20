@@ -5,6 +5,8 @@ import Home from "./screens/Landing/Home"
 import ProjectList from "./screens/ProjectList/ProjectList"
 import Login from "./screens/Authen/Login.jsx";
 import SignUp from './screens/Authen/SignUp.jsx';
+import AboutProject from './screens/ProjectWorkspace/AboutProject'
+import ProjectManagement from "./screens/ProjectWorkspace/ProjectManagement";
 // import Register from "./screens/Register.jsx";
 
 
@@ -14,9 +16,9 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import AboutProject from './screens/ProjectWorkspace/AboutProject/AboutProject';
 
-// import TaskManagement from "./screens/TaskManagement.jsx";
+
+
 
 export default function App() {
  
@@ -26,9 +28,9 @@ export default function App() {
         <Switch>
 
           {/* Task */}
-          {/* <Route path="/task">
-            <TaskManagement />
-          </Route> */}
+          <Route path="/projectManagement">
+            <ProjectManagement />
+          </Route>
           {/* Task */}
           {/* <Route path="/notes">
             <TaskManagement />

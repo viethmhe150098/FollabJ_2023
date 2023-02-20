@@ -57,12 +57,14 @@ const InviteUser = () => {
         <button className="invite-button semiBold" onClick={handleInvite}>
           Invite
         </button>
+        <div>{feedbackMessage && (
+          <div className={`feedback-message ${feedbackMessageClass}`}>
+            {feedbackMessage}
+          </div>
+        )}</div>
+
       </div>
-      {feedbackMessage && (
-        <div className={`feedback-message ${feedbackMessageClass}`}>
-          {feedbackMessage}
-        </div>
-      )}
+
 
       <div className="invited-emails-container">
         <h3>Invited emails:</h3>

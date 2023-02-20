@@ -10,7 +10,7 @@ import {
 } from "react-icons/fa";
 import { NavLink } from 'react-router-dom';
 import { Link as RouterLink } from "react-router-dom";
-import Font from '../Font/Font';
+
 
 // Assets
 import LogoIcon from "../../assets/svg/Logo";
@@ -48,13 +48,13 @@ const Sidebar = ({ children }) => {
             icon: <FaFolder />
         },
         {
-            path: "/about",
+            path: "/aboutProject",
             name: "About Project",
             icon: <FaUserAlt />
         }
     ]
     return (
-        <>     <Font />
+        <>     
         <div className="sidebarContainer">
             <div style={{ width: "300px"}} className="sidebar_sidebar">
                 <div className="sidebar_top_section">

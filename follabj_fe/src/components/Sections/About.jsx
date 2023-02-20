@@ -9,7 +9,7 @@ import AboutImg from "../../assets/img/about.png";
 
 export default function About() {
   return (
-    <Wrapper id="about">
+    <Wrapper id="about" style={{paddingTop:"100px"}}>
 
       <div className="lightBg">
         <div className="container">

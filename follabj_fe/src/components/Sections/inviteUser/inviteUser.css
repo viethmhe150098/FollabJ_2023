@@ -1,6 +1,4 @@
 .invite-user-container {
-  display: flex;
-  flex-direction: column;
   align-items: center;
   margin: 20px;
 }
@@ -41,7 +39,7 @@
 .feedback-message {
   font-size: 14px;
   font-weight: bold;
-  margin-top: 10px;
+  margin-left: 20px;
   padding: 10px;
   border-radius: 4px;
   color: #fff;
@@ -72,13 +70,9 @@
 }
 
 .invited-emails-container {
-  position: fixed;
-  top: 130px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
+
   width: 100%;
-  margin-top: 20px;
+  margin-top: 40px;
 }
 
 .invited-emails-container h3 {
