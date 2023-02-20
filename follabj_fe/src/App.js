@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 // Screens
 import Home from "./screens/Landing/Home"
 import ProjectList from "./screens/ProjectList/ProjectList"
-// import Login from "./screens/Login.jsx";
+import Login from "./screens/Authen/Login.jsx";
+import SignUp from './screens/Authen/SignUp.jsx';
 // import Register from "./screens/Register.jsx";
 
 
@@ -31,15 +32,16 @@ export default function App() {
           {/* <Route path="/notes">
             <TaskManagement />
           </Route>
+          </Route> */}
 
           <Route path="/login">
             <Login />
-          </Route> */}
+          </Route> 
 
           {/* Register */}
-          {/* <Route path="/register">
-            <Register />
-          </Route> */}
+          <Route path="/signup">
+            <SignUp />
+          </Route>
 
           {/* Meeting */}
           {/* <Route path="/meeting">
