@@ -2,10 +2,7 @@ package com.follabj_be.follabj_be.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.follabj_be.follabj_be.dto.UserDTO;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
+@Builder
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
