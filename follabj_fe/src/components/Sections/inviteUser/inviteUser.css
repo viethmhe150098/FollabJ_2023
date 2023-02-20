@@ -1,0 +1,91 @@
+.invite-user-container {
+  align-items: center;
+  margin: 20px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.input-container input {
+  border: 2px solid #f58025;
+  border-radius: 5px;
+  height: 40px !important;
+  padding: 5px;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.invite-button {
+  background-color: #f58025;
+  color: white;
+  border-radius: 5px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  padding: 0 9px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.invite-button:hover {
+  background-color: #d3690d;
+}
+
+.feedback-message {
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 20px;
+  padding: 10px;
+  border-radius: 4px;
+  color: #fff;
+  text-align: center;
+  min-width: 252px;
+  opacity: 0;
+  animation-name: fadeOut;
+  animation-duration: 3s;
+}
+
+.feedback-message.success {
+  background-color: #28a745;
+}
+
+.feedback-message.invalid,
+.feedback-message.already-invited {
+  color: #fff;
+  background-color: #dc3545;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.invited-emails-container {
+
+  width: 100%;
+  margin-top: 40px;
+}
+
+.invited-emails-container h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.invited-emails-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.invited-emails-container li {
+  font-size: 16px;
+}

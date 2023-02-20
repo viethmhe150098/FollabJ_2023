@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link as RouterLink } from "react-router-dom";
+import Popup from "reactjs-popup";
+import Content from "../Modals/CreateProject";
 
 // Components
 import Sidebar from "./MobileSideBar";
 import Backdrop from "../Elements/Backdrop";
+import FullButton from "../Buttons/FullButton";
 // Assets
 import LogoIcon from "../../assets/svg/Logo";
 import BurgerIcon from "../../assets/svg/BurgerIcon";
 
-export default function TopNavbar() {
+export default function PrjTopNavBar() {
   const [y, setY] = useState(window.scrollY);
   const [sidebarOpen, toggleSidebar] = useState(false);
 
@@ -27,13 +30,27 @@ export default function TopNavbar() {
       {sidebarOpen && <Backdrop toggleSidebar={toggleSidebar} />}
       <Wrapper className="flexCenter animate whiteBg" style={y > 100 ? { height: "60px" } : { height: "80px" }}>
         <NavInner className="container flexSpaceCenter">
-          <RouterLink className="pointer flexNullCenter" to="/">
+          <RouterLink className="pointer flexNullCenter" to="/" smooth={true}>
             <LogoIcon />
             <h1 style={{ marginLeft: "15px", color: "black" }} className="font20 extraBold">
               FollabiJ
             </h1>
           </RouterLink>
-      
+          <BurderWrapper className="pointer" onClick={() => toggleSidebar(!sidebarOpen)}>
+            <BurgerIcon />
+          </BurderWrapper>
+          <UlWrapper className="flexNullCenter">
+          </UlWrapper>
+          <UlWrapperRight className="flexNullCenter">
+
+            <Popup modal trigger={<li className="semiBold pointer font15 flexCenter">
+              <RouterLink >
+                <FullButton title="Create Project" />
+              </RouterLink>
+            </li>}>
+              {close => <Content close={close} />}
+            </Popup>
+          </UlWrapperRight>
         </NavInner>
       </Wrapper>
     </>
