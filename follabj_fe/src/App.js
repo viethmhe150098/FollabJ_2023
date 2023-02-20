@@ -8,6 +8,7 @@ import SignUp from './screens/Authen/SignUp.jsx';
 import AboutProject from './screens/ProjectWorkspace/AboutProject'
 import ProjectManagement from "./screens/ProjectWorkspace/ProjectManagement";
 // import Register from "./screens/Register.jsx";
+import LoggedLanding from './screens/Landing/LoggedLanding.jsx';
 
 
 //Library
@@ -42,8 +43,12 @@ export default function App() {
           </Route> 
 
           {/* Register */}
-          <Route path="/register">
+          <Route path="/signup">
             <SignUp />
+          </Route>
+
+          <Route path="/loggedLanding">
+            <LoggedLanding />
           </Route>
 
           {/* Meeting */}

@@ -10,6 +10,7 @@ import AuthenNavbar from "../../components/Nav/AuthenNavbar"
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    
     const dispatch = useDispatch();
     const navigate = useHistory();
 
@@ -21,7 +22,7 @@ const Login = () => {
         };
         //console.log(newUser);
         loginUser(newUser, dispatch, navigate);
-
+        
     }
 
     return (<>
@@ -41,7 +42,7 @@ const Login = () => {
                     {/* <button type="submit"> Continue </button> */}
                     <FullButton title="Get Started" action={"submit"} />
                 </form>
-                <RouterLink to="/register">
+                <RouterLink to="/signup">
                     <button className="link-btn " >Don't have an account?  <span className="semiBold"> Register here.</span></button>
 
                 </RouterLink>
