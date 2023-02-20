@@ -67,11 +67,11 @@ export default function TopNavbar() {
               <>
 
                 <li className="semiBold font15 pointer">
-                  <RouterLink to="projects" style={{ padding: "10px 30px 10px 0" }}>
-                    My Projects
+                  <RouterLink to="projects">
+                  <FullButton title="My Projects" border/>
                   </RouterLink>
                 </li>
-                <li className="semiBold pointer flexCenter">
+                <li className="semiBold pointer flexCenter"  style={{ marginLeft: "10px" }}>
                   <RouterLink to="/profile">
                     <FullButton title="Profile" />
                   </RouterLink>

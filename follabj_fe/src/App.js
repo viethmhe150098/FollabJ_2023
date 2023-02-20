@@ -7,8 +7,8 @@ import Login from "./screens/Authen/Login.jsx";
 import SignUp from './screens/Authen/SignUp.jsx';
 import AboutProject from './screens/ProjectWorkspace/AboutProject'
 import ProjectManagement from "./screens/ProjectWorkspace/ProjectManagement";
+import UserProfile from './screens/UserProfile';
 // import Register from "./screens/Register.jsx";
-import LoggedLanding from './screens/Landing/LoggedLanding.jsx';
 
 
 //Library
@@ -50,10 +50,10 @@ export default function App() {
           <Route path="/signup">
             <SignUp />
           </Route>
-
-          <Route path="/loggedLanding">
-            <LoggedLanding />
+          <Route path="/profile">
+            <UserProfile />
           </Route>
+
 
           {/* Meeting */}
           {/* <Route path="/meeting">
