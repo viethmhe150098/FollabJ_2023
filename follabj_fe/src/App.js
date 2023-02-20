@@ -39,7 +39,7 @@ export default function App() {
           </Route> 
 
           {/* Register */}
-          <Route path="/signup">
+          <Route path="/register">
             <SignUp />
           </Route>
 
