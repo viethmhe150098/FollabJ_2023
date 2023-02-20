@@ -14,9 +14,9 @@ import ProjectImg6 from "../../assets/img/projects/6.png";
 
 export default function Projects() {
   return (
-    <Wrapper id="projects" style={{marginBottom:"120px"}}>
-      <div className="whiteBg">
-        <div className="container" style={{ marginTop: "150px" }}>
+    <Wrapper id="projects" className="lightBg" style={{paddingBottom:"120px"}}>
+      <div >
+        <div className="container" style={{ paddingTop: "150px" }}>
           <HeaderInfo>
             <h1 className="font30 extraBold textCenter ">My Projects</h1>
           </HeaderInfo>

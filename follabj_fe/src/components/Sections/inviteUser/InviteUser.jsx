@@ -54,7 +54,7 @@ const InviteUser = () => {
           value={email}
           onChange={handleInputChange}
         />
-        <button className="invite-button" onClick={handleInvite}>
+        <button className="invite-button semiBold" onClick={handleInvite}>
           Invite
         </button>
       </div>
