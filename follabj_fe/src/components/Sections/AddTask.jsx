@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import FullButton from "../Buttons/FullButton"
 import { connect } from 'react-redux'
-import { addTaskApi } from "../../Redux/actions";
+// import { addTaskApi } from "../../Redux/actions";
 
 const CreateTaskForm = ({addTaskApi, close}) => {
     const [title, setTitle] = useState("");
@@ -63,5 +63,5 @@ const CreateTaskForm = ({addTaskApi, close}) => {
     );
 };
 
-
-export default connect(null,{addTaskApi})(CreateTaskForm);
+export default CreateTaskForm;
+// export default connect(null,{addTaskApi})(CreateTaskForm);

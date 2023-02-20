@@ -22,16 +22,20 @@ import {
 
 
 export default function App() {
- 
+
   return (
     <>
       <Router>
         <Switch>
 
-          {/* Task */}
           <Route path="/projectManagement">
             <ProjectManagement />
           </Route>
+
+          <Route path="/task">
+            <ProjectManagement />
+          </Route>
+
           {/* Task */}
           {/* <Route path="/notes">
             <TaskManagement />
@@ -40,7 +44,7 @@ export default function App() {
 
           <Route path="/login">
             <Login />
-          </Route> 
+          </Route>
 
           {/* Register */}
           <Route path="/signup">
@@ -64,10 +68,10 @@ export default function App() {
             <ProjectList />
           </Route> */}
           <Route path="/aboutProject" >
-            <AboutProject/>
+            <AboutProject />
           </Route>
           <Route path="/projects">
-            <ProjectList/>
+            <ProjectList />
           </Route>
           {/* Landing */}
           <Route exact path="/">

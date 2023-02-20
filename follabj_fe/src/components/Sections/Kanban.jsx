@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Popup from "reactjs-popup";
 import Content from "./AddTask";
 import { connect } from 'react-redux'
-import { ShowTasksApi} from "../../Redux/actions"
+// import { ShowTasksApi} from "../../Redux/actions"
 
 
 const Kanban = ({tasks, ShowTasksApi}) => {
@@ -127,8 +127,8 @@ const mapStateToProps = ({tasks}) => {
         tasks
     }
 }
-
-export default connect(mapStateToProps, {ShowTasksApi})(Kanban)
+export default Kanban
+// export default connect(mapStateToProps, {ShowTasksApi})(Kanban)
 
 const Wrapper = styled.section`
   color: black;
