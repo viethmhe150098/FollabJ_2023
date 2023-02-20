@@ -11,10 +11,16 @@ export const loginUser = async(user,dispatch,navigate) =>{
                                                 'Content-Type': 'application/x-www-form-urlencoded'
                                               }
                                         });
+
+        console.log(res.data);
+        const accessToken = res.data.access_token;
+        localStorage.setItem("accessToken", accessToken);
+        console.log(res.data.access_token);
+
         //console.log(res)
         dispatch(loginSuccess(res.data));
         // go to home page
-        navigate.push("/")
+        navigate.push("/loggedLanding")
     } catch (error) {
         //console.log(error)
         dispatch(loginFailed());
@@ -27,7 +33,8 @@ export const registerUser = async(user,dispatch,navigate) =>{
         await axios.post("http://localhost:8080/signup",
                                        user,
                                         {
-                                            // headers: {                                            //     'Content-Type': 'application/x-www-form-urlencoded'
+                                            // headers: {                                            
+                                                //     'Content-Type': 'application/x-www-form-urlencoded'
                                             // }
                                         });
         dispatch(registerSuccess());

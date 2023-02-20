@@ -5,7 +5,7 @@ import Home from "./screens/Landing/Home"
 import ProjectList from "./screens/ProjectList/ProjectList"
 import Login from "./screens/Authen/Login.jsx";
 import SignUp from './screens/Authen/SignUp.jsx';
-// import Register from "./screens/Register.jsx";
+import LoggedLanding from './screens/Landing/LoggedLanding.jsx';
 
 
 //Library
@@ -39,8 +39,12 @@ export default function App() {
           </Route> 
 
           {/* Register */}
-          <Route path="/register">
+          <Route path="/signup">
             <SignUp />
+          </Route>
+
+          <Route path="/loggedLanding">
+            <LoggedLanding />
           </Route>
 
           {/* Meeting */}
