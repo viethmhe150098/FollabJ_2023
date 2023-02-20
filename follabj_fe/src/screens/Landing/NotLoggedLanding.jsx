@@ -7,6 +7,7 @@ import Services from "../../components/Sections/Services";
 import Pricing from "../../components/Sections/Pricing";
 import Contact from "../../components/Sections/Contact";
 import Footer from "../../components/Sections/Footer"
+import About from "../../components/Sections/About"
 
 export default function NotLoggedLanding() {
   return (
@@ -14,6 +15,7 @@ export default function NotLoggedLanding() {
       <TopNavbar/>
       <Header />
       <Services />
+      <About/>
       <Pricing />
       <Contact />
       <Footer />

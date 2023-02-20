@@ -1,22 +1,23 @@
 import React from "react";
 import styled from "styled-components";
+import { Link as RouterLink } from "react-router-dom";
+import { Link as ScrollLink } from "react-scroll";
 // Components
-
 import FullButton from "../Buttons/FullButton";
 
-// import AboutImg from "../../assets/img/add/about.png";
+import AboutImg from "../../assets/img/about.png";
 
 export default function About() {
   return (
     <Wrapper id="about">
-  
+
       <div className="lightBg">
         <div className="container">
           <Advertising className="flexSpaceCenter">
             <AddLeft>
               <AddLeftInner>
                 <ImgWrapper className="flexCenter">
-                  {/* <img className="radius8" src={AboutImg} alt="add" /> */}
+                  <img className="radius8" src={AboutImg} />
                 </ImgWrapper>
               </AddLeftInner>
             </AddLeft>
@@ -28,10 +29,14 @@ export default function About() {
               </p>
               <ButtonsRow className="flexNullCenter" style={{ margin: "30px 0" }}>
                 <div style={{ width: "190px" }}>
-                  <FullButton title="Get Started" action={() => alert("clicked")} />
+                  <RouterLink activeClass="active" style={{ padding: "10px 15px" }} to="login" spy={true} smooth={true} offset={-80}>
+                    <FullButton title="Get Started" />
+                  </RouterLink>
                 </div>
                 <div style={{ width: "190px", marginLeft: "15px" }}>
-                  <FullButton title="Contact Us" action={() => alert("clicked")} border />
+                  <ScrollLink activeClass="active" style={{ padding: "10px 15px" }} to="contact" spy={true} smooth={true} offset={-80}>
+                    <FullButton title="Contact Us" border />
+                  </ScrollLink>
                 </div>
               </ButtonsRow>
             </AddRight>
@@ -45,15 +50,10 @@ export default function About() {
 const Wrapper = styled.section`
   width: 100%;
 `;
-const HeaderInfo = styled.div`
-margin-bottom: 40px;
-  @media (max-width: 860px) {
-    text-align: center;
-  }
-`;
+
 const Advertising = styled.div`
   padding: 100px 0;
-  margin: 100px 0;
+  margin: 0 100px 0 0;
   position: relative;
   @media (max-width: 1160px) {
     padding: 60px 0 40px 0;
@@ -117,7 +117,7 @@ const ImgWrapper = styled.div`
   width: 100%;
   padding: 0 15%;
   img {
-    width: 100%;
+    width: 80%;
     height: auto;
   }
   @media (max-width: 400px) {
