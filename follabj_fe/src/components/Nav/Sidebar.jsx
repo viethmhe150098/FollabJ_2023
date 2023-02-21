@@ -33,7 +33,7 @@ const Sidebar = ({ children }) => {
             icon: <FaRegChartBar />
         },
         {
-            path: "/meeting",
+            path: "/meetingCreate",
             name: "Meeting",
             icon: <FaVideo />
         },

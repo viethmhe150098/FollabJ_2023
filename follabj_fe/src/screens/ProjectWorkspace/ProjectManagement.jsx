@@ -2,7 +2,7 @@ import Kanban from "../../components/Sections/Kanban";
 import Sidebar from "../../components/Nav/Sidebar";
 import AboutProject from "./AboutProject";
 // import Note from "../components/Sections/Note";
-// import Meeting from "../screens/Meeting";
+import MeetingCreation from "../ProjectWorkspace/MeetingCreation";
 // import Calendar from "../screens/Calendar";
 
 import {
@@ -36,9 +36,10 @@ export default function TaskManagement() {
           </Route> */}
 
           {/* Meeting */}
-          {/* <Route path="/meeting">
-            <Meeting />
-          </Route> */}
+          <Route path="/meetingCreate">
+          <MeetingCreation />
+          </Route>
+
           <Route path="/aboutProject">
             <AboutProject />
           </Route>

@@ -8,6 +8,7 @@ import SignUp from './screens/Authen/SignUp.jsx';
 import AboutProject from './screens/ProjectWorkspace/AboutProject'
 import ProjectManagement from "./screens/ProjectWorkspace/ProjectManagement";
 import UserProfile from './screens/UserProfile';
+import Meeting from './screens/ProjectWorkspace/Meeting';
 // import Register from "./screens/Register.jsx";
 
 
@@ -17,6 +18,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+
 
 
 
@@ -34,6 +36,15 @@ export default function App() {
 
           <Route path="/task">
             <ProjectManagement />
+          </Route>
+
+          {/* Meeting */}
+          <Route path="/meetingCreate">
+            <ProjectManagement />
+          </Route>
+
+          <Route path="/meeting">
+            <Meeting />
           </Route>
 
           {/* Task */}
@@ -54,11 +65,6 @@ export default function App() {
             <UserProfile />
           </Route>
 
-
-          {/* Meeting */}
-          {/* <Route path="/meeting">
-            <TaskManagement />
-          </Route> */}
           {/* Meeting */}
           {/* <Route path="/events">
           <TaskManagement />
