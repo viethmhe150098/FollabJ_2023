@@ -9,7 +9,9 @@ import Contact from "../../components/Sections/Contact";
 import Footer from "../../components/Sections/Footer"
 import About from "../../components/Sections/About"
 export default function LoggedLanding() {
- 
+
+
+  
   return (
     <>
       <TopNavbar />

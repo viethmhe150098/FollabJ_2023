@@ -1,5 +1,9 @@
 import axios from "axios";
-import { loginFailed, loginStart, loginSuccess, registerFailed, registerStart, registerSuccess } from "./authSlice";
+import { async } from "q";
+import jwtDecode from 'jwt-decode';
+import {loginFailed, loginStart, loginSuccess, registerFailed, registerStart, registerSuccess } from "./authSlice";
+import { createProjectFailed, createProjectStart, createProjectSuccess, getProjectStart } from "./projectSlice";
+
 
 export const loginUser = async(user,dispatch,navigate) =>{
     dispatch(loginStart());
@@ -13,9 +17,17 @@ export const loginUser = async(user,dispatch,navigate) =>{
                                         });
 
         console.log(res.data);
-        const accessToken = res.data.access_token;
-        localStorage.setItem("accessToken", accessToken);
+        const access_token = res.data.access_token;
+        const refresh_token = res.data.refresh_token;
+        localStorage.setItem("access_token", access_token);
         console.log(res.data.access_token);
+        localStorage.setItem("refresh_token", refresh_token);
+        console.log(res.data.refresh_token);
+        
+        const decodedToken = jwtDecode(access_token);
+        const role_name = decodedToken.role_name;
+        localStorage.setItem('role_name', role_name);
+        console.log(res.data.role_name);
 
         //console.log(res)
         dispatch(loginSuccess(res.data));
@@ -43,3 +55,31 @@ export const registerUser = async(user,dispatch,navigate) =>{
         dispatch(registerFailed());
     }
 }
+
+// export const getAllProjects = async (access_token,dispatch) =>{
+//     dispatch(getProjectStart());
+//     try {
+//         const res = await axios.get 
+//     } catch (error) {
+        
+//     }
+// }
+
+   export const createProject = async(project,access_token,dispatch,navigate) =>{
+       dispatch(createProjectStart());
+       access_token = localStorage.getItem('access_token');
+       console.log(access_token);
+       try {
+           const res = await axios.post("http://localhost:8080/createproject",
+                                           project,
+                                           {
+                                               headers: {
+                                                   Authorization: `Bearer ${access_token}`
+                                               }
+                                           });
+           dispatch(createProjectSuccess(res.data));
+           navigate.push("/aboutProject");
+       } catch (error) {
+           dispatch(createProjectFailed());
+       }
+   }    

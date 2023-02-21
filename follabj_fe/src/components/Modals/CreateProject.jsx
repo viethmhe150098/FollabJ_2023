@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+ import { useDispatch } from "react-redux";
+ import { useHistory } from "react-router";
+ import { createProject } from "../../Redux/actions/apiRequest";
 
 import FullButton from "../Buttons/FullButton"
 
@@ -7,12 +10,20 @@ const CreateProject = () => {
     const [prjName, setPrjName] = useState("");
     const [prjDes, setPrjDes] = useState("");
 
+     const dispatch = useDispatch();
+     const navigate = useHistory();
+
+    const access_token = localStorage.getItem('access_token');
     const handleSubmit = (event) => {
-        event.preventDefault();
-        
-        
-        //Code create Task here
-        console.log(prjID, prjName, prjDes);
+         event.preventDefault();
+         const newProject = {
+             prjID: prjID,
+             prjName: prjName,
+             prjDes: prjDes
+         };
+         createProject(newProject,access_token,dispatch,navigate);
+         //Code create Task here
+         console.log(prjID, prjName, prjDes);
     };
 
     return (
