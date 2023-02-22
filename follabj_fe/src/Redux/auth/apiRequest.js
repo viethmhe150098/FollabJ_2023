@@ -2,7 +2,7 @@ import axios from "axios";
 import { async } from "q";
 import jwtDecode from 'jwt-decode';
 import {loginFailed, loginStart, loginSuccess, registerFailed, registerStart, registerSuccess } from "./authSlice";
-import { createProjectFailed, createProjectStart, createProjectSuccess, getProjectStart } from "./projectSlice";
+import { createProjectFailed, createProjectStart, createProjectSuccess, getProjectStart } from "../project/projectSlice";
 
 
 export const loginUser = async(user,dispatch,navigate) =>{
