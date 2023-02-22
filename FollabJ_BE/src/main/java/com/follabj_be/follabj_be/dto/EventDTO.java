@@ -15,6 +15,8 @@ import java.util.List;
 @Setter
 public class EventDTO {
 
+    private Long id;
+
     private String title;
 
     private String description;

@@ -3,13 +3,13 @@ import Sidebar from "../../components/Nav/Sidebar";
 import AboutProject from "./AboutProject";
 // import Note from "../components/Sections/Note";
 import MeetingCreation from "../ProjectWorkspace/MeetingCreation";
-// import Calendar from "../screens/Calendar";
 
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
+import CalendarView from "../../components/Elements/CalendarView";
 
 
 
@@ -31,9 +31,9 @@ export default function TaskManagement() {
           </Route> */}
           
           {/* Notes */}
-          {/* <Route path="/events">
-            <Calendar />
-          </Route> */}
+          <Route path="/events">
+            <CalendarView />
+          </Route>
 
           {/* Meeting */}
           <Route path="/meetingCreate">

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { Link as RouterLink } from "react-router-dom";
-import { loginUser } from "../../Redux/actions/apiRequest";
+import { loginUser } from "../../Redux/auth/apiRequest";
 import '../../style/authen.css'
 import FullButton from "../../components/Buttons/FullButton";
 import AuthenNavbar from "../../components/Nav/AuthenNavbar"

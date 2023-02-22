@@ -1,22 +1,31 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addTask } from "../../Redux/task/taskAPI";
 
 import FullButton from "../Buttons/FullButton"
-import { connect } from 'react-redux'
 // import { addTaskApi } from "../../Redux/actions";
 
-const CreateTaskForm = ({addTaskApi, close}) => {
+const CreateTaskForm = ({close}) => {
     const [title, setTitle] = useState("");
-    const [assignee, setAssignee] = useState("");
+    const [label, setLabel] = useState("");
     const [statusId, setStatusId] = useState(1);
+
+    const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const taskData = {
+        project_id : 1,
+        task : {
             title,
-            assignee
+            label,
+            reporter_id : 2,
+            assigneeList : [1],
+            statusId
+            }  
         }
-        addTaskApi({taskData, statusId})
 
+        dispatch(addTask(1, taskData));
         //Code create Task here
         //console.log(taskId, taskName, assignee);
 
@@ -40,16 +49,16 @@ const CreateTaskForm = ({addTaskApi, close}) => {
                         />
                     </div>
                     <div>
-                        <label htmlFor="assignee">Assignee:</label>
+                        <label htmlFor="assignee">Label:</label>
                         <input
                             type=""
-                            id="assignee"
-                            value={assignee}
-                            onChange={(event) => setAssignee(event.target.value)}
+                            id="label"
+                            value={label}
+                            onChange={(event) => setLabel(event.target.value)}
                         />
                     </div>
                     <div>
-                        <label htmlFor="task-status-id">Task ID:</label>
+                        <label htmlFor="task-status-id">Status :</label>
                         <select name="task-status-id" defaultValue={"1"} onChange={(event) => setStatusId(event.target.value)}>
                             <option value="1">To do</option>
                             <option value="2">In progress</option>

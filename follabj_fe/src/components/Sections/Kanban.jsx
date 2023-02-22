@@ -4,17 +4,23 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import Popup from "reactjs-popup";
 import Content from "./AddTask";
-import { connect } from 'react-redux'
+import { useDispatch } from "react-redux";
+import { getTasksByProjectId } from "../../Redux/task/taskActions";
+import { useSelector } from "react-redux";
 // import { ShowTasksApi} from "../../Redux/actions"
 
 
-const Kanban = ({tasks, ShowTasksApi}) => {
+const Kanban = () => {
     
+    const dispatch = useDispatch();
+    const state = useSelector((state) => state)
     useEffect(() => {
-        ShowTasksApi()
+        dispatch(getTasksByProjectId(1));
     }, [])
 
-    //console.log(data)
+    console.log(state)
+    const tasks = useSelector((state) => state.task)
+
     const onDragEnd = result => {
         console.log(result);
 
@@ -102,7 +108,7 @@ const Kanban = ({tasks, ShowTasksApi}) => {
                                                             >
                                                                 <Card>
                                                                     <div>{task.title}</div>
-                                                                    <div>{task.assignee}</div>
+                                                                    <div>{task.label}</div>
                                                                 </Card>
                                                             </div>
                                                         )}
@@ -122,13 +128,7 @@ const Kanban = ({tasks, ShowTasksApi}) => {
     )
 }
 
-const mapStateToProps = ({tasks}) => {
-    return {
-        tasks
-    }
-}
 export default Kanban
-// export default connect(mapStateToProps, {ShowTasksApi})(Kanban)
 
 const Wrapper = styled.section`
   color: black;

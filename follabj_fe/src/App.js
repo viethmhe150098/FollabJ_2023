@@ -66,9 +66,9 @@ export default function App() {
           </Route>
 
           {/* Meeting */}
-          {/* <Route path="/events">
-          <TaskManagement />
-          </Route> */}
+          <Route path="/events">
+          <ProjectManagement />
+          </Route>
 
           {/* <Route path="/projects">
             <ProjectList />

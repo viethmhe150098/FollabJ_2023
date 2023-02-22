@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { isLoggedIn } from '../../Redux/actions/auth';
+import { isLoggedIn } from '../../Redux/auth/auth';
 
 //sreens
 import LoggedLanding from './LoggedLanding.jsx';

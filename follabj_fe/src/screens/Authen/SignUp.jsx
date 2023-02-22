@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import { registerUser } from "../../Redux/actions/apiRequest";
+import { registerUser } from "../../Redux/auth/apiRequest";
 import { Link as RouterLink } from "react-router-dom";
 import '../../style/authen.css'
 import FullButton from "../../components/Buttons/FullButton";
