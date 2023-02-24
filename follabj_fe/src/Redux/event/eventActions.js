@@ -11,9 +11,18 @@ export const getEventsByProjectId = createAsyncThunk("FETCH_EVENTS_BY_PRJ_ID", a
     }
 })
 
-export const getEventById = createAsyncThunk("FETCH_TASK_BY_TASK_ID", async (event_id) => {
+export const getEventById = createAsyncThunk("FETCH_EVENT_BY_EVENT_ID", async (event_id) => {
     try {
         const response = await eventAPI.fetchEventsByProjectId(event_id)
+        return response.data
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+export const addEvent = createAsyncThunk("ADD_TASK", async (event) => {
+    try {
+        const response = await eventAPI.addEvent(event.project_id, event)
         return response.data
     } catch (error) {
         console.log(error);

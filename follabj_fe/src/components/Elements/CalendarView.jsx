@@ -6,11 +6,11 @@ import startOfWeek from 'date-fns/startOfWeek'
 import getDay from 'date-fns/getDay'
 import enUS from 'date-fns/locale/en-US'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-// import Popping from './Popping';
 import { useDispatch, useSelector } from 'react-redux'
 import { getEventsByProjectId } from '../../Redux/event/eventActions'
-//import {closeEvent, ShowEventApi, ShowEventsApi} from "../../Redux/actions"
-//import { connect } from 'react-redux'
+import FullButton from '../Buttons/FullButton'
+import Popup from 'reactjs-popup'
+import CreateEventForm from './AddEvent'
 
 const locales = {
   'en-US': enUS,
@@ -24,69 +24,32 @@ const localizer = dateFnsLocalizer({
   locales,
 })
 
-
-
-
-
 const CalendarView = () => {
-    const [open, setOpen] = useState(false);
-    const [renderStatus, rerender] = useState(false);
 
     const dispatch = useDispatch();
 
     useEffect(()=>{
-      //ShowEventsApi()
-      //console.log("i renderd because of refresh or start");
       dispatch(getEventsByProjectId(1));
     },[])
 
+    const events = useSelector((state) => state.event)
 
-    useEffect(()=>{
-      //ShowEventsApi()
-      //console.log("i renderd");
-    },[renderStatus])
-   
-    const events = useSelector((state) => state.event )
-    console.log(events)
-    // const openEventClick = (event)=>{
-    //      setOpen(true)
-    //      if(event.id) {
-    //       ShowEventApi( event.id);
-    //      }
-         
-    //      return;
-    // }
-
-    // const closeEventClick = () =>{
-    //   setOpen(false);
-    //   setTimeout(()=>closeEvent(),300) ;
-    // }
-    
     return (
     <div>
-        {/* <Popping open={open}
-         handleOpen={openEventClick} 
-         handleClose={closeEventClick} 
-         renderStatus = {renderStatus} 
-         rerender= {rerender}/> */}
+        <Popup modal trigger={<button className='purpleBg font25 radius6 lightColor tag'>Add Event</button>}>
+            {close => <CreateEventForm close={close} />}
+        </Popup>
         <Calendar
             localizer={localizer}
             events={events}
-            startAccessor="start"
-            endAccessor="end"
-            style={{ height: 500 , margin: 50, fontFamily: 'Patrick Hand' }}
-            // onSelectEvent={openEventClick}
+            startAccessor={(event) => { return new Date(event.start)}}
+            endAccessor={(event) => { return new Date(event.end)  }}
+            style={{ height: 750 , margin: 50, fontFamily: 'Patrick Hand' }}
+            // onSelectEvent={(event)=>{console.log(moment(event.startDate).format("YYYY-MM-DD HH:mm:ss"))}}
         />
     </div>
         
     )
-}
-
-function mapStateToProps({event, events}){
-  return{
-    event,
-    events
-  }
 }
 
 export default CalendarView

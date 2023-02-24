@@ -30,7 +30,9 @@ public class TaskDTO {
     private Date endDate;
 
     private int statusId;
+
     private UserDTO reporter;
+
     private List<UserDTO> assigneeList;
 
 }

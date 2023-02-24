@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Popup from "reactjs-popup";
 import Content from "./AddTask";
 import { useDispatch } from "react-redux";
-import { getTasksByProjectId } from "../../Redux/task/taskActions";
+import { getTaskById, getTasksByProjectId } from "../../Redux/task/taskActions";
 import { useSelector } from "react-redux";
 // import { ShowTasksApi} from "../../Redux/actions"
 
@@ -13,13 +13,16 @@ import { useSelector } from "react-redux";
 const Kanban = () => {
     
     const dispatch = useDispatch();
-    const state = useSelector((state) => state)
     useEffect(() => {
         dispatch(getTasksByProjectId(1));
     }, [])
 
-    console.log(state)
+    //console.log(state)
     const tasks = useSelector((state) => state.task)
+
+    const showTaskDetail = (id) => {
+        dispatch(getTaskById({project_id : 1, task_id : id}))
+    }
 
     const onDragEnd = result => {
         console.log(result);
@@ -106,7 +109,7 @@ const Kanban = () => {
                                                                     opacity: snapshot.isDragging ? '0.5' : '1'
                                                                 }}
                                                             >
-                                                                <Card>
+                                                                <Card onDoubleClick={()=>{showTaskDetail(task.id)}}>
                                                                     <div>{task.title}</div>
                                                                     <div>{task.label}</div>
                                                                 </Card>

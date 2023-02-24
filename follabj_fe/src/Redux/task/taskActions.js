@@ -11,9 +11,9 @@ export const getTasksByProjectId = createAsyncThunk("FETCH_TASKS_BY_PRJ_ID", asy
     }
 })
 
-export const getTaskById = createAsyncThunk("FETCH_TASK_BY_TASK_ID", async (task_id) => {
+export const getTaskById = createAsyncThunk("FETCH_TASK_BY_TASK_ID", async ({project_id, task_id}) => {
     try {
-        const response = await taskAPI.fetchTaskById(task_id)
+        const response = await taskAPI.fetchTaskById(project_id, task_id)
         return response.data
     } catch (error) {
         console.log(error);

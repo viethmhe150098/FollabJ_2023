@@ -19,7 +19,6 @@ const initialState = [
 export const taskReducer = createReducer(initialState, (builder) => {
     builder
         .addCase(getTasksByProjectId.fulfilled, (state, action) => {
-
             // const newState = state;
 
             // action.payload.map((task) => {

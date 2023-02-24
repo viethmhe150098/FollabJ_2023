@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addTask } from "../../Redux/task/taskAPI";
+import { addTask } from "../../Redux/task/taskActions";
 
 import FullButton from "../Buttons/FullButton"
 // import { addTaskApi } from "../../Redux/actions";
@@ -20,15 +20,11 @@ const CreateTaskForm = ({close}) => {
             title,
             label,
             reporter_id : 2,
-            assigneeList : [1],
             statusId
             }  
         }
 
-        dispatch(addTask(1, taskData));
-        //Code create Task here
-        //console.log(taskId, taskName, assignee);
-
+        dispatch(addTask(taskData));
 
     };
 
