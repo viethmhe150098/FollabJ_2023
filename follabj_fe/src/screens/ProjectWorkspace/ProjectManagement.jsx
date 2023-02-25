@@ -1,4 +1,5 @@
-import Kanban from "../../components/Sections/Kanban";
+// import Kanban from "../../components/Sections/Kanban";
+import AddTask from "../../components/Modals/AddTask";
 import Sidebar from "../../components/Nav/Sidebar";
 import AboutProject from "./AboutProject";
 // import Note from "../components/Sections/Note";
@@ -22,7 +23,7 @@ export default function TaskManagement() {
         <Switch>
           {/* Task */}
           <Route path="/task">
-            <Kanban />
+            <AddTask />
           </Route>
 
           {/* Notes */}
