@@ -24,6 +24,24 @@ const Kanban = () => {
         dispatch(getTaskById({project_id : 1, task_id : id}))
     }
 
+    const columnArray = [
+        {
+            id : 1,
+            title: "To do",
+            tasks : []
+        },
+        {
+            id : 2,
+            title: "Doing",
+            tasks : []
+        },
+        {
+            id : 3,
+            title: "Done",
+            tasks : []
+        }
+    ]
+
     const onDragEnd = result => {
         console.log(result);
 
@@ -77,54 +95,103 @@ const Kanban = () => {
             <DragDropContext onDragEnd={onDragEnd}>
                 <KanbanBoard >
                     {
-                        tasks.map(section => (
-                            <Droppable
-                                key={String(section.id)}
-                                droppableId={String(section.id)}
-                            >
-                                {(provided) => (
+                    columnArray.map(column => (
+                        <Droppable
+                                key={String(column.id)}
+                                droppableId={String(column.id)}
+                        >
+                            {(provided) => (
                                     <BoardSection
                                         ref={provided.innerRef}
                                         {...provided.droppableProps}
                                     >
-                                        <SectionTitle>{section.title}</SectionTitle>
-                                        <Popup modal trigger={<Card style={{ cursor: "pointer" }}><p className="extraBold" style={{ color: "#434242" }}>+ Add issue</p></Card>}>
-                                            {close => <Content close={close} />}
-                                        </Popup>
-                                        <SectionContent>
-                                            {
-                                                section.tasks.map((task, index) => (
-                                                    <Draggable
-                                                        key={String(task.id)}
-                                                        draggableId={String(task.id)}
-                                                        index={index}
-                                                    >
-                                                        {(provided, snapshot) => (
-                                                            <div
-                                                                ref={provided.innerRef}
-                                                                {...provided.draggableProps}
-                                                                {...provided.dragHandleProps}
-                                                                style={{
-                                                                    ...provided.draggableProps.style,
-                                                                    opacity: snapshot.isDragging ? '0.5' : '1'
-                                                                }}
-                                                            >
-                                                                <Card onDoubleClick={()=>{showTaskDetail(task.id)}}>
-                                                                    <div>{task.title}</div>
-                                                                    <div>{task.label}</div>
-                                                                </Card>
-                                                            </div>
-                                                        )}
-                                                    </Draggable>
-                                                ))
-                                            }
-                                            {provided.placeholder}
-                                        </SectionContent>
-                                    </BoardSection>
-                                )}
-                            </Droppable>
-                        ))
-                    }
+                                    <SectionTitle>{column.title}</SectionTitle>
+                                    <Popup modal trigger={<Card style={{ cursor: "pointer" }}><p className="extraBold" style={{ color: "#434242" }}>+ Add Task</p></Card>}>
+                                       {close => <Content close={close} />}
+                                    </Popup>
+                                    <SectionContent>
+                                        {
+                                            tasks.map((task, index) => task.statusId == column.id ? (
+                                                <Draggable
+                                                    key={String(task.id)}
+                                                    draggableId={String(task.id)}
+                                                    index={index}
+                                                >
+                                                    {(provided, snapshot) => (
+                                                        <div
+                                                            ref={provided.innerRef}
+                                                            {...provided.draggableProps}
+                                                            {...provided.dragHandleProps}
+                                                            style={{
+                                                                ...provided.draggableProps.style,
+                                                                opacity: snapshot.isDragging ? '0.5' : '1'
+                                                            }}
+                                                        >
+                                                            <Card onDoubleClick={()=>{showTaskDetail(task.id)}}>
+                                                                <div>{task.title}</div>
+                                                                <div>{task.label}</div>
+                                                            </Card>
+                                                        </div>
+                                                    )}
+                                                </Draggable>
+                                            ) : null )
+                                        }
+                                        {provided.placeholder}
+                                    </SectionContent>
+                                </BoardSection>
+                            )
+                            }
+                        </Droppable>
+                    ))
+                        // tasks.map(section => (
+                        //     <Droppable
+                        //         key={String(section.id)}
+                        //         droppableId={String(section.id)}
+                        //     >
+                        //         {(provided) => (
+                        //             <BoardSection
+                        //                 ref={provided.innerRef}
+                        //                 {...provided.droppableProps}
+                        //             >
+                        //                 <SectionTitle>{section.title}</SectionTitle>
+                        //                 <Popup modal trigger={<Card style={{ cursor: "pointer" }}><p className="extraBold" style={{ color: "#434242" }}>+ Add issue</p></Card>}>
+                        //                     {close => <Content close={close} />}
+                        //                 </Popup>
+                        //                 <SectionContent>
+                        //                     {
+                        //                         section.tasks.map((task, index) => (
+                        //                             <Draggable
+                        //                                 key={String(task.id)}
+                        //                                 draggableId={String(task.id)}
+                        //                                 index={index}
+                        //                             >
+                        //                                 {(provided, snapshot) => (
+                        //                                     <div
+                        //                                         ref={provided.innerRef}
+                        //                                         {...provided.draggableProps}
+                        //                                         {...provided.dragHandleProps}
+                        //                                         style={{
+                        //                                             ...provided.draggableProps.style,
+                        //                                             opacity: snapshot.isDragging ? '0.5' : '1'
+                        //                                         }}
+                        //                                     >
+                        //                                         <Card onDoubleClick={()=>{showTaskDetail(task.id)}}>
+                        //                                             <div>{task.title}</div>
+                        //                                             <div>{task.label}</div>
+                        //                                         </Card>
+                        //                                     </div>
+                        //                                 )}
+                        //                             </Draggable>
+                        //                         ))
+                        //                     }
+                        //                     {provided.placeholder}
+                        //                 </SectionContent>
+                        //             </BoardSection>
+                        //         )}
+                        //     </Droppable>
+                        // ))
+                    }                    
+                    
                 </KanbanBoard>
             </DragDropContext>
         </Wrapper>

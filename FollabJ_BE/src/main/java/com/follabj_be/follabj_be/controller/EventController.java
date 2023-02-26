@@ -37,7 +37,7 @@ public class EventController {
         return eventDTOList;
     }
 
-    @PostMapping("/project/{project_id}/events/add")
+    @PostMapping("/project/{project_id}/events")
     public Event addEvent(@RequestBody CreateEventDTO createEventDTO, @PathVariable Long project_id) {
         createEventDTO.setProjectId(project_id);
         return eventService.addEvent(createEventDTO);

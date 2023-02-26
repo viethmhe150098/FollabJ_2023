@@ -20,7 +20,7 @@ export const getEventById = createAsyncThunk("FETCH_EVENT_BY_EVENT_ID", async (e
     }
 })
 
-export const addEvent = createAsyncThunk("ADD_TASK", async (event) => {
+export const addEvent = createAsyncThunk("ADD_EVENT", async (event) => {
     try {
         const response = await eventAPI.addEvent(event.project_id, event)
         return response.data

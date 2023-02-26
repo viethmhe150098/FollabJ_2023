@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addEvent } from "../../Redux/event/eventActions";
@@ -13,9 +14,13 @@ const CreateEventForm = ({close}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        const startDate = new Date().setDate(2)
+        const endDate = new Date().setDate(7)
         const event = {
             title,
             description,
+            startDate,
+            endDate,
             project_id : 1
         }
 
