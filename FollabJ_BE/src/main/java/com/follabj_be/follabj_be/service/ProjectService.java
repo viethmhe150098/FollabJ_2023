@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -61,5 +63,15 @@ public class ProjectService implements ProjectInterface {
         String create_date = dtf.format(now);
         Invitation i = new Invitation(to, create_date, content);
         invitationRepository.save(i);
+    }
+
+    public List<UserDTO> getMembersByProjectId(Long project_id) {
+        List<AppUser> userList = projectRepository.getMembersById(project_id);
+        List<UserDTO> userDTOList = new ArrayList<>();
+        for(AppUser user: userList) {
+            UserDTO userDTO = new UserDTO(user.getId(), user.getEmail(), user.getUsername());
+            userDTOList.add(userDTO);
+        }
+        return userDTOList;
     }
 }

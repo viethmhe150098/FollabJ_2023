@@ -3,7 +3,6 @@ import DatePicker from "react-datepicker";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { ShowEventsApi, updateEventApi } from "../../Redux/actions";
 import { connect } from "react-redux";
 import "react-datepicker/dist/react-datepicker.css";
 import {useHistory} from "react-router-dom"
@@ -18,46 +17,46 @@ const schema = yup.object({
 
 
 
-const UpdateEvent = ({updateEventApi, event, error}) => {
-    const history = useHistory();
-    const [rerender, setRerender] = useState(false);
-    const [dbError, setError] = useState(false)
-    const [firstRender, setFirstRender] = useState(true)
+ const UpdateEvent = ({event, error}) => {
+//     const history = useHistory();
+//     const [rerender, setRerender] = useState(false);
+//     const [dbError, setError] = useState(false)
+//     const [firstRender, setFirstRender] = useState(true)
 
 
-    useEffect( ()=>{
-      console.log(error);
-      if(error && !firstRender){
-        setError(error)
+    // useEffect( ()=>{
+    //   console.log(error);
+    //   if(error && !firstRender){
+    //     setError(error)
         
-      }
-        if(!error.start && !error.end && dbError !== false){
-          setTimeout(history.push("/")) 
-        }
-     }, [rerender])
+    //   }
+    //     if(!error.start && !error.end && dbError !== false){
+    //       setTimeout(history.push("/")) 
+    //     }
+    //  }, [rerender])
     //using form-hook to register event data
-    const { register, handleSubmit, formState: {errors}, control } = useForm({
-      resolver: yupResolver(schema),
-      defaultValues: {
-        title: event.title,
-        start: new Date(event.start) ,
-        end: event.end? new Date(event.end) :"",
-        describe: event.describe? event.describe : "No description was provided"
-      }
-    });
+    // const { register, handleSubmit, formState: {errors}, control } = useForm({
+    //   resolver: yupResolver(schema),
+    //   defaultValues: {
+    //     title: event.title,
+    //     start: new Date(event.start) ,
+    //     end: event.end? new Date(event.end) :"",
+    //     describe: event.describe? event.describe : "No description was provided"
+    //   }
+    // });
    
-     const onSubmit = async(values)=>{
-      setFirstRender(false)
-      updateEventApi(values, event.id)
-      .then(res=> {
-        console.log(res);
-        setRerender(!rerender);
-        if(res === "response was successful"){
-          history.push("/")
-        }
-      })
+    //  const onSubmit = async(values)=>{
+    //   setFirstRender(false)
+    //   updateEventApi(values, event.id)
+    //   .then(res=> {
+    //     console.log(res);
+    //     setRerender(!rerender);
+    //     if(res === "response was successful"){
+    //       history.push("/")
+    //     }
+    //   })
       
-    }
+    // }
 
 
   return (
@@ -137,5 +136,5 @@ function mapStateToProps({event, error}){
   }
 }
 
-
-export default connect(mapStateToProps , {updateEventApi, ShowEventsApi})(UpdateEvent)
+export default UpdateEvent
+// export default connect(mapStateToProps , {updateEventApi, ShowEventsApi})(UpdateEvent)

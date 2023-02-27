@@ -1,10 +1,9 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom"
 import CalendarView from "../../components/Elements/CalendarView";
 import FullButton from "../../components/Buttons/FullButton";
 //import "../style/global.scss"
-import AddEvents from "../../components/Elements/AddEvents";
-import UpdateEvent from "../../components/Elements/UpdateEvent";
+import AddEvent from "../../components/Modals/AddEvent";
+// import UpdateEvent from "../../components/Elements/UpdateEvent";
 import Popup from "reactjs-popup";
 
 export default function Calendar() {
@@ -33,7 +32,7 @@ export default function Calendar() {
           width: "100px", marginLeft:"50px"
         }}>
           <FullButton title={"Add Event"} /></div>}>
-          {close => <AddEvents close={close} />
+          {close => <AddEvent close={close} />
           }
         </Popup>
 

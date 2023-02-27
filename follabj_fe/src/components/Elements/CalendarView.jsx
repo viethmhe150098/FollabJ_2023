@@ -8,9 +8,6 @@ import enUS from 'date-fns/locale/en-US'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useDispatch, useSelector } from 'react-redux'
 import { getEventsByProjectId } from '../../Redux/event/eventActions'
-import FullButton from '../Buttons/FullButton'
-import Popup from 'reactjs-popup'
-import CreateEventForm from './AddEvent'
 
 const locales = {
   'en-US': enUS,
@@ -28,17 +25,19 @@ const CalendarView = () => {
 
     const dispatch = useDispatch();
 
+    const events = useSelector((state) => state.event)
+
     useEffect(()=>{
+      if (events.length == 0)
       dispatch(getEventsByProjectId(1));
     },[])
 
-    const events = useSelector((state) => state.event)
 
     return (
     <div>
-        <Popup modal trigger={<button className='purpleBg font25 radius6 lightColor tag'>Add Event</button>}>
+        {/* <Popup modal trigger={<button className='purpleBg font25 radius6 lightColor tag'>Add Event</button>}>
             {close => <CreateEventForm close={close} />}
-        </Popup>
+        </Popup> */}
         <Calendar
             localizer={localizer}
             events={events}

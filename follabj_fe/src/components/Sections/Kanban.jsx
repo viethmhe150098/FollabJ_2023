@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import Popup from "reactjs-popup";
-import Content from "./AddTask";
+import AddTaskModal from "../Modals/AddTask";
 import { useDispatch } from "react-redux";
 import { getTaskById, getTasksByProjectId } from "../../Redux/task/taskActions";
 import { useSelector } from "react-redux";
@@ -13,12 +13,13 @@ import { useSelector } from "react-redux";
 const Kanban = () => {
     
     const dispatch = useDispatch();
+
+    const tasks = useSelector((state) => state.task)
+    
     useEffect(() => {
+        if (tasks.length==0)
         dispatch(getTasksByProjectId(1));
     }, [])
-
-    //console.log(state)
-    const tasks = useSelector((state) => state.task)
 
     const showTaskDetail = (id) => {
         dispatch(getTaskById({project_id : 1, task_id : id}))
@@ -107,7 +108,7 @@ const Kanban = () => {
                                     >
                                     <SectionTitle>{column.title}</SectionTitle>
                                     <Popup modal trigger={<Card style={{ cursor: "pointer" }}><p className="extraBold" style={{ color: "#434242" }}>+ Add Task</p></Card>}>
-                                       {close => <Content close={close} />}
+                                       {close => <AddTaskModal close={close} statusId={column.id}/>}
                                     </Popup>
                                     <SectionContent>
                                         {

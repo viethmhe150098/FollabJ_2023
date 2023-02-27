@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,4 +23,6 @@ public class CreateEventDTO {
     private Date endDate;
 
     private Long projectId;
+
+    private List<UserDTO> participantList;
 }

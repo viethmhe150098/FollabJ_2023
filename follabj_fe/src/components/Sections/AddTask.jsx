@@ -3,16 +3,15 @@ import { useDispatch } from "react-redux";
 import { addTask } from "../../Redux/task/taskActions";
 
 import FullButton from "../Buttons/FullButton"
-// import { addTaskApi } from "../../Redux/actions";
 
-const CreateTaskForm = ({close}) => {
+const CreateTaskForm = ({close, statusId = 1}) => {
     const [title, setTitle] = useState("");
     const [label, setLabel] = useState("");
-    const [statusId, setStatusId] = useState(1);
 
     const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
+
         e.preventDefault();
         const taskData = {
         project_id : 1,
@@ -53,14 +52,14 @@ const CreateTaskForm = ({close}) => {
                             onChange={(event) => setLabel(event.target.value)}
                         />
                     </div>
-                    <div>
+                    {/* <div>
                         <label htmlFor="task-status-id">Status :</label>
                         <select name="task-status-id" defaultValue={"1"} onChange={(event) => setStatusId(event.target.value)}>
                             <option value="1">To do</option>
                             <option value="2">In progress</option>
                             <option value="3">Done</option>
                         </select>
-                    </div>
+                    </div> */}
                     <FullButton title="Create Task" />
                 </form>
             </div>
