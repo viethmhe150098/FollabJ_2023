@@ -2,17 +2,13 @@ package com.follabj_be.follabj_be.controller;
 
 import com.follabj_be.follabj_be.dto.CreateProjectDTO;
 import com.follabj_be.follabj_be.dto.UserDTO;
-import com.follabj_be.follabj_be.entity.AppUser;
 import com.follabj_be.follabj_be.entity.Project;
 import com.follabj_be.follabj_be.exception.GroupException;
 import com.follabj_be.follabj_be.service.ProjectService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,5 +39,15 @@ public class ProjectController {
         res.put("message", "Send Invitation success");
 
         return new ResponseEntity<>(res, HttpStatus.OK) ;
+    }
+
+    @GetMapping(value = "/{u_id}")
+    @PreAuthorize("hasAuthority('ACTIVE_USER')")
+    public ResponseEntity<Map<Object, Object>> getProjectByUserId(@PathVariable Long u_id){
+        List<Project> projects = projectService.getProjectByUserId(u_id);
+        Map<Object, Object> res = new HashMap<>();
+        res.put("status", HttpStatus.OK.toString());
+        res.put("projects", projects);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }

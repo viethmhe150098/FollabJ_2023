@@ -15,4 +15,6 @@ public interface UserInterface {
     List<UserDTO> findUsersByEmail(String email_cha);
 
     List<Invitation> getAllInvitation(Long user_id);
+
+    AppUser getUserByEmail(String email);
 }

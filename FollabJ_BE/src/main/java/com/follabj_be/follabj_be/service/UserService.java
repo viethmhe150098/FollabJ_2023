@@ -119,4 +119,11 @@ public class UserService implements UserDetailsService, UserInterface {
         userRepository.findById(user_id).orElseThrow(()-> new ObjectNotFoundException("Not found user", user_id.toString()));
         return invitationRepository.findByUserId(user_id);
     }
+
+    @Override
+    public AppUser getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+
 }
