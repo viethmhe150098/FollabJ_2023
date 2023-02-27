@@ -1,6 +1,6 @@
-package com.follabj_be.follabj_be.service;
+package com.follabj_be.follabj_be.service.impl;
 
-import com.follabj_be.follabj_be.service.dependency.EmailSender;
+import com.follabj_be.follabj_be.service.EmailSender;
 
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;

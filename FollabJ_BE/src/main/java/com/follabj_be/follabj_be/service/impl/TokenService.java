@@ -1,8 +1,8 @@
-package com.follabj_be.follabj_be.service;
+package com.follabj_be.follabj_be.service.impl;
 
 import com.follabj_be.follabj_be.entity.ConfirmToken;
 import com.follabj_be.follabj_be.repository.TokenRepository;
-import com.follabj_be.follabj_be.service.dependency.TokenInterface;
+import com.follabj_be.follabj_be.service.TokenInterface;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

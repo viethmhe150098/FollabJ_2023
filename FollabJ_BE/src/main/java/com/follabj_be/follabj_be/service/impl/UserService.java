@@ -1,4 +1,4 @@
-package com.follabj_be.follabj_be.service;
+package com.follabj_be.follabj_be.service.impl;
 
 import com.follabj_be.follabj_be.config.securityConfig.PasswordEncoder;
 import com.follabj_be.follabj_be.dto.UserDTO;
@@ -7,8 +7,8 @@ import com.follabj_be.follabj_be.entity.ConfirmToken;
 import com.follabj_be.follabj_be.entity.Invitation;
 import com.follabj_be.follabj_be.repository.InvitationRepository;
 import com.follabj_be.follabj_be.repository.UserRepository;
-import com.follabj_be.follabj_be.service.dependency.TokenInterface;
-import com.follabj_be.follabj_be.service.dependency.UserInterface;
+import com.follabj_be.follabj_be.service.TokenInterface;
+import com.follabj_be.follabj_be.service.UserInterface;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

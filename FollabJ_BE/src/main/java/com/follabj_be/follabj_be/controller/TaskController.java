@@ -1,17 +1,13 @@
 package com.follabj_be.follabj_be.controller;
 
 import com.follabj_be.follabj_be.dto.TaskDTO;
-import com.follabj_be.follabj_be.dto.UserDTO;
 import com.follabj_be.follabj_be.entity.Project;
 import com.follabj_be.follabj_be.entity.Task;
-import com.follabj_be.follabj_be.service.TaskService;
+import com.follabj_be.follabj_be.service.impl.TaskService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

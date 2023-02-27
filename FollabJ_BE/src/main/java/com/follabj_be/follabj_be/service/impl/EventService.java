@@ -1,11 +1,11 @@
-package com.follabj_be.follabj_be.service;
+package com.follabj_be.follabj_be.service.impl;
 
 import com.follabj_be.follabj_be.dto.CreateEventDTO;
 import com.follabj_be.follabj_be.entity.Event;
 import com.follabj_be.follabj_be.entity.Project;
 import com.follabj_be.follabj_be.repository.EventParticipantRepository;
 import com.follabj_be.follabj_be.repository.EventRepository;
-import com.follabj_be.follabj_be.service.dependency.EventInterface;
+import com.follabj_be.follabj_be.service.EventInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

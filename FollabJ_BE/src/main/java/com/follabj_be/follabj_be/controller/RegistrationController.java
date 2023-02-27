@@ -1,7 +1,7 @@
 package com.follabj_be.follabj_be.controller;
 
 import com.follabj_be.follabj_be.dto.RegistrationRequest;
-import com.follabj_be.follabj_be.service.dependency.RegistrationInterface;
+import com.follabj_be.follabj_be.service.RegistrationInterface;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

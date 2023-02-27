@@ -1,7 +1,7 @@
 package com.follabj_be.follabj_be.controller;
 
 import com.follabj_be.follabj_be.exception.NoTypeException;
-import com.follabj_be.follabj_be.service.MeetingService;
+import com.follabj_be.follabj_be.service.impl.MeetingService;
 import com.follabj_be.follabj_be.utils.TokenServerAssistant;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

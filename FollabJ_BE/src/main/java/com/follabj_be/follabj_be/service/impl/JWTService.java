@@ -1,4 +1,4 @@
-package com.follabj_be.follabj_be.service;
+package com.follabj_be.follabj_be.service.impl;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -7,7 +7,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.follabj_be.follabj_be.entity.AppUser;
 import com.follabj_be.follabj_be.entity.Role;
 import com.follabj_be.follabj_be.exception.JwtException;
-import com.follabj_be.follabj_be.service.dependency.JWTInterface;
+import com.follabj_be.follabj_be.service.JWTInterface;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;

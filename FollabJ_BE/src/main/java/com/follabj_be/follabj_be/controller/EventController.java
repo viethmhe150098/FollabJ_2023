@@ -4,10 +4,9 @@ import com.follabj_be.follabj_be.dto.CreateEventDTO;
 import com.follabj_be.follabj_be.dto.EventDTO;
 import com.follabj_be.follabj_be.entity.Event;
 import com.follabj_be.follabj_be.entity.Project;
-import com.follabj_be.follabj_be.service.EventService;
+import com.follabj_be.follabj_be.service.impl.EventService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;

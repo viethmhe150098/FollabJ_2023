@@ -19,7 +19,6 @@ public class Project {
     private String name;
     private String des;
     private String createdDate;
-
     @ManyToOne
     @JoinColumn(
             name = "leader_id"
