@@ -14,6 +14,8 @@ public interface ProjectInterface {
 
     void sendInvitation(UserDTO user, Long p_id);
 
+    List<UserDTO> getMembersByProjectId(Long project_id);
+
     List<Project> getProjectByUserId(Long u_id);
 
     void deleteProject(Long p_id);

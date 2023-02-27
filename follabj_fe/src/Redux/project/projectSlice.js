@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { getProjectsByUserId } from "./projectActions";
 
 const projectSlice = createSlice({
     name:"project",

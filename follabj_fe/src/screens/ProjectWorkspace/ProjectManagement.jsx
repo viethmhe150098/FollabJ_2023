@@ -11,7 +11,6 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import CalendarView from "../../components/Elements/CalendarView";
 import Kanban from "../../components/Sections/Kanban";
 
 
@@ -24,7 +23,7 @@ export default function TaskManagement() {
       <Sidebar>
         <Switch>
           {/* Task */}
-          <Route path="/task">
+          <Route path="/tasks">
             <Kanban />
           </Route>
 
