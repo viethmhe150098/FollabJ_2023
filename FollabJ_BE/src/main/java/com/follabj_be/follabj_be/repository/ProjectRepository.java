@@ -17,5 +17,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     Optional<Project> findByNameLike(String name);
 
     Optional<Project> findById(Long id);
-
+    @Query(nativeQuery = true, value="Select project_id from project_members where user_id = ?1")
+    List<Long> findByUserId(Long id);
 }
