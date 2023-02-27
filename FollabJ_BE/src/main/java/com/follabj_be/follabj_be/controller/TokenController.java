@@ -1,7 +1,7 @@
 package com.follabj_be.follabj_be.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.follabj_be.follabj_be.service.JWTService;
+import com.follabj_be.follabj_be.service.impl.JWTService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

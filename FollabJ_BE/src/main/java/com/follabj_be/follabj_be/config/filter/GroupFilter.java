@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
+import org.springframework.web.servlet.HandlerMapping;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -40,8 +41,9 @@ public class GroupFilter extends GenericFilterBean {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        if(request.getRequestURI().equals("/project")){
-            Long project_id = Long.valueOf(request.getParameter("id"));
+        if(request.getRequestURL().toString().contains("/project")){
+            String param_p_id = request.getRequestURI().toString().substring(9,10);
+            Long project_id = Long.valueOf(param_p_id);
             String authorizationHeader = request.getHeader("AUTHORIZATION");
             if(authorizationHeader!=null && authorizationHeader.startsWith("Bearer ")){
                 try{

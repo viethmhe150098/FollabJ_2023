@@ -1,8 +1,8 @@
-package com.follabj_be.follabj_be.service;
+package com.follabj_be.follabj_be.service.impl;
 
 import com.follabj_be.follabj_be.entity.MeetingType;
 import com.follabj_be.follabj_be.repository.MeetingTypeRepository;
-import com.follabj_be.follabj_be.service.dependency.MeetingTypeInterface;
+import com.follabj_be.follabj_be.service.MeetingTypeInterface;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 

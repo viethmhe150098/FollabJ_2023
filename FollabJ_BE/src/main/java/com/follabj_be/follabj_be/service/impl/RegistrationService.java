@@ -1,14 +1,14 @@
-package com.follabj_be.follabj_be.service;
+package com.follabj_be.follabj_be.service.impl;
 
 import com.follabj_be.follabj_be.entity.AppUser;
 import com.follabj_be.follabj_be.entity.AppUserRole;
 import com.follabj_be.follabj_be.entity.ConfirmToken;
 import com.follabj_be.follabj_be.entity.Role;
-import com.follabj_be.follabj_be.service.dependency.EmailSender;
+import com.follabj_be.follabj_be.service.EmailSender;
 import com.follabj_be.follabj_be.dto.RegistrationRequest;
-import com.follabj_be.follabj_be.service.dependency.RegistrationInterface;
-import com.follabj_be.follabj_be.service.dependency.TokenInterface;
-import com.follabj_be.follabj_be.service.dependency.UserInterface;
+import com.follabj_be.follabj_be.service.RegistrationInterface;
+import com.follabj_be.follabj_be.service.TokenInterface;
+import com.follabj_be.follabj_be.service.UserInterface;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

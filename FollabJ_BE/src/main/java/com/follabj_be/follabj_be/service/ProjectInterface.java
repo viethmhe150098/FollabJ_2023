@@ -1,4 +1,4 @@
-package com.follabj_be.follabj_be.service.dependency;
+package com.follabj_be.follabj_be.service;
 
 import com.follabj_be.follabj_be.dto.CreateProjectDTO;
 import com.follabj_be.follabj_be.dto.UserDTO;
@@ -15,4 +15,6 @@ public interface ProjectInterface {
     void sendInvitation(UserDTO user, Long p_id);
 
     List<Project> getProjectByUserId(Long u_id);
+
+    void deleteProject(Long p_id);
 }

@@ -1,4 +1,4 @@
-package com.follabj_be.follabj_be.service.dependency;
+package com.follabj_be.follabj_be.service;
 
 import com.follabj_be.follabj_be.dto.RegistrationRequest;
 

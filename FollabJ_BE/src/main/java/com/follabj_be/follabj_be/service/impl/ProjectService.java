@@ -1,4 +1,4 @@
-package com.follabj_be.follabj_be.service;
+package com.follabj_be.follabj_be.service.impl;
 
 import com.follabj_be.follabj_be.dto.CreateProjectDTO;
 import com.follabj_be.follabj_be.dto.UserDTO;
@@ -10,7 +10,7 @@ import com.follabj_be.follabj_be.exception.GroupException;
 import com.follabj_be.follabj_be.repository.InvitationRepository;
 import com.follabj_be.follabj_be.repository.ProjectRepository;
 import com.follabj_be.follabj_be.repository.UserRepository;
-import com.follabj_be.follabj_be.service.dependency.ProjectInterface;
+import com.follabj_be.follabj_be.service.ProjectInterface;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
@@ -71,4 +71,16 @@ public class ProjectService implements ProjectInterface {
         );
         return projects;
     }
+
+    @Override
+    public void deleteProject(Long p_id) {
+        Project p = projectRepository.findById(p_id).orElseThrow(() -> new ObjectNotFoundException("Not found project", p_id.toString()));
+        for (AppUser u: p.getMembers()
+             ) {
+            u.getProjects().remove(p);
+        }
+
+        projectRepository.deleteProjectById(p_id);
+    }
+
 }

@@ -2,7 +2,7 @@ package com.follabj_be.follabj_be.config.securityConfig;
 
 import com.follabj_be.follabj_be.config.filter.CustomAuthenticationFilter;
 import com.follabj_be.follabj_be.config.filter.CustomAuthorizationFilter;
-import com.follabj_be.follabj_be.service.UserService;
+import com.follabj_be.follabj_be.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

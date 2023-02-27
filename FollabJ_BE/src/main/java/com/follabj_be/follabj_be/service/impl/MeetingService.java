@@ -1,4 +1,4 @@
-package com.follabj_be.follabj_be.service;
+package com.follabj_be.follabj_be.service.impl;
 
 import com.follabj_be.follabj_be.entity.Meeting;
 import com.follabj_be.follabj_be.entity.Project;
@@ -8,7 +8,7 @@ import com.follabj_be.follabj_be.repository.EventRepository;
 import com.follabj_be.follabj_be.repository.MeetingRepository;
 import com.follabj_be.follabj_be.repository.MeetingTypeRepository;
 import com.follabj_be.follabj_be.repository.ProjectRepository;
-import com.follabj_be.follabj_be.service.dependency.MeetingInterface;
+import com.follabj_be.follabj_be.service.MeetingInterface;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
