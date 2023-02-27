@@ -17,9 +17,9 @@ const CreateProject = () => {
     const handleSubmit = (event) => {
          event.preventDefault();
          const newProject = {
-             prjID: prjID,
-             prjName: prjName,
-             prjDes: prjDes
+            user_id: 3,
+             p_name: prjName,
+             p_des: prjDes
          };
          createProject(newProject,access_token,dispatch,navigate);
          //Code create Task here
@@ -48,7 +48,7 @@ const CreateProject = () => {
                             onChange={(event) => setPrjDes(event.target.value)}
                         />
                     </div>
-                    <FullButton title="Create Project" action={"submit"}/>
+                    <FullButton title="Create Project" type="submit"/>
                 </form>
             </div>
         </div>

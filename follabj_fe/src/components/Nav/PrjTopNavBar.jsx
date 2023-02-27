@@ -44,9 +44,7 @@ export default function PrjTopNavBar() {
           <UlWrapperRight className="flexNullCenter">
 
             <Popup modal trigger={<li className="semiBold pointer font15 flexCenter">
-              <RouterLink >
                 <FullButton title="Create Project" />
-              </RouterLink>
             </li>}>
               {close => <Content close={close} />}
             </Popup>
