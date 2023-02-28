@@ -16,6 +16,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -85,12 +86,23 @@ public class ProjectService implements ProjectInterface {
 
     @Override
     @Transactional
-    public void editProject(CreateProjectDTO createProjectDTO) {
-        Long p_id = Long.valueOf(createProjectDTO.getId());
-        Project p = projectRepository.findById(p_id).orElseThrow(()-> new ObjectNotFoundException("Not found project", createProjectDTO.getId()));
+    public void editProject(Long p_id, CreateProjectDTO createProjectDTO) {
+        Project p = projectRepository.findById(p_id).orElseThrow(()-> new ObjectNotFoundException("Not found project", p_id.toString()));
         p.setName(createProjectDTO.getP_name());
         p.setDes(createProjectDTO.getP_des());
         projectRepository.save(p);
+    }
+
+    @Transactional
+    @Override
+    public void deleteMember(Long p_id, Long u_id) {
+        Project p = projectRepository.findById(p_id).orElseThrow(()-> new ObjectNotFoundException("Not found project", p_id.toString()));
+        p.setMembers(p.getMembers().stream().filter(m -> m.getId().equals(p_id)).collect(Collectors.toSet()));
+        List<Event> events = eventRepository.findByProjectId(p_id);
+        List<Task> tasks = taskRepository.findByProjectId(p_id);
+        events.forEach(event -> event.setParticipantList(event.getParticipantList().stream().filter(e -> e.getId().equals(u_id)).collect(Collectors.toList())));
+
+        tasks.forEach(task -> task.setAssigneeList(task.getAssigneeList().stream().filter(t -> t.getId().equals(u_id)).collect(Collectors.toList())));
     }
 
 

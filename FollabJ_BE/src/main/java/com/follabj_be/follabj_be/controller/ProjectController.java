@@ -62,10 +62,20 @@ public class ProjectController {
     @PutMapping(value = "/project/{p_id}")
     @PreAuthorize("hasAuthority('LEADER')")
     public ResponseEntity<Map<Object, Object>> editProject(@PathVariable Long p_id, @RequestBody CreateProjectDTO createProjectDTO){
-        projectService.editProject(createProjectDTO);
+        projectService.editProject(p_id, createProjectDTO);
         Map<Object, Object> res = new HashMap<>();
         res.put("status", HttpStatus.OK);
         res.put("message", "deleted project with id ="+p_id);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/project/{p_id}/member/{u_id}")
+    @PreAuthorize("hasAuthority('LEADER')")
+    public ResponseEntity<Map<Object, Object>> deleteMember(@PathVariable Long p_id, @PathVariable Long u_id){
+        projectService.deleteMember(p_id, u_id);
+        Map<Object, Object> res = new HashMap<>();
+        res.put("status", HttpStatus.OK);
+        res.put("message", "Deleted member with Id: "+u_id);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }

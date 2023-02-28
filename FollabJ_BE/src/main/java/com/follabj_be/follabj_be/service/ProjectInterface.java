@@ -17,5 +17,7 @@ public interface ProjectInterface {
 
     void deleteProject(Long p_id);
 
-    void editProject(CreateProjectDTO createProjectDTO);
+    void editProject(Long p_id,CreateProjectDTO createProjectDTO);
+
+    void deleteMember(Long p_id, Long u_id);
 }
