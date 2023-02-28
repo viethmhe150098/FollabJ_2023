@@ -4,6 +4,8 @@ const projectUrl = (project_id) => "http://localhost:8080/project/"+project_id+"
 
 export const fetchEventsByProjectId = (project_id) => axios.get(projectUrl(project_id));
 
+export const fetchEventsByUserId = (user_id) => axios.get("http://localhost:8080/events?user_id="+user_id);
+
 export const fetchEventById = (project_id, event_id) => axios.get(projectUrl(project_id)+"/"+event_id);
 
 export const addEvent = (project_id, event) => axios.post(projectUrl(project_id), event);

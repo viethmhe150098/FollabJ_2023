@@ -11,6 +11,8 @@ public interface EventInterface {
 
     List<Event> getEventsByProjectId(Long project_id);
 
+    List<Event> getEventsByUserId(Long user_id);
+
     Optional<Event> getEventById(Long event_id);
 
     Event addEvent(CreateEventDTO createEventDTO);

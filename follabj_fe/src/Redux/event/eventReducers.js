@@ -1,16 +1,25 @@
 import { createReducer } from "@reduxjs/toolkit/dist";
 import moment from "moment/moment";
-import { getEventsByProjectId, getEventById, addEvent } from "./eventActions";
+import { getEventsByProjectId, getEventById, addEvent, getEventsByUserId } from "./eventActions";
 
 const initialState = []
 
 export const eventReducer = createReducer(initialState, (builder) => {
     builder
-        .addCase(getEventsByProjectId.pending, (state, action) => {
-            state = initialState
+        .addCase(getEventsByProjectId.fulfilled, (state, action) => {
+            action.payload.map((event) =>{
+                const converted = {
+                    title : event.title,
+                    describe : event.description,
+                    id: event.id,
+                    start: moment(event.startDate).format("yyyy-MM-DD hh:mm:ss"),
+                    end: moment(event.endDate).format("yyyy-MM-DD hh:mm:ss")
+                }
+                state.push(converted)
+            })
             return state
         })
-        .addCase(getEventsByProjectId.fulfilled, (state, action) => {
+        .addCase(getEventsByUserId.fulfilled, (state, action) => {
             action.payload.map((event) =>{
                 const converted = {
                     title : event.title,

@@ -36,6 +36,20 @@ public class EventController {
         return eventDTOList;
     }
 
+    @GetMapping("/events")
+    public List<EventDTO> getEventsByUserId(@RequestParam Long user_id) {
+        List<Event> eventList = eventService.getEventsByUserId(user_id);
+
+        List<EventDTO> eventDTOList = new ArrayList<>();
+
+        for(Event event: eventList) {
+            EventDTO eventDTO = modelMapper.map(event, EventDTO.class);
+            eventDTOList.add(eventDTO);
+        }
+
+        return eventDTOList;
+    }
+
     @PostMapping("/project/{project_id}/events")
     public Event addEvent(@RequestBody CreateEventDTO createEventDTO, @PathVariable Long project_id) {
         createEventDTO.setProjectId(project_id);

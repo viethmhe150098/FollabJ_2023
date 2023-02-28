@@ -1,6 +1,7 @@
 package com.follabj_be.follabj_be.service.impl;
 
 import com.follabj_be.follabj_be.dto.CreateEventDTO;
+import com.follabj_be.follabj_be.dto.EventDTO;
 import com.follabj_be.follabj_be.entity.Event;
 import com.follabj_be.follabj_be.entity.Project;
 import com.follabj_be.follabj_be.repository.EventParticipantRepository;
@@ -25,6 +26,12 @@ public class EventService implements EventInterface {
         return eventRepository.findAll();
     }
 
+    @Override
+    public List<Event> getEventsByUserId(Long user_id) {
+        return eventRepository.findByParticipantListId(user_id);
+    }
+
+    @Override
     public Optional<Event> getEventById(Long event_id) {
         return eventRepository.findById(event_id);
     }

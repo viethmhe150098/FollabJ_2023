@@ -7,7 +7,7 @@ import getDay from 'date-fns/getDay'
 import enUS from 'date-fns/locale/en-US'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useDispatch, useSelector } from 'react-redux'
-import { getEventsByProjectId } from '../../Redux/event/eventActions'
+import { getEventsByProjectId, getEventsByUserId } from '../../Redux/event/eventActions'
 
 const locales = {
   'en-US': enUS,
@@ -29,7 +29,7 @@ const CalendarView = () => {
 
     useEffect(()=>{
       if (events.length == 0)
-      dispatch(getEventsByProjectId(1));
+      dispatch(getEventsByUserId(3));
     },[])
 
 
