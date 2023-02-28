@@ -5,6 +5,7 @@ import com.follabj_be.follabj_be.dto.UserDTO;
 import com.follabj_be.follabj_be.entity.Project;
 import com.follabj_be.follabj_be.exception.GroupException;
 import com.follabj_be.follabj_be.service.impl.ProjectService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,12 +16,9 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@AllArgsConstructor
 public class ProjectController {
     private final ProjectService projectService;
-
-    public ProjectController(ProjectService projectService) {
-        this.projectService = projectService;
-    }
 
     @PostMapping (value = "/createproject")
     @PreAuthorize("hasAuthority('LEADER')")
@@ -53,10 +51,20 @@ public class ProjectController {
 
     @DeleteMapping(value = "/project/{p_id}")
     @PreAuthorize("hasAuthority('LEADER')")
-    public ResponseEntity<Map<Object, Object>> changeProjectStatus(@PathVariable Long p_id){
+    public ResponseEntity<Map<Object, Object>> deleteProject(@PathVariable Long p_id){
         Map<Object, Object> res = new HashMap<>();
         res.put("status", HttpStatus.OK);
         projectService.deleteProject(p_id);
+        res.put("message", "deleted project with id ="+p_id);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/project/{p_id}")
+    @PreAuthorize("hasAuthority('LEADER')")
+    public ResponseEntity<Map<Object, Object>> editProject(@PathVariable Long p_id, @RequestBody CreateProjectDTO createProjectDTO){
+        projectService.editProject(createProjectDTO);
+        Map<Object, Object> res = new HashMap<>();
+        res.put("status", HttpStatus.OK);
         res.put("message", "deleted project with id ="+p_id);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }

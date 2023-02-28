@@ -2,41 +2,37 @@ package com.follabj_be.follabj_be.service.impl;
 
 import com.follabj_be.follabj_be.dto.CreateProjectDTO;
 import com.follabj_be.follabj_be.dto.UserDTO;
-import com.follabj_be.follabj_be.entity.AppUser;
-import com.follabj_be.follabj_be.entity.Invitation;
-import com.follabj_be.follabj_be.entity.Project;
+import com.follabj_be.follabj_be.entity.*;
 import com.follabj_be.follabj_be.errorMessge.CustomErrorMessage;
 import com.follabj_be.follabj_be.exception.GroupException;
-import com.follabj_be.follabj_be.repository.InvitationRepository;
-import com.follabj_be.follabj_be.repository.ProjectRepository;
-import com.follabj_be.follabj_be.repository.UserRepository;
+import com.follabj_be.follabj_be.repository.*;
 import com.follabj_be.follabj_be.service.ProjectInterface;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
 @Slf4j
+@AllArgsConstructor
 public class ProjectService implements ProjectInterface {
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
     private final InvitationRepository invitationRepository;
-    public ProjectService(ProjectRepository projectRepository, UserRepository userRepository, InvitationRepository invitationRepository) {
-        this.projectRepository = projectRepository;
-        this.userRepository = userRepository;
-        this.invitationRepository = invitationRepository;
-    }
+    private final EventRepository eventRepository;
+    private final TaskRepository taskRepository;
 
-
+    private final MeetingRepository meetingRepository;
     @Override
     public Project createPrj(CreateProjectDTO createProjectDTO) throws GroupException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDateTime now = LocalDateTime.now();
-        Long user_id = Long.valueOf(createProjectDTO.getUser_id());
+        Long user_id = Long.valueOf(createProjectDTO.getId());
         AppUser app_user = userRepository.getAppUserById(user_id);
         String create_date = dtf.format(now);
         String p_name = createProjectDTO.getP_name();
@@ -73,14 +69,29 @@ public class ProjectService implements ProjectInterface {
     }
 
     @Override
+    @Transactional
     public void deleteProject(Long p_id) {
         Project p = projectRepository.findById(p_id).orElseThrow(() -> new ObjectNotFoundException("Not found project", p_id.toString()));
         for (AppUser u: p.getMembers()
              ) {
             u.getProjects().remove(p);
         }
+        eventRepository.deleteAll(eventRepository.findByProjectId(p_id));
+        taskRepository.deleteAll(taskRepository.findByProjectId(p_id));
 
+        meetingRepository.deleteAll(meetingRepository.findByProject_id(p_id));
         projectRepository.deleteProjectById(p_id);
     }
+
+    @Override
+    @Transactional
+    public void editProject(CreateProjectDTO createProjectDTO) {
+        Long p_id = Long.valueOf(createProjectDTO.getId());
+        Project p = projectRepository.findById(p_id).orElseThrow(()-> new ObjectNotFoundException("Not found project", createProjectDTO.getId()));
+        p.setName(createProjectDTO.getP_name());
+        p.setDes(createProjectDTO.getP_des());
+        projectRepository.save(p);
+    }
+
 
 }
