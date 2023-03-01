@@ -71,7 +71,7 @@ const Login = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 {errors.password && <p className="error-message">{errors.password}</p>}
-                <FullButton title="Get Started" action={"submit"} />
+                <FullButton title="Get Started"/>
               </form>
               <RouterLink to="/signup">
                 <button className="link-btn">Don't have an account?  <span className="semiBold"> Register here.</span></button>

@@ -1,5 +1,5 @@
 import React from "react";
-import CalendarView from "../../components/Elements/CalendarView";
+import CalendarView from "../../components/Sections/CalendarView";
 import FullButton from "../../components/Buttons/FullButton";
 //import "../style/global.scss"
 import AddEvent from "../../components/Modals/AddEvent";

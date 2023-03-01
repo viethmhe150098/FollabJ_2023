@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import styled from "styled-components";
 import "react-datepicker/dist/react-datepicker.css";
 import { addTask } from "../../Redux/task/taskActions";
 import { useDispatch } from "react-redux";
+import moment from "moment";
 
-const AddTaskModal = ({close, statusId=1,  type}) => {
+const AddTaskModal = ({type, close, statusId=1, task}) => {
 
     const dispatch = useDispatch();
 
@@ -21,6 +22,16 @@ const AddTaskModal = ({close, statusId=1,  type}) => {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [assigneeList, setAssigneeList] = useState([]);
+
+    useEffect(() => {
+      if(type=="readonly") {
+        var form = document.getElementById('taskForm');
+        var elements = form.elements;
+        for (var i = 0, len = elements.length; i < len; ++i) {
+            elements[i].readOnly = true;
+        } 
+     }
+    }, [])
 
     const handleCheckboxChange = (event) => {
         const selectedAssigneeId = event.target.value;
@@ -63,13 +74,15 @@ const AddTaskModal = ({close, statusId=1,  type}) => {
                 <a className="close" onClick={close}>
                     &times;
                 </a>
-                <h2>Create Task</h2>
-                <form onSubmit={handleCreateTask}>
+                {type=="readonly" && (<h2>View Task</h2>)}
+                {type=="update" && (<h2>Update Task</h2>)}
+                {type==null && (<h2>Create Task</h2>)}
+                <form id="taskForm" onSubmit={handleCreateTask}>
                 <div className="form-group">
                         <label htmlFor="title">Task Title</label>
                         <textarea
                             id="title"
-                            value={title}
+                            value={task != null ?  task.title : title}
                             onChange={(event) => setTitle(event.target.value)}
                         ></textarea>
                     </div>
@@ -77,7 +90,7 @@ const AddTaskModal = ({close, statusId=1,  type}) => {
                         <label htmlFor="description">Task Description</label>
                         <textarea
                             id="description"
-                            value={description}
+                            value={task != null ?  task.description : description}
                             onChange={(event) => setDescription(event.target.value)}
                         ></textarea>
                     </div>
@@ -85,7 +98,7 @@ const AddTaskModal = ({close, statusId=1,  type}) => {
                         <label htmlFor="label">Task Label</label>
                         <textarea
                             id="label"
-                            value={label}
+                            value={task != null ?  task.label : label}
                             onChange={(event) => setLabel(event.target.value)}
                         ></textarea>
                     </div>
@@ -94,17 +107,18 @@ const AddTaskModal = ({close, statusId=1,  type}) => {
                         <DatePicker
                             id="startDate"
                             selected={startDate}
-                            value={new Date()}
+                            disabled={task != null}
+                            value={task != null ? moment(task.startDate).format("DD/MM/yyyy hh:mm a") : new Date()}
                             showTimeSelect
                             onChange={(date) => setStartDate(date)}
                             dateFormat="dd/MM/yyyy hh:mm a"
-
                         />
                          <label htmlFor="endDate">End Date</label>
                         <DatePicker
                             id="endDate"
                             selected={endDate}
-                            value={new Date()}
+                            disabled={task != null}
+                            value={task != null ? moment(task.endDate).format("DD/MM/yyyy hh:mm a") : new Date()}
                             showTimeSelect
                             onChange={(date) => setEndDate(date)}
                             dateFormat="dd/MM/yyyy hh:mm a"
@@ -114,7 +128,7 @@ const AddTaskModal = ({close, statusId=1,  type}) => {
                         <label>Assignees</label>
                         {teamMembers.map((teamMember) => (
                             <div key={teamMember.id}>
-                                <input
+                                <input disabled={type=="readonly"}
                                     type="checkbox"
                                     id={`assignee-${teamMember.id}`}
                                     value={teamMember.id}
@@ -128,7 +142,8 @@ const AddTaskModal = ({close, statusId=1,  type}) => {
                             </div>
                         ))}
                     </div>
-                    <button type="submit">Create Task</button>
+                    {type=="update" && (<button type="submit">Update Task</button>)}
+                    {type==null && (<button type="submit">Create Task</button>)}
                 </form>
             </Modal>
         </>

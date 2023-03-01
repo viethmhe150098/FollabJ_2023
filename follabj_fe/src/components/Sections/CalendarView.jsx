@@ -1,4 +1,4 @@
-import React , { useEffect, useState } from 'react'
+import React , { useEffect } from 'react'
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar'
 import format from 'date-fns/format'
 import parse from 'date-fns/parse'
@@ -7,7 +7,8 @@ import getDay from 'date-fns/getDay'
 import enUS from 'date-fns/locale/en-US'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useDispatch, useSelector } from 'react-redux'
-import { getEventsByProjectId, getEventsByUserId } from '../../Redux/event/eventActions'
+import { getEventsByUserId } from '../../Redux/event/eventActions'
+import { ToastContainer, toast } from 'react-toastify'
 
 const locales = {
   'en-US': enUS,
@@ -30,14 +31,38 @@ const CalendarView = () => {
     useEffect(()=>{
       if (events.length == 0)
       dispatch(getEventsByUserId(3));
+      notify();
     },[])
 
+    const message = useSelector((state) => state.responseMessage)
 
+    const notify = () => {
+      if (message.success != "") {
+          toast.success(message.success, {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              progress: undefined,
+              theme: "light",
+          });;
+      }
+      if (message.error != "") {
+          toast.error(message.error, {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              progress: undefined,
+              theme: "light",
+          });;
+      }
+    } 
+  
     return (
+      <>
+      <ToastContainer />
     <div>
-        {/* <Popup modal trigger={<button className='purpleBg font25 radius6 lightColor tag'>Add Event</button>}>
-            {close => <CreateEventForm close={close} />}
-        </Popup> */}
         <Calendar
             localizer={localizer}
             events={events}
@@ -47,9 +72,9 @@ const CalendarView = () => {
             // onSelectEvent={(event)=>{console.log(moment(event.startDate).format("YYYY-MM-DD HH:mm:ss"))}}
         />
     </div>
+    </>
         
     )
 }
 
 export default CalendarView
-//export default connect(mapStateToProps, {ShowEventApi, closeEvent, ShowEventsApi})(CalendarView)

@@ -19,6 +19,7 @@ import {
   Route,
 } from "react-router-dom";
 import TestParams from './components/Elements/TestParams';
+import TestToast from './components/Elements/TestToast';
 
 
 
@@ -35,7 +36,7 @@ export default function App() {
             <ProjectManagement />
           </Route>
 
-          <Route path="/task">
+          <Route path="/tasks">
             <ProjectManagement />
           </Route>
 
@@ -87,6 +88,10 @@ export default function App() {
 
           <Route exact path="/projects/:project_id/tasks/:task_id">
             <TestParams/>
+          </Route>
+
+          <Route exact path="/toast">
+            <TestToast/>
           </Route>
 
         </Switch>

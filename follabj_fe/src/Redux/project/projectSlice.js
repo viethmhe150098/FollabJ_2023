@@ -1,9 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getProjectsByUserId } from "./projectActions";
+import { getProjectMembersByProjectId, getProjectsByUserId } from "./projectActions";
 
 const projectSlice = createSlice({
     name:"project",
     initialState:{
+        currentProject: {
+            id : null,
+            user_role: null,
+            members: []
+        },
         projects: {
             allProjects:null,
             isFetching:false,
@@ -36,7 +41,17 @@ const projectSlice = createSlice({
             state.projects.error=true;
             state.msg = action.payload;
         },
-    }
+    },
+    extraReducers: (builder) => {
+
+        builder
+            .addCase(getProjectsByUserId.fulfilled, (state, action) => {
+                state.projects.allProjects = action.payload
+            })
+            .addCase(getProjectMembersByProjectId.fulfilled, (state, action) => {
+                state.currentProject.members.push(action.payload)
+            })
+    },
 })
 
 export const {

@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { getTaskById, getTasksByProjectId } from "../../Redux/task/taskActions";
 import { useSelector } from "react-redux";
 // import { ShowTasksApi} from "../../Redux/actions"
+import { ToastContainer, toast } from 'react-toastify';
 
 
 const Kanban = () => {
@@ -15,14 +16,36 @@ const Kanban = () => {
     const dispatch = useDispatch();
 
     const tasks = useSelector((state) => state.task)
-    
+
     useEffect(() => {
         if (tasks.length==0)
         dispatch(getTasksByProjectId(1));
+        notify();
     }, [])
 
-    const showTaskDetail = (id) => {
-        dispatch(getTaskById({project_id : 1, task_id : id}))
+    const message = useSelector((state) => state.responseMessage)
+
+    const notify = () => {
+        if (message.success != "") {
+            toast.success(message.success, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                progress: undefined,
+                theme: "light",
+            });;
+        }
+        if (message.error != "") {
+            toast.error(message.error, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                progress: undefined,
+                theme: "light",
+            });;
+        }
     }
 
     const columnArray = [
@@ -90,6 +113,7 @@ const Kanban = () => {
 
     return (
         <Wrapper id='tasks'>
+            <ToastContainer />
             <HeaderInfo>
                 <h1 className="font40 extraBold">Kanban Board</h1>
             </HeaderInfo>
@@ -128,10 +152,14 @@ const Kanban = () => {
                                                                 opacity: snapshot.isDragging ? '0.5' : '1'
                                                             }}
                                                         >
-                                                            <Card onDoubleClick={()=>{showTaskDetail(task.id)}}>
+                                                            <Popup modal trigger=
+                                                                {<Card>
                                                                 <div>{task.title}</div>
                                                                 <div>{task.label}</div>
-                                                            </Card>
+                                                                </Card>}>
+                                                                {close => <AddTaskModal type={"readonly"} close={close} statusId={column.id} task={task}/>}
+                                                            </Popup>
+                                                            
                                                         </div>
                                                     )}
                                                 </Draggable>

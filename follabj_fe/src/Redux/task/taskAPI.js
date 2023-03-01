@@ -2,7 +2,11 @@ import axios from "axios";
 
 const projectUrl = (project_id) => "http://localhost:8080/project/"+project_id+"/tasks";
 
-export const fetchTasksByProjectId = (project_id) => axios.get(projectUrl(project_id));
+export const fetchTasksByProjectId = (project_id) => axios.get(projectUrl(project_id),{
+    headers : {
+        'Authorization' : "Bearer "+ localStorage.getItem("access_token")
+    }
+});
 
 export const fetchTaskById = (project_id, task_id) => axios.get(projectUrl(project_id)+"/"+task_id);
 

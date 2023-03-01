@@ -41,6 +41,11 @@ public class ProjectController {
         return new ResponseEntity<>(res, HttpStatus.OK) ;
     }
 
+    @GetMapping(value= "/project/{p_id}/members")
+    public List<UserDTO> getProjectMembersByProjectId(@PathVariable Long p_id) {
+        return projectService.getMembersByProjectId(p_id);
+    }
+
     @GetMapping(value = "/{u_id}")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
     public ResponseEntity<Map<Object, Object>> getProjectByUserId(@PathVariable Long u_id){

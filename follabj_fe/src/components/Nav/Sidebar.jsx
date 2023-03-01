@@ -18,7 +18,7 @@ import LogoIcon from "../../assets/svg/Logo";
 const Sidebar = ({ children }) => {
     const menuItem = [
         {
-            path: "/task",
+            path: "/tasks",
             name: "Tasks",
             icon: <FaTh />
         },
