@@ -10,8 +10,8 @@ const CreateProject = () => {
     const [prjName, setPrjName] = useState("");
     const [prjDes, setPrjDes] = useState("");
 
-     const dispatch = useDispatch();
-     const navigate = useHistory();
+    const dispatch = useDispatch();
+    const navigate = useHistory();
 
     const access_token = localStorage.getItem('access_token');
     const handleSubmit = (event) => {

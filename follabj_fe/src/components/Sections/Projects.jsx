@@ -1,4 +1,4 @@
-import React from "react";
+
 import styled from "styled-components";
 // Components
 import ProjectBox from "../Elements/ProjectBox";
@@ -12,59 +12,44 @@ import ProjectImg5 from "../../assets/img/projects/5.png";
 import ProjectImg6 from "../../assets/img/projects/6.png";
 // import AboutImg from "../../assets/img/add/about.png";
 
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
+import { getAllProjectsByUserId } from "../../Redux/project/projectAPI";
+
+
 export default function Projects() {
+  
+  const [projects, setProjects] = useState("");
+  const access_token = localStorage.getItem("access_token");
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getAllProjectsByUserId(3,access_token,dispatch);
+      setProjects(response.data);
+    };
+    fetchData();
+  }, []);
+
   return (
-    <Wrapper id="projects" className="lightBg" style={{paddingBottom:"120px"}}>
-      <div >
+    <Wrapper id="projects" className="lightBg" style={{ paddingBottom: "120px" }}>
+      <div>
         <div className="container" style={{ paddingTop: "150px" }}>
           <HeaderInfo>
-            <h1 className="font30 extraBold textCenter ">My Projects</h1>
+            <h1 className="font30 extraBold textCenter">My Projects</h1>
           </HeaderInfo>
           <div className="row textCenter">
-            <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-              <ProjectBox
-                img={ProjectImg1}
-                title="Awesome Project"
-                action={() => alert("clicked")}
-              />
-            </div>
-            <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-              <ProjectBox
-                img={ProjectImg2}
-                title="Awesome Project"
-                action={() => alert("clicked")}
-              />
-            </div>
-            <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-              <ProjectBox
-                img={ProjectImg3}
-                title="Awesome Project"
-                action={() => alert("clicked")}
-              />
-            </div>
-          </div>
-          <div className="row textCenter">
-            <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-              <ProjectBox
-                img={ProjectImg4}
-                title="Awesome Project"
-                action={() => alert("clicked")}
-              />
-            </div>
-            <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-              <ProjectBox
-                img={ProjectImg5}
-                title="Awesome Project"
-                action={() => alert("clicked")}
-              />
-            </div>
-            <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-              <ProjectBox
-                img={ProjectImg6}
-                title="Awesome Project"
-                action={() => alert("clicked")}
-              />
-            </div>
+            {projects.length > 0 && projects.map(project => (
+              <div key={project.id} className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <ProjectBox
+                  img={project.image}
+                  title={project.p_name}
+                  //action={() => alert("clicked")}
+                />
+              </div>
+            ))}
           </div>
           <div className="row flexCenter">
             <div style={{ margin: "50px 0", width: "200px" }}>
@@ -73,7 +58,6 @@ export default function Projects() {
           </div>
         </div>
       </div>
-      
     </Wrapper>
   );
 }
