@@ -6,7 +6,6 @@ import com.follabj_be.follabj_be.entity.Project;
 import com.follabj_be.follabj_be.exception.GroupException;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ProjectInterface {
     Project createPrj(CreateProjectDTO createProjectDTO) throws GroupException;

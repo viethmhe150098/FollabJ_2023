@@ -28,7 +28,7 @@ public class ProjectController {
         return new ResponseEntity<>(p, HttpStatus.CREATED);
     }
 
-    @PostMapping(value = "/project/{p_id}/addmembers")
+    @PostMapping(value = "/project/{p_id}/addmembers/leader")
     @PreAuthorize("hasAuthority('LEADER')")
     public ResponseEntity<Map<String, String>> sendInvitation(@RequestBody UserDTO userDTO, @PathVariable("p_id") Long p_id) {
         projectService.sendInvitation(userDTO, p_id);
@@ -49,7 +49,7 @@ public class ProjectController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/project/{p_id}")
+    @DeleteMapping(value = "/project/{p_id}/leader")
     @PreAuthorize("hasAuthority('LEADER')")
     public ResponseEntity<Map<Object, Object>> deleteProject(@PathVariable Long p_id){
         Map<Object, Object> res = new HashMap<>();
@@ -59,7 +59,7 @@ public class ProjectController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/project/{p_id}")
+    @PutMapping(value = "/project/{p_id}/leader")
     @PreAuthorize("hasAuthority('LEADER')")
     public ResponseEntity<Map<Object, Object>> editProject(@PathVariable Long p_id, @RequestBody CreateProjectDTO createProjectDTO){
         projectService.editProject(p_id, createProjectDTO);
@@ -69,7 +69,7 @@ public class ProjectController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/project/{p_id}/member/{u_id}")
+    @PutMapping(value = "/project/{p_id}/leader/member/{u_id}")
     @PreAuthorize("hasAuthority('LEADER')")
     public ResponseEntity<Map<Object, Object>> deleteMember(@PathVariable Long p_id, @PathVariable Long u_id){
         projectService.deleteMember(p_id, u_id);
