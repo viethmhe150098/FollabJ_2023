@@ -6,14 +6,6 @@ const initialState = []
 export const taskReducer = createReducer(initialState, (builder) => {
     builder
         .addCase(getTasksByProjectId.fulfilled, (state, action) => {
-            // // const newState = state;
-
-            // action.payload.map((task) => {
-                
-            //     state.map((column)=> column.id == task.statusId ? () => {console.log(column.id);column.tasks.push(task)} : () => {console.log(column.id); return column })
-            //     //newState.map((column) => console.log(column))
-            // })
-            // //action.payload.map((task) => state[0].tasks.push(task))
             return action.payload
         })
         .addCase(getTaskById.fulfilled, (state, action) => {

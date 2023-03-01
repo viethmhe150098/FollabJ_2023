@@ -5,15 +5,49 @@ import ProjectBox from "../Elements/ProjectBox";
 import FullButton from "../Buttons/FullButton";
 // Assets
 import ProjectImg1 from "../../assets/img/projects/1.png";
-import ProjectImg2 from "../../assets/img/projects/2.png";
-import ProjectImg3 from "../../assets/img/projects/3.png";
-import ProjectImg4 from "../../assets/img/projects/4.png";
-import ProjectImg5 from "../../assets/img/projects/5.png";
-import ProjectImg6 from "../../assets/img/projects/6.png";
-// import AboutImg from "../../assets/img/add/about.png";
 
-export default function Projects() {
+import { useDispatch } from "react-redux";
+import { setCurrentProjectId, setCurrentProjectUserRole } from "../../Redux/project/projectSlice";
+import { getProjectMembersByProjectId } from "../../Redux/project/projectActions";
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+const Projects = () => {
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+
+  const user_id = 3;
+
+  const projects = [
+    {
+      id: 1,
+      name: "Project 1"
+    },
+    {
+      id: 18,
+      name: "Project 18"
+    }
+  ]
+
+  const setCurrentProject = (project_id) => {
+
+      dispatch(setCurrentProjectId(project_id));
+      
+      dispatch(getProjectMembersByProjectId(project_id));
+
+      // if (user_id == members[0].id) {
+      //   dispatch(setCurrentProjectUserRole("LEADER"))
+      // } else {
+      //   dispatch(setCurrentProjectUserRole("ACTIVE_USER"))
+      // }
+
+      history.push("/tasks")
+  }
+
   return (
+
     <Wrapper id="projects" className="lightBg" style={{paddingBottom:"120px"}}>
       <div >
         <div className="container" style={{ paddingTop: "150px" }}>
@@ -21,50 +55,16 @@ export default function Projects() {
             <h1 className="font30 extraBold textCenter ">My Projects</h1>
           </HeaderInfo>
           <div className="row textCenter">
-            <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-              <ProjectBox
-                img={ProjectImg1}
-                title="Awesome Project"
-                action={() => alert("clicked")}
-              />
-            </div>
-            <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-              <ProjectBox
-                img={ProjectImg2}
-                title="Awesome Project"
-                action={() => alert("clicked")}
-              />
-            </div>
-            <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-              <ProjectBox
-                img={ProjectImg3}
-                title="Awesome Project"
-                action={() => alert("clicked")}
-              />
-            </div>
-          </div>
-          <div className="row textCenter">
-            <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-              <ProjectBox
-                img={ProjectImg4}
-                title="Awesome Project"
-                action={() => alert("clicked")}
-              />
-            </div>
-            <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-              <ProjectBox
-                img={ProjectImg5}
-                title="Awesome Project"
-                action={() => alert("clicked")}
-              />
-            </div>
-            <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-              <ProjectBox
-                img={ProjectImg6}
-                title="Awesome Project"
-                action={() => alert("clicked")}
-              />
-            </div>
+            {
+              projects.map((project) => 
+              <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4" key={project.id.toString()}>
+                <ProjectBox
+                  img={ProjectImg1}
+                  title={project.name}    
+                  action={() => {setCurrentProject(project.id)}}
+                />
+              </div>)
+            }
           </div>
           <div className="row flexCenter">
             <div style={{ margin: "50px 0", width: "200px" }}>
@@ -88,4 +88,4 @@ margin-bottom: 40px;
   }
 `;
 
-
+export default Projects

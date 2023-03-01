@@ -6,7 +6,7 @@ const projectSlice = createSlice({
     initialState:{
         currentProject: {
             id : null,
-            user_role: null,
+            userRole: null,
             members: []
         },
         projects: {
@@ -41,15 +41,22 @@ const projectSlice = createSlice({
             state.projects.error=true;
             state.msg = action.payload;
         },
+
+        setCurrentProjectId: (state, action) => {
+            state.currentProject.id = action.payload;
+        },
+        setCurrentProjectUserRole : (state, action) => {
+            state.currentProject.userRole = action.payload.userRole;
+        },
     },
     extraReducers: (builder) => {
 
         builder
             .addCase(getProjectsByUserId.fulfilled, (state, action) => {
-                state.projects.allProjects = action.payload
+                state.projects.allProjects = action.payload.projects
             })
             .addCase(getProjectMembersByProjectId.fulfilled, (state, action) => {
-                state.currentProject.members.push(action.payload)
+                state.currentProject.members = action.payload
             })
     },
 })
@@ -62,6 +69,9 @@ export const {
     createProjectStart,
     createProjectSuccess,
     createProjectFailed,
+
+    setCurrentProjectId,
+    setCurrentProjectUserRole
 
 } = projectSlice.actions;
 

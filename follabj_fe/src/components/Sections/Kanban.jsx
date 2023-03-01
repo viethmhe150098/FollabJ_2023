@@ -9,6 +9,7 @@ import { getTaskById, getTasksByProjectId } from "../../Redux/task/taskActions";
 import { useSelector } from "react-redux";
 // import { ShowTasksApi} from "../../Redux/actions"
 import { ToastContainer, toast } from 'react-toastify';
+import { useHistory } from "react-router";
 
 
 const Kanban = () => {
@@ -17,12 +18,22 @@ const Kanban = () => {
 
     const tasks = useSelector((state) => state.task)
 
+    const projectId = useSelector((state) => state.project.currentProject.id);
+
+    // const history = useHistory();
+
+    if (projectId == null) {
+        // history.push("/projects")
+        window.location.href = "/projects";
+
+    }
+
     useEffect(() => {
-        if (tasks.length==0)
-        dispatch(getTasksByProjectId(1));
+        dispatch(getTasksByProjectId(projectId));
         notify();
     }, [])
 
+    
     const message = useSelector((state) => state.responseMessage)
 
     const notify = () => {

@@ -64,15 +64,23 @@ public class ProjectService implements ProjectInterface {
 
     @Override
     public List<UserDTO> getMembersByProjectId(Long project_id) {
+
         List<AppUser> userList = projectRepository.getMembersById(project_id);
         List<UserDTO> userDTOList = new ArrayList<>();
+
+        AppUser leader = projectRepository.getLeaderById(project_id);
+        UserDTO leaderDTO = new UserDTO(leader.getId(), leader.getEmail(), leader.getUsername());
+
+        userDTOList.add(leaderDTO);
+
         for(AppUser user: userList) {
             UserDTO userDTO = new UserDTO(user.getId(), user.getEmail(), user.getUsername());
-            userDTOList.add(userDTO);
+            if(userDTO.getId() != leaderDTO.getId()) {
+                userDTOList.add(userDTO);
+            }
         }
         return userDTOList;
     }
-    
     @Override
     public List<Project> getProjectByUserId(Long u_id) {
         List<Long> projects_id = projectRepository.findByUserId(u_id);

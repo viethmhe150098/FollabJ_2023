@@ -5,17 +5,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import { addTask } from "../../Redux/task/taskActions";
 import { useDispatch } from "react-redux";
 import moment from "moment";
+import { useSelector } from "react-redux";
 
 const AddTaskModal = ({type, close, statusId=1, task}) => {
 
     const dispatch = useDispatch();
 
-    const teamMembers = [
-        { id: 2, name: "Jane Doe" },
-        { id: 3, name: "Bob Johnson" },
-        { id: 4, name: "Alice Lee" },
-        { id: 5, name: "Mike Brown" }
-    ];
+    const members = useSelector((state) => state.project.currentProject.members);
+
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [label, setLabel] = useState("")
@@ -77,6 +74,7 @@ const AddTaskModal = ({type, close, statusId=1, task}) => {
                 {type=="readonly" && (<h2>View Task</h2>)}
                 {type=="update" && (<h2>Update Task</h2>)}
                 {type==null && (<h2>Create Task</h2>)}
+                
                 <form id="taskForm" onSubmit={handleCreateTask}>
                 <div className="form-group">
                         <label htmlFor="title">Task Title</label>
@@ -126,18 +124,18 @@ const AddTaskModal = ({type, close, statusId=1, task}) => {
                     </div>
                     <div className="form-group">
                         <label>Assignees</label>
-                        {teamMembers.map((teamMember) => (
-                            <div key={teamMember.id}>
+                        {members.map((member) => (
+                            <div key={member.id}>
                                 <input disabled={type=="readonly"}
                                     type="checkbox"
-                                    id={`assignee-${teamMember.id}`}
-                                    value={teamMember.id}
+                                    id={`assignee-${member.id}`}
+                                    value={member.id}
                                     onChange={handleCheckboxChange}
                                     // checked={assigneeList.includes(teamMember.id)}
-                                    checked = {assigneeList.some((assignee) => assignee.id == teamMember.id)}
+                                    checked = {assigneeList.some((assignee) => assignee.id == member.id)}
                                 />
-                                <label htmlFor={`assignee-${teamMember.id}`}>
-                                    {teamMember.name}
+                                <label htmlFor={`assignee-${member.id}`}>
+                                    {member.username}
                                 </label>
                             </div>
                         ))}

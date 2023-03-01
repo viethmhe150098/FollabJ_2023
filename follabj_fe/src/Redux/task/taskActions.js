@@ -4,7 +4,7 @@ import * as taskAPI from "./taskAPI";
 export const getTasksByProjectId = createAsyncThunk("FETCH_TASKS_BY_PRJ_ID", async (project_id) => {
     try {
         const response = await taskAPI.fetchTasksByProjectId(project_id)
-        console.log(response)
+        //console.log(response)
         return response.data
     } catch (error) {
         console.log(error);
