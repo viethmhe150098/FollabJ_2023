@@ -69,7 +69,7 @@ const SignUp = () => {
         <div className="auth-form-container" style={{ maxHeight: "900px" }}>
           <h2>Register</h2>
           <form className="register-form" onSubmit={handleRegister} >
-            <label className="semiBold" htmlFor="email">Email</label>
+            <label className="semiBold font15" htmlFor="email">Email</label>
             <input type="text" placeholder="Enter your email" required
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -80,7 +80,7 @@ const SignUp = () => {
                 <span className="error-icon" role="img" aria-label="Error icon">❌</span>
               </div>
             )}
-            <label className="semiBold" htmlFor="email">Username</label>
+            <label className="semiBold font15" htmlFor="email">Username</label>
             <input type="text" placeholder="Enter your username" required
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -91,7 +91,7 @@ const SignUp = () => {
                 <span className="error-icon" role="img" aria-label="Error icon">❌</span>
               </div>
             )}
-            <label className="semiBold" htmlFor="email">Password</label>
+            <label className="semiBold font15" htmlFor="email">Password</label>
             <input type="password" placeholder="Enter your password" required
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -104,6 +104,7 @@ const SignUp = () => {
                 <span className="error-icon" role="img" aria-label="Error icon">❌</span>
               </div>
             )}
+            <div style={{ marginTop: '10px ' }}></div>
             <FullButton title={"Register"} />
           </form>
           <RouterLink to="/login">
