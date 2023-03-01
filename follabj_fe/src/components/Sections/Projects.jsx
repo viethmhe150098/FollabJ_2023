@@ -1,4 +1,4 @@
-import React from "react";
+
 import styled from "styled-components";
 // Components
 import ProjectBox from "../Elements/ProjectBox";
@@ -52,7 +52,7 @@ const Projects = () => {
       <div >
         <div className="container" style={{ paddingTop: "150px" }}>
           <HeaderInfo>
-            <h1 className="font30 extraBold textCenter ">My Projects</h1>
+            <h1 className="font30 extraBold textCenter">My Projects</h1>
           </HeaderInfo>
           <div className="row textCenter">
             {
@@ -73,7 +73,6 @@ const Projects = () => {
           </div>
         </div>
       </div>
-      
     </Wrapper>
   );
 }
