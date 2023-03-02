@@ -7,6 +7,7 @@ import com.follabj_be.follabj_be.entity.Project;
 import com.follabj_be.follabj_be.service.impl.EventService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -50,7 +51,8 @@ public class EventController {
         return eventDTOList;
     }
 
-    @PostMapping("/project/{project_id}/events")
+    @PostMapping("/project/{project_id}/leader/events")
+    @PreAuthorize("hasAuthority('LEADER')")
     public Event addEvent(@RequestBody CreateEventDTO createEventDTO, @PathVariable Long project_id) {
         createEventDTO.setProjectId(project_id);
         return eventService.addEvent(createEventDTO);
@@ -69,8 +71,9 @@ public class EventController {
 
     @RequestMapping(
             method=RequestMethod.PUT,
-            path = "/project/{project_id}/events/{event_id}/update"
+            path = "/project/{project_id}/leader/events/{event_id}/update"
     )
+    @PreAuthorize("hasAuthority('LEADER')")
     public Event updateEvent(@RequestBody Event event,@PathVariable Long project_id,@PathVariable Long event_id) {
         event.setProject(new Project());
         event.getProject().setId(project_id);
@@ -79,24 +82,27 @@ public class EventController {
 
     @RequestMapping(
             method=RequestMethod.DELETE,
-            path = "/project/{project_id}/events/{event_id}/delete"
+            path = "/project/{project_id}/leader/events/{event_id}/delete"
     )
+    @PreAuthorize("hasAuthority('LEADER')")
     public void deleteEvent(@PathVariable Long event_id) {
         eventService.deleteEvent(event_id);
     }
 
     @RequestMapping(
             method=RequestMethod.POST,
-            path = "/project/{project_id}/events/{event_id}/add"
+            path = "/project/{project_id}/leader/events/{event_id}/add"
     )
+    @PreAuthorize("hasAuthority('LEADER')")
     public void addParticipantToEvent(@PathVariable Long event_id, @RequestParam Long participant_id) {
         eventService.addParticipantToEvent(event_id, participant_id);
     }
 
     @RequestMapping(
             method=RequestMethod.DELETE,
-            path = "/project/{project_id}/events/{event_id}/remove"
+            path = "/project/{project_id}/leader/events/{event_id}/remove"
     )
+    @PreAuthorize("hasAuthority('LEADER')")
     public void removeAssigneeFromTask(@PathVariable Long event_id, @RequestParam Long participant_id) {
         eventService.removeParticipantFromEvent(event_id, participant_id);
     }

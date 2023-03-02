@@ -10,7 +10,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateProjectDTO {
-    private String user_id;
+    private String id;
     private String p_name;
     private String p_des;
+
 }
