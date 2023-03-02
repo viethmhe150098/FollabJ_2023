@@ -47,17 +47,19 @@ const Meeting = () => {
     const roomID = getUrlParams().get('roomID') || randomID(5);
     const userID = randomID(5);
     const userName = randomID(5);
+    const expired_ts = 7200;
+
         let myMeeting = async (element) => {
             
         // generate token
         const token = await generateToken(
-            'http://localhost:8080/rtctoken',
+            'http://localhost:8080/project/1/meeting',
             userID,
             roomID
         );
-        console.log(token.token)
+        console.log(token)
         const kitToken = ZegoUIKitPrebuilt.generateKitTokenForProduction(
-            1770178411,
+            1445575204,
             token.token,
             roomID,
             userID,

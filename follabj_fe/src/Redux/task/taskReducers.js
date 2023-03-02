@@ -14,7 +14,11 @@ export const taskReducer = createReducer(initialState, (builder) => {
         .addCase(addTask.fulfilled, (state, action) => {
             // return [...state, action.payload]
             state.push(action.payload)
-        }).addCase(updateTask.fulfilled, (state, action) => {
+        })
+        .addCase(updateTask.fulfilled, (state, action) => {
             return state.map((task) => task.id == action.payload.id ? action.payload : task)
+        })
+        .addCase(deleteTask.fulfilled, (state, action) => {
+            return state.filter((task) => task.id != action.payload)
         })
 })

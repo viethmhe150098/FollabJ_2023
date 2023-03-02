@@ -1,23 +1,61 @@
 import moment from "moment";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { addEvent } from "../../Redux/event/eventActions";
 import styled from "styled-components";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
+import { useSelector } from "react-redux";
 
-const CreateEventForm = ({close}) => {
+const CreateEventForm = ({type, close, event}) => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [participantList, setParticipantList] = useState([]);
 
-    //let { project_id } = useParams();
-    const project_id = 1;
+    const [modalType, setType] = useState(type)
+
+    const user_id =3
+    const members = useSelector((state) => state.project.currentProject.members);
+
+    const project_id = useSelector((state) => state.project.currentProject.id);
 
     const dispatch = useDispatch();
+
+    useEffect(() => {
+      if(type=="readonly") {
+        var form = document.getElementById('eventForm');
+        var elements = form.elements;
+        for (var i = 0, len = elements.length; i < len; ++i) {
+            elements[i].readOnly = true;
+        } 
+     }
+
+     if(event != null) {
+        setTitle(event.title)
+        setDescription(event.describe)
+        setStartDate(new Date(event.start))
+        setEndDate(new Date(event.end))
+        setParticipantList(event.participantList)
+     }
+
+    }, [])
+
+    const handleCheckboxChange = (event) => {
+      const selectedParticipantId = event.target.value;
+      if (event.target.checked) {
+        //console.log("checked");
+        setParticipantList([...participantList, { id: selectedParticipantId}]);
+      } else {
+          const filteredParticipantList = participantList.filter(
+            (participant) => participant.id != selectedParticipantId ? participant : null
+          );
+          //console.log("unchecked");
+          setParticipantList(filteredParticipantList);
+      }
+  };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -29,7 +67,8 @@ const CreateEventForm = ({close}) => {
             description,
             startDate,
             endDate,
-            project_id
+            project_id,
+            participantList
         }
         //console.log(event)
         dispatch(addEvent(event));
@@ -40,8 +79,10 @@ const CreateEventForm = ({close}) => {
             <a className="close" onClick={close}>
                 &times;
             </a>
+            {modalType=="readonly" && (<h2>View Event</h2>)}
+            {modalType==null && (<h2>Create Event</h2>)}
             <div className="form-group">
-                <form onSubmit={handleSubmit}>
+                <form id="eventForm" onSubmit={handleSubmit}>
                 <div className="form-group">
                         <label htmlFor="title">Event Title</label>
                         <textarea
@@ -76,6 +117,24 @@ const CreateEventForm = ({close}) => {
                             dateFormat="dd/MM/yyyy hh:mm a"
                             showTimeSelect
                         />
+                    </div>
+                    <div className="form-group">
+                        <label>Participants: </label>
+                        {members.map((member) => (
+                            <div key={member.id}>
+                                <input disabled={modalType=="readonly"}
+                                    type="checkbox"
+                                    id={`participant-${member.id}`}
+                                    value={member.id}
+                                    onChange={handleCheckboxChange}
+                                    // checked={assigneeList.includes(teamMember.id)}
+                                    checked = {participantList.some((participant) => participant.id == member.id)}
+                                />
+                                <label htmlFor={`assignee-${member.id}`}>
+                                    {member.username}
+                                </label>
+                            </div>
+                        ))}
                     </div>
                     <button type="submit">Create Event</button>
                 </form>

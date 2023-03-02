@@ -30,19 +30,19 @@ export const addTask = createAsyncThunk("ADD_TASK", async ({project_id, task}) =
     }
 })
 
-export const updateTask = createAsyncThunk("UPDATE_TASK", async (task) => {
+export const updateTask = createAsyncThunk("UPDATE_TASK", async ({project_id, task}) => {
     try {
-        const response = await taskAPI.updateTask(task)
+        const response = await taskAPI.updateTask(project_id, task)
         return response.data
     } catch (error) {
         console.log(error);
     }
 })
 
-export const deleteTask = createAsyncThunk("DELETE_TASK", async (task) => {
+export const deleteTask = createAsyncThunk("DELETE_TASK", async ({project_id, task_id}) => {
     try {
-        const response = await taskAPI.deleteTask(task)
-        return response.data
+        const response = await taskAPI.deleteTask(project_id,task_id)
+        return task_id
     } catch (error) {
         console.log(error);
     }

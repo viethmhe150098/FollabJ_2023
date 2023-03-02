@@ -85,7 +85,7 @@ const Login = () => {
               </div>
             )}
             <div style={{ marginTop: '10px ' }}></div>
-            <FullButton title="Get Started" action={"submit"} />
+            <FullButton title="Get Started"/>
           </form>
           <RouterLink to="/signup">
             <button className="link-btn">Don't have an account?  <span className="semiBold"> Register here.</span></button>

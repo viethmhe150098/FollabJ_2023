@@ -18,8 +18,6 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import TestParams from './components/Elements/TestParams';
-import TestToast from './components/Elements/TestToast';
 
 
 
@@ -84,14 +82,6 @@ export default function App() {
           {/* Landing */}
           <Route exact path="/">
             <Home />
-          </Route>
-
-          <Route exact path="/projects/:project_id/tasks/:task_id">
-            <TestParams/>
-          </Route>
-
-          <Route exact path="/toast">
-            <TestToast/>
           </Route>
 
         </Switch>

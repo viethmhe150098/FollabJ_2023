@@ -9,7 +9,10 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useDispatch, useSelector } from 'react-redux'
 import { getEventsByUserId } from '../../Redux/event/eventActions'
 import { ToastContainer, toast } from 'react-toastify'
-
+import 'react-toastify/dist/ReactToastify.css';
+import CreateEventForm from '../Modals/AddEvent';
+import { useState } from 'react'
+import Popup from 'reactjs-popup'
 const locales = {
   'en-US': enUS,
 }
@@ -27,6 +30,18 @@ const CalendarView = () => {
     const dispatch = useDispatch();
 
     const events = useSelector((state) => state.event)
+
+    const projectId = useSelector((state) => state.project.currentProject.id);
+
+    const [selectedEvent, setSelectedEvent] = useState(null)
+
+    // const history = useHistory();
+
+    if (projectId == null) {
+        // history.push("/projects")
+        window.location.href = "/projects";
+
+    }
 
     useEffect(()=>{
       if (events.length == 0)
@@ -58,10 +73,23 @@ const CalendarView = () => {
           });;
       }
     } 
-  
+    
+    const openEventModal = (event) => {
+      setSelectedEvent(event);
+
+      // console.log(event);
+      // console.log("opening modal")
+
+      const button = document.getElementById("openButton");
+      button.click()
+    }
+
     return (
       <>
       <ToastContainer />
+      <Popup modal trigger={<button id="openButton"></button>}>
+          {close => <CreateEventForm close={close} type={"readonly"} event={selectedEvent}/>}
+      </Popup>
     <div>
         <Calendar
             localizer={localizer}
@@ -69,7 +97,7 @@ const CalendarView = () => {
             startAccessor={(event) => { return new Date(event.start)}}
             endAccessor={(event) => { return new Date(event.end)  }}
             style={{ height: 750 , margin: 50, fontFamily: 'Patrick Hand' }}
-            // onSelectEvent={(event)=>{console.log(moment(event.startDate).format("YYYY-MM-DD HH:mm:ss"))}}
+            onSelectEvent={(event)=>{openEventModal(event)}}
         />
     </div>
     </>

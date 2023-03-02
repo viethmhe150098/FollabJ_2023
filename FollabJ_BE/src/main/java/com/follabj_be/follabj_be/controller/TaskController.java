@@ -55,7 +55,6 @@ public class TaskController {
 
         return null;
     }
-
     @RequestMapping(
             method=RequestMethod.PUT,
             path = "/project/{project_id}/tasks/{task_id}/update"

@@ -2,6 +2,8 @@ package com.follabj_be.follabj_be.service.impl;
 
 import com.follabj_be.follabj_be.dto.CreateEventDTO;
 import com.follabj_be.follabj_be.dto.EventDTO;
+import com.follabj_be.follabj_be.dto.UserDTO;
+import com.follabj_be.follabj_be.entity.AppUser;
 import com.follabj_be.follabj_be.entity.Event;
 import com.follabj_be.follabj_be.entity.Project;
 import com.follabj_be.follabj_be.repository.EventParticipantRepository;
@@ -10,6 +12,7 @@ import com.follabj_be.follabj_be.service.EventInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -46,6 +49,16 @@ public class EventService implements EventInterface {
         event.setEndDate(createEventDTO.getEndDate());
         event.setProject(new Project());
         event.getProject().setId(createEventDTO.getProjectId());
+
+        List<AppUser> userList = new ArrayList<>();
+
+        for (UserDTO userDTO: createEventDTO.getParticipantList()) {
+            AppUser user = new AppUser();
+            user.setId(userDTO.getId());
+            userList.add(user);
+        }
+
+        event.setParticipantList(userList);
 
         return eventRepository.save(event);
     }

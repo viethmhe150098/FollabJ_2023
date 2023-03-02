@@ -24,7 +24,7 @@ public class MeetingController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @GetMapping("/project/meeting")
+    @GetMapping("/project/{project_id}/meeting")
     public Map<Object, Object> getToken (@RequestParam String channelId, @RequestParam String userId, @RequestParam int expired_ts){
         Map<Object, Object> payloadData = new HashMap<>();
         payloadData.put("roomId", channelId);
@@ -36,7 +36,7 @@ public class MeetingController {
         String payload = payloadData.toString();
         TokenServerAssistant.VERBOSE = false;
         TokenServerAssistant.TokenInfo token = TokenServerAssistant.generateToken04(APP_ID,  userId, SECRET_KEY, expired_ts, payload);
-        System.out.println(token.data);
+        System.out.println("Token data "+token.data);
         Map<Object, Object> response = new HashMap<>();
         response.put("token", token.data);
         return response;

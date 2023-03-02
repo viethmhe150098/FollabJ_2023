@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createProjectFailed, createProjectStart, createProjectSuccess, getProjectFailed, getProjectStart, getProjectSuccess } from "./projectSlice";
 
-const projectUrl =() => "http://localhost:8080/project/";
+const projectUrl =(project_id) => "http://localhost:8080/project/"+project_id;
 
 export const fetchProjectsByUserId = (user_id) => axios.get("http://localhost:8080/"+user_id,{
     headers : {

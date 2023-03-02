@@ -8,28 +8,24 @@ import ProjectImg1 from "../../assets/img/projects/1.png";
 
 import { useDispatch } from "react-redux";
 import { setCurrentProjectId, setCurrentProjectUserRole } from "../../Redux/project/projectSlice";
-import { getProjectMembersByProjectId } from "../../Redux/project/projectActions";
+import { getProjectMembersByProjectId, getProjectsByUserId } from "../../Redux/project/projectActions";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const Projects = () => {
 
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const user_id = 3
 
-  const user_id = 3;
+  useEffect(() => {
+      dispatch(getProjectsByUserId(user_id))
+  }, [])
 
-  const projects = [
-    {
-      id: 1,
-      name: "Project 1"
-    },
-    {
-      id: 18,
-      name: "Project 18"
-    }
-  ]
+  const projects = useSelector((state) => state.project.projects.allProjects)
+
 
   const setCurrentProject = (project_id) => {
 

@@ -10,7 +10,7 @@ const projectSlice = createSlice({
             members: []
         },
         projects: {
-            allProjects:null,
+            allProjects:[],
             isFetching:false,
             error:false
         },
@@ -46,7 +46,7 @@ const projectSlice = createSlice({
             state.currentProject.id = action.payload;
         },
         setCurrentProjectUserRole : (state, action) => {
-            state.currentProject.userRole = action.payload.userRole;
+            state.currentProject.userRole = action.payload;
         },
     },
     extraReducers: (builder) => {
