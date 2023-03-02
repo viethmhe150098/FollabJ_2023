@@ -8,7 +8,6 @@ import com.follabj_be.follabj_be.repository.FileMetaRepository;
 import com.follabj_be.follabj_be.repository.ProjectRepository;
 import com.follabj_be.follabj_be.repository.UserRepository;
 import com.follabj_be.follabj_be.service.FileMetaInterface;
-import lombok.AllArgsConstructor;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -24,15 +23,23 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
-@AllArgsConstructor
-public class FileMetaService implements FileMetaInterface {
-    private AmazonS3Service amazonS3Service;
 
-    private FileMetaRepository fileMetaRepository;
-    private ProjectRepository projectRepository;
-    private UserRepository userRepository;
+public class FileMetaService implements FileMetaInterface {
+    private final AmazonS3Service amazonS3Service;
+
+    private final FileMetaRepository fileMetaRepository;
+    private final ProjectRepository projectRepository;
+    private final UserRepository userRepository;
     @Value("${aws.s3.bucket.name}")
     private String bucketName;
+
+    public FileMetaService(AmazonS3Service amazonS3Service, FileMetaRepository fileMetaRepository, ProjectRepository projectRepository, UserRepository userRepository) {
+        this.amazonS3Service = amazonS3Service;
+        this.fileMetaRepository = fileMetaRepository;
+        this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
+    }
+
     @Override
     public void upload(MultipartFile file, Long p_id, Long u_id) throws IOException {
         if (file.isEmpty()) throw new IllegalStateException("Cannot upload empty file");

@@ -28,7 +28,7 @@ public class FileMeta {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "project_id", referencedColumnName = "id")
+    @JoinColumn(name = "p_id", referencedColumnName = "id")
     private Project project;
 
     @ManyToOne
