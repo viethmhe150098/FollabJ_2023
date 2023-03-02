@@ -22,8 +22,7 @@ public class UserController {
     @GetMapping("/find")
     @PreAuthorize("hasAuthority('LEADER')")
     public List<UserDTO> findUserInfoByEmail(@RequestParam String email_cha){
-        List<UserDTO> list = userService.findUsersByEmail(email_cha);
-        return list;
+        return userService.findUsersByEmail(email_cha);
     }
 
     @GetMapping("{user_id}/invitation")
