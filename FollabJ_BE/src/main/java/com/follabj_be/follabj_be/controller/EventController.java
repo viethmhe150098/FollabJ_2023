@@ -5,8 +5,8 @@ import com.follabj_be.follabj_be.dto.EventDTO;
 import com.follabj_be.follabj_be.entity.Event;
 import com.follabj_be.follabj_be.entity.Project;
 import com.follabj_be.follabj_be.service.impl.EventService;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,12 +15,10 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@AllArgsConstructor
 public class EventController {
 
-    @Autowired
     EventService eventService;
-
-    @Autowired
     private ModelMapper modelMapper;
 
     @GetMapping("/project/{project_id}/events")
@@ -61,12 +59,8 @@ public class EventController {
     @GetMapping("/project/{project_id}/events/{event_id}")
     public EventDTO getEventById(@PathVariable Long event_id) {
         Optional<Event> optionalEvent = eventService.getEventById(event_id);
-        if (optionalEvent.isPresent()) {
-            EventDTO eventDTO = modelMapper.map(optionalEvent.get(), EventDTO.class);
-            return eventDTO;
-        }
+        return optionalEvent.map(event -> modelMapper.map(event, EventDTO.class)).orElse(null);
 
-        return null;
     }
 
     @RequestMapping(
