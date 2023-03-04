@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
 public class TaskController {
 
     final
@@ -57,10 +57,7 @@ public class TaskController {
         return optionalTask.map(task -> modelMapper.map(task, TaskDTO.class)).orElse(null);
 
     }
-    @RequestMapping(
-            method=RequestMethod.PUT,
-            path = "/project/{project_id}/leader/tasks/{task_id}/update"
-    )
+    @PutMapping("/project/{project_id}/leader/tasks/{task_id}/update\"")
     @PreAuthorize("hasAuthority('LEADER')")
     public Task updateTask(@RequestBody Task task,@PathVariable Long project_id,@PathVariable Long task_id) {
         task.setProject(new Project());
@@ -68,10 +65,7 @@ public class TaskController {
         return taskService.updateTask(task_id, task);
     }
 
-    @RequestMapping(
-            method=RequestMethod.DELETE,
-            path = "/project/{project_id}/leader/tasks/{task_id}/delete"
-    )
+    @DeleteMapping("/project/{project_id}/leader/tasks/{task_id}/delete")
     @PreAuthorize("hasAuthority('LEADER')")
     public void deleteTask(@PathVariable Long task_id) {
         taskService.deleteTask(task_id);
@@ -86,10 +80,7 @@ public class TaskController {
         taskService.addAssigneeToTask(task_id, assignee_id);
     }
 
-    @RequestMapping(
-            method=RequestMethod.DELETE,
-            path = "/project/{project_id}/leader/tasks/{task_id}/remove"
-    )
+    @DeleteMapping("/project/{project_id}/leader/tasks/{task_id}/remove")
     @PreAuthorize("hasAuthority('LEADER')")
     public void removeAssigneeFromTask(@PathVariable Long task_id, @RequestParam Long assignee_id) {
         taskService.removeAssigneeFromTask(task_id, assignee_id);
