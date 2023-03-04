@@ -6,6 +6,7 @@ import com.follabj_be.follabj_be.service.impl.FileMetaService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +20,7 @@ public class FileController {
     private FileMetaService fileMetaService;
 
     @GetMapping("/project/{project_id}")
+    @PreAuthorize("hasAuthority('ACTIVE_USER')")
     public ResponseEntity <Map<Object, Object>> getAllFiles(@PathVariable  Long project_id, @RequestParam int page){
         Map<Object, Object> response = new HashMap<>();
         Page<FileMeta> listFile = fileMetaService.list(project_id, page);
@@ -31,6 +33,7 @@ public class FileController {
     }
 
     @PostMapping("/project/{project_id}/upload")
+    @PreAuthorize("hasAuthority('ACTIVE_USER')")
     public String upload(
             @RequestParam("file") MultipartFile file, @PathVariable Long project_id, @RequestParam Long u_id) throws IOException {
         fileMetaService.upload(file, project_id, u_id);
@@ -38,6 +41,7 @@ public class FileController {
     }
 
     @GetMapping("/project/{project_id}/download/{id}")
+    @PreAuthorize("hasAuthority('ACTIVE_USER')")
     @ResponseBody
     public HttpEntity<byte[]> download(@PathVariable Long project_id,@PathVariable Long id) throws
             IOException {
