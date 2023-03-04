@@ -3,16 +3,14 @@ import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import Popup from "reactjs-popup";
-import AddTaskModal from "../Modals/AddTask";
+import AddTaskModal from "../../components/Modals/AddTask";
 import { useDispatch } from "react-redux";
 import { getTasksByProjectId } from "../../Redux/task/taskActions";
 import { useSelector } from "react-redux";
 // import { ShowTasksApi} from "../../Redux/actions"
 import { ToastContainer, toast } from 'react-toastify';
-import { useHistory } from "react-router";
 
 import 'react-toastify/dist/ReactToastify.css';
-import { setCurrentProjectUserRole } from "../../Redux/project/projectSlice";
 
 const Kanban = () => {
     
@@ -27,7 +25,6 @@ const Kanban = () => {
     if (projectId == null) {
         // history.push("/projects")
         window.location.href = "/projects";
-
     }
 
     useEffect(() => {

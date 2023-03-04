@@ -9,6 +9,7 @@ import AboutProject from './screens/ProjectWorkspace/AboutProject'
 import ProjectManagement from "./screens/ProjectWorkspace/ProjectManagement";
 import UserProfile from './screens/UserProfile';
 import Meeting from './screens/ProjectWorkspace/Meeting';
+import FileWorkspace from './screens/ProjectWorkspace/File';
 // import Register from "./screens/Register.jsx";
 
 
@@ -47,6 +48,10 @@ export default function App() {
             <Meeting />
           </Route>
 
+          <Route path="/files">
+            <ProjectManagement />
+          </Route>
+
           {/* Task */}
           {/* <Route path="/notes">
             <TaskManagement />
@@ -67,7 +72,7 @@ export default function App() {
 
           {/* Meeting */}
           <Route path="/events">
-          <ProjectManagement />
+            <ProjectManagement />
           </Route>
 
           {/* <Route path="/projects">

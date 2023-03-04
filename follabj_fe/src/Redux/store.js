@@ -4,6 +4,7 @@ import { taskReducer } from "./task/taskReducers";
 import { eventReducer } from "./event/eventReducers";
 import projectReducer from "./project/projectSlice";
 import { responseMessageReducer } from "./responseMessage/messageReducers";
+import { fileReducer } from "./file/fileReducers";
 
 export default configureStore({
     reducer:{
@@ -11,6 +12,7 @@ export default configureStore({
         auth: authReducer,
         project: projectReducer,
         task : taskReducer,
-        event : eventReducer
+        event : eventReducer,
+        file : fileReducer
     },
 })

@@ -11,7 +11,8 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import Kanban from "../../components/Sections/Kanban";
+import Kanban from "./Kanban";
+import FileWorkspace from "./File";
 
 
 
@@ -35,6 +36,11 @@ export default function TaskManagement() {
           {/* Notes */}
           <Route path="/events">
             <Calendar />
+          </Route>
+
+          {/* Notes */}
+          <Route path="/files">
+            <FileWorkspace />
           </Route>
 
           {/* Meeting */}

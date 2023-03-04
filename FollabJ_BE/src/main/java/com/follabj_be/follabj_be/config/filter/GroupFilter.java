@@ -63,6 +63,7 @@ public class GroupFilter extends GenericFilterBean {
                         throw new ObjectNotFoundException("Not found project", project_id.toString());
                     }
                 }catch (Exception e){
+                    e.printStackTrace();
                     log.error("Error logging in: {}", e.getMessage());
                     response.setStatus(401);
                     Map<String, String> tokens = new HashMap<>();

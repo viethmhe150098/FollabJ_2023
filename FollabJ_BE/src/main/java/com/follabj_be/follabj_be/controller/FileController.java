@@ -42,7 +42,7 @@ public class FileController {
     public HttpEntity<byte[]> download(@PathVariable Long project_id,@PathVariable Long id) throws
             IOException {
 
-        S3Object s3Object = fileMetaService.download(project_id,id);
+        S3Object s3Object = fileMetaService.download(id,project_id);
         String contentType = s3Object.getObjectMetadata().getContentType();
         var bytes = s3Object.getObjectContent().readAllBytes();
 

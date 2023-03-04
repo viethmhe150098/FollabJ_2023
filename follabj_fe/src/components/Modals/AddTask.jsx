@@ -288,8 +288,4 @@ border: 1px black solid;
   
 `;
 
-const BorderDatepicker = styled(DatePicker)`
-  display: inline-block;
-  border: solid black 1px;
-`
 export default AddTaskModal;
