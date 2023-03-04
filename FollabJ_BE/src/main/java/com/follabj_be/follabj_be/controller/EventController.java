@@ -16,6 +16,7 @@ import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
+@CrossOrigin
 public class EventController {
 
     EventService eventService;
