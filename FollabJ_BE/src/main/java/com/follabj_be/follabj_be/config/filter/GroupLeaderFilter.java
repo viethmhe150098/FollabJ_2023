@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.follabj_be.follabj_be.errorMessge.CustomErrorMessage;
 import com.follabj_be.follabj_be.exception.GroupPermissionException;
 import com.follabj_be.follabj_be.repository.ProjectRepository;
 import lombok.AllArgsConstructor;
@@ -53,7 +54,7 @@ public class GroupLeaderFilter extends GenericFilterBean {
                     String email = projectRepository.findById(project_id).orElseThrow(()->new ObjectNotFoundException("Not found group", project_id.toString()))
                                     .getLeader().getEmail();
                     if(!email.equals(username)){
-                        throw new GroupPermissionException("You are not the leader of the group");
+                        throw new GroupPermissionException(CustomErrorMessage.NO_PERMISSION);
                     }
                     filterChain.doFilter(request, response);
                 }catch (Exception e){

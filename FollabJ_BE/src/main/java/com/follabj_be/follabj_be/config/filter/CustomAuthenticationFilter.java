@@ -3,6 +3,7 @@ package com.follabj_be.follabj_be.config.filter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.follabj_be.follabj_be.errorMessge.CustomErrorMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -73,7 +74,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         response.setStatus(401);
         Map<String, String> error = new HashMap<>();
         error.put("statusCode", HttpStatus.UNAUTHORIZED.toString());
-        error.put("message", "Wrong username or password");
+        error.put("message", CustomErrorMessage.WRONG_CREDENTIAL.getCode()+":"+CustomErrorMessage.WRONG_CREDENTIAL.getMessage());
         new ObjectMapper().writeValue(response.getOutputStream(), error);
     }
 

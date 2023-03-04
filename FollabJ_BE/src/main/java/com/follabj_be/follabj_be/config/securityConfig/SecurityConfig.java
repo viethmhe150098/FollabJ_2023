@@ -37,9 +37,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http
-                .cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
-
-        http
                 .addFilter(new CustomAuthenticationFilter(authenticationManager()));
         http
                 .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
