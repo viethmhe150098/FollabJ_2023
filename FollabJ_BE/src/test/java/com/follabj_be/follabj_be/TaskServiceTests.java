@@ -63,7 +63,6 @@ public class TaskServiceTests {
     public void Task_TestGetTaskById() {
         Long taskID = 1L;
         Optional<Task> task = Optional.of(Task.builder().id(taskID).build());
-        //task.setId(taskID);
         Mockito.when(taskRepository.findById(taskID)).thenReturn(task);
         Optional<Task> foundTask = taskService.getTaskById(taskID);
         assertThat(task).isEqualTo(foundTask);
