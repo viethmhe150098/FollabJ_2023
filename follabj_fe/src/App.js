@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 // Screens
-import Home from "./screens/Landing/Home"
 import ProjectList from "./screens/ProjectList/ProjectList"
 import Login from "./screens/Authen/Login.jsx";
 import SignUp from './screens/Authen/SignUp.jsx';
@@ -19,6 +18,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import Landing from './screens/Landing/Landing';
 
 
 
@@ -86,7 +86,7 @@ export default function App() {
           </Route>
           {/* Landing */}
           <Route exact path="/">
-            <Home />
+            <Landing />
           </Route>
 
         </Switch>

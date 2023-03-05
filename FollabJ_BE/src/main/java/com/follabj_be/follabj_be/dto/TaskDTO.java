@@ -24,8 +24,6 @@ public class TaskDTO {
 
     private String label;
 
-    private String category;
-
     private Date startDate;
 
     private Date endDate;

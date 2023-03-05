@@ -25,8 +25,6 @@ public class Task {
 
     private String label;
 
-    private String category;
-
     private Date startDate;
 
     private Date endDate;

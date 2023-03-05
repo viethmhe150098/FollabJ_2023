@@ -58,6 +58,7 @@ public class GroupLeaderFilter extends GenericFilterBean {
                     }
                     filterChain.doFilter(request, response);
                 }catch (Exception e){
+                    e.printStackTrace();
                     log.error("Error logging in: {}", e.getMessage());
                     response.setStatus(401);
                     Map<String, String> tokens = new HashMap<>();

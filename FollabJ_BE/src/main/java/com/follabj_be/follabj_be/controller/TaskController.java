@@ -5,6 +5,7 @@ import com.follabj_be.follabj_be.entity.Project;
 import com.follabj_be.follabj_be.entity.Task;
 import com.follabj_be.follabj_be.service.impl.TaskService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,11 +14,11 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
+@CrossOrigin
 public class TaskController {
 
-    final
-    TaskService taskService;
+    @Autowired
+    final TaskService taskService;
 
     private final ModelMapper modelMapper;
 
@@ -57,12 +58,14 @@ public class TaskController {
         return optionalTask.map(task -> modelMapper.map(task, TaskDTO.class)).orElse(null);
 
     }
-    @PutMapping("/project/{project_id}/leader/tasks/{task_id}/update\"")
+    @PutMapping("/project/{project_id}/leader/tasks/{task_id}/update")
     @PreAuthorize("hasAuthority('LEADER')")
-    public Task updateTask(@RequestBody Task task,@PathVariable Long project_id,@PathVariable Long task_id) {
+    public TaskDTO updateTask(@RequestBody Task task,@PathVariable Long project_id,@PathVariable Long task_id) {
         task.setProject(new Project());
         task.getProject().setId(project_id);
-        return taskService.updateTask(task_id, task);
+        Task updatedTask = taskService.updateTask(task_id, task);
+        TaskDTO taskDTO = modelMapper.map(updatedTask, TaskDTO.class);
+        return taskDTO;
     }
 
     @DeleteMapping("/project/{project_id}/leader/tasks/{task_id}/delete")

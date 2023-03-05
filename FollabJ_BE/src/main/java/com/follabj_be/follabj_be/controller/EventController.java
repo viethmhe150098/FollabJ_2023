@@ -7,6 +7,7 @@ import com.follabj_be.follabj_be.entity.Project;
 import com.follabj_be.follabj_be.service.impl.EventService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,8 @@ import java.util.Optional;
 @CrossOrigin
 public class EventController {
 
-    EventService eventService;
+    @Autowired
+    final EventService eventService;
     private ModelMapper modelMapper;
 
     @GetMapping("/project/{project_id}/events")

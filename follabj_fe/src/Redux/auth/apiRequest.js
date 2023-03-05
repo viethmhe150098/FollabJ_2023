@@ -16,22 +16,24 @@ export const loginUser = async(user,dispatch,navigate) =>{
                                               }
                                         });
 
-        console.log(res.data);
+        //console.log(res.data);
         const access_token = res.data.access_token;
         const refresh_token = res.data.refresh_token;
         localStorage.setItem("access_token", access_token);
-        console.log(res.data.access_token);
+        //console.log("access_token ", res.data.access_token);
         localStorage.setItem("refresh_token", refresh_token);
-        console.log(res.data.refresh_token);
+        //console.log("refresh_token", res.data.refresh_token);
+        
+        localStorage.setItem("expire_date", new Date().getTime() + 10*60*1000)
 
         const decodedToken = jwtDecode(localStorage.getItem('access_token'));
-        console.log(decodedToken);
+        //console.log('decoded token '+decodedToken);
 
         const role_name = decodedToken.roles;
         if (role_name.includes('LEADER')) {
             localStorage.setItem("role_name", role_name);
           }
-        console.log(role_name);
+        //console.log("role_name", role_name);
 
 
         //console.log(res)

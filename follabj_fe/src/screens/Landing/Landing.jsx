@@ -8,10 +8,8 @@ import Pricing from "../../components/Sections/Pricing";
 import Contact from "../../components/Sections/Contact";
 import Footer from "../../components/Sections/Footer"
 import About from "../../components/Sections/About"
-import { useDispatch } from 'react-redux';
-import { getProjectsByUserId } from '../../Redux/project/projectActions';
-import { useEffect } from 'react';
-export default function LoggedLanding() {
+
+export default function Landing() {
   
   return (
     <>

@@ -2,7 +2,7 @@ package com.follabj_be.follabj_be;
 import com.follabj_be.follabj_be.entity.Task;
 import com.follabj_be.follabj_be.repository.TaskAssigneeRepository;
 import com.follabj_be.follabj_be.repository.TaskRepository;
-import com.follabj_be.follabj_be.service.TaskService;
+import com.follabj_be.follabj_be.service.impl.TaskService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

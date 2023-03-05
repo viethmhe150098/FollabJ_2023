@@ -7,6 +7,7 @@ import com.follabj_be.follabj_be.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -41,7 +42,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .cors()
-                .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
+                .configurationSource(request -> {
+                    CorsConfiguration config = new CorsConfiguration().applyPermitDefaultValues();
+                    config.addAllowedMethod(HttpMethod.PUT);
+                    config.addAllowedMethod(HttpMethod.DELETE);
+                    return config;
+                });
         http
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
