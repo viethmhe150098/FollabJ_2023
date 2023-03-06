@@ -1,6 +1,5 @@
 package com.follabj_be.follabj_be.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,7 +12,8 @@ import java.util.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class AppUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,6 +37,7 @@ public class AppUser implements UserDetails {
     @ManyToMany(mappedBy = "members")
     @JsonIgnore
     private Set<Project> projects;
+
     public AppUser(String username, String email, String password, int status, Set<Role> roles) {
         this.username = username;
         this.email = email;
@@ -54,8 +55,8 @@ public class AppUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> authorities = new HashSet<>();
-        for (Role r: roles
-             ) {
+        for (Role r : roles
+        ) {
             authorities.add(new SimpleGrantedAuthority(r.getName()));
         }
         return authorities;

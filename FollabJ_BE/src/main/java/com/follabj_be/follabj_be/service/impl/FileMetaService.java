@@ -48,7 +48,7 @@ public class FileMetaService implements FileMetaInterface {
         metadata.put("Content-Type", file.getContentType());
         metadata.put("Content-Length", String.valueOf(file.getSize()));
 
-        String path = String.format("%s/%s/%s", bucketName, p_id,UUID.randomUUID());
+        String path = String.format("%s/%s/%s", bucketName, p_id, UUID.randomUUID());
         String fileName = String.format("%s", file.getOriginalFilename());
 
         // Uploading file to s3
@@ -57,16 +57,16 @@ public class FileMetaService implements FileMetaInterface {
         Date local = new Date();
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         String uploadDate = dateFormat.format(local);
-        Project p = projectRepository.findById(p_id).orElseThrow(()->new ObjectNotFoundException("Project not found", p_id.toString()));
+        Project p = projectRepository.findById(p_id).orElseThrow(() -> new ObjectNotFoundException("Project not found", p_id.toString()));
         AppUser ap = userRepository.getAppUserById(u_id);
         // Saving metadata to db
-        fileMetaRepository.save(new FileMeta(fileName,path,uploadDate, p, ap));
+        fileMetaRepository.save(new FileMeta(fileName, path, uploadDate, p, ap));
     }
 
     @Override
     public S3Object download(Long id, Long p_id) {
         FileMeta fileMeta = fileMetaRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        return amazonS3Service.download(fileMeta.getFilePath(),fileMeta.getFileName());
+        return amazonS3Service.download(fileMeta.getFilePath(), fileMeta.getFileName());
     }
 
     @Override

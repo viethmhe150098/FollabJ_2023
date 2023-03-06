@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+
 @Service
 public class RegistrationService implements RegistrationInterface {
     private final UserInterface userInterface;
@@ -28,23 +29,24 @@ public class RegistrationService implements RegistrationInterface {
         this.tokenInterface = tokenInterface;
         this.emailSender = emailSender;
     }
+
     @Override
     public String register(RegistrationRequest request) {
         Set<Role> roles = new HashSet<>();
         roles.add(new Role(0L, AppUserRole.INACTIVE_USER.toString()));
-            String tokenForNewUser = userInterface.signUpUser(new AppUser(
-                    request.getUsername(),
-                    request.getEmail(),
-                    request.getPassword(),
-                    0,
-                    roles
-                    ));
+        String tokenForNewUser = userInterface.signUpUser(new AppUser(
+                request.getUsername(),
+                request.getEmail(),
+                request.getPassword(),
+                0,
+                roles
+        ));
 
-            //Since, we are running the spring boot application in localhost, we are hardcoding the
-            //url of the server. We are creating a POST request with token param
-            String link = "http://localhost:8080/confirm?token=" + tokenForNewUser;
-            emailSender.sendEmail(request.getEmail(), buildEmail(request.getUsername(), link));
-            return tokenForNewUser;
+        //Since, we are running the spring boot application in localhost, we are hardcoding the
+        //url of the server. We are creating a POST request with token param
+        String link = "http://localhost:8080/confirm?token=" + tokenForNewUser;
+        emailSender.sendEmail(request.getEmail(), buildEmail(request.getUsername(), link));
+        return tokenForNewUser;
     }
 
     @Override
@@ -67,7 +69,7 @@ public class RegistrationService implements RegistrationInterface {
         }
 
         tokenInterface.setConfirmedAt(token);
-        userInterface.enableAppUser(confirmToken.get().getAppUser().getEmail(),1);
+        userInterface.enableAppUser(confirmToken.get().getAppUser().getEmail(), 1);
         userInterface.activeUser(confirmToken.get().getAppUser().getId());
         //Returning confirmation message if the token matches
         return "Your email is confirmed. Thank you for using our service!";

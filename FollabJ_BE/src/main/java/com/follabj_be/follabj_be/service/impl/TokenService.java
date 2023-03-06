@@ -15,14 +15,17 @@ public class TokenService implements TokenInterface {
     public TokenService(TokenRepository confirmationTokenRepository) {
         this.tokenRepository = confirmationTokenRepository;
     }
+
     @Override
     public void saveConfirmationToken(ConfirmToken token) {
         tokenRepository.save(token);
     }
+
     @Override
     public Optional<ConfirmToken> getToken(String token) {
         return tokenRepository.findByToken(token);
     }
+
     @Override
     public int setConfirmedAt(String token) {
         return tokenRepository.updateConfirmedAt(token, LocalDateTime.now());

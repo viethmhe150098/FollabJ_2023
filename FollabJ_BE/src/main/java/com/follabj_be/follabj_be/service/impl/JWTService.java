@@ -31,8 +31,8 @@ public class JWTService implements JWTInterface {
     @Override
     public Map<String, String> getRefreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
-        if(authorizationHeader!=null && authorizationHeader.startsWith("Bearer ")){
-            try{
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            try {
                 String refreshToken = authorizationHeader.substring("Bearer ".length()); //get token after bearer
                 Algorithm algorithm = Algorithm.HMAC256("viet".getBytes());
                 JWTVerifier verifier = JWT.require(algorithm).build();
@@ -41,7 +41,7 @@ public class JWTService implements JWTInterface {
                 AppUser user = userService.getUserByEmail(username);
                 String accessToken = JWT.create()
                         .withSubject(user.getUsername())
-                        .withExpiresAt(new Date(System.currentTimeMillis()+ 10*60*1000)) //10m
+                        .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000)) //10m
                         .withClaim("roles", user.getRoles().stream().map(Role::getName).collect(Collectors.toList()))
                         .sign(algorithm);
                 Map<String, String> tokens = new HashMap<>();
@@ -49,7 +49,7 @@ public class JWTService implements JWTInterface {
                 tokens.put("refresh token", refreshToken);
                 return tokens;
 
-            }catch (JwtException e){
+            } catch (JwtException e) {
                 response.setHeader("error", e.getMessage());
                 response.setStatus(403);
                 Map<String, String> error = new HashMap<>();
@@ -57,7 +57,7 @@ public class JWTService implements JWTInterface {
                 return error;
             }
 
-        }else{
+        } else {
             throw new RuntimeException("Refresh token is missing");
         }
     }

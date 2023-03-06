@@ -20,7 +20,7 @@ import java.util.Map;
 public class ProjectController {
     private final ProjectService projectService;
 
-    @PostMapping (value = "/createproject")
+    @PostMapping(value = "/createproject")
     @PreAuthorize("hasAuthority('LEADER')")
     public ResponseEntity<Project> createProject(@RequestBody CreateProjectDTO createProjectDTO) throws GroupException {
 
@@ -36,17 +36,17 @@ public class ProjectController {
         res.put("status", HttpStatus.OK.toString());
         res.put("message", "Send Invitation success");
 
-        return new ResponseEntity<>(res, HttpStatus.OK) ;
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @GetMapping(value= "/project/{p_id}/members")
+    @GetMapping(value = "/project/{p_id}/members")
     public List<UserDTO> getProjectMembersByProjectId(@PathVariable Long p_id) {
         return projectService.getMembersByProjectId(p_id);
     }
 
     @GetMapping(value = "/{u_id}")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
-    public ResponseEntity<Map<Object, Object>> getProjectByUserId(@PathVariable Long u_id){
+    public ResponseEntity<Map<Object, Object>> getProjectByUserId(@PathVariable Long u_id) {
         List<Project> projects = projectService.getProjectByUserId(u_id);
         Map<Object, Object> res = new HashMap<>();
         res.put("status", HttpStatus.OK.toString());
@@ -56,31 +56,31 @@ public class ProjectController {
 
     @DeleteMapping(value = "/project/{p_id}/leader")
     @PreAuthorize("hasAuthority('LEADER')")
-    public ResponseEntity<Map<Object, Object>> deleteProject(@PathVariable Long p_id){
+    public ResponseEntity<Map<Object, Object>> deleteProject(@PathVariable Long p_id) {
         Map<Object, Object> res = new HashMap<>();
         res.put("status", HttpStatus.OK);
         projectService.deleteProject(p_id);
-        res.put("message", "deleted project with id ="+p_id);
+        res.put("message", "deleted project with id =" + p_id);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @PutMapping(value = "/project/{p_id}/leader")
     @PreAuthorize("hasAuthority('LEADER')")
-    public ResponseEntity<Map<Object, Object>> editProject(@PathVariable Long p_id, @RequestBody CreateProjectDTO createProjectDTO){
+    public ResponseEntity<Map<Object, Object>> editProject(@PathVariable Long p_id, @RequestBody CreateProjectDTO createProjectDTO) {
         projectService.editProject(p_id, createProjectDTO);
         Map<Object, Object> res = new HashMap<>();
         res.put("status", HttpStatus.OK);
-        res.put("message", "deleted project with id ="+p_id);
+        res.put("message", "deleted project with id =" + p_id);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @PutMapping(value = "/project/{p_id}/leader/member/{u_id}")
     @PreAuthorize("hasAuthority('LEADER')")
-    public ResponseEntity<Map<Object, Object>> deleteMember(@PathVariable Long p_id, @PathVariable Long u_id){
+    public ResponseEntity<Map<Object, Object>> deleteMember(@PathVariable Long p_id, @PathVariable Long u_id) {
         projectService.deleteMember(p_id, u_id);
         Map<Object, Object> res = new HashMap<>();
         res.put("status", HttpStatus.OK);
-        res.put("message", "Deleted member with Id: "+u_id);
+        res.put("message", "Deleted member with Id: " + u_id);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }

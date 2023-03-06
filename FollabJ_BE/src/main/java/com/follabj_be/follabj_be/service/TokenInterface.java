@@ -6,6 +6,8 @@ import java.util.Optional;
 
 public interface TokenInterface {
     void saveConfirmationToken(ConfirmToken token);
+
     Optional<ConfirmToken> getToken(String token);
+
     int setConfirmedAt(String token);
 }

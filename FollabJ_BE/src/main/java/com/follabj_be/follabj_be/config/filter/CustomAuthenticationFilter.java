@@ -14,7 +14,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
@@ -28,9 +27,10 @@ import java.util.stream.Collectors;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
-public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
+public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
+
     public CustomAuthenticationFilter(AuthenticationManager authenticationManager, UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
@@ -41,7 +41,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         log.info("User with username: {} and password: {} is login", username, password);
-        UsernamePasswordAuthenticationToken authenticationToken= new UsernamePasswordAuthenticationToken(username, password);
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
         return authenticationManager.authenticate(authenticationToken);
     }
 
@@ -53,14 +53,14 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         Algorithm algorithm = Algorithm.HMAC256("viet".getBytes());
         String access_token = JWT.create() //create access token
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis()+ 60*60*1000))//10m
+                .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 60 * 1000))//10m
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 //get user roles
                 .sign(algorithm);
 
         String refresh_token = JWT.create() //create refresh token
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis()+ 60*60*1000))//60m
+                .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 60 * 1000))//60m
                 .sign(algorithm);
         //send token back to user as JSON
         Map<String, String> tokens = new HashMap<>();
@@ -77,7 +77,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         response.setStatus(401);
         Map<String, String> error = new HashMap<>();
         error.put("statusCode", HttpStatus.UNAUTHORIZED.toString());
-        error.put("message", CustomErrorMessage.WRONG_CREDENTIAL.getCode()+":"+CustomErrorMessage.WRONG_CREDENTIAL.getMessage());
+        error.put("message", CustomErrorMessage.WRONG_CREDENTIAL.getCode() + ":" + CustomErrorMessage.WRONG_CREDENTIAL.getMessage());
         new ObjectMapper().writeValue(response.getOutputStream(), error);
     }
 

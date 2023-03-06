@@ -29,12 +29,12 @@ public class Event {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
-    @JoinColumn(name="project_id",referencedColumnName = "id")
+    @JoinColumn(name = "project_id", referencedColumnName = "id")
     private Project project;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name="event_participant",
+            name = "event_participant",
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )

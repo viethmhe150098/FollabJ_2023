@@ -1,7 +1,5 @@
 package com.follabj_be.follabj_be.dto;
 
-import com.follabj_be.follabj_be.entity.AppUser;
-import com.follabj_be.follabj_be.entity.Project;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +7,6 @@ import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,5 +30,5 @@ public class TaskDTO {
     private UserDTO reporter;
 
     private List<UserDTO> assigneeList;
-    
+
 }

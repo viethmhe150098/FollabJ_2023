@@ -1,7 +1,6 @@
 package com.follabj_be.follabj_be.service;
 
 import com.follabj_be.follabj_be.dto.CreateEventDTO;
-import com.follabj_be.follabj_be.dto.EventDTO;
 import com.follabj_be.follabj_be.entity.Event;
 
 import java.util.List;

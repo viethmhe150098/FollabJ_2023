@@ -35,30 +35,30 @@ public class MeetingService implements MeetingInterface {
 
     @Override
     public String generateRoomId(Long project_id, int type) throws NoTypeException {
-        Project p = projectRepository.findById(project_id).orElseThrow(()->new ObjectNotFoundException("Not found project", project_id.toString()));
+        Project p = projectRepository.findById(project_id).orElseThrow(() -> new ObjectNotFoundException("Not found project", project_id.toString()));
         String project_name = p.getName();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         String create_at = dtf.format(now);
-        String encoded = project_name+create_at;
+        String encoded = project_name + create_at;
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
 
             byte[] roomCode = digest.digest(encoded.getBytes(StandardCharsets.UTF_8));
 
-                if (type == 1) {
-                    String meeting_id = bytesToHex(roomCode, 3);
-                    meetingRepository.save(new Meeting(meeting_id, p, meetingTypeRepository.findById(1).get()));
-                    return meeting_id;
-                }
-                if (type == 2) {
-                    String meeting_id = bytesToHex(roomCode, 4);
-                    meetingRepository.save(new Meeting(meeting_id,p, meetingTypeRepository.findById(2).get()));
-                    return meeting_id;
-                }else {
-                    throw new NoTypeException(CustomErrorMessage.TYPE01);
+            if (type == 1) {
+                String meeting_id = bytesToHex(roomCode, 3);
+                meetingRepository.save(new Meeting(meeting_id, p, meetingTypeRepository.findById(1).get()));
+                return meeting_id;
+            }
+            if (type == 2) {
+                String meeting_id = bytesToHex(roomCode, 4);
+                meetingRepository.save(new Meeting(meeting_id, p, meetingTypeRepository.findById(2).get()));
+                return meeting_id;
+            } else {
+                throw new NoTypeException(CustomErrorMessage.TYPE01);
 
-                }
+            }
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
@@ -68,7 +68,7 @@ public class MeetingService implements MeetingInterface {
         StringBuilder hexString = new StringBuilder(8);
         for (int i = 0; i < number; i++) {
             String hex = Integer.toHexString(0xff & hash[i]);
-            if(hex.length() == 1) {
+            if (hex.length() == 1) {
                 hexString.append('0');
             }
             hexString.append(hex);

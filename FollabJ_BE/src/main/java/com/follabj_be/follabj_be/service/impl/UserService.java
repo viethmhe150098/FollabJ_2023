@@ -60,7 +60,7 @@ public class UserService implements UserDetailsService, UserInterface {
 
         if (userExists) {
 
-            AppUser appUserPrevious =  userRepository.findAppUserByEmail(appUser.getEmail()).get();
+            AppUser appUserPrevious = userRepository.findAppUserByEmail(appUser.getEmail()).get();
             int isEnabled = appUserPrevious.getStatus();
 
             if (isEnabled == 0) {
@@ -104,7 +104,7 @@ public class UserService implements UserDetailsService, UserInterface {
         userRepository.enableAppUser(status, email);
     }
 
-    public void activeUser(Long user_id){
+    public void activeUser(Long user_id) {
         userRepository.updateRole(user_id);
     }
 
@@ -116,7 +116,7 @@ public class UserService implements UserDetailsService, UserInterface {
 
     @Override
     public List<Invitation> getAllInvitation(Long user_id) {
-        userRepository.findById(user_id).orElseThrow(()-> new ObjectNotFoundException("Not found user", user_id.toString()));
+        userRepository.findById(user_id).orElseThrow(() -> new ObjectNotFoundException("Not found user", user_id.toString()));
         return invitationRepository.findByUserId(user_id);
     }
 
