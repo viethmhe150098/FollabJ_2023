@@ -22,6 +22,7 @@ public class Note {
     private String content;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false, updatable = false)
     private Date createdDate;
 
     @UpdateTimestamp
@@ -30,7 +31,5 @@ public class Note {
     @ManyToOne
     @JoinColumn(name="creator_id",referencedColumnName = "id")
     private AppUser creator;
-    @ManyToOne
-    @JoinColumn(name="project_id", referencedColumnName ="id")
-    private Project project;
+
 }

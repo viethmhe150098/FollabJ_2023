@@ -23,5 +23,4 @@ public class NoteDTO {
 
     private UserDTO creator;
 
-    private ProjectDTO project;
 }

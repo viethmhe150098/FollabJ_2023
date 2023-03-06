@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.Access;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NoteService implements NoteInterface {
@@ -18,6 +19,11 @@ public class NoteService implements NoteInterface {
     @Override
     public List<Note> getNotesByCreatorId(Long creator_id) {
         return noteRepository.findByCreatorId(creator_id);
+    }
+
+    @Override
+    public Optional<Note> getNoteById(Long note_id) {
+        return noteRepository.findById(note_id);
     }
 
     @Override

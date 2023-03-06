@@ -4,7 +4,7 @@ import com.follabj_be.follabj_be.dto.CreateEventDTO;
 import com.follabj_be.follabj_be.entity.Event;
 import com.follabj_be.follabj_be.entity.Task;
 import com.follabj_be.follabj_be.repository.EventRepository;
-import com.follabj_be.follabj_be.service.EventService;
+import com.follabj_be.follabj_be.service.impl.EventService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
