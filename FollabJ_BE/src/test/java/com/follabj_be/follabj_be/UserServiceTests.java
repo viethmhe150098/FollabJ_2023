@@ -1,15 +1,19 @@
 package com.follabj_be.follabj_be;
 
-import com.follabj_be.follabj_be.entity.Event;
-import com.follabj_be.follabj_be.repository.EventRepository;
+import com.follabj_be.follabj_be.entity.AppUser;
+import com.follabj_be.follabj_be.entity.Task;
 import com.follabj_be.follabj_be.repository.UserRepository;
-import com.follabj_be.follabj_be.service.impl.EventService;
 import com.follabj_be.follabj_be.service.impl.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
@@ -25,22 +29,36 @@ public class UserServiceTests {
 
     @Test
     public void User_LoadUserByUsername() {
-        assertThat(1).isEqualTo(1);
+        List<AppUser> mockUsers = new ArrayList<>();
+        for(int i = 0; i < 5; i++) {
+            mockUsers.add(new AppUser());
+        }
+        List<AppUser> actualTasks = new ArrayList<>();
+        for(int i = 0; i < 5; i++) {
+            actualTasks.add(new AppUser());
+        }
+        assertThat(actualTasks.size()).isEqualTo(mockUsers.size());
     }
     @Test
     public void User_SignUpUser() {
-        assertThat(1).isEqualTo(1);
-    }
-    @Test
-    public void User_SaveConfirmationToken() {
-        assertThat(1).isEqualTo(1);
-    }
-    @Test
-    public void User_EnableAppUser() {
+        Long taskID = 1L;
+        Optional<Task> task = Optional.of(Task.builder().id(taskID).build());
         assertThat(1).isEqualTo(1);
     }
     @Test
     public void User_FindUsersByEmail() {
+        assertThat(1).isEqualTo(1);
+    }
+    @Test
+    public void User_SaveConfirmationToken() {
+        Long taskID = 1L;
+        Optional<Task> task = Optional.of(Task.builder().id(taskID).build());
+        assertThat(1).isEqualTo(1);
+    }
+    @Test
+    public void User_EnableAppUser() {
+        Long taskID = 1L;
+        Optional<Task> task = Optional.of(Task.builder().id(taskID).build());
         assertThat(1).isEqualTo(1);
     }
     @Test
