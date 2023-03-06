@@ -1,8 +1,6 @@
 package com.follabj_be.follabj_be;
-
 import com.follabj_be.follabj_be.dto.CreateEventDTO;
 import com.follabj_be.follabj_be.entity.Event;
-import com.follabj_be.follabj_be.entity.Task;
 import com.follabj_be.follabj_be.repository.EventRepository;
 import com.follabj_be.follabj_be.service.impl.EventService;
 import org.junit.jupiter.api.Test;
@@ -11,12 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -50,7 +44,6 @@ public class EventServiceTests {
     public void Event_TestGetEventById() {
         Long eventID = 1L;
         Optional<Event> event = Optional.of(Event.builder().id(eventID).build());
-        //task.setId(taskID);
         Mockito.when(eventRepository.findById(eventID)).thenReturn(event);
         Optional<Event> foundEvent = eventService.getEventById(eventID);
         assertThat(event).isEqualTo(foundEvent);
