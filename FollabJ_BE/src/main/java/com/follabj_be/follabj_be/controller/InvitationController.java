@@ -1,7 +1,7 @@
 package com.follabj_be.follabj_be.controller;
 
 import com.follabj_be.follabj_be.dto.UpdateStatusDTO;
-import com.follabj_be.follabj_be.service.InvitationService;
+import com.follabj_be.follabj_be.service.impl.InvitationService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

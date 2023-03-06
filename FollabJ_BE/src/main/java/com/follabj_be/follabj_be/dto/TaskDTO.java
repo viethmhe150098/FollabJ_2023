@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,13 +24,14 @@ public class TaskDTO {
 
     private String label;
 
-    private String category;
-
     private Date startDate;
 
     private Date endDate;
 
-    private UserDTO reporter;
-    private List<UserDTO> assigneeList;
+    private int statusId;
 
+    private UserDTO reporter;
+
+    private List<UserDTO> assigneeList;
+    
 }

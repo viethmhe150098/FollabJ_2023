@@ -29,7 +29,7 @@ export default function About() {
               </p>
               <ButtonsRow className="flexNullCenter" style={{ margin: "30px 0" }}>
                 <div style={{ width: "190px" }}>
-                  <RouterLink activeClass="active" style={{ padding: "10px 15px" }} to="login" spy={true} smooth={true} offset={-80}>
+                  <RouterLink style={{ padding: "10px 15px" }} to="login" offset={-80}>
                     <FullButton title="Get Started" />
                   </RouterLink>
                 </div>

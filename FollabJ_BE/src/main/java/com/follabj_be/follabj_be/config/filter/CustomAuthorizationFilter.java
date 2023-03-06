@@ -53,6 +53,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     request.setAttribute("username", username);
                     filterChain.doFilter(request, response);
                 }catch (Exception e){
+                    e.printStackTrace();
                     log.error("Error logging in: {}", e.getMessage());
                     response.setHeader("error", e.getMessage());
                     response.setStatus(401);

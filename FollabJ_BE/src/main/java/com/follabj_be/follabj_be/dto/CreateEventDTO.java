@@ -3,6 +3,7 @@ package com.follabj_be.follabj_be.dto;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,4 +21,6 @@ public class CreateEventDTO {
     private Date endDate;
 
     private Long projectId;
+
+    private List<UserDTO> participantList;
 }

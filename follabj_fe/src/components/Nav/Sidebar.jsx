@@ -18,7 +18,7 @@ import LogoIcon from "../../assets/svg/Logo";
 const Sidebar = ({ children }) => {
     const menuItem = [
         {
-            path: "/task",
+            path: "/tasks",
             name: "Tasks",
             icon: <FaTh />
         },
@@ -33,7 +33,7 @@ const Sidebar = ({ children }) => {
             icon: <FaRegChartBar />
         },
         {
-            path: "/meeting",
+            path: "/meetingCreate",
             name: "Meeting",
             icon: <FaVideo />
         },
@@ -58,12 +58,12 @@ const Sidebar = ({ children }) => {
         <div className="sidebarContainer">
             <div style={{ width: "300px"}} className="sidebar_sidebar">
                 <div className="sidebar_top_section">
-                    <RouterLink className="pointer flexNullCenter" to="/">
+                    <a className="pointer flexNullCenter" href='/'>
                         <LogoIcon />
                         <h1 style={{ marginLeft: "15px", color: "black",   fontFamily: "'Khula', sans-serif"}} className="font20 extraBold">
                             FollabiJ
                         </h1>
-                    </RouterLink>
+                    </a>
                 </div>
                 {
                     menuItem.map((item, index) => (

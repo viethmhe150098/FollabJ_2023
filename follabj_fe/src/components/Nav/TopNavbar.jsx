@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link as RouterLink } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
-import { isLoggedIn } from '../../Redux/actions/auth';
+import { isLoggedIn } from '../../Redux/auth/auth';
 
 // Components
 import Sidebar from "../Nav/MobileSideBar";
@@ -30,7 +30,7 @@ export default function TopNavbar() {
       {sidebarOpen && <Backdrop toggleSidebar={toggleSidebar} />}
       <Wrapper className="flexCenter animate whiteBg" style={y > 100 ? { height: "60px" } : { height: "80px" }}>
         <NavInner className="container flexSpaceCenter">
-          <RouterLink className="pointer flexNullCenter" to="/" smooth={true}>
+          <RouterLink className="pointer flexNullCenter" to="/">
             <LogoIcon />
             <h1 style={{ marginLeft: "15px", color: "black" }} className="font20 extraBold">
               FollabiJ
@@ -67,11 +67,11 @@ export default function TopNavbar() {
               <>
 
                 <li className="semiBold font15 pointer">
-                  <RouterLink to="projects" style={{ padding: "10px 30px 10px 0" }}>
-                    My Projects
+                  <RouterLink to="projects">
+                  <FullButton title="My Projects" border/>
                   </RouterLink>
                 </li>
-                <li className="semiBold pointer flexCenter">
+                <li className="semiBold pointer flexCenter"  style={{ marginLeft: "10px" }}>
                   <RouterLink to="/profile">
                     <FullButton title="Profile" />
                   </RouterLink>
@@ -81,7 +81,7 @@ export default function TopNavbar() {
             ) : (
               <>
                 <li className="semiBold font15 pointer">
-                  <RouterLink to="/register" style={{ padding: "10px 30px 10px 0" }}>
+                  <RouterLink to="/signup" style={{ padding: "10px 30px 10px 0" }}>
                     Sign Up
                   </RouterLink>
                 </li>
