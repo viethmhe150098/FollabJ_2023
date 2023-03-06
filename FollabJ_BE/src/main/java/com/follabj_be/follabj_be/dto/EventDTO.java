@@ -1,6 +1,5 @@
 package com.follabj_be.follabj_be.dto;
 
-import com.follabj_be.follabj_be.entity.Project;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

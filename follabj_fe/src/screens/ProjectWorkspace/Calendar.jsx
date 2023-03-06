@@ -1,10 +1,9 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom"
-import CalendarView from "../../components/Elements/CalendarView";
+import CalendarView from "../../components/Sections/CalendarView";
 import FullButton from "../../components/Buttons/FullButton";
 //import "../style/global.scss"
-import AddEvents from "../../components/Elements/AddEvents";
-import UpdateEvent from "../../components/Elements/UpdateEvent";
+import AddEvent from "../../components/Modals/AddEvent";
+// import UpdateEvent from "../../components/Elements/UpdateEvent";
 import Popup from "reactjs-popup";
 
 export default function Calendar() {
@@ -12,39 +11,16 @@ export default function Calendar() {
 
   return (
     <>
-      {/* <Router> */}
-      {/* <nav className="navbar navbar-light bg-light">
-     
-     <div className="container-fluid align-items-center">
-       <Link className="navbar-brand ms-2" to="/">
-         <h3>Agenda</h3>
-       </Link>
-       <span className="navbar-brand mb-0 h2 "><Link className="nav-link pe-0 " to={"/events/add"}>Add Event</Link></span>
-     </div>
-
-   </nav> */}
-
       <div className="">
-        {/* <span className=""><Link className="" to={"/events/add"}>Add Event</Link></span> */}
-
-
-
         <Popup modal trigger={<div style={{
           width: "100px", marginLeft:"50px"
         }}>
           <FullButton title={"Add Event"} /></div>}>
-          {close => <AddEvents close={close} />
+          {close => <AddEvent close={close} />
           }
         </Popup>
-
       </div>
       <CalendarView />
-      {/* <Switch>
-      <Route path="/events" exact element={<CalendarView/>} />
-      <Route path="/events/add" element={<AddEvents/>}/>
-      <Route path="/event/:id/update" element={<UpdateEvent/>}/>
-    </Switch>
-    </Router> */}
     </>
   );
 }

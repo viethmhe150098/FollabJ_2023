@@ -1,7 +1,5 @@
 package com.follabj_be.follabj_be.dto;
 
-import com.follabj_be.follabj_be.entity.AppUser;
-import com.follabj_be.follabj_be.entity.Project;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,8 +20,6 @@ public class TaskDTO {
     private String description;
 
     private String label;
-
-    private String category;
 
     private Date startDate;
 

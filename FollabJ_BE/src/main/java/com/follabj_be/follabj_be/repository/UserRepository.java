@@ -29,4 +29,6 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
 
     @Query("select new com.follabj_be.follabj_be.dto.UserDTO(u.id, u.username, u.email)from AppUser u where upper(u.email) like %:email_cha%")
     List<UserDTO> findByEmailLike(String email_cha);
+
+    AppUser findByEmail(String email);
 }

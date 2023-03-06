@@ -6,12 +6,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,7 +19,6 @@ public class Project {
     private String name;
     private String des;
     private String createdDate;
-
     @ManyToOne
     @JoinColumn(
             name = "leader_id"

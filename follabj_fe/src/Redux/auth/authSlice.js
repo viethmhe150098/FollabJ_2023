@@ -7,6 +7,7 @@ const authSlice = createSlice({
         login:{
             currentUser:null,
             isFetching: false,
+            expirationDate: null,
             error:false
         },
         register:{
@@ -24,6 +25,7 @@ const authSlice = createSlice({
             state.login.isFetching=false;
             state.login.currentUser = action.payload;
             state.login.error=false;
+            state.login.expirationDate = new Date().getTime() + 10*60*1000
         },
         loginFailed: (state) =>{
             state.login.isFetching=false;

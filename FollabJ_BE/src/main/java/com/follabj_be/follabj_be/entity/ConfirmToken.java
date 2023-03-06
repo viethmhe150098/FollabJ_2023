@@ -11,7 +11,8 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class ConfirmToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

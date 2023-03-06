@@ -3,6 +3,8 @@ package com.follabj_be.follabj_be.config.filter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.follabj_be.follabj_be.errorMessge.CustomErrorMessage;
+import com.follabj_be.follabj_be.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,12 +27,13 @@ import java.util.stream.Collectors;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
-public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
+public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
 
-
-    public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public CustomAuthenticationFilter(AuthenticationManager authenticationManager, UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -38,7 +41,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         log.info("User with username: {} and password: {} is login", username, password);
-        UsernamePasswordAuthenticationToken authenticationToken= new UsernamePasswordAuthenticationToken(username, password);
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
         return authenticationManager.authenticate(authenticationToken);
     }
 
@@ -50,20 +53,21 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         Algorithm algorithm = Algorithm.HMAC256("viet".getBytes());
         String access_token = JWT.create() //create access token
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis()+ 60*60*1000))//10m
+                .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 60 * 1000))//10m
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 //get user roles
                 .sign(algorithm);
 
         String refresh_token = JWT.create() //create refresh token
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis()+ 60*60*1000))//60m
+                .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 60 * 1000))//60m
                 .sign(algorithm);
         //send token back to user as JSON
         Map<String, String> tokens = new HashMap<>();
         tokens.put("access_token", access_token);
         tokens.put("refresh_token", refresh_token);
         tokens.put("email", user.getUsername());
+        tokens.put("id", userRepository.findAppUserByEmail(user.getUsername()).get().getId().toString());
         response.setContentType(APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
     }
@@ -73,7 +77,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         response.setStatus(401);
         Map<String, String> error = new HashMap<>();
         error.put("statusCode", HttpStatus.UNAUTHORIZED.toString());
-        error.put("message", "Wrong username or password");
+        error.put("message", CustomErrorMessage.WRONG_CREDENTIAL.getCode() + ":" + CustomErrorMessage.WRONG_CREDENTIAL.getMessage());
         new ObjectMapper().writeValue(response.getOutputStream(), error);
     }
 

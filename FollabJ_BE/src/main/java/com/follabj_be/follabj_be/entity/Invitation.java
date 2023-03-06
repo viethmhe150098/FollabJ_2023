@@ -10,7 +10,8 @@ import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor@Getter
+@AllArgsConstructor
+@Getter
 @Setter
 public class Invitation {
     @Id

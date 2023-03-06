@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 // Screens
-import Home from "./screens/Landing/Home"
 import ProjectList from "./screens/ProjectList/ProjectList"
 import Login from "./screens/Authen/Login.jsx";
 import SignUp from './screens/Authen/SignUp.jsx';
@@ -9,6 +8,7 @@ import AboutProject from './screens/ProjectWorkspace/AboutProject'
 import ProjectManagement from "./screens/ProjectWorkspace/ProjectManagement";
 import UserProfile from './screens/UserProfile';
 import Meeting from './screens/ProjectWorkspace/Meeting';
+import FileWorkspace from './screens/ProjectWorkspace/File';
 // import Register from "./screens/Register.jsx";
 
 
@@ -18,7 +18,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import TestParams from './components/Elements/TestParams';
+import Landing from './screens/Landing/Landing';
 
 
 
@@ -35,7 +35,7 @@ export default function App() {
             <ProjectManagement />
           </Route>
 
-          <Route path="/task">
+          <Route path="/tasks">
             <ProjectManagement />
           </Route>
 
@@ -46,6 +46,10 @@ export default function App() {
 
           <Route path="/meeting">
             <Meeting />
+          </Route>
+
+          <Route path="/files">
+            <ProjectManagement />
           </Route>
 
           {/* Task */}
@@ -68,7 +72,7 @@ export default function App() {
 
           {/* Meeting */}
           <Route path="/events">
-          <ProjectManagement />
+            <ProjectManagement />
           </Route>
 
           {/* <Route path="/projects">
@@ -82,11 +86,7 @@ export default function App() {
           </Route>
           {/* Landing */}
           <Route exact path="/">
-            <Home />
-          </Route>
-
-          <Route exact path="/projects/:project_id/tasks/:task_id">
-            <TestParams/>
+            <Landing />
           </Route>
 
         </Switch>

@@ -11,6 +11,17 @@ export const getEventsByProjectId = createAsyncThunk("FETCH_EVENTS_BY_PRJ_ID", a
     }
 })
 
+export const getEventsByUserId = createAsyncThunk("FETCH_EVENTS_BY_USER_ID", async (user_id) => {
+    try {
+        const response = await eventAPI.fetchEventsByUserId(user_id)
+        return response.data
+
+    } catch (error) {
+        //console.log(error)
+        throw error
+    }
+})
+
 export const getEventById = createAsyncThunk("FETCH_EVENT_BY_EVENT_ID", async (event_id) => {
     try {
         const response = await eventAPI.fetchEventsByProjectId(event_id)
