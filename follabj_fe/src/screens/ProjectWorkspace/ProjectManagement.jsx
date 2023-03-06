@@ -5,6 +5,7 @@ import AboutProject from "./AboutProject";
 // import Note from "../components/Sections/Note";
 import MeetingCreation from "../ProjectWorkspace/MeetingCreation";
 import Calendar from "../ProjectWorkspace/Calendar";
+import Note from "./NoteList";
 
 import {
   BrowserRouter as Router,
@@ -29,9 +30,9 @@ export default function TaskManagement() {
           </Route>
 
           {/* Notes */}
-          {/* <Route path="/notes">
+          <Route path="/notes">
             <Note />
-          </Route> */}
+          </Route>
           
           {/* Notes */}
           <Route path="/events">

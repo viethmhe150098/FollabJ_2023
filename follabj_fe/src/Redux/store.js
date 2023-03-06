@@ -5,6 +5,7 @@ import { eventReducer } from "./event/eventReducers";
 import projectReducer from "./project/projectSlice";
 import { responseMessageReducer } from "./responseMessage/messageReducers";
 import { fileReducer } from "./file/fileReducers";
+import { noteReducer } from "./note/noteReducers";
 
 export default configureStore({
     reducer:{
@@ -13,6 +14,7 @@ export default configureStore({
         project: projectReducer,
         task : taskReducer,
         event : eventReducer,
-        file : fileReducer
+        file : fileReducer,
+        note : noteReducer
     },
 })

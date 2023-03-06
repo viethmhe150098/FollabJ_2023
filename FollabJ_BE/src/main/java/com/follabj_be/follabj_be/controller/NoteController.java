@@ -34,7 +34,7 @@ public class NoteController {
     }
 
     @GetMapping("/notes/{user_id}/{note_id}")
-    public NoteDTO getNotesByUserId(@PathVariable Long user_id,@PathVariable Long note_id) {
+    public NoteDTO getNoteByNoteId(@PathVariable Long user_id,@PathVariable Long note_id) {
         Optional<Note> optinalNote = noteService.getNoteById(note_id);
 
         if (optinalNote.isPresent()) {
