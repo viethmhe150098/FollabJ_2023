@@ -1,5 +1,6 @@
 package com.follabj_be.follabj_be.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter@Setter
 public class LeaderRequest {
-    enum requestStatus {
+    public enum requestStatus {
         PENDING,
         ACCEPT,
         REJECT
@@ -23,6 +24,7 @@ public class LeaderRequest {
 
     @ManyToOne
     @JoinColumn(name = "u_id", referencedColumnName = "id")
+    @JsonIgnore
     private AppUser user;
     private String user_fullname;
     private String user_id_number;

@@ -8,7 +8,12 @@ import com.follabj_be.follabj_be.repository.UserRepository;
 import com.follabj_be.follabj_be.service.LeaderRequestInterface;
 import lombok.AllArgsConstructor;
 import org.hibernate.ObjectNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -17,12 +22,18 @@ public class LeaderRequestService implements LeaderRequestInterface {
     private final UserRepository userRepository;
     @Override
     public boolean isPendingRequest(Long u_id) {
-        return leaderRequestRepository.requestIsPending(u_id);
+        return leaderRequestRepository.getByStatus(u_id, 0);
     }
 
     @Override
     public void updateRequestStatus(Long req_id, int status) {
-
+        LeaderRequest l = leaderRequestRepository.findById(req_id).orElseThrow(()->new ObjectNotFoundException("Not found request", req_id.toString()));
+        if(status == 1){
+            l.setStatus(LeaderRequest.requestStatus.ACCEPT);
+        }else{
+            l.setStatus(LeaderRequest.requestStatus.REJECT);
+        }
+        leaderRequestRepository.save(l);
     }
 
     @Override
@@ -37,4 +48,12 @@ public class LeaderRequestService implements LeaderRequestInterface {
             return "The request has been sent to the administrator";
         }
     }
+
+    @Override
+    public Page<LeaderRequest> getListRequest(int page) {
+        Pageable paging = PageRequest.of(page,7);
+        return leaderRequestRepository.getPendingRequest(paging);
+    }
+
+
 }
