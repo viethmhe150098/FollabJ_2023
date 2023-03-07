@@ -17,7 +17,7 @@ public class MeetingTypeService implements MeetingTypeInterface {
     @Override
     @Bean
     public void init() {
-        if(meetingTypeRepository.findAll().isEmpty()) {
+        if (meetingTypeRepository.findAll().isEmpty()) {
             meetingTypeRepository.save(new MeetingType(1, "INSTANT"));
             meetingTypeRepository.save(new MeetingType(2, "LATER"));
         }

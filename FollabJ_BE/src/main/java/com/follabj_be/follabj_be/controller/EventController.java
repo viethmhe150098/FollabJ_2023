@@ -30,7 +30,7 @@ public class EventController {
 
         List<EventDTO> eventDTOList = new ArrayList<>();
 
-        for(Event event: eventList) {
+        for (Event event : eventList) {
             EventDTO eventDTO = modelMapper.map(event, EventDTO.class);
             eventDTOList.add(eventDTO);
         }
@@ -44,7 +44,7 @@ public class EventController {
 
         List<EventDTO> eventDTOList = new ArrayList<>();
 
-        for(Event event: eventList) {
+        for (Event event : eventList) {
             EventDTO eventDTO = modelMapper.map(event, EventDTO.class);
             eventDTOList.add(eventDTO);
         }
@@ -67,18 +67,18 @@ public class EventController {
     }
 
     @RequestMapping(
-            method=RequestMethod.PUT,
+            method = RequestMethod.PUT,
             path = "/project/{project_id}/leader/events/{event_id}/update"
     )
     @PreAuthorize("hasAuthority('LEADER')")
-    public Event updateEvent(@RequestBody Event event,@PathVariable Long project_id,@PathVariable Long event_id) {
+    public Event updateEvent(@RequestBody Event event, @PathVariable Long project_id, @PathVariable Long event_id) {
         event.setProject(new Project());
         event.getProject().setId(project_id);
         return eventService.updateEvent(event_id, event);
     }
 
     @RequestMapping(
-            method=RequestMethod.DELETE,
+            method = RequestMethod.DELETE,
             path = "/project/{project_id}/leader/events/{event_id}/delete"
     )
     @PreAuthorize("hasAuthority('LEADER')")
@@ -87,7 +87,7 @@ public class EventController {
     }
 
     @RequestMapping(
-            method=RequestMethod.POST,
+            method = RequestMethod.POST,
             path = "/project/{project_id}/leader/events/{event_id}/add"
     )
     @PreAuthorize("hasAuthority('LEADER')")
@@ -96,7 +96,7 @@ public class EventController {
     }
 
     @RequestMapping(
-            method=RequestMethod.DELETE,
+            method = RequestMethod.DELETE,
             path = "/project/{project_id}/leader/events/{event_id}/remove"
     )
     @PreAuthorize("hasAuthority('LEADER')")

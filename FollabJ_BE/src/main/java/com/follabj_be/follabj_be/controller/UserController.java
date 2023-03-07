@@ -21,13 +21,13 @@ public class UserController {
 
     @GetMapping("/find")
     @PreAuthorize("hasAuthority('LEADER')")
-    public List<UserDTO> findUserInfoByEmail(@RequestParam String email_cha){
+    public List<UserDTO> findUserInfoByEmail(@RequestParam String email_cha) {
         return userService.findUsersByEmail(email_cha);
     }
 
     @GetMapping("{user_id}/invitation")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
-    public ResponseEntity<List<Invitation>> getInvitations(@PathVariable Long user_id){
+    public ResponseEntity<List<Invitation>> getInvitations(@PathVariable Long user_id) {
         List<Invitation> list = userService.getAllInvitation(user_id);
 
         return new ResponseEntity<>(list, HttpStatus.OK);

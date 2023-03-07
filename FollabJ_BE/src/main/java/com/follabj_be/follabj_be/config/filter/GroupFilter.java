@@ -10,11 +10,9 @@ import com.follabj_be.follabj_be.errorMessge.CustomErrorMessage;
 import com.follabj_be.follabj_be.exception.GroupPermissionException;
 import com.follabj_be.follabj_be.repository.ProjectRepository;
 import lombok.extern.slf4j.Slf4j;
-
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
-import org.springframework.web.servlet.HandlerMapping;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -43,27 +41,27 @@ public class GroupFilter extends GenericFilterBean {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        if(request.getRequestURL().toString().contains("/project")){
-            String param_p_id = request.getRequestURI().toString().substring(9,10);
+        if (request.getRequestURL().toString().contains("/project")) {
+            String param_p_id = request.getRequestURI().toString().substring(9, 10);
             Long project_id = Long.valueOf(param_p_id);
             String authorizationHeader = request.getHeader("AUTHORIZATION");
-            if(authorizationHeader!=null && authorizationHeader.startsWith("Bearer ")){
-                try{
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+                try {
                     String access_token = authorizationHeader.substring("Bearer ".length());
                     Algorithm algorithm = Algorithm.HMAC256("viet".getBytes());
                     JWTVerifier verifier = JWT.require(algorithm).build();
                     //decoded token from header
                     DecodedJWT decodedJWT = verifier.verify(access_token);
                     String username = decodedJWT.getSubject();
-                    if(projectRepository.findById(project_id).isPresent()) {
+                    if (projectRepository.findById(project_id).isPresent()) {
                         List<AppUser> members_list = projectRepository.getMembersById(project_id);
                         Optional<AppUser> member = members_list.stream().filter(user -> user.getEmail().equals(username)).findAny();
                         member.orElseThrow(() -> new GroupPermissionException(CustomErrorMessage.NO_PERMISSION));
                         filterChain.doFilter(request, response);
-                    }else{
+                    } else {
                         throw new ObjectNotFoundException("Not found project", project_id.toString());
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                     log.error("Error logging in: {}", e.getMessage());
                     response.setStatus(401);
@@ -72,8 +70,8 @@ public class GroupFilter extends GenericFilterBean {
                     response.setContentType(APPLICATION_JSON_VALUE);
                     new ObjectMapper().writeValue(response.getOutputStream(), tokens);
                 }
-        }
-    }else{
+            }
+        } else {
             filterChain.doFilter(request, response);
         }
     }

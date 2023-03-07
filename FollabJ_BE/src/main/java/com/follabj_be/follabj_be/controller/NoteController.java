@@ -1,14 +1,13 @@
 package com.follabj_be.follabj_be.controller;
 
 import com.follabj_be.follabj_be.dto.NoteDTO;
-import com.follabj_be.follabj_be.dto.TaskDTO;
 import com.follabj_be.follabj_be.entity.AppUser;
 import com.follabj_be.follabj_be.entity.Note;
-import com.follabj_be.follabj_be.entity.Task;
 import com.follabj_be.follabj_be.service.impl.NoteService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +24,7 @@ public class NoteController {
     public List<NoteDTO> getNotesByUserId(@PathVariable Long user_id) {
         List<Note> noteList = noteService.getNotesByCreatorId(user_id);
         List<NoteDTO> noteDTOList = new ArrayList<>();
-        for (Note note: noteList) {
+        for (Note note : noteList) {
             NoteDTO noteDTO = modelMapper.map(note, NoteDTO.class);
             noteDTOList.add(noteDTO);
         }
@@ -34,7 +33,7 @@ public class NoteController {
     }
 
     @GetMapping("/notes/{user_id}/{note_id}")
-    public NoteDTO getNoteByNoteId(@PathVariable Long user_id,@PathVariable Long note_id) {
+    public NoteDTO getNoteByNoteId(@PathVariable Long user_id, @PathVariable Long note_id) {
         Optional<Note> optinalNote = noteService.getNoteById(note_id);
 
         if (optinalNote.isPresent()) {

@@ -30,7 +30,7 @@ public class Note {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
     @ManyToOne
-    @JoinColumn(name="creator_id",referencedColumnName = "id")
+    @JoinColumn(name = "creator_id", referencedColumnName = "id")
     private AppUser creator;
 
 }

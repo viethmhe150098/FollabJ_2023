@@ -8,8 +8,11 @@ import java.util.List;
 
 public interface UserInterface {
     String signUpUser(AppUser appUser);
+
     void saveConfirmationToken(AppUser appUser, String token);
+
     void enableAppUser(String email, int status);
+
     void activeUser(Long user_id);
 
     List<UserDTO> findUsersByEmail(String email_cha);

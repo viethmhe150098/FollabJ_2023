@@ -14,12 +14,14 @@ import org.springframework.stereotype.Service;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.Optional;
+
 @Service
 @Slf4j
 @AllArgsConstructor
 public class AmazonS3Service implements AmazonS3Interface {
 
     private AmazonS3 amazonS3;
+
     @Override
     public PutObjectResult upload(String path, String fileName, Optional<Map<String, String>> optionalMetaData, InputStream inputStream) {
         ObjectMetadata objectMetadata = new ObjectMetadata();
@@ -37,7 +39,6 @@ public class AmazonS3Service implements AmazonS3Interface {
     public S3Object download(String path, String fileName) {
         return amazonS3.getObject(path, fileName);
     }
-
 
 
 }

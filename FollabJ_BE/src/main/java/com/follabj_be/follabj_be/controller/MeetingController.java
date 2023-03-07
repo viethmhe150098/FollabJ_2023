@@ -17,6 +17,7 @@ public class MeetingController {
     private final long APP_ID = Long.parseLong(System.getenv("APP_ID"));
     private final String SECRET_KEY = System.getenv("SECRET_KEY");
     private final MeetingService meetingService;
+
     @PostMapping("/project/{p_id}/meeting")
     public ResponseEntity<Map<Object, Object>> getRoomCode(@PathVariable Long p_id, @RequestParam int type) throws NoTypeException {
         Map<Object, Object> res = new HashMap<>();
@@ -25,7 +26,7 @@ public class MeetingController {
     }
 
     @GetMapping("/project/{project_id}/meeting")
-    public Map<Object, Object> getToken (@RequestParam String channelId, @RequestParam String userId, @RequestParam int expired_ts){
+    public Map<Object, Object> getToken(@RequestParam String channelId, @RequestParam String userId, @RequestParam int expired_ts) {
         Map<Object, Object> payloadData = new HashMap<>();
         payloadData.put("roomId", channelId);
         Map<Object, Object> privilege = new HashMap<>();
@@ -35,8 +36,8 @@ public class MeetingController {
         payloadData.put("stream_id_list", null);
         String payload = payloadData.toString();
         TokenServerAssistant.VERBOSE = false;
-        TokenServerAssistant.TokenInfo token = TokenServerAssistant.generateToken04(APP_ID,  userId, SECRET_KEY, expired_ts, payload);
-        System.out.println("Token data "+token.data);
+        TokenServerAssistant.TokenInfo token = TokenServerAssistant.generateToken04(APP_ID, userId, SECRET_KEY, expired_ts, payload);
+        System.out.println("Token data " + token.data);
         Map<Object, Object> response = new HashMap<>();
         response.put("token", token.data);
         return response;

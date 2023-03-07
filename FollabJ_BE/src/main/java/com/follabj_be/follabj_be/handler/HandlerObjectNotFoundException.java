@@ -1,6 +1,5 @@
 package com.follabj_be.follabj_be.handler;
 
-import com.follabj_be.follabj_be.exception.GroupPermissionException;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;

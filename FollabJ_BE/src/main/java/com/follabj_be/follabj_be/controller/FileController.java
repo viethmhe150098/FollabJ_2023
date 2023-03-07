@@ -21,7 +21,7 @@ public class FileController {
 
     @GetMapping("/project/{project_id}")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
-    public ResponseEntity <Map<Object, Object>> getAllFiles(@PathVariable  Long project_id, @RequestParam int page){
+    public ResponseEntity<Map<Object, Object>> getAllFiles(@PathVariable Long project_id, @RequestParam int page) {
         Map<Object, Object> response = new HashMap<>();
         Page<FileMeta> listFile = fileMetaService.list(project_id, page);
         response.put("status", HttpStatus.OK);
@@ -43,10 +43,10 @@ public class FileController {
     @GetMapping("/project/{project_id}/download/{id}")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
     @ResponseBody
-    public HttpEntity<byte[]> download(@PathVariable Long project_id,@PathVariable Long id) throws
+    public HttpEntity<byte[]> download(@PathVariable Long project_id, @PathVariable Long id) throws
             IOException {
 
-        S3Object s3Object = fileMetaService.download(id,project_id);
+        S3Object s3Object = fileMetaService.download(id, project_id);
         String contentType = s3Object.getObjectMetadata().getContentType();
         var bytes = s3Object.getObjectContent().readAllBytes();
 

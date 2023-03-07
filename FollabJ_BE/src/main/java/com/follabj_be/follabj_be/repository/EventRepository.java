@@ -1,6 +1,5 @@
 package com.follabj_be.follabj_be.repository;
 
-import com.follabj_be.follabj_be.dto.EventDTO;
 import com.follabj_be.follabj_be.entity.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
-    
+
     List<Event> findByParticipantListId(Long user_id);
 
     @Query(value = "Select e from Event e where e.project.id=?1")

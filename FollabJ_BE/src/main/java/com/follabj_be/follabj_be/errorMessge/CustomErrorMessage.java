@@ -8,7 +8,8 @@ public class CustomErrorMessage {
     public static final CustomErrorMessage WRONG_CREDENTIAL = new CustomErrorMessage("FL04", "WRONG_CREDENTIAL");
     private final String code;
     private final String message;
-    private CustomErrorMessage(String code, String message){
+
+    private CustomErrorMessage(String code, String message) {
         this.code = code;
         this.message = message;
     }

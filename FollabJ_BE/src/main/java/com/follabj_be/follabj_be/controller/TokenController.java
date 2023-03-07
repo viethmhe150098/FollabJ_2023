@@ -22,7 +22,7 @@ public class TokenController {
 
     @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Map<String, String> message = jwtService.getRefreshToken(request,response);
+        Map<String, String> message = jwtService.getRefreshToken(request, response);
         response.setContentType(APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), message);
     }

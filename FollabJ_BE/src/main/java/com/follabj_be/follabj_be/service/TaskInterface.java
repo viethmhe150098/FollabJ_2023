@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface TaskInterface {
-    List<Task> getAllTasks() ;
+    List<Task> getAllTasks();
 
-    List<Task> getTasksByProjectId(Long projectId) ;
+    List<Task> getTasksByProjectId(Long projectId);
 
-    Task addTask(Task task) ;
+    Task addTask(Task task);
 
     Task updateTask(Long id, Task task);
 

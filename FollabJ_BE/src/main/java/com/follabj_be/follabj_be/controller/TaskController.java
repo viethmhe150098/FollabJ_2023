@@ -31,7 +31,7 @@ public class TaskController {
     public List<TaskDTO> getTasksByProjectId(@PathVariable Long project_id) {
         List<Task> taskList = taskService.getTasksByProjectId(project_id);
         List<TaskDTO> taskDTOList = new ArrayList<>();
-        for (Task task: taskList) {
+        for (Task task : taskList) {
             TaskDTO taskDTO = modelMapper.map(task, TaskDTO.class);
             taskDTOList.add(taskDTO);
         }
@@ -40,13 +40,13 @@ public class TaskController {
     }
 
     @GetMapping("/task")
-    public List<Task>  getAllTasks() {
+    public List<Task> getAllTasks() {
         return taskService.getAllTasks();
     }
 
     @PostMapping("/project/{project_id}/leader/tasks")
     @PreAuthorize("hasAuthority('LEADER')")
-    public Task addTask(@RequestBody Task task,@PathVariable Long project_id) {
+    public Task addTask(@RequestBody Task task, @PathVariable Long project_id) {
         task.setProject(new Project());
         task.getProject().setId(project_id);
         return taskService.addTask(task);
@@ -58,9 +58,10 @@ public class TaskController {
         return optionalTask.map(task -> modelMapper.map(task, TaskDTO.class)).orElse(null);
 
     }
+
     @PutMapping("/project/{project_id}/leader/tasks/{task_id}/update")
     @PreAuthorize("hasAuthority('LEADER')")
-    public TaskDTO updateTask(@RequestBody Task task,@PathVariable Long project_id,@PathVariable Long task_id) {
+    public TaskDTO updateTask(@RequestBody Task task, @PathVariable Long project_id, @PathVariable Long task_id) {
         task.setProject(new Project());
         task.getProject().setId(project_id);
         Task updatedTask = taskService.updateTask(task_id, task);
@@ -75,7 +76,7 @@ public class TaskController {
     }
 
     @RequestMapping(
-            method=RequestMethod.POST,
+            method = RequestMethod.POST,
             path = "/project/{project_id}/leader/tasks/{task_id}/add"
     )
     @PreAuthorize("hasAuthority('LEADER')")

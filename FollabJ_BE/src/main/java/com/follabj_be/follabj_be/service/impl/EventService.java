@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class EventService implements EventInterface {
 
@@ -52,7 +53,7 @@ public class EventService implements EventInterface {
 
         List<AppUser> userList = new ArrayList<>();
 
-        for (UserDTO userDTO: createEventDTO.getParticipantList()) {
+        for (UserDTO userDTO : createEventDTO.getParticipantList()) {
             AppUser user = new AppUser();
             user.setId(userDTO.getId());
             userList.add(user);

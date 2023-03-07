@@ -17,6 +17,7 @@ public class InvitationService implements InvitationInterface {
     private final InvitationRepository invitationRepository;
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
+
     public InvitationService(InvitationRepository invitationRepository, ProjectRepository projectRepository, UserRepository userRepository) {
         this.invitationRepository = invitationRepository;
         this.projectRepository = projectRepository;
@@ -26,10 +27,10 @@ public class InvitationService implements InvitationInterface {
 
     @Override
     public void updateStatus(int status, Long i_id) {
-        Invitation i =  invitationRepository.findById(i_id).orElseThrow(()->new ObjectNotFoundException("Not found invitation", i_id.toString()));
+        Invitation i = invitationRepository.findById(i_id).orElseThrow(() -> new ObjectNotFoundException("Not found invitation", i_id.toString()));
         invitationRepository.updateStatus(status, i_id);
-        if(status == 1){
-            Project p = projectRepository.findByNameLike(i.getContent()).orElseThrow(()-> new ObjectNotFoundException("Not found object", i.getContent()));
+        if (status == 1) {
+            Project p = projectRepository.findByNameLike(i.getContent()).orElseThrow(() -> new ObjectNotFoundException("Not found object", i.getContent()));
             Set<AppUser> members = p.getMembers();
             members.add(i.getTo());
             p.setMembers(members);

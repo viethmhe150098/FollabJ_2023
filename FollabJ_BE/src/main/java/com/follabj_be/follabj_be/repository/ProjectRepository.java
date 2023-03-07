@@ -3,7 +3,6 @@ package com.follabj_be.follabj_be.repository;
 import com.follabj_be.follabj_be.entity.AppUser;
 import com.follabj_be.follabj_be.entity.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -22,7 +21,8 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     Optional<Project> findByNameLike(String name);
 
     Optional<Project> findById(Long id);
-    @Query(nativeQuery = true, value="Select project_id from project_members where user_id = ?1")
+
+    @Query(nativeQuery = true, value = "Select project_id from project_members where user_id = ?1")
     List<Long> findByUserId(Long id);
 
     void deleteProjectById(Long id);

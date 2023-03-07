@@ -9,6 +9,8 @@ import java.io.IOException;
 
 public interface FileMetaInterface {
     void upload(MultipartFile file, Long p_id, Long u_id) throws IOException;
+
     S3Object download(Long id, Long p_id);
+
     Page<FileMeta> list(Long p_id, int page);
 }
