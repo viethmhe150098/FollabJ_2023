@@ -36,7 +36,6 @@ public class GroupLeaderFilter extends GenericFilterBean {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String leaderURI = request.getRequestURI();
-        String servletPath = request.getServletPath();
         log.info(leaderURI);
 
         if(leaderURI.contains("leader")){

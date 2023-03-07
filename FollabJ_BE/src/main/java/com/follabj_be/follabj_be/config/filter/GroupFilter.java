@@ -10,11 +10,9 @@ import com.follabj_be.follabj_be.errorMessge.CustomErrorMessage;
 import com.follabj_be.follabj_be.exception.GroupPermissionException;
 import com.follabj_be.follabj_be.repository.ProjectRepository;
 import lombok.extern.slf4j.Slf4j;
-
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
-import org.springframework.web.servlet.HandlerMapping;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -44,7 +42,7 @@ public class GroupFilter extends GenericFilterBean {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         if(request.getRequestURL().toString().contains("/project")){
-            String param_p_id = request.getRequestURI().toString().substring(9,10);
+            String param_p_id = request.getRequestURI().substring(9,10);
             Long project_id = Long.valueOf(param_p_id);
             String authorizationHeader = request.getHeader("AUTHORIZATION");
             if(authorizationHeader!=null && authorizationHeader.startsWith("Bearer ")){
