@@ -32,8 +32,7 @@ public class NoteService implements NoteInterface {
     }
 
     @Override
-    public Note updateNote(Long id, Note note) {
-        note.setId(id);
+    public Note updateNote(Note note) {
         return noteRepository.save(note);
     }
 

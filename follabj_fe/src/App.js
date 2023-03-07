@@ -48,15 +48,17 @@ export default function App() {
             <Meeting />
           </Route>
 
-          <Route path="/files">
+          <Route path="/notes">
             <ProjectManagement />
           </Route>
 
-          {/* Task */}
-          {/* <Route path="/notes">
-            <TaskManagement />
+          <Route exact path="/noteEdit">
+            <ProjectManagement />
           </Route>
-          </Route> */}
+
+          <Route path="/files">
+            <ProjectManagement />
+          </Route>
 
           <Route path="/login">
             <Login />

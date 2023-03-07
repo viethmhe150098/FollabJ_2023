@@ -46,7 +46,7 @@ const CalendarView = () => {
     useEffect(()=>{
       if (events.length == 0)
       dispatch(getEventsByUserId(3));
-      notify();
+      // notify();
     },[])
 
     const message = useSelector((state) => state.responseMessage)

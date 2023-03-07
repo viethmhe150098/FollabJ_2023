@@ -136,7 +136,7 @@ const CreateEventForm = ({type, close, event}) => {
                             </div>
                         ))}
                     </div>
-                    <button type="submit">Create Event</button>
+                    {modalType==null && (<button type="submit">Create Event</button>)}
                 </form>
             </div>
         </Modal>

@@ -16,6 +16,8 @@ const AddTaskModal = ({type, close, statusId=1, task}) => {
 
     const project_id = useSelector((state) => state.project.currentProject.id);
 
+    const userRole = useSelector((state) => state.project.currentProject.userRole);
+
     //console.log(user_id == members[0].id)
 
     const [title, setTitle] = useState("");
@@ -119,8 +121,11 @@ const AddTaskModal = ({type, close, statusId=1, task}) => {
                 </a>
                 {modalType=="readonly" && (<>
                   <h2>View Task</h2>
+                  { userRole == "LEADER" &&
+                  ( <>
                   <button onClick={() => handleUpdate()} className='greenBg font25 radius6 lightColor tag'>Update</button>
                   <button onClick={() => handleDelete()} className='darkBg font25 radius6 lightColor tag'>Delete</button>
+                  </>)}
                 </>)}
                 {modalType=="update" && (
                   <>

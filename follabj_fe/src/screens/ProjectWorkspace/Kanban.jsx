@@ -20,7 +20,7 @@ const Kanban = () => {
 
     const projectId = useSelector((state) => state.project.currentProject.id);
 
-    // const history = useHistory();
+    const userRole = useSelector((state) => state.project.currentProject.userRole);
 
     if (projectId == null) {
         // history.push("/projects")
@@ -29,7 +29,7 @@ const Kanban = () => {
 
     useEffect(() => {
         dispatch(getTasksByProjectId(projectId));
-        notify();
+        // notify();
     }, [])
 
     
@@ -141,9 +141,11 @@ const Kanban = () => {
                                         {...provided.droppableProps}
                                     >
                                     <SectionTitle>{column.title}</SectionTitle>
+                                    {userRole == "LEADER" &&
                                     <Popup modal trigger={<Card style={{ cursor: "pointer" }}><p className="extraBold" style={{ color: "#434242" }}>+ Add Task</p></Card>}>
                                        {close => <AddTaskModal close={close} statusId={column.id}/>}
                                     </Popup>
+                                    }
                                     <SectionContent>
                                         {
                                             tasks.map((task, index) => task.statusId == column.id ? (

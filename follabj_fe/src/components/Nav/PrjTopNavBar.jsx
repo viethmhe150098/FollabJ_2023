@@ -23,6 +23,7 @@ export default function PrjTopNavBar() {
     };
   }, [y]);
 
+  const roles = localStorage.getItem("role_name")
 
   return (
     <>
@@ -41,6 +42,7 @@ export default function PrjTopNavBar() {
           </BurderWrapper>
           <UlWrapper className="flexNullCenter">
           </UlWrapper>
+          { roles.includes("LEADER") &&
           <UlWrapperRight className="flexNullCenter">
 
             <Popup modal trigger={<li className="semiBold pointer font15 flexCenter">
@@ -49,6 +51,7 @@ export default function PrjTopNavBar() {
               {close => <Content close={close} />}
             </Popup>
           </UlWrapperRight>
+        }
         </NavInner>
       </Wrapper>
     </>

@@ -15,13 +15,13 @@ export const fetchNotesByNoteId = (user_id, note_id) => axios.get(noteUrl(user_i
     }
 });
 
-export const addNote = (user_id) => axios.post(noteUrl(user_id),{
+export const addNote = (user_id, post) => axios.post(noteUrl(user_id),post,{
     headers : {
         'Authorization' : "Bearer "+ localStorage.getItem("access_token")
     }
 });
 
-export const updateNote = (user_id) => axios.put(noteUrl(user_id),{
+export const updateNote = (user_id, post) => axios.put(noteUrl(user_id),post,{
     headers : {
         'Authorization' : "Bearer "+ localStorage.getItem("access_token")
     }

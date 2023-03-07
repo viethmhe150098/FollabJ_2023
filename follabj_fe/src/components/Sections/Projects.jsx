@@ -26,6 +26,7 @@ const Projects = () => {
 
   const projects = useSelector((state) => state.project.projects.allProjects)
 
+  const roles = localStorage.getItem("role_name")
 
   const setCurrentProject = (project_id) => {
 
@@ -62,11 +63,11 @@ const Projects = () => {
               </div>)
             }
           </div>
-          <div className="row flexCenter">
+          {/* <div className="row flexCenter">
             <div style={{ margin: "50px 0", width: "200px" }}>
               <FullButton title="Load More" action={() => alert("clicked")} />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </Wrapper>

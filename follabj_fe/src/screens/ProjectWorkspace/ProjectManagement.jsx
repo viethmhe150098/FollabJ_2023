@@ -5,7 +5,7 @@ import AboutProject from "./AboutProject";
 // import Note from "../components/Sections/Note";
 import MeetingCreation from "../ProjectWorkspace/MeetingCreation";
 import Calendar from "../ProjectWorkspace/Calendar";
-import Note from "./NoteList";
+import Note from "./Note";
 
 import {
   BrowserRouter as Router,
@@ -14,6 +14,7 @@ import {
 } from "react-router-dom";
 import Kanban from "./Kanban";
 import FileWorkspace from "./File";
+import NoteEditor from "./NoteEditor";
 
 
 
@@ -34,6 +35,10 @@ export default function TaskManagement() {
             <Note />
           </Route>
           
+          <Route exact path="/noteEdit">
+            <NoteEditor />
+          </Route>
+
           {/* Notes */}
           <Route path="/events">
             <Calendar />

@@ -27,12 +27,12 @@ export const loginUser = async(user,dispatch,navigate) =>{
         localStorage.setItem("expire_date", new Date().getTime() + 10*60*1000)
 
         const decodedToken = jwtDecode(localStorage.getItem('access_token'));
-        //console.log('decoded token '+decodedToken);
+        console.log('decoded token '+JSON.stringify(decodedToken));
 
         const role_name = decodedToken.roles;
-        if (role_name.includes('LEADER')) {
-            localStorage.setItem("role_name", role_name);
-          }
+        
+        localStorage.setItem("role_name", role_name);
+        
         //console.log("role_name", role_name);
 
 
