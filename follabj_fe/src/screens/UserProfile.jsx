@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import AuthenNavBar from "../components/Nav/AuthenNavbar"
 import styled from "styled-components";
-
+import { useHistory } from "react-router";
 
 const UserProfile = () => {
-
-
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const history = useHistory();
     //handle logout hear
-    const handleLogout = () => { };
+    const handleLogout = () => { 
+        
+        localStorage.clear();
+        setIsLoggedIn(false);
+        history.push('/login');
 
+    };
+    
     return (
         <>
             <Wrapper>
