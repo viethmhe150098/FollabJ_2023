@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import Popup from "reactjs-popup";
-import AddTaskModal from "../../components/Modals/AddTask";
+import AddTaskModal from "../../../components/Modals/AddTask";
 import { useDispatch } from "react-redux";
-import { getTasksByProjectId } from "../../Redux/task/taskActions";
+import { getTasksByProjectId } from "../../../Redux/task/taskActions";
 import { useSelector } from "react-redux";
 // import { ShowTasksApi} from "../../Redux/actions"
 import { ToastContainer, toast } from 'react-toastify';

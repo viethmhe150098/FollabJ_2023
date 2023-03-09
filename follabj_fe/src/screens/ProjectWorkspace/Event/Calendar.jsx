@@ -1,8 +1,8 @@
 import React from "react";
-import CalendarView from "../../components/Sections/CalendarView";
-import FullButton from "../../components/Buttons/FullButton";
+import CalendarView from "../../../components/Sections/CalendarView";
+import FullButton from "../../../components/Buttons/FullButton";
 //import "../style/global.scss"
-import AddEvent from "../../components/Modals/AddEvent";
+import AddEvent from "../../../components/Modals/AddEvent";
 // import UpdateEvent from "../../components/Elements/UpdateEvent";
 import Popup from "reactjs-popup";
 import { useSelector } from "react-redux";

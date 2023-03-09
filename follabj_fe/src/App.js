@@ -4,11 +4,10 @@ import React, { useState } from 'react';
 import ProjectList from "./screens/ProjectList/ProjectList"
 import Login from "./screens/Authen/Login.jsx";
 import SignUp from './screens/Authen/SignUp.jsx';
-import AboutProject from './screens/ProjectWorkspace/AboutProject'
+import AboutProject from './screens/ProjectWorkspace/About/AboutProject'
 import ProjectManagement from "./screens/ProjectWorkspace/ProjectManagement";
 import UserProfile from './screens/UserProfile';
-import Meeting from './screens/ProjectWorkspace/Meeting';
-import FileWorkspace from './screens/ProjectWorkspace/File';
+import Meeting from './screens/ProjectWorkspace/Meeting/Meeting';
 // import Register from "./screens/Register.jsx";
 
 
@@ -57,6 +56,10 @@ export default function App() {
           </Route>
 
           <Route path="/files">
+            <ProjectManagement />
+          </Route>
+
+          <Route path="/chat">
             <ProjectManagement />
           </Route>
 

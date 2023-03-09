@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Editor } from "react-draft-wysiwyg";
-import { ContentState, EditorState } from "draft-js";
+import { ContentState, convertToRaw, EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useHistory, useLocation } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { updateNote } from '../../Redux/note/noteActions';
+import { updateNote } from '../../../Redux/note/noteActions';
 
 
 
@@ -37,7 +37,8 @@ const NoteEditor = () => {
     dispatch(updateNote({user_id, note: updatedNote}))
 
     history.push("/notes")
-    //console.log(editorState.getCurrentContent().getPlainText())
+    //console.log(convertToRaw(editorState.getCurrentContent()))
+    //console.log(updatedNote)
   }
 
   return (<div>

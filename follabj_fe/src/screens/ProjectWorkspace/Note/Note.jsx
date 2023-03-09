@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 // Components
-import NoteBox from "../../components/Elements/NoteBox";
-import FullButton from "../../components/Buttons/FullButton";
+import NoteBox from "../../../components/Elements/NoteBox";
+import FullButton from "../../../components/Buttons/FullButton";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import { getNotesByUserId } from "../../Redux/note/noteActions";
+import { getNotesByUserId } from "../../../Redux/note/noteActions";
 import { useSelector } from "react-redux";
-import NoteModal from "../../components/Modals/NoteModal";
+import NoteModal from "../../../components/Modals/NoteModal";
 import Popup from "reactjs-popup";
 
 export default function Note() {

@@ -1,8 +1,8 @@
 
 import styled from "styled-components";
 // Components
-import ProjectBox from "../Elements/ProjectBox";
-import FullButton from "../Buttons/FullButton";
+import ProjectBox from "../../components/Elements/ProjectBox";
+import FullButton from "../../components/Buttons/FullButton";
 // Assets
 import ProjectImg1 from "../../assets/img/projects/1.png";
 
@@ -28,17 +28,19 @@ const Projects = () => {
 
   const roles = localStorage.getItem("role_name")
 
+  const members = useSelector((state) => state.project.currentProject.members)
+
   const setCurrentProject = (project_id) => {
 
       dispatch(setCurrentProjectId(project_id));
       
       dispatch(getProjectMembersByProjectId(project_id));
 
-      // if (user_id == members[0].id) {
-      //   dispatch(setCurrentProjectUserRole("LEADER"))
-      // } else {
-      //   dispatch(setCurrentProjectUserRole("ACTIVE_USER"))
-      // }
+      if (user_id == members[0].id) {
+        dispatch(setCurrentProjectUserRole("LEADER"))
+      } else {
+        dispatch(setCurrentProjectUserRole("ACTIVE_USER"))
+      }
 
       history.push("/tasks")
   }

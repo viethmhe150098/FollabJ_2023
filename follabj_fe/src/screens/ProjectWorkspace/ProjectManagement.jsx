@@ -1,20 +1,20 @@
 // import Kanban from "../../components/Sections/Kanban";
-import AddTask from "../../components/Modals/AddTask";
 import Sidebar from "../../components/Nav/Sidebar";
-import AboutProject from "./AboutProject";
+import AboutProject from "./About/AboutProject";
 // import Note from "../components/Sections/Note";
-import MeetingCreation from "../ProjectWorkspace/MeetingCreation";
-import Calendar from "../ProjectWorkspace/Calendar";
-import Note from "./Note";
+import MeetingCreation from "../ProjectWorkspace/Meeting/MeetingCreation";
+import Calendar from "../ProjectWorkspace/Event/Calendar";
+import Note from "./Note/Note";
 
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
-import Kanban from "./Kanban";
-import FileWorkspace from "./File";
-import NoteEditor from "./NoteEditor";
+import Kanban from "./Task/Kanban";
+import FileWorkspace from "./File/File";
+import NoteEditor from "./Note/NoteEditor";
+import Chat from "./Chat/Chat";
 
 
 
@@ -35,18 +35,24 @@ export default function TaskManagement() {
             <Note />
           </Route>
           
+          {/* Note Edit */}
           <Route exact path="/noteEdit">
             <NoteEditor />
           </Route>
 
-          {/* Notes */}
+          {/* Event */}
           <Route path="/events">
             <Calendar />
           </Route>
 
-          {/* Notes */}
+          {/* Files */}
           <Route path="/files">
             <FileWorkspace />
+          </Route>
+
+          {/* Chat */}
+          <Route path="/chat">
+            <Chat />
           </Route>
 
           {/* Meeting */}

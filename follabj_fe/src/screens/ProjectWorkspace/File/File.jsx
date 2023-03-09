@@ -5,11 +5,11 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { BsFileTextFill } from "react-icons/bs";
 import styled from "styled-components";
-import { getFiles } from "../../Redux/file/fileActions";
-import FullButton from "../../components/Buttons/FullButton";
-import FileModal from "../../components/Modals/FileModal";
+import { getFiles } from "../../../Redux/file/fileActions";
+import FullButton from "../../../components/Buttons/FullButton";
+import FileModal from "../../../components/Modals/FileModal";
 import Popup from "reactjs-popup";
-import { downloadFile } from "../../Redux/file/fileAPI";
+import { downloadFile } from "../../../Redux/file/fileAPI";
 
 const FileWorkspace = () => {
     const dispatch = useDispatch();
