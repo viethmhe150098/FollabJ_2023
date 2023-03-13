@@ -17,7 +17,7 @@ const CreateEventForm = ({type, close, event}) => {
 
     const [modalType, setType] = useState(type)
 
-    const user_id =3
+    const user_id = useSelector((state) => state.auth.login.currentUser.id)
     const members = useSelector((state) => state.project.currentProject.members);
 
     const project_id = useSelector((state) => state.project.currentProject.id);

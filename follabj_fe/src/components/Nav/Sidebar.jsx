@@ -58,12 +58,12 @@ const Sidebar = ({ children }) => {
         <div className="sidebarContainer">
             <div style={{ width: "300px"}} className="sidebar_sidebar">
                 <div className="sidebar_top_section">
-                    <a className="pointer flexNullCenter" href='/'>
+                    <NavLink className="pointer flexNullCenter" to='/'>
                         <LogoIcon />
                         <h1 style={{ marginLeft: "15px", color: "black",   fontFamily: "'Khula', sans-serif"}} className="font20 extraBold">
                             FollabiJ
                         </h1>
-                    </a>
+                    </NavLink>
                 </div>
                 {
                     menuItem.map((item, index) => (

@@ -80,11 +80,9 @@ export default function App() {
             <ProjectManagement />
           </Route>
 
-          {/* <Route path="/projects">
-            <ProjectList />
-          </Route> */}
+
           <Route path="/aboutProject" >
-            <AboutProject />
+            <ProjectManagement />
           </Route>
           <Route exact path="/projects">
             <ProjectList />

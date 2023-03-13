@@ -15,7 +15,7 @@ export default function Note() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const user_id = 3
+  const user_id = useSelector((state) => state.auth.login.currentUser.id)
 
   const projectId = useSelector((state) => state.project.currentProject.id);
 

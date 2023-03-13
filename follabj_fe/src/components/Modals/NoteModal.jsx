@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 import styled from "styled-components";
@@ -8,12 +9,14 @@ import FullButton from "../Buttons/FullButton"
 
 
 const NoteModal = ({close}) => {
+    
     const dispatch  = useDispatch();
     const [title, setTitle] = useState("");
 
-    const user_id = 3
+    const user_id = useSelector((state) => state.auth.login.currentUser.id)
 
     const handleSubmit = (e) => {
+      e.preventDefault()
       const note = {
         title,
         content: ""

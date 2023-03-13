@@ -21,7 +21,7 @@ import Chat from "./Chat/Chat";
 
 export default function TaskManagement() {
   return (
-    <Router>
+    <>
 
       <Sidebar>
         <Switch>
@@ -66,6 +66,6 @@ export default function TaskManagement() {
           
         </Switch>
       </Sidebar>
-    </Router>
+    </>
   );
 }

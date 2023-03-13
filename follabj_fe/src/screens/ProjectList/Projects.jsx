@@ -18,7 +18,7 @@ const Projects = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const user_id = 3
+  const user_id = useSelector((state) => state.auth.login.currentUser.id)
 
   useEffect(() => {
       dispatch(getProjectsByUserId(user_id))
@@ -36,10 +36,15 @@ const Projects = () => {
       
       dispatch(getProjectMembersByProjectId(project_id));
 
-      if (user_id == members[0].id) {
-        dispatch(setCurrentProjectUserRole("LEADER"))
-      } else {
-        dispatch(setCurrentProjectUserRole("ACTIVE_USER"))
+      while(true) {
+        if (members != []) {
+          if (user_id == members[0].id) {
+            dispatch(setCurrentProjectUserRole("LEADER"))
+          } else {
+            dispatch(setCurrentProjectUserRole("ACTIVE_USER"))
+          }
+          break
+        }
       }
 
       history.push("/tasks")

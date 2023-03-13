@@ -5,12 +5,13 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useHistory, useLocation } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { updateNote } from '../../../Redux/note/noteActions';
+import { useSelector } from 'react-redux';
 
 
 
 const NoteEditor = () => {
  
-  const user_id = 3
+  const user_id = useSelector((state) => state.auth.login.currentUser.id)
   const history = useHistory()
   const {state}= useLocation();
   const note = state
