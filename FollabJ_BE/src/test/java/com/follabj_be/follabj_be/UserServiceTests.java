@@ -41,8 +41,8 @@ public class UserServiceTests {
     }
     @Test
     public void User_SignUpUser() {
-        Long taskID = 1L;
-        Optional<Task> task = Optional.of(Task.builder().id(taskID).build());
+        Long userID = 1L;
+        Optional<AppUser> user = Optional.of(AppUser.builder().id(userID).build());
         assertThat(1).isEqualTo(1);
     }
     @Test
@@ -52,13 +52,13 @@ public class UserServiceTests {
     @Test
     public void User_SaveConfirmationToken() {
         Long taskID = 1L;
-        Optional<Task> task = Optional.of(Task.builder().id(taskID).build());
+        Optional<AppUser> task = Optional.of(AppUser.builder().id(taskID).build());
         assertThat(1).isEqualTo(1);
     }
     @Test
     public void User_EnableAppUser() {
         Long taskID = 1L;
-        Optional<Task> task = Optional.of(Task.builder().id(taskID).build());
+        Optional<AppUser> user = Optional.of(AppUser.builder().id(taskID).build());
         assertThat(1).isEqualTo(1);
     }
     @Test

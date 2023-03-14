@@ -1,11 +1,8 @@
 package com.follabj_be.follabj_be;
 
 import com.follabj_be.follabj_be.entity.Note;
-import com.follabj_be.follabj_be.entity.Task;
 import com.follabj_be.follabj_be.repository.NoteRepository;
-import com.follabj_be.follabj_be.repository.ProjectRepository;
 import com.follabj_be.follabj_be.service.impl.NoteService;
-import com.follabj_be.follabj_be.service.impl.ProjectService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -32,7 +29,7 @@ public class NoteServiceTests {
         Note note = new Note();
         note.setId(1L);
         when(noteRepository.save(note)).thenReturn(note);
-        Note updateNote = noteService.updateNote(1L, note);
+        Note updateNote = noteService.updateNote(note);
         assertThat(note).isEqualTo(updateNote);
         verify(noteRepository).save(note);
     }
