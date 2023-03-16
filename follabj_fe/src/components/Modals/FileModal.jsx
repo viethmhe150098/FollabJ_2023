@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 import styled from "styled-components";
-import { uploadFile } from "../../Redux/file/fileActions";
+import { getFiles, uploadFile } from "../../Redux/file/fileActions";
 import FullButton from "../Buttons/FullButton"
 
 
@@ -10,20 +11,20 @@ const FileModal = ({type, close}) => {
     const dispatch  = useDispatch();
     const [file, setFile] = useState(null);
 
-    const project_id = 1;
-
+    const project_id = useSelector((state)=> state.project.currentProject.id);
+    const user_id = useSelector((state)=> state.auth.login.currentUser.id);
     const handleSubmit = (e) => {
       const formData = new FormData()
       formData.append("file", file)
-      formData.append("u_id", 3)
+      formData.append("u_id", user_id)
       e.preventDefault();
       if (file != null ) {
           //console.log(file);
           dispatch(uploadFile({project_id, data: formData}));
-          
       } else {
           alert("please choose file")
       }
+
   }
 
     return (

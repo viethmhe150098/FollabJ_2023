@@ -28,6 +28,7 @@ public class ProjectService implements ProjectInterface {
     private final EventRepository eventRepository;
     private final TaskRepository taskRepository;
 
+    private final FileMetaRepository fileMetaRepository;
     private final MeetingRepository meetingRepository;
 
     @Override
@@ -100,9 +101,9 @@ public class ProjectService implements ProjectInterface {
         }
         eventRepository.deleteAll(eventRepository.findByProjectId(p_id));
         taskRepository.deleteAll(taskRepository.findByProjectId(p_id));
-
         meetingRepository.deleteAll(meetingRepository.findByProject_id(p_id));
-        projectRepository.deleteProjectById(p_id);
+        fileMetaRepository.deleteAll(fileMetaRepository.findByProjectId(p_id));
+        projectRepository.deleteById(p_id);
     }
 
     @Override

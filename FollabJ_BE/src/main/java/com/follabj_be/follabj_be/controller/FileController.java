@@ -34,10 +34,10 @@ public class FileController {
 
     @PostMapping("/project/{project_id}/upload")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
-    public String upload(
+    public FileMeta upload(
             @RequestParam("file") MultipartFile file, @PathVariable Long project_id, @RequestParam Long u_id) throws IOException {
-        fileMetaService.upload(file, project_id, u_id);
-        return "Upload Success";
+        return fileMetaService.upload(file, project_id, u_id);
+        //return "Upload Success";
     }
 
     @GetMapping("/project/{project_id}/download/{id}")

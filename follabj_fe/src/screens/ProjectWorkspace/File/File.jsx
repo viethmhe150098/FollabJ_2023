@@ -14,7 +14,7 @@ import { downloadFile } from "../../../Redux/file/fileAPI";
 const FileWorkspace = () => {
     const dispatch = useDispatch();
 
-    const project_id = 1;
+    const project_id = useSelector((state)=> state.project.currentProject.id)
     const page_number = 0;
 
     useEffect(() => {
@@ -45,20 +45,45 @@ const FileWorkspace = () => {
             })
     }
 
+    // return (
+    //     <>
+    //     <Popup modal trigger={<div style={{
+    //       width: "100px", marginLeft:"50px"
+    //     }}>
+    //       <FullButton title={"Upload File"} /></div>}>
+    //                 {close => <FileModal close={close} />}
+    //     </Popup>
+    //     <div className="container">
+            
+    //         <FileContainer>
+    //             {
+    //                 files.map((item, index) => {return (
+    //                 <FileGrid key={index} onDoubleClick={()=>handleDownload(item.id,item.fileName)}>
+                        
+    //                     <FileIcon/>
+                    
+    //                     <FileName>{item.fileName}</FileName>
+
+    //                 </FileGrid>
+    //                 )})
+    //             }
+    //         </FileContainer>
+    //     </div>
+    //     </> );
     return (
         <>
         <Popup modal trigger={<div style={{
-          width: "100px", marginLeft:"50px"
+          width: "150px", marginLeft:"50px"
         }}>
           <FullButton title={"Upload File"} /></div>}>
                     {close => <FileModal close={close} />}
         </Popup>
         <div className="container">
             
-            <FileContainer>
+            <div className="row ">
                 {
                     files.map((item, index) => {return (
-                    <FileGrid key={index} onDoubleClick={()=>handleDownload(item.id,item.fileName)}>
+                    <FileGrid className="col-lg-4 col-md-6 col-xs-12" key={index} onDoubleClick={()=>handleDownload(item.id,item.fileName)}>
                         
                         <FileIcon/>
                     
@@ -67,35 +92,16 @@ const FileWorkspace = () => {
                     </FileGrid>
                     )})
                 }
-            </FileContainer>
+            </div>
         </div>
         </> );
 }
 
-const FileContainer = styled.div`
-    display: grid;
-    grid-template-columns: auto auto auto;
-    @media (max-width: 900px) {
-        grid-template-columns: auto auto;
-    }
-    @media (max-width: 768px) {
-        grid-template-columns: auto;
-    }
-    padding-top:1.5rem;
-    padding-bottom:1.5rem;
-    gap:.25rem;
-    padding-right:3rem;
-    padding-left:3rem;
-    justify-content:flex-start;
-    
-`
 const FileGrid = styled.div`
     border: 2px solid black;
     border-radius : 0.5rem;
-    flex: 0 0 auto;
-    width: 100%;
-    margin-right:1rem;
-    margin-left:1rem;
+    margin-right: 5px;
+    max-width: 243px;
     &:hover: {
         background-color: #E5E5E5;
     }

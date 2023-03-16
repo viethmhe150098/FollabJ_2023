@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 public interface FileMetaInterface {
-    void upload(MultipartFile file, Long p_id, Long u_id) throws IOException;
+    FileMeta upload(MultipartFile file, Long p_id, Long u_id) throws IOException;
 
     S3Object download(Long id, Long p_id);
 

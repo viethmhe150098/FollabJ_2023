@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
  import { useDispatch } from "react-redux";
  import { useHistory } from "react-router";
  import { createProject } from "../../Redux/auth/apiRequest";
@@ -13,11 +14,14 @@ const CreateProject = () => {
     const dispatch = useDispatch();
     const navigate = useHistory();
 
+    const user_id = useSelector((state) => state.auth.login.currentUser.id)
+
+
     const access_token = localStorage.getItem('access_token');
     const handleSubmit = (event) => {
          event.preventDefault();
          const newProject = {
-            user_id: 3,
+             id: user_id,
              p_name: prjName,
              p_des: prjDes
          };
