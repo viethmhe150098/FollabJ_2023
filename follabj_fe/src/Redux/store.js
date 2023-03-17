@@ -1,4 +1,4 @@
-import {configureStore} from "@reduxjs/toolkit"
+import {combineReducers, configureStore} from "@reduxjs/toolkit"
 import authReducer from "./auth/authSlice";
 import { taskReducer } from "./task/taskReducers";
 import { eventReducer } from "./event/eventReducers";
@@ -7,14 +7,30 @@ import { responseMessageReducer } from "./responseMessage/messageReducers";
 import { fileReducer } from "./file/fileReducers";
 import { noteReducer } from "./note/noteReducers";
 
-export default configureStore({
-    reducer:{
-        responseMessage: responseMessageReducer,
-        auth: authReducer,
-        project: projectReducer,
-        task : taskReducer,
-        event : eventReducer,
-        file : fileReducer,
-        note : noteReducer
-    },
+import {persistReducer , persistStore} from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import thunk from "redux-thunk";
+
+const rootReducer = combineReducers({
+    responseMessage: responseMessageReducer,
+    auth: authReducer,
+    project: projectReducer,
+    task : taskReducer,
+    event : eventReducer,
+    file : fileReducer,
+    note : noteReducer
 })
+
+const persistConfig = {
+    key: 'root',
+    storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
+export const store =  configureStore({
+    reducer: persistedReducer,
+    middleware: [thunk]
+})
+
+export const persistor = persistStore(store)
