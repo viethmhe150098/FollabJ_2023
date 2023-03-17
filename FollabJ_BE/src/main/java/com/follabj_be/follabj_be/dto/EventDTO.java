@@ -24,5 +24,6 @@ public class EventDTO {
 
     private Date endDate;
 
+    private ProjectDTO project;
     private List<UserDTO> participantList;
 }
