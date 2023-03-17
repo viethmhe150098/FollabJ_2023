@@ -95,15 +95,17 @@ public class ProjectService implements ProjectInterface {
     @Transactional
     public void deleteProject(Long p_id) {
         Project p = projectRepository.findById(p_id).orElseThrow(() -> new ObjectNotFoundException("Not found project", p_id.toString()));
-        for (AppUser u : p.getMembers()
-        ) {
-            u.getProjects().remove(p);
-        }
-        eventRepository.deleteAll(eventRepository.findByProjectId(p_id));
-        taskRepository.deleteAll(taskRepository.findByProjectId(p_id));
-        meetingRepository.deleteAll(meetingRepository.findByProject_id(p_id));
-        fileMetaRepository.deleteAll(fileMetaRepository.findByProjectId(p_id));
-        projectRepository.deleteById(p_id);
+
+        System.out.println(p);
+//        for (AppUser u : p.getMembers()
+//        ) {
+//            u.getProjects().remove(p);
+//        }
+//        eventRepository.deleteAll(eventRepository.findByProjectId(p_id));
+//        taskRepository.deleteAll(taskRepository.findByProjectId(p_id));
+//        meetingRepository.deleteAll(meetingRepository.findByProject_id(p_id));
+//        fileMetaRepository.deleteAll(fileMetaRepository.findByProjectId(p_id));
+//        projectRepository.deleteById(p_id);
     }
 
     @Override

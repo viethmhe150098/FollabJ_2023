@@ -12,6 +12,9 @@ import java.util.Optional;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
+
+
+
     @Query("Select p.members from Project p where p.id=?1")
     List<AppUser> getMembersById(Long project_id);
 
@@ -20,10 +23,12 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     Optional<Project> findByNameLike(String name);
 
+    @Query(nativeQuery = true, value = "Select * from project where id = ?1 and status = 1")
     Optional<Project> findById(Long id);
 
     @Query(nativeQuery = true, value = "Select project_id from project_members where user_id = ?1")
     List<Long> findByUserId(Long id);
 
+    @Query(nativeQuery = true, value = "set status = 0 from project where id = ?1")
     void deleteProjectById(Long id);
 }
