@@ -22,15 +22,16 @@ export default function Note() {
   // const history = useHistory();
 
   if (projectId == null) {
-      // history.push("/projects")
-      window.location.href = "/projects";
+      history.push("/projects")
+      //window.location.href = "/projects";
   }
+
+  const notes = useSelector((state) => state.note)
 
   useEffect(()=>{
     dispatch(getNotesByUserId(user_id))
-  },[])
+  },[notes])
   
-  const notes = useSelector((state) => state.note)
 
   const handleNote = (note) => {
     history.push({

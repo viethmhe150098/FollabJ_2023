@@ -3,9 +3,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 import styled from "styled-components";
-import { uploadFile } from "../../Redux/file/fileActions";
 import { addNote } from "../../Redux/note/noteActions";
-import FullButton from "../Buttons/FullButton"
 
 
 const NoteModal = ({close}) => {

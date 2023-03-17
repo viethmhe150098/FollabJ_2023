@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Editor } from "react-draft-wysiwyg";
 import { ContentState, convertToRaw, EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -38,9 +38,12 @@ const NoteEditor = () => {
     dispatch(updateNote({user_id, note: updatedNote}))
 
     history.push("/notes")
+
     //console.log(convertToRaw(editorState.getCurrentContent()))
     //console.log(updatedNote)
   }
+
+
 
   return (<div>
     <button onClick={() => handleUpdate()} className='purpleBg font25 radius6 lightColor tag'>Save</button>
