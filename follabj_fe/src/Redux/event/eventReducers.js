@@ -20,6 +20,7 @@ export const eventReducer = createReducer(initialState, (builder) => {
             return state
         })
         .addCase(getEventsByUserId.fulfilled, (state, action) => {
+            state = []
             action.payload.map((event) =>{
                 const converted = {
                     title : event.title,
@@ -27,6 +28,7 @@ export const eventReducer = createReducer(initialState, (builder) => {
                     id: event.id,
                     start: moment(event.startDate).format("yyyy-MM-DD hh:mm:ss a"),
                     end: moment(event.endDate).format("yyyy-MM-DD hh:mm:ss a"),
+                    project: event.project,
                     participantList: event.participantList
                 }
                 state.push(converted)

@@ -7,10 +7,10 @@ import getDay from 'date-fns/getDay'
 import enUS from 'date-fns/locale/en-US'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useDispatch, useSelector } from 'react-redux'
-import { getEventsByUserId } from '../../Redux/event/eventActions'
+import { getEventsByUserId } from '../../../Redux/event/eventActions'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-import CreateEventForm from '../Modals/AddEvent';
+import CreateEventForm from '../../../components/Modals/AddEvent';
 import { useState } from 'react'
 import Popup from 'reactjs-popup'
 const locales = {
@@ -31,6 +31,8 @@ const CalendarView = () => {
 
     const events = useSelector((state) => state.event)
 
+    const user_id = useSelector((state) => state.auth.login.currentUser.id)
+
     const projectId = useSelector((state) => state.project.currentProject.id);
 
     const [selectedEvent, setSelectedEvent] = useState(null)
@@ -44,8 +46,8 @@ const CalendarView = () => {
     }
 
     useEffect(()=>{
-      if (events.length == 0)
-      dispatch(getEventsByUserId(3));
+      // if (events.length == 0)
+      dispatch(getEventsByUserId(user_id));
       // notify();
     },[])
 

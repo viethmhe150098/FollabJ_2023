@@ -1,7 +1,5 @@
-import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router";
 import { addEvent } from "../../Redux/event/eventActions";
 import styled from "styled-components";
 import "react-datepicker/dist/react-datepicker.css";
@@ -23,6 +21,8 @@ const CreateEventForm = ({type, close, event}) => {
     const project_id = useSelector((state) => state.project.currentProject.id);
 
     const dispatch = useDispatch();
+
+    const userRole = useSelector((state) => state.project.currentProject.userRole);
 
     useEffect(() => {
       if(type=="readonly") {
@@ -74,12 +74,56 @@ const CreateEventForm = ({type, close, event}) => {
         dispatch(addEvent(event));
     };
 
+    const handleUpdate = () => {
+      var form = document.getElementById('eventForm');
+      var elements = form.elements;
+      for (var i = 0, len = elements.length; i < len; ++i) {
+          elements[i].readOnly = false;
+      }
+      setType("update")
+    }  
+    
+    const handleDelete = () => {
+      //dispatch(deleteTask({project_id, task_id: task.id}))
+      close()
+    }
+
+    const handleCommitUpdate = () => {
+
+      // const updatedTask = {
+      //     id: task.id,
+      //     title,
+      //     description,
+      //     label,
+      //     startDate,
+      //     endDate,
+      //     statusId,
+      //     assigneeList
+      // }
+
+      // dispatch(updateTask({project_id, task: updatedTask}))
+      close()
+    }
+
     return (
         <Modal>
             <a className="close" onClick={close}>
                 &times;
             </a>
-            {modalType=="readonly" && (<h2>View Event</h2>)}
+            {modalType=="readonly" && (<>
+                  <h2>View Event</h2>
+                  { user_id == event.project.leader.id &&
+                  ( <>
+                  <button onClick={() => handleUpdate()} className='greenBg font25 radius6 lightColor tag'>Update</button>
+                  <button onClick={() => handleDelete()} className='darkBg font25 radius6 lightColor tag'>Delete</button>
+                  </>)}
+            </>)}
+            {modalType=="update" && (
+                  <>
+                  <h2>Update Event</h2>
+                  <button onClick={() => handleCommitUpdate()} className='greenBg font25 radius6 lightColor tag'>Commit Update</button>
+                  </>
+                )}
             {modalType==null && (<h2>Create Event</h2>)}
             <div className="form-group">
                 <form id="eventForm" onSubmit={handleSubmit}>
@@ -117,6 +161,9 @@ const CreateEventForm = ({type, close, event}) => {
                             dateFormat="dd/MM/yyyy hh:mm a"
                             showTimeSelect
                         />
+                    </div>
+                    <div className="form-group">
+                        <label >Project Name: {event.project.name}</label>
                     </div>
                     <div className="form-group">
                         <label>Participants: </label>
