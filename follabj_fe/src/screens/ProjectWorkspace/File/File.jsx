@@ -81,7 +81,7 @@ const FileWorkspace = () => {
         <div className="container">
             
             <div className="row ">
-                {
+                {/* {
                     files.map((item, index) => {return (
                     <FileGrid className="col-lg-4 col-md-6 col-xs-12" key={index} onDoubleClick={()=>handleDownload(item.id,item.fileName)}>
                         
@@ -91,32 +91,42 @@ const FileWorkspace = () => {
 
                     </FileGrid>
                     )})
-                }
+                } */}
+                <div className="col-lg-6">File Name</div>
+                <div className="col-lg-3">Uploaded Date</div>
+                <div className="col-lg-3">Uploader</div>
             </div>
+            {
+            files.map((item, index) => {return (
+            <FileGrid className="row " key={index}>
+                <div className="col-lg-6">
+                    <FileIcon/>
+                    <FileName className="col-lg-10">{item.fileName}</FileName>
+                </div>
+                <div className="col-lg-3">{item.uploadDate}</div>
+                <div className="col-lg-3">{item.user.username}</div>
+            </FileGrid>
+            )})}
         </div>
         </> );
 }
 
 const FileGrid = styled.div`
     border: 2px solid black;
-    border-radius : 0.5rem;
-    margin-right: 5px;
-    max-width: 243px;
+    height: 40px;
     &:hover: {
         background-color: #E5E5E5;
     }
 `
 
 const FileIcon = styled(BsFileTextFill)`
-    width:50%;
     height: 75%;
-    display: block;
-    margin-right:auto;
-    margin-left:auto
+    display: inline-block;
 `
 
 const FileName = styled.p`
-    display: block;
+    font-size:20px;
+    display: inline-block;
     text-align:center;
     overflow:hidden;
     text-overflow:ellipsis;

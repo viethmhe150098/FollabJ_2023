@@ -32,7 +32,6 @@ public class FileMeta {
     private Project project;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "uploadBy", referencedColumnName = "id")
     private AppUser user;
 
