@@ -32,9 +32,6 @@ public class Event {
     @JoinColumn(name = "project_id", referencedColumnName = "id")
     private Project project;
 
-    @Column(columnDefinition = "integer default 1")
-    private int status;
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "event_participant",

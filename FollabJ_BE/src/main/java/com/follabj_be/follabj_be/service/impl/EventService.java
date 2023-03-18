@@ -32,7 +32,7 @@ public class EventService implements EventInterface {
 
     @Override
     public List<Event> getEventsByUserId(Long user_id) {
-        return eventRepository.findByParticipantListIdAndStatus(user_id, 1);
+        return eventRepository.findByParticipantListId(user_id);
     }
 
     @Override

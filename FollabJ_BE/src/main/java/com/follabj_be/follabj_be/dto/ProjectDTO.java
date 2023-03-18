@@ -17,8 +17,4 @@ public class ProjectDTO {
 
     private UserDTO leader;
 
-    private ProjectDTO project;
-
-    private UserDTO user;
-
 }

@@ -9,9 +9,8 @@ import java.util.List;
 
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
-
-
-    List<Event> findByParticipantListIdAndStatus(Long user_id, int status);
+    
+    List<Event> findByParticipantListId(Long user_id);
 
     @Query(value = "Select e from Event e where e.project.id=?1")
     List<Event> findByProjectId(Long p_id);

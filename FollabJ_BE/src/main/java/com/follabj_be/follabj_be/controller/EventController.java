@@ -71,10 +71,13 @@ public class EventController {
             path = "/project/{project_id}/leader/events/{event_id}/update"
     )
     @PreAuthorize("hasAuthority('LEADER')")
-    public Event updateEvent(@RequestBody Event event, @PathVariable Long project_id, @PathVariable Long event_id) {
+    public EventDTO updateEvent(@RequestBody Event event, @PathVariable Long project_id, @PathVariable Long event_id) {
         event.setProject(new Project());
         event.getProject().setId(project_id);
-        return eventService.updateEvent(event_id, event);
+        Event updatedEvent = eventService.updateEvent(event_id, event);
+
+        EventDTO eventDTO = modelMapper.map(updatedEvent, EventDTO.class);
+        return eventDTO;
     }
 
     @RequestMapping(
