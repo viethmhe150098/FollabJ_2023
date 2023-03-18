@@ -1,10 +1,13 @@
 package com.follabj_be.follabj_be.service.impl;
 
 import com.follabj_be.follabj_be.config.securityConfig.PasswordEncoder;
+import com.follabj_be.follabj_be.dto.AppUserDTO;
+import com.follabj_be.follabj_be.dto.PasswordDTO;
 import com.follabj_be.follabj_be.dto.UserDTO;
 import com.follabj_be.follabj_be.entity.AppUser;
 import com.follabj_be.follabj_be.entity.ConfirmToken;
 import com.follabj_be.follabj_be.entity.Invitation;
+import com.follabj_be.follabj_be.errorMessge.CustomErrorMessage;
 import com.follabj_be.follabj_be.repository.InvitationRepository;
 import com.follabj_be.follabj_be.repository.UserRepository;
 import com.follabj_be.follabj_be.service.TokenInterface;
@@ -18,6 +21,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -125,5 +129,39 @@ public class UserService implements UserDetailsService, UserInterface {
         return userRepository.findByEmail(email);
     }
 
+    @Override
+    public AppUserDTO updateStatus(int status, Long u_id) {
+        if(status == 2 || status == 1) {
+            AppUser appUser = userRepository.findById(u_id).orElseThrow(() -> new ObjectNotFoundException("Not found user", u_id.toString()));
+            appUser.setStatus(status);
+            userRepository.save(appUser);
+            AppUserDTO aud = new AppUserDTO(appUser.getId(), appUser.getEmail(), appUser.getUsername(), appUser.getStatus());
+            return aud;
+        }else{
+            return null;
+        }
+    }
 
+    @Override
+    public String changePassword(PasswordDTO passwordDTO, Long u_id) {
+        AppUser appUser = userRepository.findById(u_id).orElseThrow(() -> new ObjectNotFoundException("Not found user", u_id.toString()));
+        String old_password = passwordDTO.getOld_password();
+        String new_password = passwordDTO.getNew_password();
+        if(u_id == passwordDTO.getReq_u_id()){
+            if(passwordEncoder.bCryptPasswordEncoder().matches(old_password, appUser.getPassword())){
+                appUser.setPassword(passwordEncoder.bCryptPasswordEncoder().encode(new_password));
+                userRepository.save(appUser);
+                return "CHANGE PASSWORD SUCCESS";
+            }else{
+                return CustomErrorMessage.WRONG_PASSWORD.getMessage();
+            }
+        }else{
+            return CustomErrorMessage.NO_PERMISSION.getMessage();
+        }
+    }
+
+    public AppUserDTO getUserProfile(Long u_id){
+        AppUser appUser = userRepository.findById(u_id).orElseThrow(() -> new ObjectNotFoundException("Not found user", u_id.toString()));
+        return new AppUserDTO(appUser.getId(), appUser.getEmail(), appUser.getUsername(), appUser.getStatus());
+    }
 }
