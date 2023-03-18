@@ -18,6 +18,7 @@ import {
   Route,
 } from "react-router-dom";
 import Landing from './screens/Landing/Landing';
+import AdminDashboard from './screens/Admin/AdminDashboard';
 
 
 
@@ -80,13 +81,18 @@ export default function App() {
             <ProjectManagement />
           </Route>
 
-
           <Route path="/aboutProject" >
             <ProjectManagement />
           </Route>
+
           <Route exact path="/projects">
             <ProjectList />
           </Route>
+
+          <Route path="/admin" >
+            <AdminDashboard />
+          </Route>
+
           {/* Landing */}
           <Route exact path="/">
             <Landing />
