@@ -19,7 +19,7 @@ import Chat from "./Chat/Chat";
 
 
 
-export default function TaskManagement() {
+export default function ProjectManagement() {
   return (
     <>
 

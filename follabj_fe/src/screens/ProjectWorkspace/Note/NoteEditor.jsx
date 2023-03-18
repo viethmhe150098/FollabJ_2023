@@ -46,8 +46,8 @@ const NoteEditor = () => {
 
 
   return (<div>
-    <button onClick={() => handleUpdate()} className='purpleBg font25 radius6 lightColor tag'>Save</button>
-    <h2>{note.title}</h2>
+    <button onClick={() => handleUpdate()} className='orangeBg font25 radius6 lightColor tag'>Save</button>
+    {/* <h2>{note.title}</h2> */}
     <div style={{ border: "1px solid black", padding: '2px', minHeight: '400px' }}>
       <Editor
         editorState={editorState}

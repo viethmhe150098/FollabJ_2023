@@ -92,19 +92,19 @@ const FileWorkspace = () => {
                     </FileGrid>
                     )})
                 } */}
-                <div className="col-lg-6">File Name</div>
-                <div className="col-lg-3">Uploaded Date</div>
-                <div className="col-lg-3">Uploader</div>
+                <div className="col-lg-6 font20">File Name</div>
+                <div className="col-lg-3 font20">Uploaded Date</div>
+                <div className="col-lg-3 font20">Uploader</div>
             </div>
             {
             files.map((item, index) => {return (
             <FileGrid className="row " key={index}>
                 <div className="col-lg-6">
                     <FileIcon/>
-                    <FileName className="col-lg-10">{item.fileName}</FileName>
+                    <FileName className="col-lg-10 font20">{item.fileName}</FileName>
                 </div>
-                <div className="col-lg-3">{item.uploadDate}</div>
-                <div className="col-lg-3">{item.user.username}</div>
+                <div className="col-lg-3 font20">{item.uploadDate}</div>
+                <div className="col-lg-3 font20">{item.user.username}</div>
             </FileGrid>
             )})}
         </div>
@@ -125,7 +125,6 @@ const FileIcon = styled(BsFileTextFill)`
 `
 
 const FileName = styled.p`
-    font-size:20px;
     display: inline-block;
     text-align:center;
     overflow:hidden;

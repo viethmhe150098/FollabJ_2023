@@ -124,7 +124,7 @@ const AddTaskModal = ({type, close, statusId=1, task}) => {
                   { userRole == "LEADER" &&
                   ( <>
                   <button onClick={() => handleUpdate()} className='greenBg font25 radius6 lightColor tag'>Update</button>
-                  <button onClick={() => handleDelete()} className='darkBg font25 radius6 lightColor tag'>Delete</button>
+                  <button onClick={() => handleDelete()} className='redBg font25 radius6 lightColor tag'>Delete</button>
                   </>)}
                 </>)}
                 {modalType=="update" && (

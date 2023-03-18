@@ -307,11 +307,19 @@ body {
   background-color: #211207;
 }
 
+.redBg {
+  background-color: #ed191c;
+}
+
 .purpleBg {
-  background-color: #fd9309;
+  background-color: #850b48c5;
 }
 
 .orangeBg {
+  background-color: #fd9309;
+}
+
+.orangeLightBg {
   background-color: #F2B300;
 }
 
