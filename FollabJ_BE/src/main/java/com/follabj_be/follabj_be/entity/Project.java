@@ -13,12 +13,19 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter @Setter
 public class Project {
+    public enum ProjectStatus {
+        ACTIVE,
+        DEACTIVATE
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String des;
     private String createdDate;
+
+    @Column(columnDefinition = "integer default 0")
+    private ProjectStatus status;
     @ManyToOne
     @JoinColumn(
             name = "leader_id"

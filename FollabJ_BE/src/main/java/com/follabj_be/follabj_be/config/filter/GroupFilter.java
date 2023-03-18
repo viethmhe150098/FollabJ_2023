@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.follabj_be.follabj_be.entity.AppUser;
+import com.follabj_be.follabj_be.entity.Project;
 import com.follabj_be.follabj_be.errorMessge.CustomErrorMessage;
 import com.follabj_be.follabj_be.exception.GroupPermissionException;
 import com.follabj_be.follabj_be.repository.ProjectRepository;
@@ -53,13 +54,18 @@ public class GroupFilter extends GenericFilterBean {
                     //decoded token from header
                     DecodedJWT decodedJWT = verifier.verify(access_token);
                     String username = decodedJWT.getSubject();
-                    if(projectRepository.findById(project_id).isPresent()) {
+                    Project p = projectRepository.findById(project_id).orElseThrow(() -> new ObjectNotFoundException("Not found project", project_id.toString()));
+                    if(p.getStatus().equals(Project.ProjectStatus.ACTIVE)) {
                         List<AppUser> members_list = projectRepository.getMembersById(project_id);
                         Optional<AppUser> member = members_list.stream().filter(user -> user.getEmail().equals(username)).findAny();
                         member.orElseThrow(() -> new GroupPermissionException(CustomErrorMessage.NO_PERMISSION));
                         filterChain.doFilter(request, response);
                     }else{
-                        throw new ObjectNotFoundException("Not found project", project_id.toString());
+                        response.setStatus(401);
+                        Map<String, String> tokens = new HashMap<>();
+                        tokens.put("message", "Group is deactivate");
+                        response.setContentType(APPLICATION_JSON_VALUE);
+                        new ObjectMapper().writeValue(response.getOutputStream(), tokens);
                     }
                 }catch (Exception e){
                     e.printStackTrace();
