@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addEvent } from "../../Redux/event/eventActions";
+import { addEvent, deleteEvent, updateEvent } from "../../Redux/event/eventActions";
 import styled from "styled-components";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
@@ -84,24 +84,24 @@ const CreateEventForm = ({type, close, event}) => {
     }  
     
     const handleDelete = () => {
-      //dispatch(deleteTask({project_id, task_id: task.id}))
+      dispatch(deleteEvent({project_id, event_id: event.id}))
       close()
     }
 
     const handleCommitUpdate = () => {
 
-      // const updatedTask = {
-      //     id: task.id,
-      //     title,
-      //     description,
-      //     label,
-      //     startDate,
-      //     endDate,
-      //     statusId,
-      //     assigneeList
-      // }
+      const updatedEvent = {
+        id: event.id,
+        title,
+        description,
+        startDate,
+        endDate,
+        project_id,
+        participantList
+      }
 
-      // dispatch(updateTask({project_id, task: updatedTask}))
+      dispatch(updateEvent(updatedEvent))
+
       close()
     }
 
@@ -115,7 +115,7 @@ const CreateEventForm = ({type, close, event}) => {
                   { user_id == event.project.leader.id &&
                   ( <>
                   <button onClick={() => handleUpdate()} className='greenBg font25 radius6 lightColor tag'>Update</button>
-                  <button onClick={() => handleDelete()} className='darkBg font25 radius6 lightColor tag'>Delete</button>
+                  <button onClick={() => handleDelete()} className='redBg font25 radius6 lightColor tag'>Delete</button>
                   </>)}
             </>)}
             {modalType=="update" && (
@@ -162,9 +162,11 @@ const CreateEventForm = ({type, close, event}) => {
                             showTimeSelect
                         />
                     </div>
+                    {modalType !=null &&
                     <div className="form-group">
                         <label >Project Name: {event.project.name}</label>
                     </div>
+                    }
                     <div className="form-group">
                         <label>Participants: </label>
                         {members.map((member) => (
