@@ -39,3 +39,21 @@ export const addEvent = createAsyncThunk("ADD_EVENT", async (event) => {
         console.log(error);
     }
 })
+
+export const updateEvent = createAsyncThunk("UPDATE_EVENT", async (event) => {
+    try {
+        const response = await eventAPI.updateEvent(event.project_id, event)
+        return response.data
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+export const deleteEvent = createAsyncThunk("DELETE_EVENT", async ({project_id, event_id}) => {
+    try {
+        const response = await eventAPI.deleteEvent(project_id, event_id)
+        return event_id
+    } catch (error) {
+        console.log(error);
+    }
+})
