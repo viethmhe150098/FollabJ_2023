@@ -24,7 +24,7 @@ public class Project {
     private String des;
     private String createdDate;
 
-    @Column(columnDefinition = "integer default 0")
+    @Column(columnDefinition = "varchar(255) default ACTIVE")
     private ProjectStatus status;
     @ManyToOne
     @JoinColumn(
