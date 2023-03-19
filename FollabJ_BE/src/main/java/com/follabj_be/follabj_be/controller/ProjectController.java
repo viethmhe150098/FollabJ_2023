@@ -99,4 +99,19 @@ public class ProjectController {
         res.put("message", "Project "+p_id+" is deactivate and can not be active again");
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
+
+    @PostMapping(value = "/project/{p_id}/leave")
+    @PreAuthorize("hasAuthority('ACTIVE_USER')")
+    public ResponseEntity<Map<Object, Object>> leave(@PathVariable Long p_id, @RequestParam Long u_id){
+        Map<Object, Object> res = projectService.leaveGroup(p_id, u_id);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/project/{p_id}/assign")
+    @PreAuthorize("hasAuthority('LEADER')")
+    public ResponseEntity<Map<Object, Object>> assignNewLeader(@PathVariable Long p_id, @RequestParam Long u_id){
+        projectService.assignNewLeader(p_id, u_id);
+        return new ResponseEntity<>(projectService.assignNewLeader(p_id, u_id), HttpStatus.OK);
+    }
+
 }

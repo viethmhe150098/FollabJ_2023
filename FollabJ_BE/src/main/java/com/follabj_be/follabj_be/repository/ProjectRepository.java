@@ -31,4 +31,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     @Query(nativeQuery = true, value = "set status = 0 from project where id = ?1")
     void deleteProjectById(Long id);
+
+    @Query("select p.id from Project p where p.leader.id=?1")
+    List<Long> getProjectIdByLeaderID(Long u_id);
 }

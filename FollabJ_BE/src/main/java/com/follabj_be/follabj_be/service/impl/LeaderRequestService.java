@@ -5,6 +5,7 @@ import com.follabj_be.follabj_be.entity.AppUser;
 import com.follabj_be.follabj_be.entity.LeaderRequest;
 import com.follabj_be.follabj_be.repository.LeaderRequestRepository;
 import com.follabj_be.follabj_be.repository.UserRepository;
+import com.follabj_be.follabj_be.service.EmailSender;
 import com.follabj_be.follabj_be.service.LeaderRequestInterface;
 import lombok.AllArgsConstructor;
 import org.hibernate.ObjectNotFoundException;
@@ -13,13 +14,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @AllArgsConstructor
 public class LeaderRequestService implements LeaderRequestInterface {
     private final LeaderRequestRepository leaderRequestRepository;
     private final UserRepository userRepository;
+    private final BuildEmail buildEmail;
+    private final EmailSender emailSender;
     @Override
     public boolean isPendingRequest(Long u_id) {
         return leaderRequestRepository.getByStatus(u_id, 0);
@@ -30,6 +31,9 @@ public class LeaderRequestService implements LeaderRequestInterface {
         LeaderRequest l = leaderRequestRepository.findById(req_id).orElseThrow(()->new ObjectNotFoundException("Not found request", req_id.toString()));
         if(status == 1){
             l.setStatus(LeaderRequest.requestStatus.ACCEPT);
+            userRepository.updateRole(l.getUser().getId(), 3);
+            emailSender.sendEmail(l.getUser().getEmail(), buildEmail.becomeLeader(l.getUser().getUsername()));
+
         }else{
             l.setStatus(LeaderRequest.requestStatus.REJECT);
         }

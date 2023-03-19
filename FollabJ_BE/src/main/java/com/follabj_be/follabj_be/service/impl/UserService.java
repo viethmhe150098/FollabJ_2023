@@ -108,8 +108,8 @@ public class UserService implements UserDetailsService, UserInterface {
         userRepository.enableAppUser(status, email);
     }
 
-    public void activeUser(Long user_id) {
-        userRepository.updateRole(user_id);
+    public void activeUser(Long user_id){
+        userRepository.updateRole(user_id, 1);
     }
 
     @Override
