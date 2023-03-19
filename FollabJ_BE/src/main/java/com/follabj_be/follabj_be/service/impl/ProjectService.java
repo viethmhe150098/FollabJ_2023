@@ -36,7 +36,6 @@ public class ProjectService implements ProjectInterface {
     private final MeetingRepository meetingRepository;
 
     private final BuildEmail buildEmail;
-    private final MeetingRepository meetingRepository;
     private final EmailSender emailSender;
     @Override
     public Project createPrj(CreateProjectDTO createProjectDTO) throws GroupException {

@@ -41,7 +41,7 @@ public class Project {
     )
     @JsonIgnore
     private Set<AppUser> members;
-    
+
     public Project(String name, String des, String createdDate, AppUser leader, Set<AppUser> members) {
         this.name = name;
         this.des = des;
