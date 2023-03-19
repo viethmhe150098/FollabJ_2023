@@ -20,4 +20,6 @@ public interface UserInterface {
     List<Invitation> getAllInvitation(Long user_id);
 
     AppUser getUserByEmail(String email);
+
+    List<AppUser> getInvitedUserByProjectId(Long project_id);
 }

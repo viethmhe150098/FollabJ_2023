@@ -10,6 +10,7 @@ import com.follabj_be.follabj_be.service.InvitationInterface;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -24,17 +25,15 @@ public class InvitationService implements InvitationInterface {
         this.userRepository = userRepository;
     }
 
+    @Override
+    public List<Invitation> getInvitationsByUserId(Long user_id) {
+        return invitationRepository.findByUserId(user_id);
+    }
 
     @Override
     public void updateStatus(int status, Long i_id) {
         Invitation i = invitationRepository.findById(i_id).orElseThrow(() -> new ObjectNotFoundException("Not found invitation", i_id.toString()));
         invitationRepository.updateStatus(status, i_id);
-        if (status == 1) {
-            Project p = projectRepository.findByNameLike(i.getContent()).orElseThrow(() -> new ObjectNotFoundException("Not found object", i.getContent()));
-            Set<AppUser> members = p.getMembers();
-            members.add(i.getTo());
-            p.setMembers(members);
-            projectRepository.save(p);
-        }
+
     }
 }

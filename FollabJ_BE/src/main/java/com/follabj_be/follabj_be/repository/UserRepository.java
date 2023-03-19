@@ -31,4 +31,9 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
     List<UserDTO> findByEmailLike(String email_cha);
 
     AppUser findByEmail(String email);
+
+    AppUser findByUsername(String username);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM app_user u where u.id in (SELECT receiver_id from invitation where project_id=?1);")
+    List<AppUser> findAllUserInvitedToProject(Long project_id);
 }

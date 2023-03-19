@@ -19,16 +19,15 @@ public class Invitation {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "receiver_id")
     @JsonIgnore
-    private AppUser to;
-    private String at;
-    private String content;
+    private AppUser receiver;
+    @Column(columnDefinition = "integer default 0")
     private int status;
 
-    public Invitation(AppUser to, String at, String content) {
-        this.to = to;
-        this.at = at;
-        this.content = content;
-    }
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "project_id", referencedColumnName = "id")
+    private Project project;
+
 }

@@ -51,14 +51,14 @@ public class ProjectService implements ProjectInterface {
 
     @Override
     public void sendInvitation(UserDTO user, Long project_id) {
-        Project p = projectRepository.findById(project_id).orElseThrow(() -> new ObjectNotFoundException("Not found object", project_id.toString()));
-        AppUser to = new AppUser(user.getId(), user.getUsername(), user.getEmail());
-        String content = p.getName();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDateTime now = LocalDateTime.now();
-        String create_date = dtf.format(now);
-        Invitation i = new Invitation(to, create_date, content);
-        invitationRepository.save(i);
+//        Project p = projectRepository.findById(project_id).orElseThrow(() -> new ObjectNotFoundException("Not found object", project_id.toString()));
+//        AppUser to = new AppUser(user.getId(), user.getUsername(), user.getEmail());
+//        String content = p.getName();
+//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//        LocalDateTime now = LocalDateTime.now();
+//        String create_date = dtf.format(now);
+//        Invitation i = new Invitation(to, create_date, content);
+//        invitationRepository.save(i);
     }
 
     @Override
@@ -115,6 +115,19 @@ public class ProjectService implements ProjectInterface {
         p.setName(createProjectDTO.getP_name());
         p.setDes(createProjectDTO.getP_des());
         projectRepository.save(p);
+    }
+
+    @Transactional
+    @Override
+    public Project addMember(Long p_id, Long u_id) {
+        Project p = projectRepository.findById(p_id).orElseThrow(() -> new ObjectNotFoundException("Not found project", p_id.toString()));
+
+        AppUser newMember = new AppUser();
+        newMember.setId(u_id);
+        p.getMembers().add(newMember);
+        p.setMembers(p.getMembers());
+
+        return projectRepository.save(p);
     }
 
     @Transactional

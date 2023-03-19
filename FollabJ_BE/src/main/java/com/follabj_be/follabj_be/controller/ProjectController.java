@@ -2,15 +2,18 @@ package com.follabj_be.follabj_be.controller;
 
 import com.follabj_be.follabj_be.dto.CreateProjectDTO;
 import com.follabj_be.follabj_be.dto.UserDTO;
+import com.follabj_be.follabj_be.entity.AppUser;
 import com.follabj_be.follabj_be.entity.Project;
 import com.follabj_be.follabj_be.exception.GroupException;
 import com.follabj_be.follabj_be.service.impl.ProjectService;
+import com.follabj_be.follabj_be.service.impl.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +22,8 @@ import java.util.Map;
 @AllArgsConstructor
 public class ProjectController {
     private final ProjectService projectService;
+
+    private UserService userService;
 
     @PostMapping(value = "/createproject")
     @PreAuthorize("hasAuthority('LEADER')")
@@ -43,6 +48,7 @@ public class ProjectController {
     public List<UserDTO> getProjectMembersByProjectId(@PathVariable Long p_id) {
         return projectService.getMembersByProjectId(p_id);
     }
+
 
     @GetMapping(value = "/{u_id}")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")

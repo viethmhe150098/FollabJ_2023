@@ -125,5 +125,10 @@ public class UserService implements UserDetailsService, UserInterface {
         return userRepository.findByEmail(email);
     }
 
+    @Override
+    public List<AppUser> getInvitedUserByProjectId(Long project_id) {
+        return userRepository.findAllUserInvitedToProject(project_id);
+    }
+
 
 }
