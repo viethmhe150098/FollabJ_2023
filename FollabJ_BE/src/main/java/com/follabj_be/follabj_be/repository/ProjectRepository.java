@@ -26,4 +26,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     List<Long> findByUserId(Long id);
 
     void deleteProjectById(Long id);
+
+    @Query("select p.id from Project p where p.leader.id=?1")
+    List<Long> getProjectIdByLeaderID(Long u_id);
 }

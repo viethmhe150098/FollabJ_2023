@@ -109,7 +109,7 @@ public class UserService implements UserDetailsService, UserInterface {
     }
 
     public void activeUser(Long user_id){
-        userRepository.updateRole(user_id);
+        userRepository.updateRole(user_id, 1);
     }
 
     @Override

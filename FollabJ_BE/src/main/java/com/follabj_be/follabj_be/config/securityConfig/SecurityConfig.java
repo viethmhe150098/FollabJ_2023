@@ -2,6 +2,7 @@ package com.follabj_be.follabj_be.config.securityConfig;
 
 import com.follabj_be.follabj_be.config.filter.CustomAuthenticationFilter;
 import com.follabj_be.follabj_be.config.filter.CustomAuthorizationFilter;
+import com.follabj_be.follabj_be.repository.ProjectRepository;
 import com.follabj_be.follabj_be.repository.UserRepository;
 import com.follabj_be.follabj_be.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ProjectRepository projectRepository;
     @Bean
     @Override
     protected AuthenticationManager authenticationManager() throws Exception {
@@ -46,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http
-                .addFilter(new CustomAuthenticationFilter(authenticationManager(), userRepository));
+                .addFilter(new CustomAuthenticationFilter(authenticationManager(), userRepository, projectRepository));
         http
                 .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
         http.logout();

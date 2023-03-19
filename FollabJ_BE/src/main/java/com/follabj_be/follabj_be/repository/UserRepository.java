@@ -22,8 +22,8 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
 
     @Transactional
     @Modifying
-    @Query(nativeQuery = true, value = "update user_roles set role_id=1 where id=?1")
-    int updateRole(Long id);
+    @Query(nativeQuery = true, value = "update user_roles set role_id=?2 where id=?1")
+    int updateRole(Long id, int role_id);
 
     AppUser getAppUserById(Long id);
 

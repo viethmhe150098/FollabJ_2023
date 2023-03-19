@@ -37,7 +37,7 @@ public class LeaderRequestController {
         if(status == 1) {
             res.put("message", "Update status to accept for request id "+ req_id);
         }else{
-            res.put("message", "Update status to accept for request id "+ req_id);
+            res.put("message", "Update status to decline for request id "+ req_id);
         }
 
         return new ResponseEntity<>(res, HttpStatus.OK);

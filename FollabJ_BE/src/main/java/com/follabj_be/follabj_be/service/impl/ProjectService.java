@@ -6,10 +6,14 @@ import com.follabj_be.follabj_be.entity.*;
 import com.follabj_be.follabj_be.errorMessge.CustomErrorMessage;
 import com.follabj_be.follabj_be.exception.GroupException;
 import com.follabj_be.follabj_be.repository.*;
+import com.follabj_be.follabj_be.service.EmailSender;
 import com.follabj_be.follabj_be.service.ProjectInterface;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ObjectNotFoundException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -27,8 +31,9 @@ public class ProjectService implements ProjectInterface {
     private final InvitationRepository invitationRepository;
     private final EventRepository eventRepository;
     private final TaskRepository taskRepository;
-
+    private final BuildEmail buildEmail;
     private final MeetingRepository meetingRepository;
+    private final EmailSender emailSender;
     @Override
     public Project createPrj(CreateProjectDTO createProjectDTO) throws GroupException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -72,7 +77,7 @@ public class ProjectService implements ProjectInterface {
 
         for(AppUser user: userList) {
             UserDTO userDTO = new UserDTO(user.getId(), user.getEmail(), user.getUsername());
-            if(userDTO.getId() != leaderDTO.getId()) {
+            if(!Objects.equals(userDTO.getId(), leaderDTO.getId())) {
                 userDTOList.add(userDTO);
             }
         }
@@ -131,5 +136,50 @@ public class ProjectService implements ProjectInterface {
         projectRepository.save(p);
     }
 
+    public Map<Object, Object> leaveGroup(Long p_id, Long u_id){
+        String userEmail = userRepository.findById(u_id).orElseThrow(()-> new ObjectNotFoundException("Not found project", p_id.toString())).getEmail();
+        Map<Object, Object> res = new HashMap<>();
+        if(currentUser().getUsername().equals(userEmail)){
+            deleteMember(p_id, u_id);
+            res.put("status", 200);
+            res.put("message", "Successful leaving");
+        }else{
+            res.put("status", 401);
+            res.put("message", CustomErrorMessage.NO_PERMISSION.getMessage());
+        }
+        return res;
+    }
 
+    public Map<Object, Object> assignNewLeader(Long p_id, Long u_id){
+        Map<Object, Object> res = new HashMap<>();
+        Project p = projectRepository.findById(p_id).orElseThrow(()-> new ObjectNotFoundException("Not found project", p_id.toString()));
+        if(checkMember(p_id, u_id)) {
+            p.setLeader(userRepository.findById(u_id).orElseThrow(() -> new ObjectNotFoundException("Not found project", p_id.toString())));
+            userRepository.updateRole(u_id, 2);
+            String userEmail = userRepository.findById(u_id).orElseThrow(() -> new ObjectNotFoundException("Not found project", p_id.toString())).getEmail();
+            emailSender.sendEmail(userEmail, buildEmail.becomeLeader(userEmail));
+            projectRepository.save(p);
+            res.put("status", 200);
+            res.put("message", "Successful new team leader appointment");
+        }else{
+            res.put("status", 500);
+            res.put("message", CustomErrorMessage.NOT_TEAMMEMBER.getMessage());
+        }
+        return res;
+    }
+
+    public User currentUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (User) authentication.getPrincipal();
+    }
+
+    private boolean checkMember(Long project_id, Long user_id){
+        List<AppUser> members_list = projectRepository.getMembersById(project_id);
+        Optional<AppUser> member = members_list.stream().filter(user -> user.getId().equals(user_id)).findAny();
+        if(member.isPresent()){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
