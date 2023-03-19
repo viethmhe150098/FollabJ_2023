@@ -41,10 +41,7 @@ public class Project {
     )
     @JsonIgnore
     private Set<AppUser> members;
-
-    @Column(columnDefinition = "integer default 1")
-    private int status;
-
+    
     public Project(String name, String des, String createdDate, AppUser leader, Set<AppUser> members) {
         this.name = name;
         this.des = des;
