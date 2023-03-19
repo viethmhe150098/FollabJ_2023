@@ -77,6 +77,10 @@ public class RegistrationService implements RegistrationInterface {
         return "Your email is confirmed. Thank you for using our service!";
     }
 
+    @Override
+    public String buildEmail(String name, String link) {
+        return null;
+    }
 
 
 }
