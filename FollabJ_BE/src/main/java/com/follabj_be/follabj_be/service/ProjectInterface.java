@@ -23,4 +23,6 @@ public interface ProjectInterface {
     Project addMember(Long p_id, Long u_id);
 
     void deleteMember(Long p_id, Long u_id);
+
+    void dactivateProject(Long p_id);
 }

@@ -89,4 +89,14 @@ public class ProjectController {
         res.put("message", "Deleted member with Id: " + u_id);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
+
+    @PostMapping(value = "/project/{p_id}/leader/deactivate")
+    @PreAuthorize("hasAuthority('LEADER')")
+    public ResponseEntity<Map<String, String>> deactivatePrj (@PathVariable Long p_id){
+        projectService.dactivateProject(p_id);
+        Map<String, String> res = new HashMap<>();
+        res.put("status", HttpStatus.OK.toString());
+        res.put("message", "Project "+p_id+" is deactivate and can not be active again");
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
 }

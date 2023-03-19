@@ -1,5 +1,7 @@
 package com.follabj_be.follabj_be.service;
 
+import com.follabj_be.follabj_be.dto.AppUserDTO;
+import com.follabj_be.follabj_be.dto.PasswordDTO;
 import com.follabj_be.follabj_be.dto.UserDTO;
 import com.follabj_be.follabj_be.entity.AppUser;
 import com.follabj_be.follabj_be.entity.Invitation;
@@ -22,4 +24,7 @@ public interface UserInterface {
     AppUser getUserByEmail(String email);
 
     List<AppUser> getInvitedUserByProjectId(Long project_id);
+    AppUserDTO updateStatus(int status, Long u_id);
+
+    String changePassword(PasswordDTO passwordDTO, Long u_id);
 }

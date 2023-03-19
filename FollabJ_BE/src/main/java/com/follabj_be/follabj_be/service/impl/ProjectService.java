@@ -138,8 +138,15 @@ public class ProjectService implements ProjectInterface {
         List<Event> events = eventRepository.findByProjectId(p_id);
         List<Task> tasks = taskRepository.findByProjectId(p_id);
         events.forEach(event -> event.setParticipantList(event.getParticipantList().stream().filter(e -> e.getId().equals(u_id)).collect(Collectors.toList())));
-
         tasks.forEach(task -> task.setAssigneeList(task.getAssigneeList().stream().filter(t -> t.getId().equals(u_id)).collect(Collectors.toList())));
+    }
+
+    @Override
+    @Transactional
+    public void dactivateProject(Long p_id) {
+        Project p = projectRepository.findById(p_id).orElseThrow(()-> new ObjectNotFoundException("Not found project", p_id.toString()));
+        p.setStatus(Project.ProjectStatus.DEACTIVATE);
+        projectRepository.save(p);
     }
 
 
