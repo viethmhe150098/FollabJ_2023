@@ -1,5 +1,6 @@
 import React from 'react';
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
+import { useSelector } from 'react-redux';
 
 const generateToken = async (tokenServerUrl, userID, channelId) => {
     try {
@@ -45,15 +46,17 @@ const Meeting = () => {
     // const [userName, setUserName] = useState(randomID(5));
     // const [token, setToken] = useState(null);
     const roomID = getUrlParams().get('roomID') || randomID(5);
+    const email = useSelector((state)=> state.auth.login.currentUser.email)
     const userID = randomID(5);
-    const userName = randomID(5);
+    const userName = email;
     const expired_ts = 7200;
+    const project_id = useSelector((state) => state.project.currentProject.id);
 
         let myMeeting = async (element) => {
             
         // generate token
         const token = await generateToken(
-            'http://localhost:8080/project/1/meeting',
+            `http://localhost:8080/project/${project_id}/meeting`,
             userID,
             roomID
         );
@@ -92,7 +95,7 @@ const Meeting = () => {
                 className="myCallContainer"
                 ref={myMeeting}
                 style={{ width: '100vw', height: '100vh' }}
-            >ewqwqe</div>
+            ></div>
     );
 };
 

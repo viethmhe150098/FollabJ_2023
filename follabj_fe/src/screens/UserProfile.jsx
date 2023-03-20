@@ -6,6 +6,11 @@ import { useHistory } from "react-router";
 const UserProfile = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(true);
     const history = useHistory();
+
+
+
+
+
     //handle logout hear
     const handleLogout = () => { 
         
@@ -20,8 +25,10 @@ const UserProfile = () => {
             <Wrapper>
                 <AuthenNavBar />
                 <div style={{ margin: "200px" }}>  <h1>User Profile</h1>
-                    <p>Welcome back, [username]!</p>
-                    <button className="red-btn" onClick={handleLogout}>Logout</button></div>
+                    <h2>Welcome back, [username]!</h2>
+                    <button className='darkBg font25 radius6 lightColor tag'>Change password</button>
+                    <button onClick={() => handleLogout()} className='redBg font25 radius6 lightColor tag'>Logout</button>
+                </div>
             </Wrapper>
         </>
 

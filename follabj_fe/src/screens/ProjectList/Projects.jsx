@@ -70,11 +70,6 @@ const Projects = () => {
               </div>)
             }
           </div>
-          {/* <div className="row flexCenter">
-            <div style={{ margin: "50px 0", width: "200px" }}>
-              <FullButton title="Load More" action={() => alert("clicked")} />
-            </div>
-          </div> */}
         </div>
       </div>
     </Wrapper>
