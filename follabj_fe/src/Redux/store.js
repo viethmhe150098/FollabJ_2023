@@ -10,6 +10,7 @@ import { noteReducer } from "./note/noteReducers";
 import {persistReducer , persistStore} from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
+import { userProfileReducer } from "./userProfile/userProfileReducers";
 
 const rootReducer = combineReducers({
     responseMessage: responseMessageReducer,
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
     task : taskReducer,
     event : eventReducer,
     file : fileReducer,
-    note : noteReducer
+    note : noteReducer,
+    userProfile : userProfileReducer
 })
 
 const persistConfig = {

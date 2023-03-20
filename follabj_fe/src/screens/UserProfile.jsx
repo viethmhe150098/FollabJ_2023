@@ -1,11 +1,24 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import AuthenNavBar from "../components/Nav/AuthenNavbar"
 import styled from "styled-components";
 import { useHistory } from "react-router";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { getUserProfileByUserId } from "../Redux/userProfile/userProfileAction";
+
 
 const UserProfile = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(true);
     const history = useHistory();
+    const dispatch = useDispatch();
+
+    const user_id = useSelector((state) => state.auth.login.currentUser.id)
+
+    const userProfile = useSelector((state) => state.userProfile)
+
+    useEffect(()=>{
+      dispatch(getUserProfileByUserId(user_id))
+    },[userProfile])
     //handle logout hear
     const handleLogout = () => { 
         
@@ -20,8 +33,9 @@ const UserProfile = () => {
             <Wrapper>
                 <AuthenNavBar />
                 <div style={{ margin: "200px" }}>  <h1>User Profile</h1>
-                    <p>Welcome back, [username]!</p>
-                    <button className="red-btn" onClick={handleLogout}>Logout</button></div>
+                <p>Name: {userProfile.username}</p>
+                <p>Email: {userProfile.email}</p>
+                <button className="red-btn" onClick={handleLogout}>Logout</button></div>
             </Wrapper>
         </>
 
