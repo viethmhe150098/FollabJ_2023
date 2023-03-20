@@ -14,9 +14,9 @@ import java.util.List;
 @Repository
 public interface LeaderRequestRepository extends JpaRepository<LeaderRequest, Long> {
     @Query("select l from LeaderRequest l where l.user.id = ?1 and l.status= ?2")
-    boolean getByStatus(Long u_id, int status);
+    boolean getByStatus(Long u_id, LeaderRequest.requestStatus status);
 
-    @Query("select l from LeaderRequest l where l.status=0")
+    @Query("select l from LeaderRequest l where l.status='PENDING'")
     Page<LeaderRequest> getPendingRequest(Pageable pageable);
 
 }

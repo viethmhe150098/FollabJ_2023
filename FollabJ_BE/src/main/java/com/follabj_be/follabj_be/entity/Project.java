@@ -24,8 +24,9 @@ public class Project {
     private String des;
     private String createdDate;
 
-    @Column(columnDefinition = "varchar(255) default ACTIVE")
-    private ProjectStatus status;
+    @Column(columnDefinition = "varchar(255) default 'ACTIVE'")
+    @Enumerated(value = EnumType.STRING)
+    private ProjectStatus status = ProjectStatus.ACTIVE;
     @ManyToOne
     @JoinColumn(
             name = "leader_id"

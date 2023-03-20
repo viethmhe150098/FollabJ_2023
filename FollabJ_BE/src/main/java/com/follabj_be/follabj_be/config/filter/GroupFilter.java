@@ -43,7 +43,9 @@ public class GroupFilter extends GenericFilterBean {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         if(request.getRequestURL().toString().contains("/project")){
-            String param_p_id = request.getRequestURI().substring(9,10);
+            //String param_p_id = request.getRequestURI().substring(9,11);
+            String[] urlParts = request.getRequestURI().split("/");
+            String param_p_id = urlParts[2];
             Long project_id = Long.valueOf(param_p_id);
             String authorizationHeader = request.getHeader("AUTHORIZATION");
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {

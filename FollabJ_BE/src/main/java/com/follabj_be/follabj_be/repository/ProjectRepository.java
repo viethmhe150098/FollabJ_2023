@@ -23,7 +23,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     Optional<Project> findByNameLike(String name);
 
-    @Query(nativeQuery = true, value = "Select * from project where id = ?1 and status = 1")
+    @Query(nativeQuery = true, value = "Select * from project where id = ?1 and status = 'ACTIVE'")
     Optional<Project> findById(Long id);
 
     @Query(nativeQuery = true, value = "Select project_id from project_members where user_id = ?1")

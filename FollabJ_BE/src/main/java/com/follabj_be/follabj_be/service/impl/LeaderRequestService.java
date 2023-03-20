@@ -23,7 +23,7 @@ public class LeaderRequestService implements LeaderRequestInterface {
     private final EmailSender emailSender;
     @Override
     public boolean isPendingRequest(Long u_id) {
-        return leaderRequestRepository.getByStatus(u_id, 0);
+        return leaderRequestRepository.getByStatus(u_id, LeaderRequest.requestStatus.PENDING);
     }
 
     @Override

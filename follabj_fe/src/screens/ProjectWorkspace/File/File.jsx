@@ -98,22 +98,21 @@ const FileWorkspace = () => {
             </div>
             {
             files.map((item, index) => {return (
-            <FileGrid className="row " key={index}>
+            <Row className="row " key={index}>
                 <div className="col-lg-6">
-                    <FileIcon/>
-                    <FileName className="col-lg-10 font20">{item.fileName}</FileName>
+                    <FileIcon />
+                    <FileName className="col-lg-10 col-md-12 font20">{item.fileName}</FileName>
                 </div>
                 <div className="col-lg-3 font20">{item.uploadDate}</div>
                 <div className="col-lg-3 font20">{item.user.username}</div>
-            </FileGrid>
+            </Row>
             )})}
         </div>
         </> );
 }
 
-const FileGrid = styled.div`
+const Row = styled.div`
     border: 2px solid black;
-    height: 40px;
     &:hover: {
         background-color: #E5E5E5;
     }
