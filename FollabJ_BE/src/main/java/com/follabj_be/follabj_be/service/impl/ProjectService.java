@@ -92,7 +92,10 @@ public class ProjectService implements ProjectInterface {
         List<Long> projects_id = projectRepository.findByUserId(u_id);
         List<Project> projects = new ArrayList<>();
         projects_id.stream().map(projectRepository::findById).toList().forEach(
-                project -> projects.add(project.get())
+                project -> {
+                    if(project.isPresent())
+                    projects.add(project.get());
+                }
         );
         return projects;
     }

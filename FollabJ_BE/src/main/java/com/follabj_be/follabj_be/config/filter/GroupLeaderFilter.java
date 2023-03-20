@@ -39,7 +39,9 @@ public class GroupLeaderFilter extends GenericFilterBean {
         String leaderURI = request.getRequestURI();
 
         if (leaderURI.contains("leader")) {
-            String param_p_id = request.getRequestURI().substring(9, 10);
+            //String param_p_id = request.getRequestURI().substring(9, 10);
+            String[] urlParts = request.getRequestURI().split("/");
+            String param_p_id = urlParts[2];
             Long project_id = Long.valueOf(param_p_id);
             String authorizationHeader = request.getHeader("AUTHORIZATION");
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
