@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import AuthenNavBar from "../components/Nav/AuthenNavbar"
 import styled from "styled-components";
 import { useHistory } from "react-router";
+import Popup from "reactjs-popup";
+import ChangePasswordModal from "../components/Modals/ChangePasswordModal";
 
 const UserProfile = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -26,7 +28,9 @@ const UserProfile = () => {
                 <AuthenNavBar />
                 <div style={{ margin: "200px" }}>  <h1>User Profile</h1>
                     <h2>Welcome back, [username]!</h2>
-                    <button className='darkBg font25 radius6 lightColor tag'>Change password</button>
+                    <Popup modal trigger={ <button className='darkBg font25 radius6 lightColor tag'>Change password</button>}>
+                        {close => <ChangePasswordModal close={close}/>}
+                    </Popup>
                     <button onClick={() => handleLogout()} className='redBg font25 radius6 lightColor tag'>Logout</button>
                 </div>
             </Wrapper>
