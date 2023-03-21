@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { acceptInvitation } from "../invitation/invitationActions";
 import { getProjectMembersByProjectId, getProjectsByUserId } from "./projectActions";
 
 const projectSlice = createSlice({
@@ -57,6 +58,9 @@ const projectSlice = createSlice({
             })
             .addCase(getProjectMembersByProjectId.fulfilled, (state, action) => {
                 state.currentProject.members = action.payload
+            })
+            .addCase(acceptInvitation.fulfilled, (state, action) => {
+                state.projects.allProjects.push(action.payload.joinedProject)
             })
     },
 })
