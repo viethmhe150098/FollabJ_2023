@@ -31,13 +31,13 @@ public class UserController {
         return userService.findUsersByEmail(email_cha);
     }
 
-    @GetMapping("{user_id}/invitation")
-    @PreAuthorize("hasAuthority('ACTIVE_USER')")
-    public ResponseEntity<List<Invitation>> getInvitations(@PathVariable Long user_id) {
-        List<Invitation> list = userService.getAllInvitation(user_id);
-
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
+//    @GetMapping("{user_id}/invitation")
+//    @PreAuthorize("hasAuthority('ACTIVE_USER')")
+//    public ResponseEntity<List<Invitation>> getInvitations(@PathVariable Long user_id) {
+//        List<Invitation> list = userService.getAllInvitation(user_id);
+//
+//        return new ResponseEntity<>(list, HttpStatus.OK);
+//    }
 
     @PostMapping("/request")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
@@ -57,11 +57,11 @@ public class UserController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @PostMapping("/password/{id}")
+    @PostMapping("/password/{u_id}")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
-    public ResponseEntity<Map<String, String>> changePassword (@PathVariable Long id, @RequestBody PasswordDTO passwordDTO){
+    public ResponseEntity<Map<String, String>> changePassword (@PathVariable Long u_id, @RequestBody PasswordDTO passwordDTO){
         Map<String, String> res = new HashMap<>();
-        res.put("message", userService.changePassword(passwordDTO, id));
+        res.put("message", userService.changePassword(passwordDTO, u_id));
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }

@@ -21,6 +21,8 @@ public interface UserInterface {
 
     List<Invitation> getAllInvitation(Long user_id);
 
+    List<AppUser> getAllUsers();
+
     AppUser getUserByEmail(String email);
 
     List<AppUser> getInvitedUserByProjectId(Long project_id);

@@ -14,4 +14,12 @@ public class UserDTO {
     private Long id;
     private String email;
     private String username;
+
+    private int status;
+
+    public UserDTO(Long id, String email, String username) {
+        this.id = id;
+        this.email = email;
+        this.username = username;
+    }
 }

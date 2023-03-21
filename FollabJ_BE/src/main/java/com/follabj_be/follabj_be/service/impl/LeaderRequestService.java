@@ -32,7 +32,7 @@ public class LeaderRequestService implements LeaderRequestInterface {
         if(status == 1){
             l.setStatus(LeaderRequest.requestStatus.ACCEPT);
             userRepository.updateRole(l.getUser().getId(), 3);
-            emailSender.sendEmail(l.getUser().getEmail(), buildEmail.becomeLeader(l.getUser().getUsername()));
+            //emailSender.sendEmail(l.getUser().getEmail(), buildEmail.becomeLeader(l.getUser().getUsername()));
 
         }else{
             l.setStatus(LeaderRequest.requestStatus.REJECT);
