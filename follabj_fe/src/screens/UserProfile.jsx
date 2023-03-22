@@ -32,14 +32,18 @@ const UserProfile = () => {
     };
     
     return (
-        <>
+        <> 
             <Wrapper>
                 <AuthenNavBar />
                 <div style={{ margin: "200px" }}> 
-                             <h1>User Profile</h1>
-                            <h1>{userProfile.id}</h1>
-                            <h1>{userProfile.email}</h1>
-                            <h1>{userProfile.username}</h1>
+                            <h1>User Profile</h1>
+                            { (userProfile!=null) && 
+                            (<>
+                                <h1>{userProfile.id}</h1>
+                                <h1>{userProfile.email}</h1>
+                                <h1>{userProfile.username}</h1>
+                            </>)}
+                           
                     <Popup modal trigger={ <button className='darkBg font25 radius6 lightColor tag'>Change password</button>}>
                         {close => <ChangePasswordModal close={close}/>}
                     </Popup>

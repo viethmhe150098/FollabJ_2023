@@ -37,7 +37,7 @@ const ChangePasswordModal = ({close}) => {
                 
                 <form id="taskForm" onSubmit={(e)=>{handleSubmit(e)}} encType="multipart/form-data">
                     <div className="form-group">
-                        <label htmlFor="oldPassword">Note Title </label>
+                        <label htmlFor="oldPassword">Old Password </label>
                         <input
                             type="text"
                             id="oldPassword"
@@ -45,7 +45,7 @@ const ChangePasswordModal = ({close}) => {
                         ></input>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="newPassword">Note Title </label>
+                        <label htmlFor="newPassword">New Password </label>
                         <input
                             type="text"
                             id="newPassword"
