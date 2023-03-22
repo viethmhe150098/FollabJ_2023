@@ -4,63 +4,91 @@ import { useSelector } from "react-redux";
 
 import styled from "styled-components";
 
+const ChangePasswordModal = ({ close }) => {
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
 
-const ChangePasswordModal = ({close}) => {
-    
-    const [oldPassword, setOldPassword] = useState("");
-    const [newPassword, setNewPassword] = useState("");
+  const user_id = useSelector((state) => state.auth.login.currentUser.id);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    const user_id = useSelector((state) => state.auth.login.currentUser.id)
+    // check backend PasswordDTO to know the name of the field
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    // const passwordFormData =
+    // {
+    const passwordFormData = {
+      req_u_id: user_id,
+      old_password: oldPassword,
+      new_password: newPassword,
+    };
+    // }
 
-        // check backend PasswordDTO to know the name of the field
+    // using axios.post to send data with access token
+    //axios.post(url, data, config)
+    axios.post("http://localhost:8080/user/password/"+user_id, passwordFormData, {
+        headers : {
+          'Authorization' : "Bearer "+ localStorage.getItem("access_token")
+      }
+      })
+      .then((response) => {
+        console.log(response);
+        // Handle success
+        close();
+      })
+      .catch((error) => {
+        console.error(error);
+        // Handle error
+      });
+  };
 
-        // const passwordFormData = 
-        // {
+  return (
+    <>
+      <Modal>
+        <a className="close" onClick={close}>
+          &times;
+        </a>
+        <h2>Change Password</h2>
 
-        // }
-
-        // using axios.post to send data with access token
-        //axios.post(url, data, config)
-    }
-
-    return (
-        <>
-            <Modal>
-                <a className="close" onClick={close}>
-                    &times;
-                </a>
-                <h2>Change Password</h2>
-                
-                <form id="taskForm" onSubmit={(e)=>{handleSubmit(e)}} encType="multipart/form-data">
-                    <div className="form-group">
-                        <label htmlFor="oldPassword">Old Password </label>
-                        <input
-                            type="text"
-                            id="oldPassword"
-                            onChange={(e) => {setOldPassword(e.target.value)}}
-                        ></input>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="newPassword">New Password </label>
-                        <input
-                            type="text"
-                            id="newPassword"
-                            onChange={(e) => {setNewPassword(e.target.value)}}
-                        ></input>
-                    </div>
-                    <button onClick={() => handleSubmit()} className='greenBg font25 radius6 lightColor tag'>Change</button>
-                </form>
-            </Modal>
-        </>
-    );
-}
+        <form
+          id="taskForm"
+          onSubmit={(e) => {
+            handleSubmit(e);
+          }}
+          encType="multipart/form-data"
+        >
+          <div className="form-group">
+            <label htmlFor="oldPassword">Old Password </label>
+            <input
+              type="text"
+              id="oldPassword"
+              onChange={(e) => {
+                setOldPassword(e.target.value);
+              }}
+            ></input>
+          </div>
+          <div className="form-group">
+            <label htmlFor="newPassword">New Password </label>
+            <input
+              type="text"
+              id="newPassword"
+              onChange={(e) => {
+                setNewPassword(e.target.value);
+              }}
+            ></input>
+          </div>
+          <button
+            className="greenBg font25 radius6 lightColor tag"
+          >
+            Change
+          </button>
+        </form>
+      </Modal>
+    </>
+  );
+};
 
 const Modal = styled.div`
-
   background-color: #fff;
   padding: 1rem;
   border-radius: 5px;
@@ -87,15 +115,15 @@ const Modal = styled.div`
           outline: none;
           box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
         }
-      .date-picking {
-        display: inline-block;
-        witdth: 50 %;
-        background-color: orange;
-        text-color:white
-      }
+        .date-picking {
+          display: inline-block;
+          witdth: 50 %;
+          background-color: orange;
+          text-color: white;
+        }
       }
       textarea {
-border: 1px black solid;
+        border: 1px black solid;
         resize: none;
       }
       select {
@@ -114,14 +142,15 @@ border: 1px black solid;
         font-weight: bold;
         margin-bottom: 0.5rem;
       }
-      input[type='checkbox'] {
+      input[type="checkbox"] {
         border: 1px black solid;
 
         margin-right: 0.5rem;
       }
       label {
       }
-      #start-date, #end-date {
+      #start-date,
+      #end-date {
         border: 1px black solid;
         width: 40%;
         &:focus {
@@ -130,7 +159,7 @@ border: 1px black solid;
         }
       }
     }
-    button[type='submit'] {
+    button[type="submit"] {
       background-color: orange;
       color: #fff;
       padding: 0.5rem 1rem;
@@ -142,7 +171,6 @@ border: 1px black solid;
       }
     }
   }
-  
 `;
 
-export default ChangePasswordModal
+export default ChangePasswordModal;
