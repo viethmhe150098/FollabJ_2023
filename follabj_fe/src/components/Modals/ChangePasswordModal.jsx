@@ -15,17 +15,16 @@ const ChangePasswordModal = ({close}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const passwordForm = 
-            {
-                req_u_id: user_id,
-                old_password: oldPassword,
-                new_password: newPassword
-            }
-        axios.post("http://localhost:8080/user/password/"+user_id, passwordForm, {
-            headers : {
-                'Authorization' : "Bearer "+ localStorage.getItem("access_token")
-            }
-        }).then((response)=>{close()})
+
+        // check backend PasswordDTO to know the name of the field
+
+        // const passwordFormData = 
+        // {
+
+        // }
+
+        // using axios.post to send data with access token
+        //axios.post(url, data, config)
     }
 
     return (

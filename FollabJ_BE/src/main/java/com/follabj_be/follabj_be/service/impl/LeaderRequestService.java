@@ -31,7 +31,7 @@ public class LeaderRequestService implements LeaderRequestInterface {
         LeaderRequest l = leaderRequestRepository.findById(req_id).orElseThrow(()->new ObjectNotFoundException("Not found request", req_id.toString()));
         if(status == 1){
             l.setStatus(LeaderRequest.requestStatus.ACCEPT);
-            userRepository.updateRole(l.getUser().getId(), 3);
+            userRepository.updateRole(l.getUser().getId(), 2);
             //emailSender.sendEmail(l.getUser().getEmail(), buildEmail.becomeLeader(l.getUser().getUsername()));
 
         }else{

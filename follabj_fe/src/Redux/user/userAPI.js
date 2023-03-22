@@ -12,10 +12,11 @@ export const fetchUsers = () =>
 
 
 export const updateUserStatus = (user_id, status) => axios.post(adminUserUrl()+"/"+user_id+"/update",
+null,
 {
-    status
-},
-{
+    params : {
+        status
+    },
     headers : {
         'Authorization' : "Bearer "+ localStorage.getItem("access_token")
     }

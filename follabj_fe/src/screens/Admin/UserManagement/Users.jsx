@@ -14,8 +14,9 @@ const Users = () => {
     const users = useSelector((state) => state.user)
 
     useEffect(() => {
-        dispatch(getUsers);
-    }, [])
+        dispatch(getUsers());
+        //console.log("dispatched")
+    },[])
 
     const handleBan = (user) => {
         dispatch(banUser(user.id))
@@ -36,13 +37,13 @@ const Users = () => {
             </div>
             {users.map((user, index) => (
                 <Row className="row " key={index}>
-                <Name className="col-lg-8 font20">user.username</Name>
+                <Name className="col-lg-8 font20">{user.username}</Name>
                 <div className="col-lg-2">
                     { user.status==1 &&
-                    <button onClick={() => handleBan()} className='redBg font20 radius6 lightColor tag'>Ban user</button>
+                    <button onClick={() => handleBan(user)} className='redBg font20 radius6 lightColor tag'>Ban user</button>
                     }
                     { user.status==2 &&
-                    <button onClick={() => handleUnban()} className='greenBg font20 radius6 lightColor tag'>Unban user</button>
+                    <button onClick={() => handleUnban(user)} className='greenBg font20 radius6 lightColor tag'>Unban user</button>
                     }
                 </div>
             </Row>
