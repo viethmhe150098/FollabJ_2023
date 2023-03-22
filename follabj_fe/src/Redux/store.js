@@ -13,6 +13,7 @@ import thunk from "redux-thunk";
 import { invitationReducer } from "./invitation/invitationReducers";
 import { userReducer } from "./user/userReducers";
 import { requestReducer } from "./leaderRequest/requestReducer";
+import { userProfileReducer } from "./userProfile/userProfileReducers";
 
 const rootReducer = combineReducers({
     responseMessage: responseMessageReducer,
@@ -24,7 +25,8 @@ const rootReducer = combineReducers({
     note : noteReducer,
     invitation: invitationReducer,
     user: userReducer,
-    leaderRequest: requestReducer
+    leaderRequest: requestReducer,
+    userProfile: userProfileReducer
 })
 
 const persistConfig = {
