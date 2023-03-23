@@ -30,7 +30,7 @@ export default function Note() {
 
   useEffect(() => {
     dispatch(getNotesByUserId(user_id))
-  }, [notes])
+  }, [])
 
 
   const handleNote = (note) => {

@@ -177,7 +177,7 @@ public class ProjectService implements ProjectInterface {
         Project p = projectRepository.findById(p_id).orElseThrow(()-> new ObjectNotFoundException("Not found project", p_id.toString()));
         if(checkMember(p_id, u_id)) {
             p.setLeader(userRepository.findById(u_id).orElseThrow(() -> new ObjectNotFoundException("Not found project", p_id.toString())));
-            userRepository.updateRole(u_id, 2);
+            //userRepository.updateRole(u_id, 2);
             String userEmail = userRepository.findById(u_id).orElseThrow(() -> new ObjectNotFoundException("Not found project", p_id.toString())).getEmail();
             emailSender.sendEmail(userEmail, buildEmail.becomeLeader(userEmail));
             projectRepository.save(p);
