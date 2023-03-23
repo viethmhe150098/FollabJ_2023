@@ -22,16 +22,16 @@ export default function Note() {
   // const history = useHistory();
 
   if (projectId == null) {
-      history.push("/projects")
-      //window.location.href = "/projects";
+    history.push("/projects")
+    //window.location.href = "/projects";
   }
 
   const notes = useSelector((state) => state.note)
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getNotesByUserId(user_id))
-  },[notes])
-  
+  }, [notes])
+
 
   const handleNote = (note) => {
     history.push({
@@ -42,33 +42,35 @@ export default function Note() {
 
   return (
     <Wrapper id="notes">
+      <HeaderInfo>
+        <h1 className="font30 extraBold">Notes</h1>
+      </HeaderInfo>
       <div className="whiteBg">
-        <div className="container">
+        <div className="">
           <HeaderInfo>
-            <h1 className="font40 extraBold">All Your Notes</h1>
             <Popup modal trigger={<div style={{
-              width: "100px", marginLeft:"50px"
-              }}>
-                <FullButton title={"Add Note"} /></div>}>
-                {close => <NoteModal close={close} />
-                }
-              </Popup>
+              width: "100px"
+            }}>
+              <FullButton title={"Add Note"} /></div>}>
+              {close => <NoteModal close={close} />
+              }
+            </Popup>
           </HeaderInfo>
           <div className="row textCenter">
 
-          {notes.map((note,index)=>{ 
-        
-           return(
+            {notes.map((note, index) => {
+
+              return (
                 <div key={index} className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                   <NoteBox
                     title={note.title}
-                    text= {`Created Date: ${note.createdDate}`}
+                    text={`Created Date: ${note.createdDate}`}
                     action={() => handleNote(note)}
                   />
                 </div>
-          )
-          })
-          }
+              )
+            })
+            }
           </div>
           {/* <div className="row flexCenter">
             <div style={{ margin: "50px 0", width: "200px" }}>
@@ -77,18 +79,18 @@ export default function Note() {
           </div> */}
         </div>
       </div>
-   
+
     </Wrapper>
   );
 }
 
 const Wrapper = styled.section`
   width: 100%;
-  padding-top: 20px;
 `;
 const HeaderInfo = styled.div`
-  margin-bottom: 30px;
-  @media (max-width: 860px) {
-    text-align: center;
-  }
-`;
+margin-bottom: 30px;
+margin-left: 5px;
+@media (max-width: 860px) {
+  text-align: center;
+}
+`

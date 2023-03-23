@@ -125,7 +125,7 @@ const Kanban = () => {
         <Wrapper id='tasks'>
             <ToastContainer />
             <HeaderInfo>
-                <h1 className="font40 extraBold">Kanban Board</h1>
+                <h1 className="font30 extraBold">Kanban Board</h1>
             </HeaderInfo>
             <DragDropContext onDragEnd={onDragEnd}>
                 <KanbanBoard >

@@ -1,21 +1,22 @@
 
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, Navigate } from "react-router-dom";
 import { loginUser } from "../../Redux/auth/apiRequest";
 import '../../style/authen.css'
 import FullButton from "../../components/Buttons/FullButton";
 import AuthenNavbar from "../../components/Nav/AuthenNavbar";
 import { useState, useEffect } from 'react';
+import { isLoggedIn } from '../../Redux/auth/auth'
 
 const Login = () => {
+  const navigate = useHistory();
+  // isLoggedIn && navigate.push("/");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
   const [errors, setErrors] = useState({ username: '', password: '' });
-
   const dispatch = useDispatch();
-  const navigate = useHistory();
+
 
   // Regex to validate email
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -54,7 +55,7 @@ const Login = () => {
 
   }
 
-  
+
 
 
   return (
@@ -88,7 +89,7 @@ const Login = () => {
               </div>
             )}
             <div style={{ marginTop: '10px ' }}></div>
-            <FullButton title="Get Started"/>
+            <FullButton title="Get Started" />
           </form>
           <RouterLink to="/signup">
             <button className="link-btn">Don't have an account?  <span className="semiBold"> Register here.</span></button>

@@ -133,6 +133,7 @@ const CreateEventForm = ({type, close, event}) => {
                             id="title"
                             value={title}
                             onChange={(event) => setTitle(event.target.value)}
+                            required
                         ></textarea>
                     </div>
                     <div className="form-group">
@@ -196,7 +197,9 @@ const Modal = styled.div`
   background-color: #fff;
   padding: 1rem;
   border-radius: 5px;
-  max-height: %;
+  max-height: 100%;
+  max-width: 100%;
+  min-width: 500px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
   h2 {
     font-size: 1.5rem;

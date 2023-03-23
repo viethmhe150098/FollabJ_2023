@@ -6,14 +6,14 @@ import { useHistory, useLocation } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { updateNote } from '../../../Redux/note/noteActions';
 import { useSelector } from 'react-redux';
-
+import FullButton from "../../../components/Buttons/FullButton";
 
 
 const NoteEditor = () => {
- 
+
   const user_id = useSelector((state) => state.auth.login.currentUser.id)
   const history = useHistory()
-  const {state}= useLocation();
+  const { state } = useLocation();
   const note = state
   //console.log(state)
   const dispatch = useDispatch()
@@ -26,16 +26,16 @@ const NoteEditor = () => {
   const handleUpdate = () => {
     //console.log(editorState.getCurrentContent().getPlainText())
     const updatedNote = {
-      id : note.id,
-      title : note.title,
+      id: note.id,
+      title: note.title,
       content: editorState.getCurrentContent().getPlainText(),
-      creator : {
+      creator: {
         id: user_id
       },
       updatedDate: new Date()
     }
 
-    dispatch(updateNote({user_id, note: updatedNote}))
+    dispatch(updateNote({ user_id, note: updatedNote }))
 
     history.push("/notes")
 
@@ -46,8 +46,7 @@ const NoteEditor = () => {
 
 
   return (<div>
-    <button onClick={() => handleUpdate()} className='orangeBg font25 radius6 lightColor tag'>Save</button>
-    {/* <h2>{note.title}</h2> */}
+    <div style={{ width: '100px', marginBottom:'40px' }}> <FullButton title={"Save Note"} action={() => handleUpdate()} /></div>
     <div style={{ border: "1px solid black", padding: '2px', minHeight: '400px' }}>
       <Editor
         editorState={editorState}
@@ -55,8 +54,8 @@ const NoteEditor = () => {
       />
     </div>
   </div>
-);
-  
+  );
+
 }
 
 export default NoteEditor;

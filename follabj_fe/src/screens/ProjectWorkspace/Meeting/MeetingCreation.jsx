@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import FullButton from "../../../components/Buttons/FullButton";
+
 
 
 
@@ -17,38 +19,33 @@ const MeetingCreation = () => {
 
   return (
     <>
-      <h1>Meeting Page</h1>
+      <HeaderInfo>
+        <h1 className="font30 extraBold">Meeting</h1>
+      </HeaderInfo>
       <Wrapper>
-        <Button onClick={handleInstantMeeting}>Create Instant Meeting</Button>
-        <Button onClick={handleScheduledMeeting}>
-          Create Meeting for Later
-        </Button>
+        <FullButton title={'Create Instant Meeting'} action={() => { handleInstantMeeting() }}></FullButton>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <FullButton title={' Create Meeting for Later'} action={handleScheduledMeeting}>
+        </FullButton>
       </Wrapper>
     </>
   );
 };
 
 //style
-const Button = styled.button`
-  background-color: #ff8800;
-  color: white;
-  border: none;
-  padding: 10px;
-  margin-right: 10px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 4px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-
-  &:hover {
-    background-color: #ff6e00;
-  }
-`;
 
 const Wrapper = styled.div`
+width:700px;
   display: flex;
   flex-direction: row;
   align-items: center;
   margin: 20px 0;
 `;
+const HeaderInfo = styled.div`
+margin-bottom: 30px;
+margin-left: 5px;
+@media (max-width: 860px) {
+  text-align: center;
+}
+`
 export default MeetingCreation;

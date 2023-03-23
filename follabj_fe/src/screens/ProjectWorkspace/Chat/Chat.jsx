@@ -13,10 +13,10 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const scroll = useRef();
 
-  const project_id = useSelector((state)=> state.project.currentProject.id)
+  const project_id = useSelector((state) => state.project.currentProject.id)
 
   useEffect(() => {
-    const q = query(collection(db, 'group_'+project_id), orderBy('timestamp'));
+    const q = query(collection(db, 'group_' + project_id), orderBy('timestamp'));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       let messages = [];
       querySnapshot.forEach((doc) => {
@@ -29,15 +29,19 @@ const Chat = () => {
 
   return (
     <>
+    
+    <div style={{maxHeight:'700px', overflow:'auto'}}>
+     <br></br>
       <div style={inlineStyle.main}>
         {messages &&
           messages.map((message) => (
             <Message key={message.id} message={message} />
           ))}
+        {/* Send Message Compoenent */}
+        <InputMessage scroll={scroll} />
+        <span ref={scroll}></span>
       </div>
-      {/* Send Message Compoenent */}
-      <InputMessage scroll={scroll} />
-      <span ref={scroll}></span>
+      </div>
     </>
   );
 };
@@ -46,7 +50,6 @@ const inlineStyle = {
   main: {
     display: "flex",
     flexDirection: "column",
-    maxWidth: "728px"
   }
 }
 
