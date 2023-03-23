@@ -23,7 +23,7 @@ public class LeaderRequestService implements LeaderRequestInterface {
     private final EmailSender emailSender;
     @Override
     public boolean isPendingRequest(Long u_id) {
-        return leaderRequestRepository.getByStatus(u_id, LeaderRequest.requestStatus.PENDING);
+        return leaderRequestRepository.existsByUserIdAndStatus(u_id, LeaderRequest.requestStatus.PENDING);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class LeaderRequestService implements LeaderRequestInterface {
         LeaderRequest l = leaderRequestRepository.findById(req_id).orElseThrow(()->new ObjectNotFoundException("Not found request", req_id.toString()));
         if(status == 1){
             l.setStatus(LeaderRequest.requestStatus.ACCEPT);
-            userRepository.updateRole(l.getUser().getId(), 2);
+            userRepository.promoteLeader(l.getUser().getId());
             //emailSender.sendEmail(l.getUser().getEmail(), buildEmail.becomeLeader(l.getUser().getUsername()));
 
         }else{

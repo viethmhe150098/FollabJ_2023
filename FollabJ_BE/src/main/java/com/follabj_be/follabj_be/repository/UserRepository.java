@@ -25,6 +25,11 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
     @Query(nativeQuery = true, value = "update user_roles set role_id=?2 where id=?1")
     int updateRole(Long id, int role_id);
 
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true, value = "insert into user_roles values (?1 , 2)")
+    int promoteLeader(Long id);
+
     AppUser getAppUserById(Long id);
 
     @Query("select new com.follabj_be.follabj_be.dto.UserDTO(u.id, u.username, u.email)from AppUser u where upper(u.email) like %:email_cha%")
