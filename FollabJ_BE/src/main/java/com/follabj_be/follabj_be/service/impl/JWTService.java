@@ -45,8 +45,8 @@ public class JWTService implements JWTInterface {
                         .withClaim("roles", user.getRoles().stream().map(Role::getName).collect(Collectors.toList()))
                         .sign(algorithm);
                 Map<String, String> tokens = new HashMap<>();
-                tokens.put("access token", accessToken);
-                tokens.put("refresh token", refreshToken);
+                tokens.put("access_token", accessToken);
+                tokens.put("refresh_token", refreshToken);
                 return tokens;
 
             } catch (JwtException e) {
