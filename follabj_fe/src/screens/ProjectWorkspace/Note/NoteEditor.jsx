@@ -46,7 +46,7 @@ const NoteEditor = () => {
 
 
   return (<div>
-    <div style={{ width: '100px', marginBottom:'40px' }}> <FullButton title={"Add Event"} action={() => handleUpdate()} /></div>
+    <div style={{ width: '100px', marginBottom:'40px' }}> <FullButton title={"Save Note"} action={() => handleUpdate()} /></div>
     <div style={{ border: "1px solid black", padding: '2px', minHeight: '400px' }}>
       <Editor
         editorState={editorState}

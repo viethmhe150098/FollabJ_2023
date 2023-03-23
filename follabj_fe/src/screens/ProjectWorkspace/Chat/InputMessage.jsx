@@ -4,6 +4,7 @@ import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Picker from 'emoji-picker-react';
+import { Emoji, EmojiStyle } from 'emoji-picker-react';
 // const style = {
 //   form: `h-14 w-full max-w-[728px] flex text-xl fixed bottom-0`,
 //   input: `w-full text-xl p-3 bg-gray-900 text-white outline-none border-none`,
@@ -19,7 +20,7 @@ const InputMessage = ({ scroll }) => {
 
   const email = useSelector((state) => state.auth.login.currentUser.email)
   const [showPicker, setShowPicker] = useState(false);
-  const onEmojiClick = (event, emojiObject) => {
+  const onEmojiClick = (emojiObject,event ) => {
     console.log(emojiObject.emoji)
     setInput(prevInput => prevInput + emojiObject.emoji);
   };
@@ -55,13 +56,17 @@ const InputMessage = ({ scroll }) => {
           type='text'
           placeholder='Message'
         />
-        <img
-          className="emoji-icon"
-          src="https://icons.getbootstrap.com/assets/icons/emoji-smile.svg"
-          onClick={() => setShowPicker(val => !val)} />
-        {showPicker && <Picker
-          pickerStyle={{ width: '100px', height: '10px' }}
-          onEmojiClick={onEmojiClick} />}
+        <div style={{ position: 'absolute',right: '100px', left: '1050px', top:'30px' }}>
+          <img
+            className="emoji-icon"
+            src="https://icons.getbootstrap.com/assets/icons/emoji-smile.svg"
+            onClick={() => setShowPicker(val => !val)} />
+          <div style={{ position: 'relative', bottom: '500px',right:'200px' }}>
+            {showPicker && <Picker
+              onEmojiClick={onEmojiClick} />}
+          </div>
+        </div>
+    
         <Button type='submit'>
           Send
         </Button>

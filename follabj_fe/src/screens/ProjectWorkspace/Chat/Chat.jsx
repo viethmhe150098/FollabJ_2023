@@ -29,7 +29,8 @@ const Chat = () => {
 
   return (
     <>
-     <h1 className="font30">Chatting</h1>
+    
+    <div style={{maxHeight:'700px', overflow:'auto'}}>
      <br></br>
       <div style={inlineStyle.main}>
         {messages &&
@@ -40,7 +41,7 @@ const Chat = () => {
         <InputMessage scroll={scroll} />
         <span ref={scroll}></span>
       </div>
-
+      </div>
     </>
   );
 };
