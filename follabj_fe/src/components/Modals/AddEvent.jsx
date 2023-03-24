@@ -172,13 +172,13 @@ const CreateEventForm = ({type, close, event}) => {
                         <label>Participants: </label>
                         {members.map((member) => (
                             <div key={member.id}>
-                                <input disabled={modalType=="readonly"}
+                                <input disabled={modalType=="readonly" || member.id==user_id}
                                     type="checkbox"
                                     id={`participant-${member.id}`}
                                     value={member.id}
                                     onChange={handleCheckboxChange}
                                     // checked={assigneeList.includes(teamMember.id)}
-                                    checked = {participantList.some((participant) => participant.id == member.id)}
+                                    checked = {participantList.some((participant) => participant.id == member.id) || member.id==user_id}
                                 />
                                 <label htmlFor={`assignee-${member.id}`}>
                                     {member.username}

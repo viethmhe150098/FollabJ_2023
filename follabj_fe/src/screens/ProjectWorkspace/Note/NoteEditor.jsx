@@ -4,7 +4,7 @@ import { ContentState, convertToRaw, EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useHistory, useLocation } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { updateNote } from '../../../Redux/note/noteActions';
+import { getNotesByUserId, updateNote } from '../../../Redux/note/noteActions';
 import { useSelector } from 'react-redux';
 import FullButton from "../../../components/Buttons/FullButton";
 

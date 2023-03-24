@@ -26,8 +26,6 @@ const Projects = () => {
 
   const projects = useSelector((state) => state.project.projects.allProjects)
 
-  const roles = localStorage.getItem("role_name")
-
   const members = useSelector((state) => state.project.currentProject.members)
 
   const setCurrentProject = (project_id) => {
