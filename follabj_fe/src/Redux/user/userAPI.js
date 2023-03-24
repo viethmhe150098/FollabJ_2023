@@ -1,23 +1,16 @@
-import axios from "axios";
+import instance from "../axiosInstance";
 
-const adminUserUrl = () => "http://localhost:8080/admin/users";
+const adminUserUrl = () => "/admin/users";
 
 export const fetchUsers = () => 
-    axios.get(adminUserUrl(), {
-        headers : {
-            'Authorization' : "Bearer "+ localStorage.getItem("access_token")
-        }
-});
+instance.get(adminUserUrl());
 
 
 
-export const updateUserStatus = (user_id, status) => axios.post(adminUserUrl()+"/"+user_id+"/update",
+export const updateUserStatus = (user_id, status) => instance.post(adminUserUrl()+"/"+user_id+"/update",
 null,
 {
     params : {
         status
-    },
-    headers : {
-        'Authorization' : "Bearer "+ localStorage.getItem("access_token")
     }
 });

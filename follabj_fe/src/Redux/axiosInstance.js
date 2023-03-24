@@ -43,13 +43,15 @@ instance.interceptors.response.use(function (response) {
                     headers : {
                         'Authorization' : "Bearer "+ localStorage.getItem('refresh_token')
                     }
+                }).catch((error) => {
+                    localStorage.clear();
                 })
 
                 localStorage.setItem('access_token', response.data.access_token);
                 localStorage.setItem('refresh_token', response.data.refresh_token);
 
             }
-            //return instance(originalConfig)
+            return instance(originalConfig)
         default:
             break;
     }
