@@ -41,46 +41,47 @@ export default function Note() {
   }
 
   return (
-    <Wrapper id="notes">
-      <HeaderInfo>
-        <h1 className="font30 extraBold">Notes</h1>
-      </HeaderInfo>
-      <div className="whiteBg">
-        <div className="">
-          <HeaderInfo>
-            <Popup modal trigger={<div style={{
-              width: "100px"
-            }}>
-              <FullButton title={"Add Note"} /></div>}>
-              {close => <NoteModal close={close} />
+    <>    
+      <Wrapper id="notes"> 
+        <HeaderInfo>
+          <h1 className="font30 extraBold">Notes</h1>
+        </HeaderInfo>
+        <div className="whiteBg">
+          <div className="">
+            <HeaderInfo>
+              <Popup modal trigger={<div style={{
+                width: "100px"
+              }}>
+                <FullButton title={"Add Note"} /></div>}>
+                {close => <NoteModal close={close} />
+                }
+              </Popup>
+            </HeaderInfo>
+            <div className="row textCenter">
+
+              {notes.map((note, index) => {
+
+                return (
+                  <div key={index} className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <NoteBox
+                      title={note.title}
+                      text={`Created Date: ${note.createdDate}`}
+                      action={() => handleNote(note)}
+                    />
+                  </div>
+                )
+              })
               }
-            </Popup>
-          </HeaderInfo>
-          <div className="row textCenter">
-
-            {notes.map((note, index) => {
-
-              return (
-                <div key={index} className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                  <NoteBox
-                    title={note.title}
-                    text={`Created Date: ${note.createdDate}`}
-                    action={() => handleNote(note)}
-                  />
-                </div>
-              )
-            })
-            }
-          </div>
-          {/* <div className="row flexCenter">
+            </div>
+            {/* <div className="row flexCenter">
             <div style={{ margin: "50px 0", width: "200px" }}>
               <FullButton title="Load More" action={() => alert("clicked")} />
             </div>
           </div> */}
+          </div>
         </div>
-      </div>
 
-    </Wrapper>
+      </Wrapper></>
   );
 }
 

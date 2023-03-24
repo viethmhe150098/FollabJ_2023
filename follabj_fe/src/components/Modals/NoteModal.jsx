@@ -21,6 +21,7 @@ const NoteModal = ({close}) => {
       }
 
     dispatch(addNote({user_id, note}))
+    close()
   }
 
     return (

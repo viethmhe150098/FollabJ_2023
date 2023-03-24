@@ -6,209 +6,224 @@ import { addTask, deleteTask, updateTask } from "../../Redux/task/taskActions";
 import { useDispatch } from "react-redux";
 import moment from "moment";
 import { useSelector } from "react-redux";
+const AddTaskModal = ({ type, close, statusId = 1, task }) => {
 
-const AddTaskModal = ({type, close, statusId=1, task}) => {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
-    
-    const user_id = useSelector((state) => state.auth.login.currentUser.id)
-    const members = useSelector((state) => state.project.currentProject.members);
+  const user_id = useSelector((state) => state.auth.login.currentUser.id)
+  const members = useSelector((state) => state.project.currentProject.members);
 
-    const project_id = useSelector((state) => state.project.currentProject.id);
+  const project_id = useSelector((state) => state.project.currentProject.id);
 
-    const userRole = useSelector((state) => state.project.currentProject.userRole);
+  const userRole = useSelector((state) => state.project.currentProject.userRole);
 
-    //console.log(user_id == members[0].id)
+  //console.log(user_id == members[0].id)
 
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [label, setLabel] = useState("")
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-    const [assigneeList, setAssigneeList] = useState([]);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [label, setLabel] = useState("")
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [assigneeList, setAssigneeList] = useState([]);
 
-    const [modalType, setType] = useState(type)
-
-    useEffect(() => {
-      if(type=="readonly") {
-        var form = document.getElementById('taskForm');
-        var elements = form.elements;
-        for (var i = 0, len = elements.length; i < len; ++i) {
-            elements[i].readOnly = true;
-        } 
+  const [modalType, setType] = useState(type)
+  const makeStyle = (status) => {
+    if (status === 'Update') {
+      return {
+        background: 'rgb(145 254 159 / 47%)',
+        color: 'green',
+        marginRight: '20px',
+        cursor: 'pointer'
       }
-
-     if(task != null) {
-        setTitle(task.title)
-        setDescription(task.description)
-        setLabel(task.label)
-        setStartDate(new Date(task.startDate))
-        setEndDate(new Date(task.endDate))
-        setAssigneeList(task.assigneeList)
-     }
-
-    }, [])
-
-    const handleCheckboxChange = (event) => {
-        const selectedAssigneeId = event.target.value;
-        if (event.target.checked) {
-          //console.log("checked");
-          setAssigneeList([...assigneeList, { id: selectedAssigneeId}]);
-        } else {
-            const filteredAssigneeList = assigneeList.filter(
-              (assignee) => assignee.id != selectedAssigneeId ? assignee : null
-            );
-            //console.log("unchecked");
-            setAssigneeList(filteredAssigneeList);
-        }
-    };
-
-    const handleCreateTask = (event) => {
-        event.preventDefault();
-        const taskData = {
-          project_id ,
-          task : {
-            title,
-            description,
-            label,
-            startDate,
-            endDate,
-            statusId,
-            assigneeList
-          }
-        }
-        //console.log(taskData)
-        dispatch(addTask(taskData));
-        close()
-    };
-
-    const handleUpdate = () => {
+    }
+    else if (status === 'Delete') {
+      return {
+        background: '#ffadad8f',
+        color: 'red',
+        cursor: 'pointer'
+      }
+    }
+  }
+  useEffect(() => {
+    if (type == "readonly") {
       var form = document.getElementById('taskForm');
       var elements = form.elements;
       for (var i = 0, len = elements.length; i < len; ++i) {
-          elements[i].readOnly = false;
+        elements[i].readOnly = true;
       }
-      setType("update")
-    }  
-    
-    const handleDelete = () => {
-        dispatch(deleteTask({project_id, task_id: task.id, task_name: task.title}))
-        close()
     }
 
-    const handleCommitUpdate = () => {
-
-      const updatedTask = {
-          id: task.id,
-          title,
-          description,
-          label,
-          startDate,
-          endDate,
-          statusId,
-          assigneeList
-      }
-
-      dispatch(updateTask({project_id, task: updatedTask}))
-      close()
+    if (task != null) {
+      setTitle(task.title)
+      setDescription(task.description)
+      setLabel(task.label)
+      setStartDate(new Date(task.startDate))
+      setEndDate(new Date(task.endDate))
+      setAssigneeList(task.assigneeList)
     }
 
-    return (
-        <>
-            <Modal>
-                <a className="close" onClick={close}>
-                    &times;
-                </a>
-                {modalType=="readonly" && (<>
-                  <h2>View Task</h2>
-                  { userRole == "LEADER" &&
-                  ( <>
-                  <button onClick={() => handleUpdate()} className='greenBg font25 radius6 lightColor tag'>Update</button>
-                  <button onClick={() => handleDelete()} className='redBg font25 radius6 lightColor tag'>Delete</button>
-                  </>)}
-                </>)}
-                {modalType=="update" && (
-                  <>
-                  <h2>Update Task</h2>
-                  <button onClick={() => handleCommitUpdate()} className='greenBg font25 radius6 lightColor tag'>Commit Update</button>
-                  </>
-                )}
-                {modalType==null && (<h2>Create Task</h2>)}
-                
-                <form id="taskForm" onSubmit={handleCreateTask}>
-                <div className="form-group">
-                        <label htmlFor="title">Task Title</label>
-                        <textarea
-                            id="title"
-                            value={title}
-                            onChange={(event) => setTitle(event.target.value)}
-                            required
-                        ></textarea>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="description">Task Description</label>
-                        <textarea
-                            id="description"
-                            value={description}
-                            onChange={(event) => setDescription(event.target.value)}
-                        ></textarea>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="label">Task Label</label>
-                        <textarea
-                            id="label"
-                            value={label}
-                            onChange={(event) => setLabel(event.target.value)}
-                        ></textarea>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="startDate">Start Date</label>
-                        <DatePicker
-                            id="startDate"
-                            selected={startDate}
-                            disabled={modalType == "readonly"}
-                            value={task != null ? moment(task.startDate).format("DD/MM/yyyy hh:mm a") : new Date()}
-                            showTimeSelect
-                            onChange={(date) => setStartDate(date)}
-                            dateFormat="dd/MM/yyyy hh:mm a"
-                            required
-                        />
-                         <label htmlFor="endDate">End Date</label>
-                        <DatePicker
-                            id="endDate"
-                            selected={endDate}
-                            disabled={modalType == "readonly"}
-                            value={task != null ? moment(task.endDate).format("DD/MM/yyyy hh:mm a") : new Date()}
-                            showTimeSelect
-                            onChange={(date) => setEndDate(date)}
-                            dateFormat="dd/MM/yyyy hh:mm a"
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Assignees</label>
-                        {members.map((member) => (
-                            <div key={member.id}>
-                                <input disabled={modalType=="readonly"}
-                                    type="checkbox"
-                                    id={`assignee-${member.id}`}
-                                    value={member.id}
-                                    onChange={handleCheckboxChange}
-                                    // checked={assigneeList.includes(teamMember.id)}
-                                    checked = {assigneeList.some((assignee) => assignee.id == member.id)}
-                                />
-                                <label htmlFor={`assignee-${member.id}`}>
-                                    {member.username}
-                                </label>
-                            </div>
-                        ))}
-                    </div>
-                    {/* {modalType=="update" && (<button type="submit">Update Task</button>)} */}
-                    {modalType==null && (<button type="submit">Create Task</button>)}
-                </form>
-            </Modal>
-        </>
-    );
+  }, [])
+
+  const handleCheckboxChange = (event) => {
+    const selectedAssigneeId = event.target.value;
+    if (event.target.checked) {
+      //console.log("checked");
+      setAssigneeList([...assigneeList, { id: selectedAssigneeId }]);
+    } else {
+      const filteredAssigneeList = assigneeList.filter(
+        (assignee) => assignee.id != selectedAssigneeId ? assignee : null
+      );
+      //console.log("unchecked");
+      setAssigneeList(filteredAssigneeList);
+    }
+  };
+
+  const handleCreateTask = (event) => {
+    event.preventDefault();
+    const taskData = {
+      project_id,
+      task: {
+        title,
+        description,
+        label,
+        startDate,
+        endDate,
+        statusId,
+        assigneeList
+      }
+    }
+    //console.log(taskData)
+    dispatch(addTask(taskData));
+    close()
+  };
+
+  const handleUpdate = () => {
+    var form = document.getElementById('taskForm');
+    var elements = form.elements;
+    for (var i = 0, len = elements.length; i < len; ++i) {
+      elements[i].readOnly = false;
+    }
+    setType("update")
+  }
+
+  const handleDelete = () => {
+    dispatch(deleteTask({ project_id, task_id: task.id, task_name: task.title }))
+    close()
+  }
+
+  const handleCommitUpdate = () => {
+
+    const updatedTask = {
+      id: task.id,
+      title,
+      description,
+      label,
+      startDate,
+      endDate,
+      statusId,
+      assigneeList
+    }
+
+    dispatch(updateTask({ project_id, task: updatedTask }))
+    close()
+  }
+
+  return (
+    <>
+      <Modal>
+        {/* <a className="close" onClick={close}>
+          &times;
+        </a> */}
+        {modalType == "readonly" && (<>
+          <h2>View Task</h2>
+          {userRole == "LEADER" &&
+            (<div style={{ marginBottom: '20px' }}>
+              <span onClick={() => handleUpdate()} className="status" style={makeStyle('Update')}>Update task</span>
+              <span onClick={() => handleDelete()} className="status" style={makeStyle('Delete')}>Delete task</span>
+            </div>)}
+        </>)}
+        {modalType == "update" && (
+          <div style={{ marginBottom: '20px' }}>
+            <h2>Update Task</h2>
+            <button onClick={() => handleCommitUpdate()} className="status" style={makeStyle('Update')}>Commit Update</button>
+          </div>
+        )}
+        {modalType == null && (<h2>Create Task</h2>)}
+
+        <form id="taskForm" onSubmit={handleCreateTask}>
+          <div className="form-group">
+            <label htmlFor="title">Task Title</label>
+            <textarea
+              id="title"
+              value={title}
+              onChange={(event) => setTitle(event.target.value)}
+              required
+            ></textarea>
+          </div>
+          <div className="form-group">
+            <label htmlFor="description">Task Description</label>
+            <textarea
+              id="description"
+              value={description}
+              onChange={(event) => setDescription(event.target.value)}
+            ></textarea>
+          </div>
+          <div className="form-group">
+            <label htmlFor="label">Task Label</label>
+            <textarea
+              id="label"
+              value={label}
+              onChange={(event) => setLabel(event.target.value)}
+            ></textarea>
+          </div>
+          <div className="form-group">
+            <label htmlFor="startDate">Start Date</label>
+            <DatePicker
+              id="startDate"
+              selected={startDate}
+              disabled={modalType == "readonly"}
+              value={task != null ? moment(task.startDate).format("DD/MM/yyyy hh:mm a") : new Date()}
+              showTimeSelect
+              onChange={(date) => setStartDate(date)}
+              dateFormat="dd/MM/yyyy hh:mm a"
+              required
+            />
+            <label htmlFor="endDate">End Date</label>
+            <DatePicker
+              id="endDate"
+              selected={endDate}
+              disabled={modalType == "readonly"}
+              value={task != null ? moment(task.endDate).format("DD/MM/yyyy hh:mm a") : new Date()}
+              showTimeSelect
+              onChange={(date) => setEndDate(date)}
+              dateFormat="dd/MM/yyyy hh:mm a"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Assignees</label>
+            {members.map((member) => (
+              <div key={member.id}>
+                <input disabled={modalType == "readonly"}
+                  type="checkbox"
+                  id={`assignee-${member.id}`}
+                  value={member.id}
+                  onChange={handleCheckboxChange}
+                  // checked={assigneeList.includes(teamMember.id)}
+                  checked={assigneeList.some((assignee) => assignee.id == member.id)}
+                />
+                <label htmlFor={`assignee-${member.id}`}>
+                  {member.username}
+                </label>
+              </div>
+            ))}
+          </div>
+          {/* {modalType=="update" && (<button type="submit">Update Task</button>)} */}
+          {modalType == null && (<button type="submit">Create Task</button>)}
+        </form>
+      </Modal>
+    </>
+  );
 };
 const Modal = styled.div`
 
@@ -224,6 +239,7 @@ const Modal = styled.div`
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
   }
+
   form {
     .form-group {
       margin-bottom: 1rem;

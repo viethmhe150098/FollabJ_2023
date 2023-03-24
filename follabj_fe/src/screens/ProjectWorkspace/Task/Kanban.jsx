@@ -8,9 +8,7 @@ import { useDispatch } from "react-redux";
 import { getTasksByProjectId } from "../../../Redux/task/taskActions";
 import { useSelector } from "react-redux";
 // import { ShowTasksApi} from "../../Redux/actions"
-import { ToastContainer} from 'react-toastify';
 
-import 'react-toastify/dist/ReactToastify.css';
 
 const Kanban = () => {
 
@@ -100,7 +98,6 @@ const Kanban = () => {
 
     return (
         <Wrapper id='tasks'>
-            <ToastContainer />
             <HeaderInfo>
                 <h1 className="font30 extraBold">Kanban Board</h1>
             </HeaderInfo>
@@ -143,7 +140,7 @@ const Kanban = () => {
                                                             >
                                                                 <Popup modal trigger=
                                                                     {<Card>
-                                                                        <div>{task.title}</div>
+                                                                        <div className="extraBold">{task.title}</div>
                                                                         <div>{task.label}</div>
                                                                     </Card>}>
                                                                     {close => <AddTaskModal type={"readonly"} close={close} statusId={column.id} task={task} />}
@@ -244,7 +241,7 @@ const SectionTitle = styled.div`
     font-size: 1.2rem;
     margin: 10px 0 20px;
     color: #434242;
-    font-weight: bold;
+    font-weight: 900;
 
 `
 
