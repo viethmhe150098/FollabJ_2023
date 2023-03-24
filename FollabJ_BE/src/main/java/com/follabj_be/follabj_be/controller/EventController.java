@@ -54,9 +54,11 @@ public class EventController {
 
     @PostMapping("/project/{project_id}/leader/events")
     @PreAuthorize("hasAuthority('LEADER')")
-    public Event addEvent(@RequestBody CreateEventDTO createEventDTO, @PathVariable Long project_id) {
+    public EventDTO addEvent(@RequestBody CreateEventDTO createEventDTO, @PathVariable Long project_id) {
         createEventDTO.setProjectId(project_id);
-        return eventService.addEvent(createEventDTO);
+        Event event = eventService.addEvent(createEventDTO);
+        EventDTO eventDTO = modelMapper.map(event, EventDTO.class);
+        return eventDTO;
     }
 
     @GetMapping("/project/{project_id}/events/{event_id}")
