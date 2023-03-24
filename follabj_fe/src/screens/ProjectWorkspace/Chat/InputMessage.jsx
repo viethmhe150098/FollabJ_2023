@@ -4,7 +4,8 @@ import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Picker from 'emoji-picker-react';
-import { Emoji, EmojiStyle } from 'emoji-picker-react';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // const style = {
 //   form: `h-14 w-full max-w-[728px] flex text-xl fixed bottom-0`,
 //   input: `w-full text-xl p-3 bg-gray-900 text-white outline-none border-none`,
@@ -20,7 +21,7 @@ const InputMessage = ({ scroll }) => {
 
   const email = useSelector((state) => state.auth.login.currentUser.email)
   const [showPicker, setShowPicker] = useState(false);
-  const onEmojiClick = (emojiObject,event ) => {
+  const onEmojiClick = (emojiObject, event) => {
     console.log(emojiObject.emoji)
     setInput(prevInput => prevInput + emojiObject.emoji);
   };
@@ -28,7 +29,9 @@ const InputMessage = ({ scroll }) => {
   const sendMessage = async (e) => {
     e.preventDefault()
     if (input === '') {
-      alert('Please enter a valid message')
+      toast.warn('Empty message!', {
+        autoClose: 5000,
+      });
       return
     }
 
@@ -48,7 +51,7 @@ const InputMessage = ({ scroll }) => {
       bottom: "0",
       maxWidth: "1000px"
     }}>
-
+      <ToastContainer />
       <Form onSubmit={sendMessage} >
         <Input
           value={input}
@@ -56,17 +59,17 @@ const InputMessage = ({ scroll }) => {
           type='text'
           placeholder='Message'
         />
-        <div style={{ position: 'absolute',right: '100px', left: '1050px', top:'30px' }}>
+        <div style={{ position: 'absolute', right: '100px', left: '1050px', top: '30px' }}>
           <img
             className="emoji-icon"
             src="https://icons.getbootstrap.com/assets/icons/emoji-smile.svg"
             onClick={() => setShowPicker(val => !val)} />
-          <div style={{ position: 'relative', bottom: '500px',right:'200px' }}>
+          <div style={{ position: 'relative', bottom: '500px', right: '200px' }}>
             {showPicker && <Picker
               onEmojiClick={onEmojiClick} />}
           </div>
         </div>
-    
+
         <Button type='submit'>
           Send
         </Button>

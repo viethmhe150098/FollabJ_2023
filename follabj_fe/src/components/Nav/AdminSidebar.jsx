@@ -1,12 +1,8 @@
 import React from 'react';
 import {
     FaTh,
-    FaRegCommentAlt,
     FaUserAlt,
-    FaRegChartBar,
-    FaVideo,
-    FaPencilAlt,
-    FaFolder
+    FaSignal
 } from "react-icons/fa";
 import { NavLink } from 'react-router-dom';
 import { Link as RouterLink } from "react-router-dom";
@@ -17,6 +13,11 @@ import LogoIcon from "../../assets/svg/Logo";
 const AdminSidebar = ({ children }) => {
     const menuItem = [
         {
+            path: "/admin/dashboard",
+            name: "Statistics",
+            icon: <FaSignal />
+        },
+        {
             path: "/admin/users",
             name: "User Management",
             icon: <FaUserAlt />
@@ -26,6 +27,7 @@ const AdminSidebar = ({ children }) => {
             name: "Leader Request Management",
             icon: <FaTh />
         }
+      
     ]
     return (
         <>     

@@ -1,5 +1,5 @@
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { Link as RouterLink, Navigate } from "react-router-dom";
 import { loginUser } from "../../Redux/auth/apiRequest";
@@ -7,8 +7,8 @@ import '../../style/authen.css'
 import FullButton from "../../components/Buttons/FullButton";
 import AuthenNavbar from "../../components/Nav/AuthenNavbar";
 import { useState, useEffect } from 'react';
-import { isLoggedIn } from '../../Redux/auth/auth'
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Login = () => {
   const navigate = useHistory();
   // isLoggedIn && navigate.push("/");
@@ -23,6 +23,7 @@ const Login = () => {
 
   // Regex to validate password
   const passwordRegex = /^(?=.*\d)(?=.*[a-z])[0-9a-zA-Z]{8,}$/;
+  const loginError = useSelector(state => state.auth.login.error);
 
   useEffect(() => {
     let usernameError = '';
@@ -43,24 +44,29 @@ const Login = () => {
     setErrors({ username: usernameError, password: passwordError });
   }, [username, password]);
 
+  useEffect(() => {
+    if (loginError) {
+      // show error notification
+      toast.error("Invalid username or password. Please try again.", {
+        autoClose: 3000,
+      });
+    }
+  }, [loginError]);
   const handleLogin = (e) => {
     e.preventDefault();
-
     const newUser = {
       username: username,
       password: password,
     };
-    //console.log(newUser);
+
     loginUser(newUser, dispatch, navigate);
-
   }
-
-
 
 
   return (
     <>
       <AuthenNavbar />
+      <ToastContainer />
       <div className="Wrapper">
         <div className="auth-form-container">
           <h2>Login</h2>

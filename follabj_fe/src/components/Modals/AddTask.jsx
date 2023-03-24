@@ -77,9 +77,9 @@ const AddTaskModal = ({type, close, statusId=1, task}) => {
             assigneeList
           }
         }
-        
         //console.log(taskData)
         dispatch(addTask(taskData));
+        close()
     };
 
     const handleUpdate = () => {
@@ -92,7 +92,7 @@ const AddTaskModal = ({type, close, statusId=1, task}) => {
     }  
     
     const handleDelete = () => {
-        dispatch(deleteTask({project_id, task_id: task.id}))
+        dispatch(deleteTask({project_id, task_id: task.id, task_name: task.title}))
         close()
     }
 
@@ -142,6 +142,7 @@ const AddTaskModal = ({type, close, statusId=1, task}) => {
                             id="title"
                             value={title}
                             onChange={(event) => setTitle(event.target.value)}
+                            required
                         ></textarea>
                     </div>
                     <div className="form-group">
@@ -170,6 +171,7 @@ const AddTaskModal = ({type, close, statusId=1, task}) => {
                             showTimeSelect
                             onChange={(date) => setStartDate(date)}
                             dateFormat="dd/MM/yyyy hh:mm a"
+                            required
                         />
                          <label htmlFor="endDate">End Date</label>
                         <DatePicker
@@ -180,6 +182,7 @@ const AddTaskModal = ({type, close, statusId=1, task}) => {
                             showTimeSelect
                             onChange={(date) => setEndDate(date)}
                             dateFormat="dd/MM/yyyy hh:mm a"
+                            required
                         />
                     </div>
                     <div className="form-group">
@@ -217,6 +220,9 @@ const Modal = styled.div`
   min-width: 500px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
   height: 100%;
+  max-height: 100%;
+  max-width: 100%;
+  min-width: 500px;
   h2 {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;

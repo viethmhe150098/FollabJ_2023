@@ -10,6 +10,8 @@ import FullButton from "../../../components/Buttons/FullButton";
 import FileModal from "../../../components/Modals/FileModal";
 import Popup from "reactjs-popup";
 import { downloadFile } from "../../../Redux/file/fileAPI";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const FileWorkspace = () => {
     const dispatch = useDispatch();
@@ -72,6 +74,7 @@ const FileWorkspace = () => {
     //     </> );
     return (
         <>
+        <ToastContainer/>
         <Popup modal trigger={<div style={{
           width: "150px", marginLeft:"50px"
         }}>
