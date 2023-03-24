@@ -8,12 +8,12 @@ import { useDispatch } from "react-redux";
 import { getTasksByProjectId } from "../../../Redux/task/taskActions";
 import { useSelector } from "react-redux";
 // import { ShowTasksApi} from "../../Redux/actions"
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 
 const Kanban = () => {
-    
+
     const dispatch = useDispatch();
 
     const tasks = useSelector((state) => state.task)
@@ -32,47 +32,24 @@ const Kanban = () => {
         // notify();
     }, [])
 
-    
-    const message = useSelector((state) => state.responseMessage)
 
-    const notify = () => {
-        if (message.success != "") {
-            toast.success(message.success, {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                progress: undefined,
-                theme: "light",
-            });;
-        }
-        if (message.error != "") {
-            toast.error(message.error, {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                progress: undefined,
-                theme: "light",
-            });;
-        }
-    }
+ 
 
     const columnArray = [
         {
-            id : 1,
+            id: 1,
             title: "To do",
-            tasks : []
+            tasks: []
         },
         {
-            id : 2,
+            id: 2,
             title: "Doing",
-            tasks : []
+            tasks: []
         },
         {
-            id : 3,
+            id: 3,
             title: "Done",
-            tasks : []
+            tasks: []
         }
     ]
 
@@ -89,7 +66,7 @@ const Kanban = () => {
 
             const sourceCol = tasks[sourceColIndex]
             const destinationCol = tasks[destinationColIndex]
-            
+
             // console.log(sourceCol)
             // console.log(destinationCol)
 
@@ -130,60 +107,60 @@ const Kanban = () => {
             <DragDropContext onDragEnd={onDragEnd}>
                 <KanbanBoard >
                     {
-                    columnArray.map(column => (
-                        <Droppable
+                        columnArray.map(column => (
+                            <Droppable
                                 key={String(column.id)}
                                 droppableId={String(column.id)}
-                        >
-                            {(provided) => (
+                            >
+                                {(provided) => (
                                     <BoardSection
                                         ref={provided.innerRef}
                                         {...provided.droppableProps}
                                     >
-                                    <SectionTitle>{column.title}</SectionTitle>
-                                    {userRole == "LEADER" &&
-                                    <Popup modal trigger={<Card style={{ cursor: "pointer" }}><p className="extraBold" style={{ color: "#434242" }}>+ Add Task</p></Card>}>
-                                       {close => <AddTaskModal close={close} statusId={column.id}/>}
-                                    </Popup>
-                                    }
-                                    <SectionContent>
-                                        {
-                                            tasks.map((task, index) => task.statusId == column.id ? (
-                                                <Draggable
-                                                    key={String(task.id)}
-                                                    draggableId={String(task.id)}
-                                                    index={index}
-                                                >
-                                                    {(provided, snapshot) => (
-                                                        <div
-                                                            ref={provided.innerRef}
-                                                            {...provided.draggableProps}
-                                                            {...provided.dragHandleProps}
-                                                            style={{
-                                                                ...provided.draggableProps.style,
-                                                                opacity: snapshot.isDragging ? '0.5' : '1'
-                                                            }}
-                                                        >
-                                                            <Popup modal trigger=
-                                                                {<Card>
-                                                                <div>{task.title}</div>
-                                                                <div>{task.label}</div>
-                                                                </Card>}>
-                                                                {close => <AddTaskModal type={"readonly"} close={close} statusId={column.id} task={task}/>}
-                                                            </Popup>
-                                                            
-                                                        </div>
-                                                    )}
-                                                </Draggable>
-                                            ) : null )
+                                        <SectionTitle>{column.title}</SectionTitle>
+                                        {userRole == "LEADER" &&
+                                            <Popup modal trigger={<Card style={{ cursor: "pointer" }}><p className="extraBold" style={{ color: "#434242" }}>+ Add Task</p></Card>}>
+                                                {close => <AddTaskModal close={close} statusId={column.id} />}
+                                            </Popup>
                                         }
-                                        {provided.placeholder}
-                                    </SectionContent>
-                                </BoardSection>
-                            )
-                            }
-                        </Droppable>
-                    ))
+                                        <SectionContent>
+                                            {
+                                                tasks.map((task, index) => task.statusId == column.id ? (
+                                                    <Draggable
+                                                        key={String(task.id)}
+                                                        draggableId={String(task.id)}
+                                                        index={index}
+                                                    >
+                                                        {(provided, snapshot) => (
+                                                            <div
+                                                                ref={provided.innerRef}
+                                                                {...provided.draggableProps}
+                                                                {...provided.dragHandleProps}
+                                                                style={{
+                                                                    ...provided.draggableProps.style,
+                                                                    opacity: snapshot.isDragging ? '0.5' : '1'
+                                                                }}
+                                                            >
+                                                                <Popup modal trigger=
+                                                                    {<Card>
+                                                                        <div>{task.title}</div>
+                                                                        <div>{task.label}</div>
+                                                                    </Card>}>
+                                                                    {close => <AddTaskModal type={"readonly"} close={close} statusId={column.id} task={task} />}
+                                                                </Popup>
+
+                                                            </div>
+                                                        )}
+                                                    </Draggable>
+                                                ) : null)
+                                            }
+                                            {provided.placeholder}
+                                        </SectionContent>
+                                    </BoardSection>
+                                )
+                                }
+                            </Droppable>
+                        ))
                         // tasks.map(section => (
                         //     <Droppable
                         //         key={String(section.id)}
@@ -231,8 +208,8 @@ const Kanban = () => {
                         //         )}
                         //     </Droppable>
                         // ))
-                    }                    
-                    
+                    }
+
                 </KanbanBoard>
             </DragDropContext>
         </Wrapper>

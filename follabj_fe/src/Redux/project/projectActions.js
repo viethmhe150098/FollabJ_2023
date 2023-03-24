@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import * as projectAPI from "./projectAPI";
-
 export const getProjectsByUserId = createAsyncThunk("FETCH_PROJECTS_BY_USER_ID", async (user_id) => {
     try {
         const response = await projectAPI.fetchProjectsByUserId(user_id)
