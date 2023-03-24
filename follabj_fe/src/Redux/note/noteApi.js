@@ -27,7 +27,10 @@ export const updateNote = (user_id, post) => axios.put(noteUrl(user_id),post,{
     }
 });
 
-export const deleteNote = (user_id) => axios.delete(noteUrl(user_id),{
+export const deleteNote = (user_id,note_id) => axios.delete(noteUrl(user_id),{
+    params :{
+        note_id
+    },
     headers : {
         'Authorization' : "Bearer "+ localStorage.getItem("access_token")
     }
