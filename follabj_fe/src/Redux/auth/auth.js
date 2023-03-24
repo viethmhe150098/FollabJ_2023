@@ -10,7 +10,9 @@ function isLoggedIn() {
       //  console.log("current date "+ currentDate.getTime())
       //  console.log("expire date "+ expire_date)
        if (currentDate.getTime() < expire_date) {
-          isLoggedIn = true
+         isLoggedIn = true
+       } else {
+         localStorage.clear()
        }
     }
     
