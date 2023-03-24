@@ -7,12 +7,34 @@ import styled from "styled-components";
 const ChangePasswordModal = ({ close }) => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [reNewPassword, setReNewPassword] = useState("");
+
+  // Regex to validate password
+  const passwordRegex = /^(?=.*\d)(?=.*[a-z])[0-9a-zA-Z]{8,}$/;
+
 
   const user_id = useSelector((state) => state.auth.login.currentUser.id);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Check if old password is not empty
+  if (!oldPassword) {
+    alert("Please enter your old password.");
+    return;
+  }
+
+  // Check if new password and re-entered new password match
+  if (newPassword !== reNewPassword) {
+    alert("New passwords do not match.");
+    return;
+  }
+
+  // Check if new password meets regex requirements
+  if (!passwordRegex.test(newPassword)) {
+    alert("New password must be at least 8 characters long and contain at least one number and one lowercase letter.");
+    return;
+  }
     // check backend PasswordDTO to know the name of the field
 
     // const passwordFormData =
@@ -60,7 +82,7 @@ const ChangePasswordModal = ({ close }) => {
           <div className="form-group">
             <label htmlFor="oldPassword">Old Password </label>
             <input
-              type="text"
+              type="password"
               id="oldPassword"
               onChange={(e) => {
                 setOldPassword(e.target.value);
@@ -70,12 +92,22 @@ const ChangePasswordModal = ({ close }) => {
           <div className="form-group">
             <label htmlFor="newPassword">New Password </label>
             <input
-              type="text"
+              type="password"
               id="newPassword"
               onChange={(e) => {
                 setNewPassword(e.target.value);
               }}
             ></input>
+          </div>
+          <div className="form-group">
+            <label htmlFor="reNewPassword">Re-enter New Password</label>
+            <input
+              type="password"
+              id="reNewPassword"
+              onChange={(e) => {
+                setReNewPassword(e.target.value);
+              }}
+            />
           </div>
           <button
             className="greenBg font25 radius6 lightColor tag"

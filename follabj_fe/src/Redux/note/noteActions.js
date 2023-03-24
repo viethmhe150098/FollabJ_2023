@@ -27,3 +27,12 @@ export const updateNote = createAsyncThunk("UPDATE_NOTE", async ({user_id, note}
         throw error
     }
 })
+
+export const deleteNote = createAsyncThunk("DELETE_NOTE", async ({user_id, note_id}) =>{
+    try {
+        const response = await noteApi.deleteNote(user_id, note_id)
+        return note_id
+    } catch (error) {
+        throw error
+    }
+})
