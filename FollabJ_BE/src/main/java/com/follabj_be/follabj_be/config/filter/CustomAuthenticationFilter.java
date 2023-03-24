@@ -55,7 +55,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         Algorithm algorithm = Algorithm.HMAC256("viet".getBytes());
         String access_token = JWT.create() //create access token
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 60 * 1000))//10m
+                .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))//10m
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 //get user roles
                 .sign(algorithm);
