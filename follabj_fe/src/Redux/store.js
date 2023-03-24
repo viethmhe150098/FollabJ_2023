@@ -16,7 +16,6 @@ import { requestReducer } from "./leaderRequest/requestReducer";
 import { userProfileReducer } from "./userProfile/userProfileReducers";
 
 const rootReducer = combineReducers({
-    responseMessage: responseMessageReducer,
     auth: authReducer,
     project: projectReducer,
     task : taskReducer,
