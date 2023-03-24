@@ -45,6 +45,7 @@ instance.interceptors.response.use(function (response) {
                     }
                 }).catch((error) => {
                     localStorage.clear();
+                    return;
                 })
 
                 localStorage.setItem('access_token', response.data.access_token);
