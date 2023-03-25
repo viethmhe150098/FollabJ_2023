@@ -7,11 +7,11 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter @Setter
-public class RegistrationRequest {
-    private String username;
-    private String email;
-    private String password;
+@Getter
+@Setter
+public class UpdateUserDTO {
+    private Long u_id;
     private String fullname;
+    private String username;
     private String phone_number;
 }

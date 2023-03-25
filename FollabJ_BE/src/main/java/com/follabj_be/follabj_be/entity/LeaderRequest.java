@@ -28,7 +28,8 @@ public class LeaderRequest {
     private AppUser user;
     private String user_fullname;
     private String user_id_number;
-    @Column(columnDefinition = "default 0")
+    @Column(columnDefinition = "varchar(255) default 'PENDING'")
+    @Enumerated(value = EnumType.STRING)
     private requestStatus status;
 
     public LeaderRequest(AppUser user, String user_fullname, String user_id_number) {

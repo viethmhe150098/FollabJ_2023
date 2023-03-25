@@ -10,7 +10,7 @@ import java.util.List;
 public interface ProjectInterface {
     Project createPrj(CreateProjectDTO createProjectDTO) throws GroupException;
 
-    void sendInvitation(UserDTO user, Long p_id);
+    String sendInvitation(UserDTO user, Long p_id);
 
     List<UserDTO> getMembersByProjectId(Long project_id);
 

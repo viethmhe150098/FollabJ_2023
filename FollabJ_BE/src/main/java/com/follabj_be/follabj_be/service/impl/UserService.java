@@ -3,6 +3,7 @@ package com.follabj_be.follabj_be.service.impl;
 import com.follabj_be.follabj_be.config.securityConfig.PasswordEncoder;
 import com.follabj_be.follabj_be.dto.AppUserDTO;
 import com.follabj_be.follabj_be.dto.PasswordDTO;
+import com.follabj_be.follabj_be.dto.UpdateUserDTO;
 import com.follabj_be.follabj_be.dto.UserDTO;
 import com.follabj_be.follabj_be.entity.AppUser;
 import com.follabj_be.follabj_be.entity.ConfirmToken;
@@ -23,10 +24,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -158,6 +156,24 @@ public class UserService implements UserDetailsService, UserInterface {
         }else{
             return CustomErrorMessage.NO_PERMISSION.getMessage();
         }
+    }
+
+    @Override
+    public Map<String, String> updateUser(UpdateUserDTO userDTO, Long u_id) {
+        Map<String, String> res = new HashMap<>();
+        AppUser appUser = userRepository.findById(u_id).orElseThrow(() -> new ObjectNotFoundException("Not found user", u_id.toString()));
+        if(u_id == userDTO.getU_id()){
+            appUser.setFullname(userDTO.getFullname());
+            appUser.setPhone_number(userDTO.getPhone_number());
+            appUser.setUsername(userDTO.getUsername());
+            userRepository.save(appUser);
+            res.put("status", "200");
+            res.put("message", "Update success");
+        }else {
+            res.put("status", "401");
+            res.put("message", CustomErrorMessage.NO_PERMISSION.getMessage());
+        }
+        return res;
     }
 
     public AppUserDTO getUserProfile(Long u_id){

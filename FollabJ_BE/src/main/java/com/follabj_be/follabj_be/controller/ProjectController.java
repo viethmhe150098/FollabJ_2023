@@ -31,10 +31,10 @@ public class ProjectController {
     @PostMapping(value = "/project/{p_id}/addmembers/leader")
     @PreAuthorize("hasAuthority('LEADER')")
     public ResponseEntity<Map<String, String>> sendInvitation(@RequestBody UserDTO userDTO, @PathVariable("p_id") Long p_id) {
-        projectService.sendInvitation(userDTO, p_id);
+        String message = projectService.sendInvitation(userDTO, p_id);
         Map<String, String> res = new HashMap<>();
         res.put("status", HttpStatus.OK.toString());
-        res.put("message", "Send Invitation success");
+        res.put("message", message);
 
         return new ResponseEntity<>(res, HttpStatus.OK) ;
     }

@@ -53,15 +53,25 @@ public class ProjectService implements ProjectInterface {
     }
 
     @Override
-    public void sendInvitation(UserDTO user, Long project_id) {
-        Project p = projectRepository.findById(project_id).orElseThrow(()-> new ObjectNotFoundException("Not found object", project_id.toString()));
+    public String sendInvitation(UserDTO user, Long project_id) {
+        Project p = projectRepository.findById(project_id).orElseThrow(()-> new ObjectNotFoundException("Not found project", project_id.toString()));
+        boolean existedUser = userRepository.existsById(user.getId());
+        if(!existedUser){
+            return "Not found user";
+        }
         AppUser to = new AppUser(user.getId(), user.getUsername(), user.getEmail());
+        //check existed user
+        boolean existed  = p.getMembers().contains(to);
+        if(existed) {
+            return "Member already in your project";
+        }
         String content = p.getName();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDateTime now = LocalDateTime.now();
         String create_date = dtf.format(now);
         Invitation i = new Invitation(to, create_date, content);
         invitationRepository.save(i);
+        return "Invite member success";
     }
 
     @Override
