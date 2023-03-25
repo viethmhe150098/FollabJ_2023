@@ -4,8 +4,8 @@ import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Picker from 'emoji-picker-react';
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+
 // const style = {
 //   form: `h-14 w-full max-w-[728px] flex text-xl fixed bottom-0`,
 //   input: `w-full text-xl p-3 bg-gray-900 text-white outline-none border-none`,
@@ -51,7 +51,7 @@ const InputMessage = ({ scroll }) => {
       bottom: "0",
       maxWidth: "1000px"
     }}>
-      <ToastContainer />
+
       <Form onSubmit={sendMessage} >
         <Input
           value={input}
