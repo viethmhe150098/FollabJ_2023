@@ -31,4 +31,13 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
     List<UserDTO> findByEmailLike(String email_cha);
 
     AppUser findByEmail(String email);
+
+    @Query(nativeQuery = true, value = "select COUNT(id) from app_user where YEAR(str_to_date(created_at, '%Y/%m/%d %T')) = ?1")
+    String countByYear(int year);
+
+    @Query(nativeQuery = true, value = "select COUNT(id) from app_user where MONTH(str_to_date(created_at, '%Y/%m/%d %T')) = ?1")
+    String countByMonth(int month);
+
+    @Query(nativeQuery = true, value = "select COUNT(id) from app_user where DAY(str_to_date(created_at, '%Y/%m/%d %T')) = ?1")
+    String countByDay(int day);
 }

@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -144,6 +145,27 @@ public class ProjectService implements ProjectInterface {
         Project p = projectRepository.findById(p_id).orElseThrow(()-> new ObjectNotFoundException("Not found project", p_id.toString()));
         p.setStatus(Project.ProjectStatus.DEACTIVATE);
         projectRepository.save(p);
+    }
+
+    @Override
+    public String count(String by) {
+        by = by.toUpperCase();
+        String result = "0";
+        LocalDate lc = LocalDate.now();
+        switch (by) {
+            case "YEAR":
+                result = projectRepository.countByYear(lc.getYear());
+                break;
+            case "MONTH":
+                result = projectRepository.countByMonth(lc.getMonth().getValue());
+                break;
+            case "DAY":
+                result = projectRepository.countByDay(lc.getDayOfMonth());
+                break;
+            default:
+                result = "Wrong format";
+        }
+        return result;
     }
 
     public Map<Object, Object> leaveGroup(Long p_id, Long u_id){

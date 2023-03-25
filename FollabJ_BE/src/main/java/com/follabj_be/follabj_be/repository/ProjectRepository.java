@@ -29,4 +29,13 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     @Query("select p.id from Project p where p.leader.id=?1")
     List<Long> getProjectIdByLeaderID(Long u_id);
+
+    @Query(nativeQuery = true, value = "select COUNT(id) from project where YEAR(str_to_date(created_date, '%Y/%m/%d %T')) = ?1")
+    String countByYear(int year);
+
+    @Query(nativeQuery = true, value = "select COUNT(id) from project where MONTH(str_to_date(created_date, '%Y/%m/%d %T')) = ?1")
+    String countByMonth(int month);
+
+    @Query(nativeQuery = true, value = "select COUNT(id) from project where DAY(str_to_date(created_date, '%Y/%m/%d %T')) = ?1")
+    String countByDay(int day);
 }

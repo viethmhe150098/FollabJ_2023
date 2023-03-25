@@ -23,4 +23,6 @@ public interface ProjectInterface {
     void deleteMember(Long p_id, Long u_id);
 
     void dactivateProject(Long p_id);
+
+    String count(String by);
 }

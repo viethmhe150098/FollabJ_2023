@@ -27,4 +27,6 @@ public interface UserInterface {
     String changePassword(PasswordDTO passwordDTO, Long u_id);
 
     Map<String, String> updateUser (UpdateUserDTO userDTO, Long u_id);
+
+    String count(String by);
 }
