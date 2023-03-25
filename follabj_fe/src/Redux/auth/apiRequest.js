@@ -27,7 +27,7 @@ export const loginUser = async(user,dispatch,navigate) =>{
         localStorage.setItem("expire_date", new Date().getTime() + 10*60*1000)
 
         const decodedToken = jwtDecode(localStorage.getItem('access_token'));
-        console.log('decoded access token '+JSON.stringify(decodedToken));
+        //console.log('decoded access token '+JSON.stringify(decodedToken));
         
         // const decodedRefreshToken = jwtDecode(localStorage.getItem('refresh_token'));
         // console.log('decoded refresh token '+JSON.stringify(decodedRefreshToken));

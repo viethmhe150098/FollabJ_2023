@@ -1,11 +1,24 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { addInvitation, getInvitationsByProjectId } from "../../../Redux/invitation/invitationActions";
 import "../inviteUser/inviteUser.css";
 
 const InviteUser = () => {
   const [email, setEmail] = useState("");
-  const [invitedEmails, setInvitedEmails] = useState([]);
+  // const [invitedEmails, setInvitedEmails] = useState([]);
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [feedbackMessageClass, setFeedbackMessageClass] = useState("");
+
+  const project_id = useSelector((state) => state.project.currentProject.id);
+
+  const project_invitations = useSelector((state)=> state.invitation.project_invitations)
+
+  const dispatch = useDispatch();
+
+  useEffect(()=> {
+    dispatch(getInvitationsByProjectId(project_id))
+  },[])
 
   const handleInputChange = (e) => {
     setEmail(e.target.value);
@@ -17,12 +30,24 @@ const InviteUser = () => {
       setFeedbackMessageClass("invalid");
       return;
     }
-    if (invitedEmails.includes(email)) {
-      setFeedbackMessage("This email has already been invited.");
-      setFeedbackMessageClass("already-invited");
-      return;
-    }
-    setInvitedEmails([...invitedEmails, email]);
+
+    // if (invitedEmails.includes(email)) {
+    //   setFeedbackMessage("This email has already been invited.");
+    //   setFeedbackMessageClass("already-invited");
+    //   return;
+    // }
+
+    project_invitations.map((invitation,index) =>{
+      if (invitation.receiver.email == email) {
+        setFeedbackMessage("This email has already been invited.");
+        setFeedbackMessageClass("already-invited");
+        return;
+      }
+    })
+
+    dispatch(addInvitation({project_id, email}))
+
+    //setInvitedEmails([...invitedEmails, email]);
     setEmail("");
     setFeedbackMessage("Invitation sent successfully.");
     setFeedbackMessageClass("success");
@@ -67,11 +92,16 @@ const InviteUser = () => {
 
 
       <div className="invited-emails-container">
-        <h3>Invited emails:</h3>
+        <h3>Invited users:</h3>
         <ul>
-          {invitedEmails.map((invitedEmail, index) => (
+          {/* {invitedEmails.map((invitedEmail, index) => (
             <li key={index}>{invitedEmail}</li>
-          ))}
+          ))} */}
+          {
+            project_invitations.map((invitation, index) => 
+              <li key={index}>{invitation.receiver.email}</li>
+            )
+          }
         </ul>
       </div>
     </div>

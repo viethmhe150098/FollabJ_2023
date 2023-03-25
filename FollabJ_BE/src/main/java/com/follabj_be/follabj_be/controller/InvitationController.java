@@ -9,11 +9,13 @@ import com.follabj_be.follabj_be.entity.Invitation;
 import com.follabj_be.follabj_be.entity.Project;
 import com.follabj_be.follabj_be.service.impl.InvitationService;
 import com.follabj_be.follabj_be.service.impl.ProjectService;
+import com.follabj_be.follabj_be.service.impl.UserService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -25,20 +27,42 @@ public class InvitationController {
     private final InvitationService invitationService;
     @Autowired
     private ProjectService projectService;
+
+    @Autowired
+    private UserService userService;
     @Autowired
     private ModelMapper modelMapper;
 
-//    @GetMapping(value = "/project/{p_id}/invitations")
-//    public List<UserDTO> getInvitationsByProjectId(@PathVariable Long p_id) {
-//
-//    }
+    @GetMapping(value = "/project/{p_id}/invitation")
+    @PreAuthorize("hasAuthority('ACTIVE_USER')")
+    public List<InvitationDTO> getInvitationsByProjectId(@PathVariable Long p_id) {
+        List<Invitation> invitationList = invitationService.getInvitationsByProjectId(p_id);
+        List<InvitationDTO> invitationDTOList = new ArrayList<>();
 
-    @PostMapping(value="/project/{p_id}/invite")
+        for(Invitation invitation : invitationList) {
+            InvitationDTO invitationDTO = modelMapper.map(invitation, InvitationDTO.class);
+            invitationDTOList.add(invitationDTO);
+        }
 
+        return invitationDTOList;
+    }
 
+    @PostMapping(value="/project/{p_id}/invitation/invite")
+    @PreAuthorize("hasAuthority('ACTIVE_USER')")
+    public Invitation inviteUserByEmail(@PathVariable Long p_id, @RequestParam String email) {
+        AppUser invitedUser = userService.getUserByEmail(email);
 
-    @GetMapping("/invitation")
-    public List<InvitationDTO> getAllInvitationByUserId(@RequestParam Long user_id) {
+        Invitation invitation = new Invitation();
+        invitation.setProject(new Project());
+        invitation.getProject().setId(p_id);
+        invitation.setReceiver(invitedUser);
+
+        return invitationService.addInvitation(invitation);
+    }
+
+    @GetMapping("/user/{user_id}/invitation")
+    @PreAuthorize("hasAuthority('ACTIVE_USER')")
+    public List<InvitationDTO> getAllInvitationByUserId(@PathVariable Long user_id) {
         List<Invitation> invitationList = invitationService.getInvitationsByUserId(user_id);
         List<InvitationDTO> invitationDTOList = new ArrayList<>();
 
@@ -50,7 +74,8 @@ public class InvitationController {
         return invitationDTOList;
     }
 
-    @GetMapping("/invitation/accept")
+    @PostMapping("/user/{user_id}/invitation/accept")
+    @PreAuthorize("hasAuthority('ACTIVE_USER')")
     public ProjectDTO acceptInvitationAndJoinProject(@RequestBody Invitation invitation) {
         invitationService.updateStatus(1, invitation.getId());
         Project joinedProject =  projectService.addMember(invitation.getProject().getId(), invitation.getReceiver().getId());
@@ -59,5 +84,6 @@ public class InvitationController {
 
         return projectDTO;
     }
+
 
 }

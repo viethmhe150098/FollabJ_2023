@@ -29,7 +29,7 @@ public class LeaderRequestController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @PostMapping("/admin/request")
+    @PostMapping("/admin/request/{req_id}")
     public ResponseEntity<Map<Object, Object>> updateRequestStatus(@PathVariable Long req_id, @RequestParam int status){
         Map<Object, Object> res = new HashMap<>();
         leaderRequestService.updateRequestStatus(req_id, status);

@@ -11,7 +11,11 @@ import java.util.List;
 
 @Repository
 public interface InvitationRepository extends JpaRepository<Invitation, Long> {
-    @Query("select i from Invitation i where i.receiver.id=?1")
+
+    @Query("select i from Invitation i where i.project.id=?1 and i.status=0")
+    List<Invitation> findByProjectId(Long project_id);
+
+    @Query("select i from Invitation i where i.receiver.id=?1 and i.status=0")
     List<Invitation> findByUserId(Long user_id);
 
     @Modifying

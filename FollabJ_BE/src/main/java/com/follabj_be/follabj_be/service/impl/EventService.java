@@ -8,6 +8,8 @@ import com.follabj_be.follabj_be.entity.Event;
 import com.follabj_be.follabj_be.entity.Project;
 import com.follabj_be.follabj_be.repository.EventParticipantRepository;
 import com.follabj_be.follabj_be.repository.EventRepository;
+import com.follabj_be.follabj_be.repository.ProjectRepository;
+import com.follabj_be.follabj_be.repository.UserRepository;
 import com.follabj_be.follabj_be.service.EventInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,11 @@ public class EventService implements EventInterface {
 
     @Autowired
     EventParticipantRepository eventParticipantRepository;
+    @Autowired
+    ProjectRepository projectRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public List<Event> getEventsByProjectId(Long project_id) {
@@ -48,15 +55,21 @@ public class EventService implements EventInterface {
         event.setDescription(createEventDTO.getDescription());
         event.setStartDate(createEventDTO.getStartDate());
         event.setEndDate(createEventDTO.getEndDate());
-        event.setProject(new Project());
-        event.getProject().setId(createEventDTO.getProjectId());
+
+        Optional<Project> optionalProject = projectRepository.findById(createEventDTO.getProjectId());
+
+        if(optionalProject.isPresent()) {
+            event.setProject(optionalProject.get());
+        }
 
         List<AppUser> userList = new ArrayList<>();
 
         for (UserDTO userDTO : createEventDTO.getParticipantList()) {
-            AppUser user = new AppUser();
-            user.setId(userDTO.getId());
-            userList.add(user);
+
+            Optional<AppUser> optionalUser = userRepository.findById(userDTO.getId());
+            if(optionalUser.isPresent()) {
+                userList.add(optionalUser.get());
+            }
         }
 
         event.setParticipantList(userList);

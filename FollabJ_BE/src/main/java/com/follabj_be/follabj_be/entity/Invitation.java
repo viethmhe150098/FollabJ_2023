@@ -20,13 +20,11 @@ public class Invitation {
 
     @ManyToOne
     @JoinColumn(name = "receiver_id")
-    @JsonIgnore
     private AppUser receiver;
     @Column(columnDefinition = "integer default 0")
     private int status;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "project_id", referencedColumnName = "id")
     private Project project;
 

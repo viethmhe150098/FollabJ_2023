@@ -19,6 +19,8 @@ import {
 } from "react-router-dom";
 import Landing from './screens/Landing/Landing';
 import AdminDashboard from './screens/Admin/AdminDashboard';
+import AdminRoute from './components/Routes/AdminRoute';
+import AuthenciatedRoute from './components/Routes/AuthenciatedRoute';
 
 
 
@@ -31,38 +33,38 @@ export default function App() {
       <Router>
         <Switch>
 
-          <Route path="/projectManagement">
+          <AuthenciatedRoute path="/projectManagement">
             <ProjectManagement />
-          </Route>
+          </AuthenciatedRoute>
 
-          <Route path="/tasks">
+          <AuthenciatedRoute path="/tasks">
             <ProjectManagement />
-          </Route>
+          </AuthenciatedRoute>
 
           {/* Meeting */}
-          <Route path="/meetingCreate">
+          <AuthenciatedRoute path="/meetingCreate">
             <ProjectManagement />
-          </Route>
+          </AuthenciatedRoute>
 
-          <Route path="/meeting">
+          <AuthenciatedRoute path="/meeting">
             <Meeting />
-          </Route>
+          </AuthenciatedRoute>
 
-          <Route path="/notes">
+          <AuthenciatedRoute path="/notes">
             <ProjectManagement />
-          </Route>
+          </AuthenciatedRoute>
 
-          <Route exact path="/noteEdit">
+          <AuthenciatedRoute exact path="/noteEdit">
             <ProjectManagement />
-          </Route>
+          </AuthenciatedRoute>
 
-          <Route path="/files">
+          <AuthenciatedRoute path="/files">
             <ProjectManagement />
-          </Route>
+          </AuthenciatedRoute>
 
-          <Route path="/chat">
+          <AuthenciatedRoute path="/chat">
             <ProjectManagement />
-          </Route>
+          </AuthenciatedRoute>
 
           <Route path="/login">
             <Login />
@@ -72,28 +74,26 @@ export default function App() {
           <Route path="/signup">
             <SignUp />
           </Route>
-          <Route path="/profile">
+          <AuthenciatedRoute path="/profile">
             <UserProfile />
-          </Route>
+          </AuthenciatedRoute>
 
-          {/* Meeting */}
-          <Route path="/events">
+          <AuthenciatedRoute path="/events">
             <ProjectManagement />
-          </Route>
+          </AuthenciatedRoute>
 
-          <Route path="/aboutProject" >
+          <AuthenciatedRoute path="/aboutProject" >
             <ProjectManagement />
-          </Route>
+          </AuthenciatedRoute>
 
-          <Route exact path="/projects">
+          <AuthenciatedRoute exact path="/projects">
             <ProjectList />
-          </Route>
+          </AuthenciatedRoute>
 
-          <Route path="/admin" >
+          <AdminRoute path="/admin" >
             <AdminDashboard />
-          </Route>
-
-          {/* Landing */}
+          </AdminRoute>
+          
           <Route exact path="/">
             <Landing />
           </Route>

@@ -4,64 +4,123 @@ import { useSelector } from "react-redux";
 
 import styled from "styled-components";
 
+const ChangePasswordModal = ({ close }) => {
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [reNewPassword, setReNewPassword] = useState("");
 
-const ChangePasswordModal = ({close}) => {
-    
-    const [oldPassword, setOldPassword] = useState("");
-    const [newPassword, setNewPassword] = useState("");
+  // Regex to validate password
+  const passwordRegex = /^(?=.*\d)(?=.*[a-z])[0-9a-zA-Z]{8,}$/;
 
 
-    const user_id = useSelector((state) => state.auth.login.currentUser.id)
+  const user_id = useSelector((state) => state.auth.login.currentUser.id);
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        const passwordForm = 
-            {
-                req_u_id: user_id,
-                old_password: oldPassword,
-                new_password: newPassword
-            }
-        axios.post("http://localhost:8080/user/password/"+user_id, passwordForm, {
-            headers : {
-                'Authorization' : "Bearer "+ localStorage.getItem("access_token")
-            }
-        }).then((response)=>{close()})
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    return (
-        <>
-            <Modal>
-                <a className="close" onClick={close}>
-                    &times;
-                </a>
-                <h2>Change Password</h2>
-                
-                <form id="taskForm" onSubmit={(e)=>{handleSubmit(e)}} encType="multipart/form-data">
-                    <div className="form-group">
-                        <label htmlFor="oldPassword">Note Title </label>
-                        <input
-                            type="text"
-                            id="oldPassword"
-                            onChange={(e) => {setOldPassword(e.target.value)}}
-                        ></input>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="newPassword">Note Title </label>
-                        <input
-                            type="text"
-                            id="newPassword"
-                            onChange={(e) => {setNewPassword(e.target.value)}}
-                        ></input>
-                    </div>
-                    <button onClick={() => handleSubmit()} className='greenBg font25 radius6 lightColor tag'>Change</button>
-                </form>
-            </Modal>
-        </>
-    );
-}
+    // Check if old password is not empty
+  if (!oldPassword) {
+    alert("Please enter your old password.");
+    return;
+  }
+
+  // Check if new password and re-entered new password match
+  if (newPassword !== reNewPassword) {
+    alert("New passwords do not match.");
+    return;
+  }
+
+  // Check if new password meets regex requirements
+  if (!passwordRegex.test(newPassword)) {
+    alert("New password must be at least 8 characters long and contain at least one number and one lowercase letter.");
+    return;
+  }
+    // check backend PasswordDTO to know the name of the field
+
+    // const passwordFormData =
+    // {
+    const passwordFormData = {
+      req_u_id: user_id,
+      old_password: oldPassword,
+      new_password: newPassword,
+    };
+    // }
+
+    // using axios.post to send data with access token
+    //axios.post(url, data, config)
+    axios.post("http://localhost:8080/user/password/"+user_id, passwordFormData, {
+        headers : {
+          'Authorization' : "Bearer "+ localStorage.getItem("access_token")
+      }
+      })
+      .then((response) => {
+        console.log(response);
+        // Handle success
+        close();
+      })
+      .catch((error) => {
+        console.error(error);
+        // Handle error
+      });
+  };
+
+  return (
+    <>
+      <Modal>
+        <a className="close" onClick={close}>
+          &times;
+        </a>
+        <h2>Change Password</h2>
+
+        <form
+          id="taskForm"
+          onSubmit={(e) => {
+            handleSubmit(e);
+          }}
+          encType="multipart/form-data"
+        >
+          <div className="form-group">
+            <label htmlFor="oldPassword">Old Password </label>
+            <input
+              type="password"
+              id="oldPassword"
+              onChange={(e) => {
+                setOldPassword(e.target.value);
+              }}
+            ></input>
+          </div>
+          <div className="form-group">
+            <label htmlFor="newPassword">New Password </label>
+            <input
+              type="password"
+              id="newPassword"
+              onChange={(e) => {
+                setNewPassword(e.target.value);
+              }}
+            ></input>
+          </div>
+          <div className="form-group">
+            <label htmlFor="reNewPassword">Re-enter New Password</label>
+            <input
+              type="password"
+              id="reNewPassword"
+              onChange={(e) => {
+                setReNewPassword(e.target.value);
+              }}
+            />
+          </div>
+          <button
+            className="greenBg font25 radius6 lightColor tag"
+          >
+            Change
+          </button>
+        </form>
+      </Modal>
+    </>
+  );
+};
 
 const Modal = styled.div`
-
   background-color: #fff;
   padding: 1rem;
   border-radius: 5px;
@@ -88,15 +147,15 @@ const Modal = styled.div`
           outline: none;
           box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
         }
-      .date-picking {
-        display: inline-block;
-        witdth: 50 %;
-        background-color: orange;
-        text-color:white
-      }
+        .date-picking {
+          display: inline-block;
+          witdth: 50 %;
+          background-color: orange;
+          text-color: white;
+        }
       }
       textarea {
-border: 1px black solid;
+        border: 1px black solid;
         resize: none;
       }
       select {
@@ -115,14 +174,15 @@ border: 1px black solid;
         font-weight: bold;
         margin-bottom: 0.5rem;
       }
-      input[type='checkbox'] {
+      input[type="checkbox"] {
         border: 1px black solid;
 
         margin-right: 0.5rem;
       }
       label {
       }
-      #start-date, #end-date {
+      #start-date,
+      #end-date {
         border: 1px black solid;
         width: 40%;
         &:focus {
@@ -131,7 +191,7 @@ border: 1px black solid;
         }
       }
     }
-    button[type='submit'] {
+    button[type="submit"] {
       background-color: orange;
       color: #fff;
       padding: 0.5rem 1rem;
@@ -143,7 +203,6 @@ border: 1px black solid;
       }
     }
   }
-  
 `;
 
-export default ChangePasswordModal
+export default ChangePasswordModal;

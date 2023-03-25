@@ -4,17 +4,28 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { banUser, getUsers, unbanUser } from "../../../Redux/user/userActions";
 
 const Users = () => {
     const dispatch = useDispatch();
 
     const page_number = 0;
 
-    useEffect(() => {
-    }, [])
+    const users = useSelector((state) => state.user)
 
-    const handleAccept = () => {
-        console.log("accepeted")
+    useEffect(() => {
+        dispatch(getUsers());
+        //console.log("dispatched")
+    },[])
+
+    const handleBan = (user) => {
+        dispatch(banUser(user.id))
+        //console.log("accepeted")
+    }
+
+    const handleUnban = (user) => {
+        dispatch(unbanUser(user.id))
+        //console.log("accepeted")
     }
 
     return (
@@ -24,12 +35,19 @@ const Users = () => {
                 <div className="col-lg-8 font20">Username</div>
                 <div className="col-lg-4 font20">User options</div>
             </div>
-            <Row className="row ">
-                <Name className="col-lg-8 font20">some user name</Name>
+            {users.map((user, index) => (
+                <Row className="row " key={index}>
+                <Name className="col-lg-8 font20">{user.username}</Name>
                 <div className="col-lg-2">
-                    <button onClick={() => handleAccept()} className='redBg font20 radius6 lightColor tag'>Ban user</button>
+                    { user.status==1 &&
+                    <button onClick={() => handleBan(user)} className='redBg font20 radius6 lightColor tag'>Ban user</button>
+                    }
+                    { user.status==2 &&
+                    <button onClick={() => handleUnban(user)} className='greenBg font20 radius6 lightColor tag'>Unban user</button>
+                    }
                 </div>
             </Row>
+            ))}
             {/* {
             files.map((item, index) => {return (
             <FileGrid className="row " key={index}>

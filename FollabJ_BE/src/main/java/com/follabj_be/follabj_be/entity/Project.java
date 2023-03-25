@@ -34,13 +34,12 @@ public class Project {
     @JsonIgnore
     private AppUser leader;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "project_members",
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    @JsonIgnore
     private Set<AppUser> members;
 
     public Project(String name, String des, String createdDate, AppUser leader, Set<AppUser> members) {

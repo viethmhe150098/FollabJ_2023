@@ -26,6 +26,18 @@ public class InvitationService implements InvitationInterface {
     }
 
     @Override
+    public List<Invitation> getInvitationsByProjectId(Long project_id) {
+        return invitationRepository.findByProjectId(project_id);
+    }
+
+    @Override
+    public Invitation addInvitation(Invitation invitation) {
+        return invitationRepository.save(invitation);
+    }
+
+
+
+    @Override
     public List<Invitation> getInvitationsByUserId(Long user_id) {
         return invitationRepository.findByUserId(user_id);
     }

@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import PrjTopNavBar from "../../components/Nav/PrjTopNavBar";
 import Projects from "./Projects";
 import Footer from "../../components/Sections/Footer"
+import Invitations from './Invitations';
 
 export default function ProjectList() {
 
@@ -10,6 +11,7 @@ export default function ProjectList() {
         <>
             <PrjTopNavBar />
             <Projects />
+            <Invitations />
             <Footer />
         </>
     );

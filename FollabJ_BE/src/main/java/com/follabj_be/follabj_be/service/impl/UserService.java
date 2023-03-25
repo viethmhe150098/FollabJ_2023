@@ -125,6 +125,12 @@ public class UserService implements UserDetailsService, UserInterface {
     }
 
     @Override
+    public List<AppUser> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+
+    @Override
     public AppUser getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -169,4 +175,6 @@ public class UserService implements UserDetailsService, UserInterface {
         AppUser appUser = userRepository.findById(u_id).orElseThrow(() -> new ObjectNotFoundException("Not found user", u_id.toString()));
         return new AppUserDTO(appUser.getId(), appUser.getEmail(), appUser.getUsername(), appUser.getStatus());
     }
+
+
 }
