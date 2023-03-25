@@ -6,11 +6,13 @@ import com.follabj_be.follabj_be.dto.UserDTO;
 import com.follabj_be.follabj_be.entity.AppUser;
 import com.follabj_be.follabj_be.entity.LeaderRequest;
 import com.follabj_be.follabj_be.service.impl.LeaderRequestService;
+import com.follabj_be.follabj_be.service.impl.ProjectService;
 import com.follabj_be.follabj_be.service.impl.UserService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ public class AdminController {
 
     private final ModelMapper modelMapper;
 
+    private final ProjectService projectService;
+
     @GetMapping("/admin/users")
     public List<UserDTO> getUsers(){
         List<AppUser> userList = userService.getAllUsers();
@@ -41,7 +45,8 @@ public class AdminController {
         return dtoList;
     }
 
-    @PostMapping("/admin/users/{u_id}/update")
+    @PostMapping("/admin/users")
+    @PreAuthorize("hasAuthority('AMDIN')")
     public ResponseEntity<Map<Object, Object>> updateUserStatus(@PathVariable Long u_id, @RequestParam int status){
         AppUserDTO aud = userService.updateStatus(status, u_id);
         Map<Object, Object> res = new HashMap<>();
@@ -78,4 +83,21 @@ public class AdminController {
 //    public void acceptLeaderRequest(@RequestParam Long request_id) {
 //        leaderRequestService.updateRequestStatus(request_id, 1);
 //    }
+    @GetMapping("/admin/cu")
+    public ResponseEntity<Map<String, String>> countUser(@RequestParam String by){
+        String result = userService.count(by);
+        Map<String, String> res = new HashMap<>();
+        res.put("status", "200");
+        res.put("message", result);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @GetMapping("/admin/cp")
+    public ResponseEntity<Map<String, String>> countProject(@RequestParam String by){
+        String result = projectService.count(by);
+        Map<String, String> res = new HashMap<>();
+        res.put("status", "200");
+        res.put("message", result);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
 }

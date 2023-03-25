@@ -12,7 +12,9 @@ import com.follabj_be.follabj_be.service.UserInterface;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -34,19 +36,29 @@ public class RegistrationService implements RegistrationInterface {
     @Override
     public String register(RegistrationRequest request) {
         Set<Role> roles = new HashSet<>();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
         roles.add(new Role(0L, AppUserRole.INACTIVE_USER.toString()));
+        String email = request.getEmail();
+        String username = request.getEmail();
+        String phone_number = request.getPhone_number();
+        String password = request.getPassword();
+        String createdAt = dtf.format(now);
+        String fullname = request.getFullname();
         String tokenForNewUser = userInterface.signUpUser(new AppUser(
-                request.getUsername(),
-                request.getEmail(),
-                request.getPassword(),
+                    username,
+                email,
+                password,
+                fullname,
+                phone_number,
+                createdAt,
                 0,
                 roles
-        ));
+                    ));
 
             //Since, we are running the spring boot application in localhost, we are hardcoding the
             //url of the server. We are creating a POST request with token param
             String link = "http://localhost:8080/confirm?token=" + tokenForNewUser;
-            String email = request.getEmail();
             emailSender.sendEmail(email, buildEmail.registrationEmail(email, link));
             return tokenForNewUser;
     }
