@@ -28,7 +28,7 @@ export const addTask = createAsyncThunk("ADD_TASK", async ({project_id, task}) =
         toast.success("Add task successfully!"); // display the toast notification
         return response.data
     } catch (error) {
-        toast.error("Add task not successfully"); // display the toast notification
+        toast.error("Adde task not successfully"); // display the toast notification
         console.log(error);
     }
 })

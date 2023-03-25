@@ -21,8 +21,7 @@ import Landing from './screens/Landing/Landing';
 import AdminDashboard from './screens/Admin/AdminDashboard';
 import AdminRoute from './components/Routes/AdminRoute';
 import AuthenciatedRoute from './components/Routes/AuthenciatedRoute';
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 
 
 
@@ -31,7 +30,6 @@ export default function App() {
 
   return (
     <>
-    <ToastContainer/>
       <Router>
         <Switch>
 

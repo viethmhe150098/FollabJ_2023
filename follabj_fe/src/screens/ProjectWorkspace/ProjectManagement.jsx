@@ -5,6 +5,8 @@ import AboutProject from "./About/AboutProject";
 import MeetingCreation from "../ProjectWorkspace/Meeting/MeetingCreation";
 import Calendar from "../ProjectWorkspace/Event/Calendar";
 import Note from "./Note/Note";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   BrowserRouter as Router,
   Switch,
@@ -21,6 +23,7 @@ import Chat from "./Chat/Chat";
 export default function ProjectManagement() {
   return (
     <>
+      <ToastContainer />
       <Sidebar>
         <Switch>
           {/* Task */}
