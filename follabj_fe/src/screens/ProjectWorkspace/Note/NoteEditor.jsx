@@ -33,6 +33,7 @@ const NoteEditor = () => {
       creator: {
         id: user_id
       },
+      createdDate : new Date(note.createdDate),
       updatedDate: new Date()
     }
 
@@ -67,21 +68,6 @@ const NoteEditor = () => {
     </div>
   </div>
   );
-
-
-
-  return (<div>
-    <div style={{ width: '100px', marginBottom:'40px' }}> <FullButton title={"Save Note"} action={() => handleUpdate()} /></div>
-    <div style={{ width: '100px', marginBottom:'40px' }}> <FullButton title={"Delete Note"} action={() => handleDelete()} /></div>
-    <div style={{ border: "1px solid black", padding: '2px', minHeight: '400px' }}>
-      <Editor
-        editorState={editorState}
-        onEditorStateChange={setEditorState}
-      />
-    </div>
-  </div>
-  );
-
 }
 
 export default NoteEditor;
