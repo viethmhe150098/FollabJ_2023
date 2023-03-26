@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { BsFileTextFill } from "react-icons/bs";
@@ -31,9 +31,18 @@ const FileWorkspace = () => {
     useEffect(() => {
         dispatch(getFiles({ project_id, page_number }));
     }, [])
-
     const files = useSelector((state) => state.file)
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [filesPerPage, setFilesPerPage] = useState(5);
+    //Pagination
+    const indexOfLastFile = currentPage * filesPerPage;
+    const indexOfFirstFile = indexOfLastFile - filesPerPage;
+    const currentFiles = files.slice(indexOfFirstFile, indexOfLastFile);
+
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+      };
     const handleDownload = (file_id, fileName) => {
         downloadFile(project_id, file_id)
             .then((response) => {
@@ -87,7 +96,7 @@ const FileWorkspace = () => {
             <div className="Table">
                 <TableContainer
                     component={Paper}
-                    style={{ boxShadow: "0px 13px 20px 10px #80808029" }}
+                    style={{ boxShadow: "0px 13px 20px 10px #80808029", minHeight: '381px'  }}
                 >
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
@@ -98,7 +107,7 @@ const FileWorkspace = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody style={{ color: "white" }}>
-                            {files.map((item, index) => (
+                            {currentFiles.map((item, index) => (
                                 <TableRow key={index}>
                                     <TableCell component="th" scope="row">
                                         {item.fileName}
@@ -108,7 +117,7 @@ const FileWorkspace = () => {
                                         <span className="Details" >{item.user.username}</span>
                                     </TableCell>
                                     <TableCell align="left">
-                                        <button onClick={() => {handleDownload(item.id, item.fileName)}} className="status" style={makeStyle('Download')}>Download</button>
+                                        <button onClick={() => { handleDownload(item.id, item.fileName) }} className="status" style={makeStyle('Download')}>Download</button>
                                     </TableCell>
                                     <TableCell align="left">
                                         <button className="status" style={makeStyle('Delete')}>Delete</button>
@@ -118,8 +127,41 @@ const FileWorkspace = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <div className="pagination-wrapper">
+                    {files.length > filesPerPage && (
+                        <Pagination
+                            filesPerPage={filesPerPage}
+                            totalFiles={files.length}
+                            paginate={paginate}
+                            currentPage={currentPage}
+                        />
+                    )}
+                </div>
             </div>
         </>);
+}
+function Pagination({ filesPerPage, totalFiles, paginate, currentPage }) {
+    const pageNumbers = [];
+
+    for (let i = 1; i <= Math.ceil(totalFiles / filesPerPage); i++) {
+        pageNumbers.push(i);
+    }
+
+    return (
+        <div className="pagination">
+            {pageNumbers.map((number) => (
+                <div
+                    key={number}
+                    className={`page-item${currentPage === number ? " active" : ""}`}
+                    onClick={() => paginate(number)}
+                >
+                    <a href="#" className="page-link">
+                        {number}
+                    </a>
+                </div>
+            ))}
+        </div>
+    );
 }
 
 const HeaderInfo = styled.div`
