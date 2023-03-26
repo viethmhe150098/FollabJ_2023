@@ -28,7 +28,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getServletPath().equals("/login") || request.getServletPath().equals("/token/refresh") || request.getServletPath().equals("/signup") || request.getServletPath().equals("/confirm")) {
+        if(request.getServletPath().equals("/login") || request.getServletPath().equals("/token/refresh") || request.getServletPath().equals("/signup") || request.getServletPath().contains("/confirm")){
             filterChain.doFilter(request, response); //if request to path "..." won not do filter, let request pass
         } else {
             String authorizationHeader = request.getHeader(AUTHORIZATION);//get authorization from header
@@ -42,9 +42,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     String username = decodedJWT.getSubject();
                     String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
                     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-                    Arrays.stream(roles).forEach(role -> {
-                        authorities.add(new SimpleGrantedAuthority(role));
-                    });
+                    Arrays.stream(roles).forEach(role -> authorities.add(new SimpleGrantedAuthority(role)));
                     //do filter
                     UsernamePasswordAuthenticationToken authenticationToken =
                             new UsernamePasswordAuthenticationToken(username, null, authorities);

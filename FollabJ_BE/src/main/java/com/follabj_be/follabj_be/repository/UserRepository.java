@@ -41,4 +41,13 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
 
     @Query(nativeQuery = true, value = "SELECT * FROM app_user u where u.id in (SELECT receiver_id from invitation where project_id=?1);")
     List<AppUser> findAllUserInvitedToProject(Long project_id);
+    
+    @Query(nativeQuery = true, value = "select COUNT(id) from app_user where YEAR(str_to_date(created_at, '%Y/%m/%d %T')) = ?1")
+    String countByYear(int year);
+
+    @Query(nativeQuery = true, value = "select COUNT(id) from app_user where MONTH(str_to_date(created_at, '%Y/%m/%d %T')) = ?1")
+    String countByMonth(int month);
+
+    @Query(nativeQuery = true, value = "select COUNT(id) from app_user where DAY(str_to_date(created_at, '%Y/%m/%d %T')) = ?1")
+    String countByDay(int day);
 }

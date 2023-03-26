@@ -27,7 +27,7 @@ export const invitationReducer = createReducer(initialState, (builder) => {
             return state
         })
         .addCase(acceptInvitation.fulfilled, (state, action) => {
-            state.user_invitations.filter((invitation) => invitation.id != action.payload.invitation_id)
+            state.user_invitations = state.user_invitations.filter((invitation) => invitation.id != action.payload.invitation_id)
         })
         
 })

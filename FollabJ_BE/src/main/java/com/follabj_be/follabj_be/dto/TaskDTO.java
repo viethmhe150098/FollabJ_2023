@@ -27,8 +27,6 @@ public class TaskDTO {
 
     private int statusId;
 
-    private UserDTO reporter;
-
     private List<UserDTO> assigneeList;
 
 }

@@ -23,8 +23,8 @@ export const loginUser = async (user, dispatch, navigate) => {
         //console.log("access_token ", res.data.access_token);
         localStorage.setItem("refresh_token", refresh_token);
         //console.log("refresh_token", res.data.refresh_token);
-
-        localStorage.setItem("expire_date", new Date().getTime() + 10 * 60 * 1000)
+        
+        localStorage.setItem("expire_date", new Date().getTime() + 60*60*1000)
 
         const decodedToken = jwtDecode(localStorage.getItem('access_token'));
         //console.log('decoded access token '+JSON.stringify(decodedToken));

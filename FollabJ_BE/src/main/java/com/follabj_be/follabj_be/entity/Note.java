@@ -2,6 +2,7 @@ package com.follabj_be.follabj_be.entity;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Builder
+@DynamicUpdate
 public class Note {
 
     @Id

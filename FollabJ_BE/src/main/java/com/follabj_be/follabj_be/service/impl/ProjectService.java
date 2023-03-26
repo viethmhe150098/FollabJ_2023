@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -56,15 +57,25 @@ public class ProjectService implements ProjectInterface {
     }
 
     @Override
-    public void sendInvitation(UserDTO user, Long project_id) {
-//        Project p = projectRepository.findById(project_id).orElseThrow(() -> new ObjectNotFoundException("Not found object", project_id.toString()));
-//        AppUser to = new AppUser(user.getId(), user.getUsername(), user.getEmail());
-//        String content = p.getName();
-//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-//        LocalDateTime now = LocalDateTime.now();
-//        String create_date = dtf.format(now);
-//        Invitation i = new Invitation(to, create_date, content);
-//        invitationRepository.save(i);
+    public String sendInvitation(UserDTO user, Long project_id) {
+        Project p = projectRepository.findById(project_id).orElseThrow(()-> new ObjectNotFoundException("Not found project", project_id.toString()));
+        boolean existedUser = userRepository.existsById(user.getId());
+        if(!existedUser){
+            return "Not found user";
+        }
+        AppUser to = new AppUser(user.getId(), user.getUsername(), user.getEmail());
+        //check existed user
+        boolean existed  = p.getMembers().contains(to);
+        if(existed) {
+            return "Member already in your project";
+        }
+        String content = p.getName();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDateTime now = LocalDateTime.now();
+        String create_date = dtf.format(now);
+        Invitation i = new Invitation(to, create_date, content);
+        invitationRepository.save(i);
+        return "Invite member success";
     }
 
     @Override
@@ -143,11 +154,15 @@ public class ProjectService implements ProjectInterface {
     @Override
     public void deleteMember(Long p_id, Long u_id) {
         Project p = projectRepository.findById(p_id).orElseThrow(() -> new ObjectNotFoundException("Not found project", p_id.toString()));
-        p.setMembers(p.getMembers().stream().filter(m -> m.getId().equals(p_id)).collect(Collectors.toSet()));
+        p.setMembers(p.getMembers().stream().filter(m -> !(m.getId().equals(u_id))).collect(Collectors.toSet()));
         List<Event> events = eventRepository.findByProjectId(p_id);
         List<Task> tasks = taskRepository.findByProjectId(p_id);
         events.forEach(event -> event.setParticipantList(event.getParticipantList().stream().filter(e -> e.getId().equals(u_id)).collect(Collectors.toList())));
         tasks.forEach(task -> task.setAssigneeList(task.getAssigneeList().stream().filter(t -> t.getId().equals(u_id)).collect(Collectors.toList())));
+
+        events.forEach(event -> eventRepository.save(event));
+        tasks.forEach(task -> taskRepository.save(task));
+        projectRepository.save(p);
     }
 
     @Override
@@ -158,11 +173,33 @@ public class ProjectService implements ProjectInterface {
         projectRepository.save(p);
     }
 
+    @Override
+    public String count(String by) {
+        by = by.toUpperCase();
+        String result = "0";
+        LocalDate lc = LocalDate.now();
+        switch (by) {
+            case "YEAR":
+                result = projectRepository.countByYear(lc.getYear());
+                break;
+            case "MONTH":
+                result = projectRepository.countByMonth(lc.getMonth().getValue());
+                break;
+            case "DAY":
+                result = projectRepository.countByDay(lc.getDayOfMonth());
+                break;
+            default:
+                result = "Wrong format";
+        }
+        return result;
+    }
+
     public Map<Object, Object> leaveGroup(Long p_id, Long u_id){
         String userEmail = userRepository.findById(u_id).orElseThrow(()-> new ObjectNotFoundException("Not found project", p_id.toString())).getEmail();
         Map<Object, Object> res = new HashMap<>();
-        if(currentUser().getUsername().equals(userEmail)){
-            deleteMember(p_id, u_id);
+//        if(currentUser().getUsername().equals(userEmail)){
+        if(currentUsername().equals(userEmail)){
+        deleteMember(p_id, u_id);
             res.put("status", 200);
             res.put("message", "Successful leaving");
         }else{
@@ -179,7 +216,7 @@ public class ProjectService implements ProjectInterface {
             p.setLeader(userRepository.findById(u_id).orElseThrow(() -> new ObjectNotFoundException("Not found project", p_id.toString())));
             //userRepository.updateRole(u_id, 2);
             String userEmail = userRepository.findById(u_id).orElseThrow(() -> new ObjectNotFoundException("Not found project", p_id.toString())).getEmail();
-            emailSender.sendEmail(userEmail, buildEmail.becomeLeader(userEmail));
+            //emailSender.sendEmail(userEmail, buildEmail.becomeLeader(userEmail));
             projectRepository.save(p);
             res.put("status", 200);
             res.put("message", "Successful new team leader appointment");
@@ -193,6 +230,11 @@ public class ProjectService implements ProjectInterface {
     public User currentUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (User) authentication.getPrincipal();
+    }
+
+    public String currentUsername(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getPrincipal().toString();
     }
 
     private boolean checkMember(Long project_id, Long user_id){
