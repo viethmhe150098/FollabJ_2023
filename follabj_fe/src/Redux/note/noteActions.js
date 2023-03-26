@@ -23,7 +23,7 @@ export const addNote = createAsyncThunk("ADD_NOTE", async ({user_id, note}) => {
 export const updateNote = createAsyncThunk("UPDATE_NOTE", async ({user_id, note}) => {
     try {
         const response = await noteApi.updateNote(user_id, note)
-        toast.success(`Delete note ${note.title} successfully!`); // display the toast notification
+        toast.success(`Update note ${note.title} successfully!`); // display the toast notification
         return response.data
     } catch (error) {
         throw error

@@ -40,8 +40,6 @@ const Users = () => {
                 background: 'rgb(145 254 159 / 47%)',
                 color: 'green',
                 cursor: 'pointer',
-                minWidth: '10%',
-                width: '83px',
             }
         }
         else if (status === 'Ban') {
@@ -49,9 +47,6 @@ const Users = () => {
                 background: '#ffadad8f',
                 color: 'red',
                 cursor: 'pointer',
-                width: '83px',
-                minWidth: '10%'
-
             }
         }
     }

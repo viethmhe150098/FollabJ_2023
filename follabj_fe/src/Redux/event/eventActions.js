@@ -38,7 +38,7 @@ export const getEventById = createAsyncThunk("FETCH_EVENT_BY_EVENT_ID", async (e
 export const addEvent = createAsyncThunk("ADD_EVENT", async (event) => {
     try {
         const response = await eventAPI.addEvent(event.project_id, event)
-        toast.success('Add event successful!')
+        toast.success('Add event successfully!')
         return response.data
     } catch (error) {
         console.log(error);
@@ -48,7 +48,7 @@ export const addEvent = createAsyncThunk("ADD_EVENT", async (event) => {
 export const updateEvent = createAsyncThunk("UPDATE_EVENT", async (event) => {
     try {
         const response = await eventAPI.updateEvent(event.project_id, event)
-        toast.success(`Update event ${event.title} successful!`)
+        toast.success(`Update event ${event.title} successfully!`)
         return response.data
     } catch (error) {
         console.log(error);
@@ -58,7 +58,7 @@ export const updateEvent = createAsyncThunk("UPDATE_EVENT", async (event) => {
 export const deleteEvent = createAsyncThunk("DELETE_EVENT", async ({ project_id, event_id, title }) => {
     try {
         const response = await eventAPI.deleteEvent(project_id, event_id)
-        toast.success(`Delete event ${title} successful!`)
+        toast.success(`Delete event ${title} successfully!`)
         return event_id
     } catch (error) {
         console.log(error);

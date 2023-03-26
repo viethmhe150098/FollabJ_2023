@@ -5,8 +5,8 @@ import styled from "styled-components";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { useSelector } from "react-redux";
-
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CreateEventForm = ({ type, close, event }) => {
   const [title, setTitle] = useState("");
@@ -62,8 +62,12 @@ const CreateEventForm = ({ type, close, event }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // const startDate = new Date().setDate(2)
-    // const endDate = new Date().setDate(7)
+    if (startDate > endDate) {
+      toast.warn("Start date cannot be after finish date", {
+      });
+      return;
+    }
+
     const event = {
       title,
       description,
@@ -72,7 +76,6 @@ const CreateEventForm = ({ type, close, event }) => {
       project_id,
       participantList
     }
-    //console.log(event)
     dispatch(addEvent(event));
     close()
   };
@@ -110,7 +113,11 @@ const CreateEventForm = ({ type, close, event }) => {
 
 
   const handleCommitUpdate = () => {
-
+    if (startDate > endDate) {
+      toast.warn("Start date cannot be after finish date", {
+      });
+      return;
+    }
     const updatedEvent = {
       id: event.id,
       title,
@@ -142,10 +149,10 @@ const CreateEventForm = ({ type, close, event }) => {
           )}
       </>)}
       {modalType == "update" && (
-          <div style={{ marginBottom: '20px' }}>
-            <h2>Update Event</h2>
-            <span onClick={() => handleCommitUpdate()} className="status" style={makeStyle('Update')}>Commit Update event</span>
-          </div>
+        <div style={{ marginBottom: '20px' }}>
+          <h2>Update Event</h2>
+          <span onClick={() => handleCommitUpdate()} className="status" style={makeStyle('Update')}>Commit Update event</span>
+        </div>
       )}
       {modalType == null && (<h2>Create Event</h2>)}
       <div className="form-group">
@@ -173,6 +180,7 @@ const CreateEventForm = ({ type, close, event }) => {
             <DatePicker
               id="start-date"
               selected={startDate}
+              disabled={modalType == "readonly"}
               onChange={(date) => setStartDate(date)}
               dateFormat="dd/MM/yyyy hh:mm a"
               showTimeSelect
@@ -181,6 +189,7 @@ const CreateEventForm = ({ type, close, event }) => {
             <DatePicker
               id="end-date"
               selected={endDate}
+              disabled={modalType == "readonly"}
               onChange={(date) => setEndDate(date)}
               dateFormat="dd/MM/yyyy hh:mm a"
               showTimeSelect

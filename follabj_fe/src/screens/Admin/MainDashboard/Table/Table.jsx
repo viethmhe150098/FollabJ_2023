@@ -46,16 +46,16 @@ const makeStyle=(status)=>{
 export default function BasicTable() {
   return (
       <div className="Table">
-      <h3>Recent Orders</h3>
+      <h3 style={{marginBottom: '30px'}}>Projects List</h3>
         <TableContainer
           component={Paper}
-          style={{ boxShadow: "0px 13px 20px 0px #80808029" }}
+          style={{ boxShadow: "0px 13px 20px 10px #80808029" }}
         >
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Product</TableCell>
-                <TableCell align="left">Tracking ID</TableCell>
+                <TableCell>Project ID</TableCell>
+                <TableCell align="left">Leader ID</TableCell>
                 <TableCell align="left">Date</TableCell>
                 <TableCell align="left">Status</TableCell>
                 <TableCell align="left"></TableCell>
@@ -73,7 +73,7 @@ export default function BasicTable() {
                   <TableCell align="left">{row.trackingId}</TableCell>
                   <TableCell align="left">{row.date}</TableCell>
                   <TableCell align="left">
-                    <span className="status" style={makeStyle(row.status)}>{row.status}</span>
+                    <button className="status" style={makeStyle(row.status)}>{row.status}</button>
                   </TableCell>
                   <TableCell align="left" className="Details">Details</TableCell>
                 </TableRow>

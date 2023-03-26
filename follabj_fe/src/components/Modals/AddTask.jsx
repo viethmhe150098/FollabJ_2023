@@ -6,6 +6,8 @@ import { addTask, deleteTask, updateTask } from "../../Redux/task/taskActions";
 import { useDispatch } from "react-redux";
 import moment from "moment";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const AddTaskModal = ({ type, close, statusId = 1, task }) => {
 
   const dispatch = useDispatch();
@@ -80,6 +82,12 @@ const AddTaskModal = ({ type, close, statusId = 1, task }) => {
 
   const handleCreateTask = (event) => {
     event.preventDefault();
+
+    if (startDate > endDate) {
+      toast.warn("Start date cannot be after finish date", {
+      });
+      return;
+    }
     const taskData = {
       project_id,
       task: {
@@ -112,7 +120,11 @@ const AddTaskModal = ({ type, close, statusId = 1, task }) => {
   }
 
   const handleCommitUpdate = () => {
-
+    if (startDate > endDate) {
+      toast.warn("Start date cannot be after finish date", {
+      });
+      return;
+    }
     const updatedTask = {
       id: task.id,
       title,
@@ -182,7 +194,6 @@ const AddTaskModal = ({ type, close, statusId = 1, task }) => {
               id="startDate"
               selected={startDate}
               disabled={modalType == "readonly"}
-              value={task != null ? moment(task.startDate).format("DD/MM/yyyy hh:mm a") : new Date()}
               showTimeSelect
               onChange={(date) => setStartDate(date)}
               dateFormat="dd/MM/yyyy hh:mm a"
@@ -193,7 +204,7 @@ const AddTaskModal = ({ type, close, statusId = 1, task }) => {
               id="endDate"
               selected={endDate}
               disabled={modalType == "readonly"}
-              value={task != null ? moment(task.endDate).format("DD/MM/yyyy hh:mm a") : new Date()}
+              // value={task != null ? moment(task.endDate).format("DD/MM/yyyy hh:mm a") : new Date()}
               showTimeSelect
               onChange={(date) => setEndDate(date)}
               dateFormat="dd/MM/yyyy hh:mm a"
