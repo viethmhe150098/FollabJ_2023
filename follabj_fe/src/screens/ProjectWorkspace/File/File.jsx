@@ -34,7 +34,7 @@ const FileWorkspace = () => {
     const files = useSelector((state) => state.file)
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [filesPerPage, setFilesPerPage] = useState(5);
+    const [filesPerPage, setFilesPerPage] = useState(6);
     //Pagination
     const indexOfLastFile = currentPage * filesPerPage;
     const indexOfFirstFile = indexOfLastFile - filesPerPage;

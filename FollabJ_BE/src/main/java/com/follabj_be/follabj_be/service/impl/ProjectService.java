@@ -73,8 +73,8 @@ public class ProjectService implements ProjectInterface {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDateTime now = LocalDateTime.now();
         String create_date = dtf.format(now);
-        Invitation i = new Invitation(to, create_date, content);
-        invitationRepository.save(i);
+//        Invitation i = new Invitation(to, create_date, content);
+//        invitationRepository.save(i);
         return "Invite member success";
     }
 

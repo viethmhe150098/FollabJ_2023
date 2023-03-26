@@ -55,8 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http
-                .addFilter(new CustomAuthenticationFilter(authenticationManager(), userRepository, projectRepository));
-
+                .addFilter(new CustomAuthenticationFilter(authenticationManager(), userRepository, projectRepository))
+        .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
         http.logout();
     }
 }

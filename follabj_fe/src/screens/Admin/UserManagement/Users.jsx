@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { banUser, getUsers, unbanUser } from "../../../Redux/user/userActions";
@@ -16,10 +16,13 @@ import "../../Admin/MainDashboard/Table/Table.css";
 const Users = () => {
     const dispatch = useDispatch();
 
-    const page_number = 0;
-
     const users = useSelector((state) => state.user)
+    const [currentPage, setCurrentPage] = useState(1);
+    const [usersPerPage, setUsersPerPage] = useState(10);
 
+    const indexOfLastUser = currentPage * usersPerPage;
+    const indexOfFirstUser = indexOfLastUser - usersPerPage;
+    const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
     useEffect(() => {
         dispatch(getUsers());
         //console.log("dispatched")
@@ -50,6 +53,9 @@ const Users = () => {
             }
         }
     }
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
     return (
         <>
             <div className="Table">
@@ -67,7 +73,7 @@ const Users = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody style={{ color: "white" }}>
-                            {users.map((user, index) => (
+                            {currentUsers.map((user, index) => (
                                 <TableRow key={index}>
                                     <TableCell component="th" scope="row">
                                         {user.username}
@@ -93,6 +99,16 @@ const Users = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <div className="pagination-wrapper">
+                    {users.length > usersPerPage && (
+                        <Pagination
+                            usersPerPage={usersPerPage}
+                            totalUsers={users.length}
+                            paginate={paginate}
+                            currentPage={currentPage}
+                        />
+                    )}
+                </div>
             </div>
 
             {/* {
@@ -108,6 +124,30 @@ const Users = () => {
             )})} */}
 
         </>);
+}
+
+function Pagination({ usersPerPage, totalUsers, paginate, currentPage }) {
+    const pageNumbers = [];
+
+    for (let i = 1; i <= Math.ceil(totalUsers / usersPerPage); i++) {
+        pageNumbers.push(i);
+    }
+
+    return (
+        <div className="pagination">
+            {pageNumbers.map((number) => (
+                <div
+                    key={number}
+                    className={`page-item${currentPage === number ? " active" : ""}`}
+                    onClick={() => paginate(number)}
+                >
+                    <a href="#" className="page-link">
+                        {number}
+                    </a>
+                </div>
+            ))}
+        </div>
+    );
 }
 
 export default Users
