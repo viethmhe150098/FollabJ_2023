@@ -34,8 +34,7 @@
             return state
         })
         .addCase(updateNote.fulfilled, (state, action) => {
-            state.map((note) => note.id == action.payload.id ? action.payload : note)
-            return state
+            return state.map((note) => note.id == action.payload.id ? action.payload : note)
         })
         .addCase(deleteNote.fulfilled,(state, action)=>{
             return state.filter((note)=>note.id != action.payload)

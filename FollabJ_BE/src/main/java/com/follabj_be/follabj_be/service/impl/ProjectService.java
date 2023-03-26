@@ -154,11 +154,15 @@ public class ProjectService implements ProjectInterface {
     @Override
     public void deleteMember(Long p_id, Long u_id) {
         Project p = projectRepository.findById(p_id).orElseThrow(() -> new ObjectNotFoundException("Not found project", p_id.toString()));
-        p.setMembers(p.getMembers().stream().filter(m -> m.getId().equals(p_id)).collect(Collectors.toSet()));
+        p.setMembers(p.getMembers().stream().filter(m -> !(m.getId().equals(u_id))).collect(Collectors.toSet()));
         List<Event> events = eventRepository.findByProjectId(p_id);
         List<Task> tasks = taskRepository.findByProjectId(p_id);
         events.forEach(event -> event.setParticipantList(event.getParticipantList().stream().filter(e -> e.getId().equals(u_id)).collect(Collectors.toList())));
         tasks.forEach(task -> task.setAssigneeList(task.getAssigneeList().stream().filter(t -> t.getId().equals(u_id)).collect(Collectors.toList())));
+
+        events.forEach(event -> eventRepository.save(event));
+        tasks.forEach(task -> taskRepository.save(task));
+        projectRepository.save(p);
     }
 
     @Override
@@ -193,8 +197,9 @@ public class ProjectService implements ProjectInterface {
     public Map<Object, Object> leaveGroup(Long p_id, Long u_id){
         String userEmail = userRepository.findById(u_id).orElseThrow(()-> new ObjectNotFoundException("Not found project", p_id.toString())).getEmail();
         Map<Object, Object> res = new HashMap<>();
-        if(currentUser().getUsername().equals(userEmail)){
-            deleteMember(p_id, u_id);
+//        if(currentUser().getUsername().equals(userEmail)){
+        if(currentUsername().equals(userEmail)){
+        deleteMember(p_id, u_id);
             res.put("status", 200);
             res.put("message", "Successful leaving");
         }else{
@@ -211,7 +216,7 @@ public class ProjectService implements ProjectInterface {
             p.setLeader(userRepository.findById(u_id).orElseThrow(() -> new ObjectNotFoundException("Not found project", p_id.toString())));
             //userRepository.updateRole(u_id, 2);
             String userEmail = userRepository.findById(u_id).orElseThrow(() -> new ObjectNotFoundException("Not found project", p_id.toString())).getEmail();
-            emailSender.sendEmail(userEmail, buildEmail.becomeLeader(userEmail));
+            //emailSender.sendEmail(userEmail, buildEmail.becomeLeader(userEmail));
             projectRepository.save(p);
             res.put("status", 200);
             res.put("message", "Successful new team leader appointment");
@@ -225,6 +230,11 @@ public class ProjectService implements ProjectInterface {
     public User currentUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (User) authentication.getPrincipal();
+    }
+
+    public String currentUsername(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getPrincipal().toString();
     }
 
     private boolean checkMember(Long project_id, Long user_id){

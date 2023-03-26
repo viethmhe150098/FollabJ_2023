@@ -51,8 +51,9 @@ instance.interceptors.response.use(function (response) {
                 localStorage.setItem('access_token', response.data.access_token);
                 localStorage.setItem('refresh_token', response.data.refresh_token);
 
-            }
-            return instance(originalConfig)
+                return instance(originalConfig)
+
+            }   
         default:
             break;
     }

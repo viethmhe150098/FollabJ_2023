@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function ProjectBox({ img, title, action }) {
+export default function ProjectBox({ img, title, action, rightClickAction }) {
   return (
 
-    <ImgBtn className="aniamte pointer" onClick={action ? () => action() : null}>
+    <ImgBtn className="aniamte pointer" onClick={action ? () => action() : null} onContextMenu={rightClickAction ? (e) => {e.preventDefault();rightClickAction()} : null}>
       <div style={{
         backgroundImage: `url(${img})`,
         backgroundSize: 'cover',

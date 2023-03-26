@@ -1,27 +1,45 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 
 import styled from "styled-components";
-import { addNote } from "../../Redux/note/noteActions";
+import { assignLeader, leaveProject, leaveProjectAndAssignNewLeader } from "../../Redux/project/projectActions";
 
 
-const NoteModal = ({close}) => {
+const LeaveGroupModal = ({close}) => {
     
     const dispatch  = useDispatch();
-    const [title, setTitle] = useState("");
+
+    const history = useHistory();
+
+    const [assignedLeaderId, setAssignedLeaderId] = useState(null);
+    const [radioButtonClicked, setRadioButtonClicked] = useState(false);
+
+    const members = useSelector((state) => state.project.currentProject.members)
+    //console.log(members)
+    const project_id = useSelector((state) => state.project.currentProject.id);
 
     const user_id = useSelector((state) => state.auth.login.currentUser.id)
 
     const handleSubmit = (e) => {
-      e.preventDefault()
-      const note = {
-        title,
-        content: ""
-      }
+        e.preventDefault()
 
-    dispatch(addNote({user_id, note}))
-  }
+        if (assignedLeaderId != null) {
+          //console.log(assignedLeaderId)
+          dispatch(assignLeader({
+            project_id, 
+            new_leader_id: assignedLeaderId
+          }))
+          dispatch(leaveProject({
+            project_id, 
+            user_id
+          }))
+          history.push("/projects")
+        }
+
+        close();
+    }
 
     return (
         <>
@@ -29,18 +47,26 @@ const NoteModal = ({close}) => {
                 <a className="close" onClick={close}>
                     &times;
                 </a>
-                <h2>Create Note</h2>
+                <h2>Assign New Leader: </h2>
                 
-                <form onSubmit={(e)=>{handleSubmit(e)}} encType="multipart/form-data">
+                <form id="taskForm" onSubmit={(e)=>{handleSubmit(e)}}>
                     <div className="form-group">
-                        <label className="font20" htmlFor="title">Note Title </label>
-                        <input
-                            type="text"
-                            id="title"
-                            onChange={(e) => {setTitle(e.target.value)}}
-                        ></input>
+                        {members != null && members.map((member,index) => 
+                            user_id != member.id &&
+                            <div key={index}>
+                            <input
+                            type="radio"
+                            id={"member"+member.id}
+                            onChange={(e) => {
+                              setRadioButtonClicked(true)
+                              setAssignedLeaderId(member.id)}}
+                            ></input>
+                            <label className="font20" htmlFor={"member"+member.id}>  {member.username}</label><br/>
+                            </ div>
+                            
+                        )}
                     </div>
-                    <button type="submit">Create Note</button>
+                    {radioButtonClicked && <button type="submit">Assign and Leave Group</button>}
                 </form>
             </Modal>
         </>
@@ -133,4 +159,4 @@ border: 1px black solid;
   
 `;
 
-export default NoteModal
+export default LeaveGroupModal

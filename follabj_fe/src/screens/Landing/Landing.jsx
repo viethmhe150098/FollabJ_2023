@@ -17,12 +17,12 @@ export default function Landing() {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    if (!loginError && count === 0) {
-      toast.success('Welcome back! 🧡', {
-        autoClose: 5000,
-      });
-      setCount(1);
-    }
+    // if (!loginError && count === 0) {
+    //   toast.success('Welcome back! 🧡', {
+    //     autoClose: 5000,
+    //   });
+    //   setCount(1);
+    // }
   }, [loginError, count]);
 
 

@@ -76,7 +76,7 @@ public class ProjectController {
         projectService.editProject(p_id, createProjectDTO);
         Map<Object, Object> res = new HashMap<>();
         res.put("status", HttpStatus.OK);
-        res.put("message", "deleted project with id =" + p_id);
+        res.put("message", "edited project with id =" + p_id);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 

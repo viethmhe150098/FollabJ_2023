@@ -1,5 +1,5 @@
 import instance from "../axiosInstance";
-
+import axios from "axios";
 const noteUrl = (user_id) => "/notes/"+user_id;
 
 export const fetchNotesByUserId = (user_id) => 
