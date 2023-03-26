@@ -31,9 +31,9 @@ const NoteModal = ({close}) => {
                 </a>
                 <h2>Create Note</h2>
                 
-                <form id="taskForm" onSubmit={(e)=>{handleSubmit(e)}} encType="multipart/form-data">
+                <form onSubmit={(e)=>{handleSubmit(e)}} encType="multipart/form-data">
                     <div className="form-group">
-                        <label htmlFor="title">Note Title </label>
+                        <label className="font20" htmlFor="title">Note Title </label>
                         <input
                             type="text"
                             id="title"
