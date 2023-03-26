@@ -7,6 +7,7 @@ import ChangePasswordModal from "../components/Modals/ChangePasswordModal";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { getUserProfileByUserId } from "../Redux/userProfile/userProfileAction";
+import UpdateProfileModal from "../components/Modals/UpdateProfile";
 
 const UserProfile = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -46,6 +47,9 @@ const UserProfile = () => {
                            
                     <Popup modal trigger={ <button className='darkBg font25 radius6 lightColor tag'>Change password</button>}>
                         {close => <ChangePasswordModal close={close}/>}
+                    </Popup>
+                    <Popup modal trigger={ <button className='darkBg font25 radius6 lightColor tag'>Update profile</button>}>
+                        {close => <UpdateProfileModal close={close}/>}
                     </Popup>
                     <button onClick={() => handleLogout()} className='redBg font25 radius6 lightColor tag'>Logout</button>
                 </div>
