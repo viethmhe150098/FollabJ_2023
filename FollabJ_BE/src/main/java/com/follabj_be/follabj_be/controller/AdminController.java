@@ -45,8 +45,8 @@ public class AdminController {
         return dtoList;
     }
 
-    @PostMapping("/admin/users")
-    @PreAuthorize("hasAuthority('AMDIN')")
+    @PostMapping("/admin/users/{u_id}/update")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Map<Object, Object>> updateUserStatus(@PathVariable Long u_id, @RequestParam int status){
         AppUserDTO aud = userService.updateStatus(status, u_id);
         Map<Object, Object> res = new HashMap<>();
@@ -62,27 +62,7 @@ public class AdminController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-//    @GetMapping("/admin/request")
-//    public List<LeaderRequestDTO> getLeaderRequest() {
-//        List<LeaderRequest> requestList = leaderRequestService.getListRequest(0).toList();
-//        List<LeaderRequestDTO> dtoList = new ArrayList<>();
-//
-//        for (LeaderRequest request : requestList) {
-//            LeaderRequestDTO requestDTO = new LeaderRequestDTO();
-//            requestDTO.setU_id(request.getUser().getId());
-//            requestDTO.setU_fullname(request.getUser_fullname());
-//            request.setUser_id_number(request.getUser_id_number());
-//
-//            dtoList.add(requestDTO);
-//        }
-//
-//        return dtoList;
-//    }
-//
-//    @GetMapping("/admin/request/accept")
-//    public void acceptLeaderRequest(@RequestParam Long request_id) {
-//        leaderRequestService.updateRequestStatus(request_id, 1);
-//    }
+
     @GetMapping("/admin/cu")
     public ResponseEntity<Map<String, String>> countUser(@RequestParam String by){
         String result = userService.count(by);
