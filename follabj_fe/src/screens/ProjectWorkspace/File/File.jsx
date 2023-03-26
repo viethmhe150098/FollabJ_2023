@@ -108,7 +108,7 @@ const FileWorkspace = () => {
                                         <span className="Details" >{item.user.username}</span>
                                     </TableCell>
                                     <TableCell align="left">
-                                        <button className="status" style={makeStyle('Download')}>Download</button>
+                                        <button onClick={() => {handleDownload(item.id, item.fileName)}} className="status" style={makeStyle('Download')}>Download</button>
                                     </TableCell>
                                     <TableCell align="left">
                                         <button className="status" style={makeStyle('Delete')}>Delete</button>
