@@ -7,7 +7,7 @@ const AdminRoute = (props) => {
 
     const roles = localStorage.getItem("role_name")
     //console.log(role_name)
-    if(isLoggedIn() && roles.includes("ADMIn")) {
+    if(isLoggedIn() && roles.includes("ADMIN")) {
         return <Route path={props.path} >
             {props.children}
         </Route>

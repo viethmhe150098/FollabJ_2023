@@ -69,11 +69,14 @@ public class ProjectService implements ProjectInterface {
         if(existed) {
             return "Member already in your project";
         }
-        String content = p.getName();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDateTime now = LocalDateTime.now();
-        String create_date = dtf.format(now);
-        Invitation i = new Invitation(to, create_date, content);
+//        String content = p.getName();
+//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//        LocalDateTime now = LocalDateTime.now();
+//        String create_date = dtf.format(now);
+//        Invitation i = new Invitation(to, create_date, content);
+        Invitation i = new Invitation();
+        i.setReceiver(to);
+        i.setProject(p);
         invitationRepository.save(i);
         return "Invite member success";
     }

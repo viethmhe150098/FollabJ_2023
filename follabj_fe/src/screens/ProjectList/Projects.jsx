@@ -28,25 +28,26 @@ const Projects = () => {
 
   const members = useSelector((state) => state.project.currentProject.members)
 
-  const setCurrentProject = (project_id) => {
+  const setCurrentProject =  (project_id) => {
 
       dispatch(setCurrentProjectId(project_id));
       
-      dispatch(getProjectMembersByProjectId(project_id));
-
-      while(true) {
-        if (members != []) {
-          if (user_id == members[0].id) {
-            dispatch(setCurrentProjectUserRole("LEADER"))
-          } else {
-            dispatch(setCurrentProjectUserRole("ACTIVE_USER"))
-          }
-          break
+      dispatch(getProjectMembersByProjectId(project_id)).unwrap().then((result) => {
+        if (result != []) {
+            if (user_id == result[0].id) {
+              dispatch(setCurrentProjectUserRole("LEADER"))
+            } else {
+              dispatch(setCurrentProjectUserRole("ACTIVE_USER"))
+            }
         }
-      }
+        //console.log(result)
+        history.push("/tasks")
+      })
 
-      history.push("/tasks")
   }
+
+
+
 
   return (
 
