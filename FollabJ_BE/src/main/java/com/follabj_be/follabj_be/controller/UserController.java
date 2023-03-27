@@ -24,7 +24,7 @@ public class UserController {
 
     @GetMapping("/find")
     @PreAuthorize("hasAnyAuthority('LEADER', 'ADMIN')")
-    public List<UserDTO> findUserInfoByEmail(@RequestParam String email_cha){
+    public List<UserDTO> findUserInfoByEmail(@RequestParam String email_cha) {
         return userService.findUsersByEmail(email_cha);
     }
 
@@ -38,25 +38,25 @@ public class UserController {
 
     @PostMapping("/request")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
-    public ResponseEntity<String> sendRequest(@RequestBody LeaderRequestDTO leaderRequestDTO){
+    public ResponseEntity<String> sendRequest(@RequestBody LeaderRequestDTO leaderRequestDTO) {
         String message = leaderRequestService.saveRequest(leaderRequestDTO);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     @GetMapping("/{u_id}")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
-    public ResponseEntity<Map<Object, Object>> getUserProfile(@PathVariable Long u_id){
+    public ResponseEntity<Map<Object, Object>> getUserProfile(@PathVariable Long u_id) {
         AppUserDTO aud = userService.getUserProfile(u_id);
         Map<Object, Object> res = new HashMap<>();
         res.put("status", HttpStatus.OK);
-        res.put("message", "Found user "+u_id);
+        res.put("message", "Found user " + u_id);
         res.put("userInfo", aud);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @PostMapping("/password/{u_id}")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
-    public ResponseEntity<Map<String, String>> changePassword (@PathVariable Long u_id, @RequestBody PasswordDTO passwordDTO){
+    public ResponseEntity<Map<String, String>> changePassword(@PathVariable Long u_id, @RequestBody PasswordDTO passwordDTO) {
         Map<String, String> res = new HashMap<>();
         res.put("message", userService.changePassword(passwordDTO, u_id));
         return new ResponseEntity<>(res, HttpStatus.OK);
@@ -64,8 +64,16 @@ public class UserController {
 
     @PostMapping("/info/{id}")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
-    public ResponseEntity<Map<String, String>> updateProfile (@PathVariable Long id, @RequestBody UpdateUserDTO updateUserDTO){
+    public ResponseEntity<Map<String, String>> updateProfile(@PathVariable Long id, @RequestBody UpdateUserDTO updateUserDTO) {
         Map<String, String> res = userService.updateUser(updateUserDTO, id);
+    }
+
+    @PostMapping("/forgot")
+    public ResponseEntity<Map<String, String>> forgotPassword(@RequestBody ForgotUserDTO forgotUserDTO) {
+        String message = userService.forgetPassword(forgotUserDTO.getEmail());
+        Map<String, String> res = new HashMap<>();
+        res.put("status", "200");
+        res.put("message", message);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }

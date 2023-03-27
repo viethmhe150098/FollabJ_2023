@@ -35,4 +35,5 @@ public interface UserInterface {
     Map<String, String> updateUser (UpdateUserDTO userDTO, Long u_id);
 
     String count(String by);
+    String forgetPassword(String email);
 }
