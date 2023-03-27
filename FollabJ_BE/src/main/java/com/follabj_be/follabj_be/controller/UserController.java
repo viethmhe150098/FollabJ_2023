@@ -66,6 +66,7 @@ public class UserController {
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
     public ResponseEntity<Map<String, String>> updateProfile(@PathVariable Long id, @RequestBody UpdateUserDTO updateUserDTO) {
         Map<String, String> res = userService.updateUser(updateUserDTO, id);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @PostMapping("/forgot")
