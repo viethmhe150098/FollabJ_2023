@@ -30,10 +30,11 @@ export const updateNote = createAsyncThunk("UPDATE_NOTE", async ({user_id, note}
     }
 })
 
-export const deleteNote = createAsyncThunk("DELETE_NOTE", async ({user_id, note_id}) =>{
+export const deleteNote = createAsyncThunk("DELETE_NOTE", async ({user_id, note}) =>{
     try {
-        const response = await noteApi.deleteNote(user_id, note_id)
-        return note_id
+        const response = await noteApi.deleteNote(user_id, note.id)
+        toast.success(`Delete note ${note.title} successfully!`); // display the toast notification
+        return note.id
     } catch (error) {
         throw error
     }

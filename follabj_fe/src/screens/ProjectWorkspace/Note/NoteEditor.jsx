@@ -49,7 +49,7 @@ const NoteEditor = () => {
   const handleDelete = () =>{
     dispatch(deleteNote({
       user_id,
-      note_id: note.id
+      note
     }))
     history.push("/notes")
   }
