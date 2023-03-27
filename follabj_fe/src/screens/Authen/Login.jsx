@@ -44,14 +44,7 @@ const Login = () => {
     setErrors({ username: usernameError, password: passwordError });
   }, [username, password]);
 
-  useEffect(() => {
-    if (loginError) {
-      // show error notification
-      toast.error("Invalid username or password. Please try again.", {
-        autoClose: 3000,
-      });
-    }
-  }, [loginError]);
+
   const handleLogin = (e) => {
     e.preventDefault();
     const newUser = {
