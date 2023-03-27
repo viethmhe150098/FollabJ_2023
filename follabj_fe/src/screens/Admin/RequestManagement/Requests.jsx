@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { acceptRequest, getRequests } from "../../../Redux/leaderRequest/requestActions";
+import styled from "styled-components";
 
 //table libraby
 import Table from "@mui/material/Table";
@@ -52,40 +53,50 @@ const Requests = () => {
     }
     return (
         <>
-            <div className="Table">
-                <TableContainer
-                    component={Paper}
-                    style={{ boxShadow: "0px 13px 20px 10px #80808029" }}
-                >
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>User Name</TableCell>
-                                <TableCell align="left">User Mail</TableCell>
-                                <TableCell align="left">User options</TableCell>
+            {leaderRequests.length === 0 ?
+                <EmptyMessage>No requests found!</EmptyMessage> :
+                <div className="Table">
+                    <TableContainer
+                        component={Paper}
+                        style={{ boxShadow: "0px 13px 20px 10px #80808029" }}
+                    >
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>User Name</TableCell>
+                                    <TableCell align="left">User Mail</TableCell>
+                                    <TableCell align="left">User options</TableCell>
 
-                            </TableRow>
-                        </TableHead>
-                        <TableBody style={{ color: "white" }}>
-                            {leaderRequests.map((item, index) => (
-                                <TableRow key={index}>
-                                    <TableCell component="th" scope="row">
-                                        {item.user_fullname}
-                                    </TableCell>
-                                    <TableCell component="th" scope="row">
-                                        {item.email}
-                                    </TableCell>
-
-                                    <TableCell align="left">
-                                        <button onClick={() => handleAccept(item)} className="status" style={makeStyle('Accept')}>Accept</button>
-
-                                    </TableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </div>
+                            </TableHead>
+                            <TableBody style={{ color: "white" }}>
+                                {leaderRequests.map((item, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell component="th" scope="row">
+                                            {item.user_fullname}
+                                        </TableCell>
+                                        <TableCell component="th" scope="row">
+                                            {item.email}
+                                        </TableCell>
+
+                                        <TableCell align="left">
+                                            <button onClick={() => handleAccept(item)} className="status" style={makeStyle('Accept')}>Accept</button>
+
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </div>
+            }
         </>);
 }
+const EmptyMessage = styled.div`
+  text-align: center;
+  margin: 50px auto;
+  font-size: 24px;
+  font-weight: bold;
+  color: #888;
+`;
 export default Requests

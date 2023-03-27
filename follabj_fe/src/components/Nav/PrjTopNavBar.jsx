@@ -29,11 +29,13 @@ export default function PrjTopNavBar() {
   const roles = localStorage.getItem("role_name")
 
   const user_id = useSelector((state) => state.auth.login.currentUser.id)
+  const user_email = useSelector((state) => state.auth.login.currentUser.email)
+
 
   const handleSendRequest = () => {
     const leaderRequest = {
       u_id: user_id,
-      u_fullname : "user_fullname",
+      u_fullname : user_email,
       u_id_number : "placeholder",
     }
 

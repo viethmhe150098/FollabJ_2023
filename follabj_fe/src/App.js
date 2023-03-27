@@ -10,6 +10,7 @@ import UserProfile from './screens/UserProfile';
 import Meeting from './screens/ProjectWorkspace/Meeting/Meeting';
 import ForgotPassword from "./screens/Authen/ForgotPassword";
 // import Register from "./screens/Register.jsx";
+import { isLoggedIn } from '../src/Redux/auth/auth';
 
 
 //Library
@@ -70,14 +71,14 @@ export default function App() {
           </AuthenciatedRoute>
 
           <Route path="/login">
-            <Login />
+            {isLoggedIn() ? <Landing /> : <Login />}
           </Route>
           {/* Register */}
           <Route path="/signup">
-            <SignUp />
+            {isLoggedIn() ? <Landing /> : <SignUp />}
           </Route>
           <Route path="/forgot">
-            <ForgotPassword />
+            {isLoggedIn() ? <Landing /> : <ForgotPassword />}
           </Route>
           <AuthenciatedRoute path="/profile">
             <UserProfile />
