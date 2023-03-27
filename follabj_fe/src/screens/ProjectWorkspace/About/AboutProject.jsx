@@ -10,7 +10,7 @@ import MemberList from './MemberList';
 // Sections
 export default function AboutProject() {
 
-    const dispatch  = useDispatch();
+    const dispatch = useDispatch();
 
     const history = useHistory();
 
@@ -24,29 +24,56 @@ export default function AboutProject() {
 
     const handleMemberLeave = () => {
         dispatch(leaveProject({
-            project_id, 
+            project_id,
             user_id
-          }))
+        }))
 
         history.push("/projects")
+    }
+    const makeStyle = (status) => {
+        if (status === 'Member') {
+            return {
+                background: 'rgb(145 254 159 / 47%)',
+                color: 'green',
+            }
+        }
+        else if (status === 'Leave') {
+            return {
+                background: '#ffadad8f',
+                color: 'red',
+                marginTop: '50px',
+                height: '50px',
+                '&:hover': {
+                    background: 'red',
+                    color: 'white',
+                },
+            }
+        } else {
+            return {
+                background: '#59bfff',
+                color: 'white',
+            }
+        }
     }
 
     return (
         <>
-           {user_role=="LEADER" && <InviteUser/>}
-           <div className="invite-user-container">
+            {user_role == "LEADER" && <InviteUser />}
+            <div className="invite-user-container">
                 <MemberList />
-                {user_role=="LEADER" &&
-                <Popup modal trigger={ <button className='redBg font25 radius6 lightColor tag'>Leave project</button>}>
-                        {close => <LeaveGroupModal close={close}/>}
-                </Popup>
+                {user_role == "LEADER" &&
+                    <Popup modal trigger={<button className='status' style={makeStyle('Leave')}>Leave project</button>}>
+                        {close => <LeaveGroupModal close={close} />}
+                    </Popup>
                 }
-                {user_role!="LEADER" &&
-                <button onClick={()=>{handleMemberLeave()}} className='redBg font25 radius6 lightColor tag'>Leave project</button>
+                {user_role != "LEADER" &&
+                    <button onClick={() => { handleMemberLeave() }} className='status' style={makeStyle('Leave')}>Leave project</button>
                 }
             </div>
         </>
     );
+
+
 }
 
 

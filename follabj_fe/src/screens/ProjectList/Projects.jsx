@@ -65,23 +65,28 @@ const Projects = () => {
 
     <Wrapper id="projects" className="lightBg" style={{ paddingBottom: "50px" }}>
       <div >
-        <div className="container" style={{ paddingTop: "150px" , minHeight:"709px"}}>
+
+        <div className="container" style={{ paddingTop: "150px", minHeight: "709px" }}>
           <HeaderInfo>
             <h1 className="font30 extraBold textCenter">My Projects</h1>
           </HeaderInfo>
-          <div className="row textCenter">
-            {
-              currentProjects.map((project) =>
-                <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4" key={project.id.toString()}>
-                  <ProjectBox
-                    img={ProjectImg1}
-                    title={project.name}
-                    action={() => { setCurrentProject(project.id) }}
-                  />
-                </div>)
-            }
-          </div>
+          {projects.length === 0 ?
+            <EmptyMessage>No invitations found!</EmptyMessage> :
+            <div className="row textCenter">
+              {
+                currentProjects.map((project) =>
+                  <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4" key={project.id.toString()}>
+                    <ProjectBox
+                      img={ProjectImg1}
+                      title={project.name}
+                      action={() => { setCurrentProject(project.id) }}
+                    />
+                  </div>)
+              }
+            </div>
+          }
         </div>
+
       </div>
       <div className="pagination-wrapper">
         {projects.length > projectsPerPage && (
@@ -105,7 +110,7 @@ function Pagination({ projectsPerPage, totalProjects, paginate, currentPage }) {
 
   return (
     <div className="pagination">
-          <a href="#" className="page-link"> <FaAngleLeft/> &nbsp; </a>
+      <a href="#" className="page-link"> <FaAngleLeft /> &nbsp; </a>
 
       {pageNumbers.map((number) => (
         <div
@@ -117,7 +122,7 @@ function Pagination({ projectsPerPage, totalProjects, paginate, currentPage }) {
           </a>
         </div>
       ))}
-       <a href="#" className="page-link"> <FaAngleRight/> &nbsp; </a>
+      <a href="#" className="page-link"> <FaAngleRight /> &nbsp; </a>
     </div>
   );
 }
@@ -132,5 +137,11 @@ margin-bottom: 40px;
     text-align: center;
   }
 `;
-
+const EmptyMessage = styled.div`
+  text-align: center;
+  margin: 50px auto;
+  font-size: 24px;
+  font-weight: bold;
+  color: #888;
+`;
 export default Projects

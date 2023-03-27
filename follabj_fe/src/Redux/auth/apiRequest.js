@@ -46,7 +46,7 @@ export const loginUser = async (user, dispatch, navigate) => {
         navigate.push("/")
     } catch (error) {
         //console.log(error)
-        toast.error(loginFailed())
+        // toast.success(error.response.data.message)
         dispatch(loginFailed());
     }
 }
