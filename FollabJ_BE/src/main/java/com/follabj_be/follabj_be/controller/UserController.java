@@ -1,9 +1,6 @@
 package com.follabj_be.follabj_be.controller;
 
-import com.follabj_be.follabj_be.dto.AppUserDTO;
-import com.follabj_be.follabj_be.dto.LeaderRequestDTO;
-import com.follabj_be.follabj_be.dto.PasswordDTO;
-import com.follabj_be.follabj_be.dto.UserDTO;
+import com.follabj_be.follabj_be.dto.*;
 import com.follabj_be.follabj_be.entity.Invitation;
 import com.follabj_be.follabj_be.entity.LeaderRequest;
 import com.follabj_be.follabj_be.service.impl.LeaderRequestService;
@@ -62,6 +59,15 @@ public class UserController {
     public ResponseEntity<Map<String, String>> changePassword (@PathVariable Long u_id, @RequestBody PasswordDTO passwordDTO){
         Map<String, String> res = new HashMap<>();
         res.put("message", userService.changePassword(passwordDTO, u_id));
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @PostMapping("/forgot")
+    public ResponseEntity<Map<String, String>> forgotPassword (@RequestBody ForgotUserDTO forgotUserDTO) {
+        String message = userService.forgetPassword(forgotUserDTO.getEmail());
+        Map<String, String> res = new HashMap<>();
+        res.put("status", "200");
+        res.put("message", message);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }

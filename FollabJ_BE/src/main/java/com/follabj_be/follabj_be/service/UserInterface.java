@@ -29,4 +29,6 @@ public interface UserInterface {
     AppUserDTO updateStatus(int status, Long u_id);
 
     String changePassword(PasswordDTO passwordDTO, Long u_id);
+
+    String forgetPassword(String email);
 }

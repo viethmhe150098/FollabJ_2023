@@ -10,6 +10,7 @@ import com.follabj_be.follabj_be.entity.Invitation;
 import com.follabj_be.follabj_be.errorMessge.CustomErrorMessage;
 import com.follabj_be.follabj_be.repository.InvitationRepository;
 import com.follabj_be.follabj_be.repository.UserRepository;
+import com.follabj_be.follabj_be.service.EmailSender;
 import com.follabj_be.follabj_be.service.TokenInterface;
 import com.follabj_be.follabj_be.service.UserInterface;
 import lombok.extern.slf4j.Slf4j;
@@ -21,27 +22,37 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Slf4j
 public class UserService implements UserDetailsService, UserInterface {
+
+    private static final String alpha = "abcdefghijklmnopqrstuvwxyz"; // a-z
+    private static final String alphaUpperCase = alpha.toUpperCase(); // A-Z
+    private static final String digits = "0123456789"; // 0-9
+    private static final String specials = "~=+%^*/()[]{}/!@#$?|";
+    private static final String ALPHA_NUMERIC = alpha + alphaUpperCase + digits;
+    private static final String ALL = alpha + alphaUpperCase + digits + specials;
 
     private final UserRepository userRepository;
     private final TokenInterface tokenInterface;
     private final PasswordEncoder passwordEncoder;
     private final InvitationRepository invitationRepository;
 
-    public UserService(UserRepository userRepository, TokenInterface tokenInterface, PasswordEncoder passwordEncoder, InvitationRepository invitationRepository) {
+    private final EmailSender emailSender;
+    private final BuildEmail buildEmail;
+
+    private static Random generator = new Random();
+
+    public UserService(UserRepository userRepository, TokenInterface tokenInterface, PasswordEncoder passwordEncoder, InvitationRepository invitationRepository, EmailSender emailSender, BuildEmail buildEmail) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.tokenInterface = tokenInterface;
         this.invitationRepository = invitationRepository;
+        this.emailSender = emailSender;
+        this.buildEmail = buildEmail;
     }
 
     @Override
@@ -171,10 +182,33 @@ public class UserService implements UserDetailsService, UserInterface {
         }
     }
 
+    @Override
+    public String forgetPassword(String email) {
+        AppUser ap = userRepository.findAppUserByEmail(email).orElseThrow(() -> new ObjectNotFoundException("doesn't exist", email));
+//        AppUser ap1 = getUserByEmail(email);
+        String password = random();
+        ap.setPassword(passwordEncoder.bCryptPasswordEncoder().encode(password));
+        userRepository.save(ap);
+        emailSender.sendEmail(email, buildEmail.forgotPassword(password, email));
+        return "We have sent you a new password via "+email;
+    }
+
     public AppUserDTO getUserProfile(Long u_id){
         AppUser appUser = userRepository.findById(u_id).orElseThrow(() -> new ObjectNotFoundException("Not found user", u_id.toString()));
         return new AppUserDTO(appUser.getId(), appUser.getEmail(), appUser.getUsername(), appUser.getStatus());
     }
 
+    private String random() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 8; i++) {
+            int number = randomNumber(0, ALPHA_NUMERIC.length() - 1);
+            char ch = ALPHA_NUMERIC.charAt(number);
+            sb.append(ch);
+        }
+        return sb.toString();
+    }
 
+    public static int randomNumber(int min, int max) {
+        return generator.nextInt((max - min) + 1) + min;
+    }
 }
