@@ -47,7 +47,6 @@ const UserProfile = () => {
                     <UserInfo>{userProfile?.id}</UserInfo>
                 </UserInformation>
                 <div style={{ display: 'inline-flex' }}>
-                    <UpdateButton className="animate">Update</UpdateButton>
                     <Popup modal trigger={
                         <ChangePasswordButton className="animate">
                             Change password
@@ -58,9 +57,9 @@ const UserProfile = () => {
                     </Popup>
 
                     <Popup modal trigger={
-                        <ChangePasswordButton className="animate">
-                            Change password
-                        </ChangePasswordButton>
+                        <UpdateButton className="animate">
+                           Update profile
+                        </UpdateButton>
                     }
                     >
                         {(close) => <UpdateProfileModal close={close} />}
