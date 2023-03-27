@@ -10,10 +10,12 @@ import { getUserProfileByUserId, updateUserProfile } from "../../Redux/userProfi
 const UpdateProfileModal = ({ close }) => {
   const user_id = useSelector((state) => state.auth.login.currentUser.id);
   const oldusername = useSelector((state) => state.userProfile.userInfo.username);
+  const oldfullname = useSelector((state) => state.userProfile.userInfo.fullname);
+  const oldphonenumber = useSelector((state) => state.userProfile.userInfo.phone_number);
 
-  const [fullname, setFullname] = useState("")
+  const [fullname, setFullname] = useState(oldfullname);
   const [username, setUsername] = useState(oldusername);
-  const [phone_number, setPhonenumber] = useState("");
+  const [phone_number, setPhonenumber] = useState(oldphonenumber);
 
   const dispatch = useDispatch();
 

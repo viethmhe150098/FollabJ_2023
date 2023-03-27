@@ -42,9 +42,17 @@ const UserProfile = () => {
                     <Label>Username:</Label>
                     <UserInfo>{userProfile?.username}</UserInfo>
                 </UserInformation>
-                <UserInformation>
+                {/* <UserInformation>
                     <Label>ID:</Label>
                     <UserInfo>{userProfile?.id}</UserInfo>
+                </UserInformation> */}
+                <UserInformation>
+                    <Label>Fullname:</Label>
+                    <UserInfo>{userProfile?.fullname}</UserInfo>
+                </UserInformation>
+                <UserInformation>
+                    <Label>Phone number:</Label>
+                    <UserInfo>{userProfile?.phone_number}</UserInfo>
                 </UserInformation>
                 <div style={{ display: 'inline-flex' }}>
                     <Popup modal trigger={
