@@ -111,17 +111,6 @@ const Users = () => {
                 </div>
             </div>
 
-            {/* {
-            files.map((item, index) => {return (
-            <FileGrid className="row " key={index}>
-                <div className="col-lg-6">
-                    <FileIcon/>
-                    <FileName className="col-lg-10">{item.fileName}</FileName>
-                </div>
-                <div className="col-lg-3">{item.uploadDate}</div>
-                <div className="col-lg-3">{item.user.username}</div>
-            </FileGrid>
-            )})} */}
 
         </>);
 }

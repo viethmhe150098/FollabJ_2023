@@ -28,7 +28,8 @@ export default function TopNavbar() {
     <>
       <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
       {sidebarOpen && <Backdrop toggleSidebar={toggleSidebar} />}
-      <Wrapper className="flexCenter animate whiteBg" style={y > 100 ? { height: "60px" } : { height: "80px" }}>
+
+      <Wrapper className="flexCenter animate whiteBg" style={y > 100 ? { height: "60px"} : { height: "80px" }}>
         <NavInner className="container flexSpaceCenter">
           <RouterLink className="pointer flexNullCenter" to="/">
             <LogoIcon />

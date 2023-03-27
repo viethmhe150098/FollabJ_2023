@@ -39,18 +39,24 @@ const Chat = () => {
       <HeaderInfo>
         <h1 className="font30 extraBold">Chat</h1>
       </HeaderInfo>
+
       <div style={{ maxHeight: '700px', overflow: 'auto' }}>
         <br></br>
         <div style={inlineStyle.main}>
-          {messages &&
-            messages.map((message) => (
+        {messages.length === 0 ?
+        <EmptyMessage>No messages found. Please try sending some messages to get started.</EmptyMessage> :
+          <>
+            {messages && messages.map((message) => (
               <Message key={message.id} message={message} />
             ))}
+          </>
+}
           {/* Send Message Compoenent */}
           <InputMessage scroll={scroll} />
           <span ref={scroll}></span>
         </div>
       </div>
+
     </>
   );
 };
@@ -61,5 +67,12 @@ const inlineStyle = {
     flexDirection: "column",
   }
 }
+const EmptyMessage = styled.div`
+  text-align: center;
+  margin: 50px auto;
+  font-size: 24px;
+  font-weight: bold;
+  color: #888;
+`;
 
 export default Chat;

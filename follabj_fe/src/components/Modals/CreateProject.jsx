@@ -26,6 +26,7 @@ const CreateProject = () => {
              p_des: prjDes
          };
          createProject(newProject,access_token,dispatch,navigate);
+         
          //Code create Task here
          console.log(prjID, prjName, prjDes);
     };

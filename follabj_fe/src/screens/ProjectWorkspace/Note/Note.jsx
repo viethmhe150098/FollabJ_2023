@@ -9,7 +9,11 @@ import { getNotesByUserId } from "../../../Redux/note/noteActions";
 import { useSelector } from "react-redux";
 import NoteModal from "../../../components/Modals/NoteModal";
 import Popup from "reactjs-popup";
-import  '../../../style/pagination.css'
+import '../../../style/pagination.css'
+import {
+  FaAngleLeft, FaAngleRight
+} from "react-icons/fa";
+
 export default function Note() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -62,22 +66,27 @@ export default function Note() {
                 {(close) => <NoteModal close={close} />}
               </Popup>
             </HeaderInfo>
-            <div className="row textCenter">
-              {currentNotes.map((note, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="col-xs-12 col-sm-4 col-md-4 col-lg-4"
-                  >
-                    <NoteBox
-                      title={note.title}
-                      text={`Created Date: ${note.createdDate}`}
-                      action={() => handleNote(note)}
-                    />
-                  </div>
-                );
-              })}
-            </div>
+
+
+            {notes.length === 0 ?
+              <EmptyMessage>No notes found. Please try uploading some notes to get started.</EmptyMessage> :
+              <div className="row textCenter">
+                {currentNotes.map((note, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="col-xs-12 col-sm-4 col-md-4 col-lg-4"
+                    >
+                      <NoteBox
+                        title={note.title}
+                        text={`Created Date: ${note.createdDate}`}
+                        action={() => handleNote(note)}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            }
             <div className="pagination-wrapper">
               {notes.length > notesPerPage && (
                 <Pagination
@@ -104,6 +113,7 @@ function Pagination({ notesPerPage, totalNotes, paginate, currentPage }) {
 
   return (
     <div className="pagination">
+          <a href="#" className="page-link"> <FaAngleLeft/> &nbsp; </a>
       {pageNumbers.map((number) => (
         <div
           key={number}
@@ -115,6 +125,7 @@ function Pagination({ notesPerPage, totalNotes, paginate, currentPage }) {
           </a>
         </div>
       ))}
+          <a href="#" className="page-link"> <FaAngleRight/> &nbsp; </a>
     </div>
   );
 }
@@ -130,3 +141,10 @@ margin-left: 5px;
   text-align: center;
 }
 `
+const EmptyMessage = styled.div`
+  text-align: center;
+  margin: 50px auto;
+  font-size: 24px;
+  font-weight: bold;
+  color: #888;
+`;

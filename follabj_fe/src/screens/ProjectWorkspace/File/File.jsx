@@ -10,6 +10,9 @@ import FullButton from "../../../components/Buttons/FullButton";
 import FileModal from "../../../components/Modals/FileModal";
 import Popup from "reactjs-popup";
 import { downloadFile } from "../../../Redux/file/fileAPI";
+import {
+    FaAngleLeft, FaAngleRight
+} from "react-icons/fa";
 
 //table libraby
 import Table from "@mui/material/Table";
@@ -42,7 +45,7 @@ const FileWorkspace = () => {
 
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
-      };
+    };
     const handleDownload = (file_id, fileName) => {
         downloadFile(project_id, file_id)
             .then((response) => {
@@ -93,51 +96,55 @@ const FileWorkspace = () => {
                 <FullButton title={"Upload File"} /></div>}>
                 {close => <FileModal close={close} />}
             </Popup>
-            <div className="Table">
-                <TableContainer
-                    component={Paper}
-                    style={{ boxShadow: "0px 13px 20px 10px #80808029", minHeight: '381px'  }}
-                >
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>File Name</TableCell>
-                                <TableCell align="left">Uploaded Date</TableCell>
-                                <TableCell align="left">Uploader</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody style={{ color: "white" }}>
-                            {currentFiles.map((item, index) => (
-                                <TableRow key={index}>
-                                    <TableCell component="th" scope="row">
-                                        {item.fileName}
-                                    </TableCell>
-                                    <TableCell align="left">{item.uploadDate}</TableCell>
-                                    <TableCell align="left">
-                                        <span className="Details" >{item.user.username}</span>
-                                    </TableCell>
-                                    <TableCell align="left">
-                                        <button onClick={() => { handleDownload(item.id, item.fileName) }} className="status" style={makeStyle('Download')}>Download</button>
-                                    </TableCell>
-                                    <TableCell align="left">
-                                        <button className="status" style={makeStyle('Delete')}>Delete</button>
-                                    </TableCell>
+            {files.length === 0 ?
+                <EmptyMessage>No files found. Please try uploading some files to get started.</EmptyMessage> :
+
+                <div className="Table">
+                    <TableContainer
+                        component={Paper}
+                        style={{ boxShadow: "0px 13px 20px 10px #80808029", minHeight: '381px' }}
+                    >
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>File Name</TableCell>
+                                    <TableCell align="left">Uploaded Date</TableCell>
+                                    <TableCell align="left">Uploader</TableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <div className="pagination-wrapper">
-                    {files.length > filesPerPage && (
-                        <Pagination
-                            filesPerPage={filesPerPage}
-                            totalFiles={files.length}
-                            paginate={paginate}
-                            currentPage={currentPage}
-                        />
-                    )}
+                            </TableHead>
+                            <TableBody style={{ color: "white" }}>
+                                {currentFiles.map((item, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell component="th" scope="row">
+                                            {item.fileName}
+                                        </TableCell>
+                                        <TableCell align="left">{item.uploadDate}</TableCell>
+                                        <TableCell align="left">
+                                            <span className="Details" >{item.user.username}</span>
+                                        </TableCell>
+                                        <TableCell align="left">
+                                            <button onClick={() => { handleDownload(item.id, item.fileName) }} className="status" style={makeStyle('Download')}>Download</button>
+                                        </TableCell>
+                                        <TableCell align="left">
+                                            <button className="status" style={makeStyle('Delete')}>Delete</button>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <div className="pagination-wrapper">
+                        {files.length > filesPerPage && (
+                            <Pagination
+                                filesPerPage={filesPerPage}
+                                totalFiles={files.length}
+                                paginate={paginate}
+                                currentPage={currentPage}
+                            />
+                        )}
+                    </div>
                 </div>
-            </div>
+            }
         </>);
 }
 function Pagination({ filesPerPage, totalFiles, paginate, currentPage }) {
@@ -149,6 +156,7 @@ function Pagination({ filesPerPage, totalFiles, paginate, currentPage }) {
 
     return (
         <div className="pagination">
+          <a href="#" className="page-link"> <FaAngleLeft/> &nbsp; </a>
             {pageNumbers.map((number) => (
                 <div
                     key={number}
@@ -160,10 +168,18 @@ function Pagination({ filesPerPage, totalFiles, paginate, currentPage }) {
                     </a>
                 </div>
             ))}
+          <a href="#" className="page-link"> <FaAngleRight/> &nbsp; </a>
+
         </div>
     );
 }
-
+const EmptyMessage = styled.div`
+  text-align: center;
+  margin: 50px auto;
+  font-size: 24px;
+  font-weight: bold;
+  color: #888;
+`;
 const HeaderInfo = styled.div`
 margin-bottom: 30px;
 margin-left: 5px;

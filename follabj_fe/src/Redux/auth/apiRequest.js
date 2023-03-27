@@ -23,8 +23,8 @@ export const loginUser = async (user, dispatch, navigate) => {
         //console.log("access_token ", res.data.access_token);
         localStorage.setItem("refresh_token", refresh_token);
         //console.log("refresh_token", res.data.refresh_token);
-        
-        localStorage.setItem("expire_date", new Date().getTime() + 60*60*1000)
+
+        localStorage.setItem("expire_date", new Date().getTime() + 60 * 60 * 1000)
 
         const decodedToken = jwtDecode(localStorage.getItem('access_token'));
         //console.log('decoded access token '+JSON.stringify(decodedToken));
@@ -46,6 +46,7 @@ export const loginUser = async (user, dispatch, navigate) => {
         navigate.push("/")
     } catch (error) {
         //console.log(error)
+        toast.error(loginFailed())
         dispatch(loginFailed());
     }
 }
@@ -67,6 +68,7 @@ export const registerUser = async (user, dispatch, navigate) => {
         navigate.push("/login");
     } catch (error) {
         dispatch(registerFailed());
+        toast.error(error.response.data.message);
     }
 }
 
@@ -85,9 +87,12 @@ export const createProject = async (project, access_token, dispatch, navigate) =
                     }
                 });
             dispatch(createProjectSuccess(res.data));
+            toast.success('Create project successfully!')
             navigate.push("/aboutProject");
         } catch (error) {
             dispatch(createProjectFailed());
+            toast.error(error.response.data.message);
+
         }
     }
 }    

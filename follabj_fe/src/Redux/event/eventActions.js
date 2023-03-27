@@ -38,7 +38,7 @@ export const getEventById = createAsyncThunk("FETCH_EVENT_BY_EVENT_ID", async (e
 export const addEvent = createAsyncThunk("ADD_EVENT", async (event) => {
     try {
         const response = await eventAPI.addEvent(event.project_id, event)
-        toast.success('Add event successfully!')
+        toast.success('Create event successfully!')
         return response.data
     } catch (error) {
         console.log(error);

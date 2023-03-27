@@ -20,6 +20,7 @@ const FileModal = ({type, close}) => {
       if (file != null ) {
           //console.log(file);
           dispatch(uploadFile({project_id, data: formData}));
+          close()
       } else {
         toast.warn("Please choose a file!"); // display the toast notification
       }

@@ -6,46 +6,48 @@ import styled from "styled-components";
 import { addNote } from "../../Redux/note/noteActions";
 
 
-const NoteModal = ({close}) => {
-    
-    const dispatch  = useDispatch();
-    const [title, setTitle] = useState("");
+const NoteModal = ({ close }) => {
 
-    const user_id = useSelector((state) => state.auth.login.currentUser.id)
+  const dispatch = useDispatch();
+  const [title, setTitle] = useState("");
 
-    const handleSubmit = (e) => {
-      e.preventDefault()
-      const note = {
-        title,
-        content: ""
-      }
+  const user_id = useSelector((state) => state.auth.login.currentUser.id)
 
-    dispatch(addNote({user_id, note}))
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const defaultTitle = "Untitled Note"; // set default title
+    const note = {
+      title: title || defaultTitle, // use the input title if it exists, otherwise use the default title
+      content: ""
+    }
+
+    dispatch(addNote({ user_id, note }))
     close()
   }
 
-    return (
-        <>
-            <Modal>
-                <a className="close" onClick={close}>
-                    &times;
-                </a>
-                <h2>Create Note</h2>
-                
-                <form onSubmit={(e)=>{handleSubmit(e)}} encType="multipart/form-data">
-                    <div className="form-group">
-                        <label className="font20" htmlFor="title">Note Title </label>
-                        <input
-                            type="text"
-                            id="title"
-                            onChange={(e) => {setTitle(e.target.value)}}
-                        ></input>
-                    </div>
-                    <button type="submit">Create Note</button>
-                </form>
-            </Modal>
-        </>
-    );
+
+  return (
+    <>
+      <Modal>
+        <a className="close" onClick={close}>
+          &times;
+        </a>
+        <h2>Create Note</h2>
+
+        <form onSubmit={(e) => { handleSubmit(e) }} encType="multipart/form-data">
+          <div className="form-group">
+            <label className="font20" htmlFor="title">Note Title </label>
+            <input
+              type="text"
+              id="title"
+              onChange={(e) => { setTitle(e.target.value) }}
+            ></input>
+          </div>
+          <button type="submit">Create Note</button>
+        </form>
+      </Modal>
+    </>
+  );
 }
 
 const Modal = styled.div`
