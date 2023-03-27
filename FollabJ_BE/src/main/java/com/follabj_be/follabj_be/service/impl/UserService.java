@@ -222,6 +222,8 @@ public class UserService implements UserDetailsService, UserInterface {
                 result = "Wrong format";
         }
         return result;
+    }
+
     public String forgetPassword(String email) {
         AppUser ap = userRepository.findAppUserByEmail(email).orElseThrow(() -> new ObjectNotFoundException("doesn't exist", email));
 //        AppUser ap1 = getUserByEmail(email);
