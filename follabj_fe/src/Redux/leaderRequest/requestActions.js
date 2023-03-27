@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import * as requestAPI from "./requestAPI";
+import { toast } from 'react-toastify';
 
 export const getRequests = createAsyncThunk("FETCH_REQUESTS", async (page_number)=>{
     try {
@@ -10,10 +11,11 @@ export const getRequests = createAsyncThunk("FETCH_REQUESTS", async (page_number
     }
 })
 
-export const acceptRequest = createAsyncThunk("ACCEPT_REQUEST", async (request_id) => {
+export const acceptRequest = createAsyncThunk("ACCEPT_REQUEST", async (request) => {
     try {
-        const response = await requestAPI.updateStatusRequest(request_id, 1)
-        return request_id
+        const response = await requestAPI.updateStatusRequest(request.id, 1)
+        toast.success(`Accepted user ${request.user_fullname} to be a team leader!`)
+        return request.id
     } catch (error) {
         throw error
     }

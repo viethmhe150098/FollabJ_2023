@@ -2,6 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import { isLoggedIn } from '../../Redux/auth/auth';
 import Landing from '../../screens/Landing/Landing';
+import { toast } from "react-toastify";
 
 const AdminRoute = (props) => {
 
@@ -12,6 +13,7 @@ const AdminRoute = (props) => {
             {props.children}
         </Route>
     } else {
+        toast.error("You don't have permission to access ADMIN's features!");
         return <Route path="/" >
             <Landing /> 
         </Route>

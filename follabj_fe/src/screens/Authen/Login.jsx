@@ -7,8 +7,8 @@ import '../../style/authen.css'
 import FullButton from "../../components/Buttons/FullButton";
 import AuthenNavbar from "../../components/Nav/AuthenNavbar";
 import { useState, useEffect } from 'react';
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+
 const Login = () => {
   const navigate = useHistory();
   // isLoggedIn && navigate.push("/");
@@ -66,7 +66,6 @@ const Login = () => {
   return (
     <>
       <AuthenNavbar />
-      <ToastContainer />
       <div className="Wrapper">
         <div className="auth-form-container">
           <h2>Login</h2>

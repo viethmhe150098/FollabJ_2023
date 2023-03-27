@@ -1,0 +1,26 @@
+.pagination-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .page-item {
+    margin-right: 10px;
+  }
+  
+  @media (max-width: 576px) {
+    .pagination {
+      flex-wrap: wrap;
+    }
+  
+    .page-item {
+      margin-bottom: 10px;
+    }
+  }
+  

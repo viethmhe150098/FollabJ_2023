@@ -5,192 +5,224 @@ import styled from "styled-components";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const CreateEventForm = ({type, close, event}) => {
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-    const [participantList, setParticipantList] = useState([]);
+const CreateEventForm = ({ type, close, event }) => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [participantList, setParticipantList] = useState([]);
 
-    const [modalType, setType] = useState(type)
+  const [modalType, setType] = useState(type)
 
-    const user_id = useSelector((state) => state.auth.login.currentUser.id)
-    const members = useSelector((state) => state.project.currentProject.members);
+  const user_id = useSelector((state) => state.auth.login.currentUser.id)
+  const members = useSelector((state) => state.project.currentProject.members);
 
-    const project_id = useSelector((state) => state.project.currentProject.id);
+  const project_id = useSelector((state) => state.project.currentProject.id);
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const userRole = useSelector((state) => state.project.currentProject.userRole);
+  const userRole = useSelector((state) => state.project.currentProject.userRole);
 
-    useEffect(() => {
-      if(type=="readonly") {
-        var form = document.getElementById('eventForm');
-        var elements = form.elements;
-        for (var i = 0, len = elements.length; i < len; ++i) {
-            elements[i].readOnly = true;
-        } 
-     }
-
-     if(event != null) {
-        setTitle(event.title)
-        setDescription(event.describe)
-        setStartDate(new Date(event.start))
-        setEndDate(new Date(event.end))
-        setParticipantList(event.participantList)
-     }
-
-    }, [])
-
-    const handleCheckboxChange = (event) => {
-      const selectedParticipantId = event.target.value;
-      if (event.target.checked) {
-        //console.log("checked");
-        setParticipantList([...participantList, { id: selectedParticipantId}]);
-      } else {
-          const filteredParticipantList = participantList.filter(
-            (participant) => participant.id != selectedParticipantId ? participant : null
-          );
-          //console.log("unchecked");
-          setParticipantList(filteredParticipantList);
-      }
-  };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        // const startDate = new Date().setDate(2)
-        // const endDate = new Date().setDate(7)
-        const event = {
-            title,
-            description,
-            startDate,
-            endDate,
-            project_id,
-            participantList
-        }
-        //console.log(event)
-        dispatch(addEvent(event));
-    };
-
-    const handleUpdate = () => {
+  useEffect(() => {
+    if (type == "readonly") {
       var form = document.getElementById('eventForm');
       var elements = form.elements;
       for (var i = 0, len = elements.length; i < len; ++i) {
-          elements[i].readOnly = false;
+        elements[i].readOnly = true;
       }
-      setType("update")
-    }  
-    
-    const handleDelete = () => {
-      dispatch(deleteEvent({project_id, event_id: event.id}))
-      close()
     }
 
-    const handleCommitUpdate = () => {
-
-      const updatedEvent = {
-        id: event.id,
-        title,
-        description,
-        startDate,
-        endDate,
-        project_id,
-        participantList
-      }
-
-      dispatch(updateEvent(updatedEvent))
-
-      close()
+    if (event != null) {
+      setTitle(event.title)
+      setDescription(event.describe)
+      setStartDate(new Date(event.start))
+      setEndDate(new Date(event.end))
+      setParticipantList(event.participantList)
     }
 
-    return (
-        <Modal>
-            <a className="close" onClick={close}>
-                &times;
-            </a>
-            {modalType=="readonly" && (<>
-                  <h2>View Event</h2>
-                  { user_id == event.project.leader.id &&
-                  ( <>
-                  <button onClick={() => handleUpdate()} className='greenBg font25 radius6 lightColor tag'>Update</button>
-                  <button onClick={() => handleDelete()} className='redBg font25 radius6 lightColor tag'>Delete</button>
-                  </>)}
-            </>)}
-            {modalType=="update" && (
-                  <>
-                  <h2>Update Event</h2>
-                  <button onClick={() => handleCommitUpdate()} className='greenBg font25 radius6 lightColor tag'>Commit Update</button>
-                  </>
-                )}
-            {modalType==null && (<h2>Create Event</h2>)}
-            <div className="form-group">
-                <form id="eventForm" onSubmit={handleSubmit}>
-                <div className="form-group">
-                        <label htmlFor="title">Event Title</label>
-                        <textarea
-                            id="title"
-                            value={title}
-                            onChange={(event) => setTitle(event.target.value)}
-                            required
-                        ></textarea>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="description">Event Description</label>
-                        <textarea
-                            id="description"
-                            value={description}
-                            onChange={(event) => setDescription(event.target.value)}
-                        ></textarea>
-                    </div>
-                    <div className="form-group">
-                        <span></span>
-                        <label htmlFor="start-date">Start Date</label>
-                        <DatePicker
-                            id="start-date"
-                            selected={startDate}
-                            onChange={(date) => setStartDate(date)}
-                            dateFormat="dd/MM/yyyy hh:mm a"
-                            showTimeSelect
-                        />
-                        <label htmlFor="end-date">End Date</label>
-                        <DatePicker
-                            id="end-date"
-                            selected={endDate}
-                            onChange={(date) => setEndDate(date)}
-                            dateFormat="dd/MM/yyyy hh:mm a"
-                            showTimeSelect
-                        />
-                    </div>
-                    {modalType !=null &&
-                    <div className="form-group">
-                        <label >Project Name: {event.project.name}</label>
-                    </div>
-                    }
-                    <div className="form-group">
-                        <label>Participants: </label>
-                        {members.map((member) => (
-                            <div key={member.id}>
-                                <input disabled={modalType=="readonly" || member.id==user_id}
-                                    type="checkbox"
-                                    id={`participant-${member.id}`}
-                                    value={member.id}
-                                    onChange={handleCheckboxChange}
-                                    // checked={assigneeList.includes(teamMember.id)}
-                                    checked = {participantList.some((participant) => participant.id == member.id) || member.id==user_id}
-                                />
-                                <label htmlFor={`assignee-${member.id}`}>
-                                    {member.username}
-                                </label>
-                            </div>
-                        ))}
-                    </div>
-                    {modalType==null && (<button type="submit">Create Event</button>)}
-                </form>
+  }, [])
+
+  const handleCheckboxChange = (event) => {
+    const selectedParticipantId = event.target.value;
+    if (event.target.checked) {
+      //console.log("checked");
+      setParticipantList([...participantList, { id: selectedParticipantId }]);
+    } else {
+      const filteredParticipantList = participantList.filter(
+        (participant) => participant.id != selectedParticipantId ? participant : null
+      );
+      //console.log("unchecked");
+      setParticipantList(filteredParticipantList);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (startDate > endDate) {
+      toast.warn("Start date cannot be after finish date", {
+      });
+      return;
+    }
+
+    const event = {
+      title,
+      description,
+      startDate,
+      endDate,
+      project_id,
+      participantList
+    }
+    dispatch(addEvent(event));
+    close()
+  };
+  const makeStyle = (status) => {
+    if (status === 'Update') {
+      return {
+        background: 'rgb(145 254 159 / 47%)',
+        color: 'green',
+        marginRight: '20px',
+        cursor: 'pointer'
+      }
+    }
+    else if (status === 'Delete') {
+      return {
+        background: '#ffadad8f',
+        color: 'red',
+        cursor: 'pointer'
+      }
+    }
+  }
+  const handleUpdate = () => {
+    var form = document.getElementById('eventForm');
+    var elements = form.elements;
+    for (var i = 0, len = elements.length; i < len; ++i) {
+      elements[i].readOnly = false;
+    }
+    setType("update")
+
+  }
+
+  const handleDelete = () => {
+    dispatch(deleteEvent({ project_id, event_id: event.id, title: event.title }))
+    close()
+  }
+
+
+  const handleCommitUpdate = () => {
+    if (startDate > endDate) {
+      toast.warn("Start date cannot be after finish date", {
+      });
+      return;
+    }
+    const updatedEvent = {
+      id: event.id,
+      title,
+      description,
+      startDate,
+      endDate,
+      project_id,
+      participantList
+    }
+
+    dispatch(updateEvent(updatedEvent))
+
+    close()
+  }
+
+  return (
+    <Modal>
+      <a className="close" onClick={close}>
+        &times;
+      </a>
+      {modalType == "readonly" && (<>
+        <h2>View Event</h2>
+        {user_id == event.project.leader.id &&
+          (
+            <div style={{ marginBottom: '20px' }}>
+              <span onClick={() => handleUpdate()} className="status" style={makeStyle('Update')}>Update event</span>
+              <span onClick={() => handleDelete()} className="status" style={makeStyle('Delete')}>Delete event</span>
             </div>
-        </Modal>
-    );
+          )}
+      </>)}
+      {modalType == "update" && (
+        <div style={{ marginBottom: '20px' }}>
+          <h2>Update Event</h2>
+          <span onClick={() => handleCommitUpdate()} className="status" style={makeStyle('Update')}>Commit Update event</span>
+        </div>
+      )}
+      {modalType == null && (<h2>Create Event</h2>)}
+      <div className="form-group">
+        <form id="eventForm" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="title">Event Title</label>
+            <textarea
+              id="title"
+              value={title}
+              onChange={(event) => setTitle(event.target.value)}
+              required
+            ></textarea>
+          </div>
+          <div className="form-group">
+            <label htmlFor="description">Event Description</label>
+            <textarea
+              id="description"
+              value={description}
+              onChange={(event) => setDescription(event.target.value)}
+            ></textarea>
+          </div>
+          <div className="form-group">
+            <span></span>
+            <label htmlFor="start-date">Start Date</label>
+            <DatePicker
+              id="start-date"
+              selected={startDate}
+              disabled={modalType == "readonly"}
+              onChange={(date) => setStartDate(date)}
+              dateFormat="dd/MM/yyyy hh:mm a"
+              showTimeSelect
+            />
+            <label htmlFor="end-date">End Date</label>
+            <DatePicker
+              id="end-date"
+              selected={endDate}
+              disabled={modalType == "readonly"}
+              onChange={(date) => setEndDate(date)}
+              dateFormat="dd/MM/yyyy hh:mm a"
+              showTimeSelect
+            />
+          </div>
+          {modalType != null &&
+            <div className="form-group">
+              <label >Project Name: {event.project.name}</label>
+            </div>
+          }
+          <div className="form-group">
+            <label>Participants: </label>
+            {members.map((member) => (
+              <div key={member.id}>
+                <input disabled={modalType == "readonly"}
+                  type="checkbox"
+                  id={`participant-${member.id}`}
+                  value={member.id}
+                  onChange={handleCheckboxChange}
+                  // checked={assigneeList.includes(teamMember.id)}
+                  checked={participantList.some((participant) => participant.id == member.id)}
+                />
+                <label htmlFor={`assignee-${member.id}`}>
+                  {member.username}
+                </label>
+              </div>
+            ))}
+          </div>
+          {modalType == null && (<button type="submit">Create Event</button>)}
+        </form>
+      </div>
+    </Modal>
+  );
 };
 
 const Modal = styled.div`

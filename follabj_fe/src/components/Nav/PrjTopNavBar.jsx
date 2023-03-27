@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link as RouterLink } from "react-router-dom";
 import Popup from "reactjs-popup";
 import Content from "../Modals/CreateProject";
+import { toast } from "react-toastify";
 
 // Components
 import Sidebar from "./MobileSideBar";
@@ -41,6 +42,8 @@ export default function PrjTopNavBar() {
           'Authorization' : "Bearer "+ localStorage.getItem("access_token")
       }
     })
+    toast.success("Your request is being verified, please wait!");
+
   }
 
   return (

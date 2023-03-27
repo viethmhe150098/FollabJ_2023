@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import AuthenNavBar from "../components/Nav/AuthenNavbar"
 import styled from "styled-components";
 import { useHistory } from "react-router";
 import Popup from "reactjs-popup";
@@ -8,61 +7,140 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { getUserProfileByUserId } from "../Redux/userProfile/userProfileAction";
 import UpdateProfileModal from "../components/Modals/UpdateProfile";
+import TopNavbar from "../components/Nav/TopNavbar";
 
 const UserProfile = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(true);
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const user_id = useSelector((state) => state.auth.login.currentUser.id)
+    const user_id = useSelector((state) => state.auth.login.currentUser.id);
 
-    const userProfile = useSelector((state) => state.userProfile.userInfo)
+    const userProfile = useSelector((state) => state.userProfile.userInfo);
 
-    useEffect(()=>{
-        dispatch(getUserProfileByUserId(user_id))
-    },[])
+    useEffect(() => {
+        dispatch(getUserProfileByUserId(user_id));
+    }, []);
 
-
-    //handle logout hear
-    const handleLogout = () => { 
-        
+    // handle logout hear
+    const handleLogout = () => {
         localStorage.clear();
         setIsLoggedIn(false);
-        history.push('/login');
-
+        history.push("/login");
     };
-    
-    return (
-        <> 
-            <Wrapper>
-                <AuthenNavBar />
-                <div style={{ margin: "200px" }}> 
-                            <h1>User Profile</h1>
-                            { (userProfile!=null) && 
-                            (<>
-                                <h1>{userProfile.id}</h1>
-                                <h1>{userProfile.email}</h1>
-                                <h1>{userProfile.username}</h1>
-                            </>)}
-                           
-                    <Popup modal trigger={ <button className='darkBg font25 radius6 lightColor tag'>Change password</button>}>
-                        {close => <ChangePasswordModal close={close}/>}
-                    </Popup>
-                    <Popup modal trigger={ <button className='darkBg font25 radius6 lightColor tag'>Update profile</button>}>
-                        {close => <UpdateProfileModal close={close}/>}
-                    </Popup>
-                    <button onClick={() => handleLogout()} className='redBg font25 radius6 lightColor tag'>Logout</button>
-                </div>
-            </Wrapper>
-        </>
 
+    return (
+        <>
+            <TopNavbar />
+            <UserProfileContainer>
+                <UserProfileHeader>User Profile</UserProfileHeader>
+                <UserInformation>
+                    <Label>Email:</Label>
+                    <UserInfo>{userProfile?.email}</UserInfo>
+                </UserInformation>
+                <UserInformation>
+                    <Label>Username:</Label>
+                    <UserInfo>{userProfile?.username}</UserInfo>
+                </UserInformation>
+                <UserInformation>
+                    <Label>ID:</Label>
+                    <UserInfo>{userProfile?.id}</UserInfo>
+                </UserInformation>
+                <div style={{ display: 'inline-flex' }}>
+                    <UpdateButton className="animate">Update</UpdateButton>
+                    <Popup modal trigger={
+                        <ChangePasswordButton className="animate">
+                            Change password
+                        </ChangePasswordButton>
+                    }
+                    >
+                        {(close) => <ChangePasswordModal close={close} />}
+                    </Popup>
+
+                    <Popup modal trigger={
+                        <ChangePasswordButton className="animate">
+                            Change password
+                        </ChangePasswordButton>
+                    }
+                    >
+                        {(close) => <UpdateProfileModal close={close} />}
+                    </Popup>
+
+                    <LogoutButton className="animate" onClick={() => handleLogout()}>
+                        Logout
+                    </LogoutButton>
+                </div>
+            </UserProfileContainer>
+        </>
     );
 };
-const Wrapper = styled.div`
-margin-top: 50px;
-display: flex;
-min-height: 100vh;
-background-color: #fff;
-`
 
+const UserProfileContainer = styled.div`
+  margin: 200px 100px;
+  padding: 40px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+`;
+
+const UserProfileHeader = styled.h1`
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 40px;
+`;
+
+const UserInformation = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const Label = styled.span`
+  font-size: 18px;
+  font-weight: 700;
+  margin-right: 20px;
+`;
+
+const UserInfo = styled.span`
+  font-size: 18px;
+  font-weight: 400;
+`;
+
+const Button = styled.button`
+  display: block;
+  min-width: 200px;
+  margin: 50px 45px 50px 0;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+`;
+
+const UpdateButton = styled(Button)`
+  background: rgb(145 254 159 / 47%);
+  color: green;
+  
+  &:hover {
+    background: green;
+    color: white;
+  }
+`;
+const ChangePasswordButton = styled(Button)`
+  background: #59bfff;
+  color: white;
+  &:hover {
+    background-color: #007fff;
+    color: white;
+  }
+`;
+
+const LogoutButton = styled(Button)`
+  background: #ffadad8f;
+  color: red;
+  &:hover {
+    background-color: #ff0000;
+    color: white;
+  }
+`;
 export default UserProfile;

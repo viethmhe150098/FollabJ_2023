@@ -5,7 +5,6 @@ import AboutProject from "./About/AboutProject";
 import MeetingCreation from "../ProjectWorkspace/Meeting/MeetingCreation";
 import Calendar from "../ProjectWorkspace/Event/Calendar";
 import Note from "./Note/Note";
-
 import {
   BrowserRouter as Router,
   Switch,
@@ -22,7 +21,6 @@ import Chat from "./Chat/Chat";
 export default function ProjectManagement() {
   return (
     <>
-
       <Sidebar>
         <Switch>
           {/* Task */}
@@ -34,7 +32,7 @@ export default function ProjectManagement() {
           <Route path="/notes">
             <Note />
           </Route>
-          
+
           {/* Note Edit */}
           <Route exact path="/noteEdit">
             <NoteEditor />
@@ -63,7 +61,7 @@ export default function ProjectManagement() {
           <Route path="/aboutProject">
             <AboutProject />
           </Route>
-          
+
         </Switch>
       </Sidebar>
     </>

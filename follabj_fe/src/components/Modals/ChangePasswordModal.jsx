@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-
+import { toast } from 'react-toastify';
 import styled from "styled-components";
 
 const ChangePasswordModal = ({ close }) => {
@@ -19,22 +19,25 @@ const ChangePasswordModal = ({ close }) => {
     e.preventDefault();
 
     // Check if old password is not empty
-  if (!oldPassword) {
-    alert("Please enter your old password.");
-    return;
-  }
+    if (!oldPassword) {
+      toast.warn("Please enter your current password!");
+      return;
+    }
+    if (oldPassword === newPassword) {
+      toast.warn("New password cannot be the same as the current password!");
+      return;
+    }
+    // Check if new password and re-entered new password match
+    if (newPassword !== reNewPassword) {
+      toast.warn("New passwords do not match! ");
+      return;
+    }
 
-  // Check if new password and re-entered new password match
-  if (newPassword !== reNewPassword) {
-    alert("New passwords do not match.");
-    return;
-  }
-
-  // Check if new password meets regex requirements
-  if (!passwordRegex.test(newPassword)) {
-    alert("New password must be at least 8 characters long and contain at least one number and one lowercase letter.");
-    return;
-  }
+    // Check if new password meets regex requirements
+    if (!passwordRegex.test(newPassword)) {
+      toast.warn("New password must be at least 8 characters long and contain at least one number and one lowercase letter.");
+      return;
+    }
     // check backend PasswordDTO to know the name of the field
 
     // const passwordFormData =
@@ -48,161 +51,135 @@ const ChangePasswordModal = ({ close }) => {
 
     // using axios.post to send data with access token
     //axios.post(url, data, config)
-    axios.post("http://localhost:8080/user/password/"+user_id, passwordFormData, {
-        headers : {
-          'Authorization' : "Bearer "+ localStorage.getItem("access_token")
+    axios.post("http://localhost:8080/user/password/" + user_id, passwordFormData, {
+      headers: {
+        'Authorization': "Bearer " + localStorage.getItem("access_token")
       }
-      })
+    })
       .then((response) => {
-        console.log(response);
-        // Handle success
-        close();
+        if (response.data.message === "CHANGE PASSWORD SUCCESS") {
+          toast.success('Change password successfully! ')
+          close();
+        }
+        else {
+          toast.error(response.data.message)
+        }
       })
-      .catch((error) => {
-        console.error(error);
-        // Handle error
-      });
   };
 
   return (
     <>
-      <Modal>
-        <a className="close" onClick={close}>
-          &times;
-        </a>
-        <h2>Change Password</h2>
-
-        <form
-          id="taskForm"
-          onSubmit={(e) => {
-            handleSubmit(e);
-          }}
-          encType="multipart/form-data"
-        >
-          <div className="form-group">
-            <label htmlFor="oldPassword">Old Password </label>
-            <input
-              type="password"
-              id="oldPassword"
-              onChange={(e) => {
-                setOldPassword(e.target.value);
-              }}
-            ></input>
-          </div>
-          <div className="form-group">
-            <label htmlFor="newPassword">New Password </label>
-            <input
-              type="password"
-              id="newPassword"
-              onChange={(e) => {
-                setNewPassword(e.target.value);
-              }}
-            ></input>
-          </div>
-          <div className="form-group">
-            <label htmlFor="reNewPassword">Re-enter New Password</label>
-            <input
-              type="password"
-              id="reNewPassword"
-              onChange={(e) => {
-                setReNewPassword(e.target.value);
-              }}
-            />
-          </div>
-          <button
-            className="greenBg font25 radius6 lightColor tag"
-          >
-            Change
-          </button>
-        </form>
-      </Modal>
+   <ModalWrapper>
+      <ModalHeader>Change Password</ModalHeader>
+      <CloseButton onClick={close}>&times;</CloseButton>
+      <Form onSubmit={handleSubmit}>
+        <FormGroup>
+          <Label htmlFor="oldPassword">Current Password</Label>
+          <Input
+            type="password"
+            id="oldPassword"
+            value={oldPassword}
+            onChange={(e) => setOldPassword(e.target.value)}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label htmlFor="newPassword">New Password</Label>
+          <Input
+            id="newPassword"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label htmlFor="reNewPassword">Re-enter New Password</Label>
+          <Input
+            id="reNewPassword"
+            value={reNewPassword}
+            onChange={(e) => setReNewPassword(e.target.value)}
+          />
+        </FormGroup>
+        <SubmitButton type="submit">Change</SubmitButton>
+      </Form>
+    </ModalWrapper>
     </>
   );
 };
 
-const Modal = styled.div`
-  background-color: #fff;
-  padding: 1rem;
-  border-radius: 5px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-  height: 100%;
-  h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-  form {
-    .form-group {
-      margin-bottom: 1rem;
-      label {
-        font-weight: bold;
-        margin-bottom: 0.5rem;
-      }
-      input,
-      textarea {
-        padding: 0.5rem;
-        border-radius: 5px;
-        border: solid black 1px;
-        margin: 0;
-        &:focus {
-          outline: none;
-          box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-        }
-        .date-picking {
-          display: inline-block;
-          witdth: 50 %;
-          background-color: orange;
-          text-color: white;
-        }
-      }
-      textarea {
-        border: 1px black solid;
-        resize: none;
-      }
-      select {
-        border: 1px black solid;
+const ModalWrapper = styled.div`
+background-color: #fff;
+border-radius: 8px;
+box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+padding: 24px;
+width: 400px;
+max-width: 90%;
+position: relative;
+margin: 0 auto;
+margin-top: 40px;
+overflow: hidden;
+`;
 
-        padding: 0.5rem;
-        border-radius: 5px;
-        border: none;
-        margin-bottom: 0.5rem;
-        &:focus {
-          outline: none;
-          box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-        }
-      }
-      label {
-        font-weight: bold;
-        margin-bottom: 0.5rem;
-      }
-      input[type="checkbox"] {
-        border: 1px black solid;
+const ModalHeader = styled.h2`
+font-size: 28px;
+font-weight: 600;
+margin-top: 0;
+margin-bottom: 24px;
+`;
 
-        margin-right: 0.5rem;
-      }
-      label {
-      }
-      #start-date,
-      #end-date {
-        border: 1px black solid;
-        width: 40%;
-        &:focus {
-          outline: none;
-          box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-        }
-      }
-    }
-    button[type="submit"] {
-      background-color: orange;
-      color: #fff;
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      &:hover {
-        background-color: #ff9900;
-      }
-    }
-  }
+const Form = styled.form`
+display: flex;
+flex-direction: column;
+`;
+
+const FormGroup = styled.div`
+display: flex;
+flex-direction: column;
+margin-bottom: 24px;
+`;
+
+const Label = styled.label`
+font-size: 16px;
+font-weight: 600;
+margin-bottom: 8px;
+`;
+
+const Input = styled.input`
+border: 1px solid #ccc;
+border-radius: 4px;
+padding: 12px;
+font-size: 16px;
+margin-bottom: 8px;
+&:focus {
+  outline: none;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3);
+}
+`;
+
+const SubmitButton = styled.button`
+background: rgb(145 254 159 / 47%);
+color: green;
+border: none;
+border-radius: 4px;
+padding: 12px;
+font-size: 16px;
+font-weight: 600;
+cursor: pointer;
+transition: background-color 0.2s ease-in-out;
+&:hover {
+  background: green;
+  color: white;
+}
+`;
+
+const CloseButton = styled.button`
+position: absolute;
+top: 0;
+right: 0;
+padding: 12px;
+background-color: transparent;
+border: none;
+font-size: 24px;
+color: #ccc;
+cursor: pointer;
 `;
 
 export default ChangePasswordModal;

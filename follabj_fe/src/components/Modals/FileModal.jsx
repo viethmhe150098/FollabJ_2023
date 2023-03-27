@@ -4,8 +4,7 @@ import { useDispatch } from "react-redux";
 
 import styled from "styled-components";
 import { getFiles, uploadFile } from "../../Redux/file/fileActions";
-import FullButton from "../Buttons/FullButton"
-
+import { toast } from 'react-toastify';
 
 const FileModal = ({type, close}) => {
     const dispatch  = useDispatch();
@@ -21,8 +20,9 @@ const FileModal = ({type, close}) => {
       if (file != null ) {
           //console.log(file);
           dispatch(uploadFile({project_id, data: formData}));
+          close()
       } else {
-          alert("please choose file")
+        toast.warn("Please choose a file!"); // display the toast notification
       }
 
   }
