@@ -200,6 +200,6 @@ public class UserService implements UserDetailsService, UserInterface {
 
     public AppUserDTO getUserProfile(Long u_id){
         AppUser appUser = userRepository.findById(u_id).orElseThrow(() -> new ObjectNotFoundException("Not found user", u_id.toString()));
-        return new AppUserDTO(appUser.getId(), appUser.getEmail(), appUser.getUsername(), appUser.getStatus());
+        return new AppUserDTO(appUser.getId(), appUser.getEmail(), appUser.getUsername(), appUser.getStatus(),appUser.getFullname(), appUser.getPhone_number());
     }
 }
