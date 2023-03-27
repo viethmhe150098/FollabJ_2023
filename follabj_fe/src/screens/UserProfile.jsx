@@ -58,7 +58,7 @@ const UserProfile = () => {
 
                     <Popup modal trigger={
                         <UpdateButton className="animate">
-                           Update profile
+                            Update profile
                         </UpdateButton>
                     }
                     >

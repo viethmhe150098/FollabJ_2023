@@ -8,230 +8,207 @@ import styled from "styled-components";
 import { getUserProfileByUserId, updateUserProfile } from "../../Redux/userProfile/userProfileAction";
 
 const UpdateProfileModal = ({ close }) => {
-    const user_id = useSelector((state)=>state.auth.login.currentUser.id);
-    const oldusername = useSelector((state)=>state.userProfile.userInfo.username);
+  const user_id = useSelector((state) => state.auth.login.currentUser.id);
+  const oldusername = useSelector((state) => state.userProfile.userInfo.username);
 
-    const [fullname,setFullname] = useState("")
-    const [username,setUsername] = useState(oldusername);
-    const [phone_number,setPhonenumber] = useState("");
-    
-    const dispatch = useDispatch();
+  const [fullname, setFullname] = useState("")
+  const [username, setUsername] = useState(oldusername);
+  const [phone_number, setPhonenumber] = useState("");
 
-
-//   const [oldPassword, setOldPassword] = useState("");
-//   const [newPassword, setNewPassword] = useState("");
-//   const [reNewPassword, setReNewPassword] = useState("");
-
-//   // Regex to validate password
-//   const passwordRegex = /^(?=.*\d)(?=.*[a-z])[0-9a-zA-Z]{8,}$/;
+  const dispatch = useDispatch();
 
 
-//   const user_id = useSelector((state) => state.auth.login.currentUser.id);
+  //   const [oldPassword, setOldPassword] = useState("");
+  //   const [newPassword, setNewPassword] = useState("");
+  //   const [reNewPassword, setReNewPassword] = useState("");
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
+  //   // Regex to validate password
+  //   const passwordRegex = /^(?=.*\d)(?=.*[a-z])[0-9a-zA-Z]{8,}$/;
 
-//     // Check if old password is not empty
-//   if (!oldPassword) {
-//     alert("Please enter your old password.");
-//     return;
-//   }
 
-//   // Check if new password and re-entered new password match
-//   if (newPassword !== reNewPassword) {
-//     alert("New passwords do not match.");
-//     return;
-//   }
+  //   const user_id = useSelector((state) => state.auth.login.currentUser.id);
 
-//   // Check if new password meets regex requirements
-//   if (!passwordRegex.test(newPassword)) {
-//     alert("New password must be at least 8 characters long and contain at least one number and one lowercase letter.");
-//     return;
-//   }
-//     // check backend PasswordDTO to know the name of the field
+  //   const handleSubmit = (e) => {
+  //     e.preventDefault();
 
-//     // const passwordFormData =
-//     // {
-//     const passwordFormData = {
-//       req_u_id: user_id,
-//       old_password: oldPassword,
-//       new_password: newPassword,
-//     };
-//     // }
+  //     // Check if old password is not empty
+  //   if (!oldPassword) {
+  //     alert("Please enter your old password.");
+  //     return;
+  //   }
 
-//     // using axios.post to send data with access token
-//     //axios.post(url, data, config)
-//     axios.post("http://localhost:8080/user/password/"+user_id, passwordFormData, {
-//         headers : {
-//           'Authorization' : "Bearer "+ localStorage.getItem("access_token")
-//       }
-//       })
-//       .then((response) => {
-//         console.log(response);
-//         // Handle success
-//         close();
-//       })
-//       .catch((error) => {
-//         console.error(error);
-//         // Handle error
-//       });
-//   };
-    const handleSubmit =(e) =>{
-        e.preventDefault();
-        const updateDataProfile = {
-            u_id : user_id,
-            fullname,
-            username, 
-            phone_number
-        };
-        dispatch(updateUserProfile({
-            user_id,
-            updateDataProfile
-        })).unwrap().then((result)=>{dispatch(getUserProfileByUserId(user_id))});
-        close();
-    }
+  //   // Check if new password and re-entered new password match
+  //   if (newPassword !== reNewPassword) {
+  //     alert("New passwords do not match.");
+  //     return;
+  //   }
+
+  //   // Check if new password meets regex requirements
+  //   if (!passwordRegex.test(newPassword)) {
+  //     alert("New password must be at least 8 characters long and contain at least one number and one lowercase letter.");
+  //     return;
+  //   }
+  //     // check backend PasswordDTO to know the name of the field
+
+  //     // const passwordFormData =
+  //     // {
+  //     const passwordFormData = {
+  //       req_u_id: user_id,
+  //       old_password: oldPassword,
+  //       new_password: newPassword,
+  //     };
+  //     // }
+
+  //     // using axios.post to send data with access token
+  //     //axios.post(url, data, config)
+  //     axios.post("http://localhost:8080/user/password/"+user_id, passwordFormData, {
+  //         headers : {
+  //           'Authorization' : "Bearer "+ localStorage.getItem("access_token")
+  //       }
+  //       })
+  //       .then((response) => {
+  //         console.log(response);
+  //         // Handle success
+  //         close();
+  //       })
+  //       .catch((error) => {
+  //         console.error(error);
+  //         // Handle error
+  //       });
+  //   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const updateDataProfile = {
+      u_id: user_id,
+      fullname,
+      username,
+      phone_number
+    };
+    dispatch(updateUserProfile({
+      user_id,
+      updateDataProfile
+    })).unwrap().then((result) => { dispatch(getUserProfileByUserId(user_id)) });
+    close();
+  }
 
   return (
     <>
-      <Modal>
-        <a className="close" onClick={close}>
-          &times;
-        </a>
-        <h2>Change Password</h2>
-
-        <form
-          id="taskForm"
-          onSubmit={(e) => {
-            handleSubmit(e);
-          }}
-        >
-          <div className="form-group">
-            <label htmlFor="fullname">Full name </label>
-            <input
-              type="text"
-              id="fullname"
+      <ModalWrapper>
+        <ModalHeader>Update Profile</ModalHeader>
+        <CloseButton onClick={close}>&times;</CloseButton>
+        <Form onSubmit={(e) => {
+          handleSubmit(e);
+        }}>
+          <FormGroup>
+            <Label htmlFor="oldPassword">Full Name</Label>
+            <Input
+              id="oldPassword"
               value={fullname}
               onChange={(e) => {
                 setFullname(e.target.value);
               }}
-            ></input>
-          </div>
-          <div className="form-group">
-            <label htmlFor="username">User name </label>
-            <input
-              type="text"
-              id="username"
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label htmlFor="newPassword">User Name</Label>
+            <Input
+              id="newPassword"
               value={username}
               onChange={(e) => {
                 setUsername(e.target.value);
               }}
-            ></input>
-          </div>
-          <div className="form-group">
-            <label htmlFor="phone_number">Phone number</label>
-            <input
-              type="text"
-              id="phone_number"
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label htmlFor="reNewPassword">Phone Number</Label>
+            <Input
+              id="reNewPassword"
               value={phone_number}
               onChange={(e) => {
                 setPhonenumber(e.target.value);
               }}
             />
-          </div>
-          <button
-            className="greenBg font25 radius6 lightColor tag"
-          >
-            Change
-          </button>
-        </form>
-      </Modal>
+          </FormGroup>
+          <SubmitButton type="submit">Change</SubmitButton>
+        </Form>
+      </ModalWrapper>
     </>
   );
 };
-
-const Modal = styled.div`
-  background-color: #fff;
-  padding: 1rem;
-  border-radius: 5px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-  height: 100%;
-  h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-  form {
-    .form-group {
-      margin-bottom: 1rem;
-      label {
-        font-weight: bold;
-        margin-bottom: 0.5rem;
-      }
-      input,
-      textarea {
-        padding: 0.5rem;
-        border-radius: 5px;
-        border: solid black 1px;
-        margin: 0;
-        &:focus {
-          outline: none;
-          box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-        }
-        .date-picking {
-          display: inline-block;
-          witdth: 50 %;
-          background-color: orange;
-          text-color: white;
-        }
-      }
-      textarea {
-        border: 1px black solid;
-        resize: none;
-      }
-      select {
-        border: 1px black solid;
-
-        padding: 0.5rem;
-        border-radius: 5px;
-        border: none;
-        margin-bottom: 0.5rem;
-        &:focus {
-          outline: none;
-          box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-        }
-      }
-      label {
-        font-weight: bold;
-        margin-bottom: 0.5rem;
-      }
-      input[type="checkbox"] {
-        border: 1px black solid;
-
-        margin-right: 0.5rem;
-      }
-      label {
-      }
-      #start-date,
-      #end-date {
-        border: 1px black solid;
-        width: 40%;
-        &:focus {
-          outline: none;
-          box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-        }
-      }
-    }
-    button[type="submit"] {
-      background-color: orange;
-      color: #fff;
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      &:hover {
-        background-color: #ff9900;
-      }
-    }
-  }
+const ModalWrapper = styled.div`
+background-color: #fff;
+border-radius: 8px;
+box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+padding: 24px;
+width: 400px;
+max-width: 90%;
+position: relative;
+margin: 0 auto;
+margin-top: 40px;
+overflow: hidden;
 `;
 
+const ModalHeader = styled.h2`
+font-size: 28px;
+font-weight: 600;
+margin-top: 0;
+margin-bottom: 24px;
+`;
+
+const Form = styled.form`
+display: flex;
+flex-direction: column;
+`;
+
+const FormGroup = styled.div`
+display: flex;
+flex-direction: column;
+margin-bottom: 24px;
+`;
+
+const Label = styled.label`
+font-size: 16px;
+font-weight: 600;
+margin-bottom: 8px;
+`;
+
+const Input = styled.input`
+border: 1px solid #ccc;
+border-radius: 4px;
+padding: 12px;
+font-size: 16px;
+margin-bottom: 8px;
+&:focus {
+  outline: none;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3);
+}
+`;
+
+const SubmitButton = styled.button`
+background: rgb(145 254 159 / 47%);
+color: green;
+border: none;
+border-radius: 4px;
+padding: 12px;
+font-size: 16px;
+font-weight: 600;
+cursor: pointer;
+transition: background-color 0.2s ease-in-out;
+&:hover {
+  background: green;
+  color: white;
+}
+`;
+
+const CloseButton = styled.button`
+position: absolute;
+top: 0;
+right: 0;
+padding: 12px;
+background-color: transparent;
+border: none;
+font-size: 24px;
+color: #ccc;
+cursor: pointer;
+`;
 export default UpdateProfileModal;
