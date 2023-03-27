@@ -64,7 +64,7 @@ const Login = () => {
           <h2>Login</h2>
           <form className="login-form" onSubmit={handleLogin}>
             <label className="semiBold font15" htmlFor="email">Email</label>
-            <input type="text" className="input" placeholder="Enter your username" required
+            <input type="text" className="input" placeholder="Enter your email" required
               onChange={(e) => setUsername(e.target.value)}
             />
             {/* {errors.username && <p className="spanError marginBot">{errors.username}</p>} */}
@@ -91,6 +91,9 @@ const Login = () => {
           </form>
           <RouterLink to="/signup">
             <button className="link-btn">Don't have an account?  <span className="semiBold"> Register here.</span></button>
+          </RouterLink>
+          <RouterLink to="/forgot">
+            <button className="link-btn">Forgot password  <span className="semiBold"> Click here.</span></button>
           </RouterLink>
         </div>
       </div>

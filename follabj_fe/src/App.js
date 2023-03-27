@@ -8,6 +8,7 @@ import AboutProject from './screens/ProjectWorkspace/About/AboutProject'
 import ProjectManagement from "./screens/ProjectWorkspace/ProjectManagement";
 import UserProfile from './screens/UserProfile';
 import Meeting from './screens/ProjectWorkspace/Meeting/Meeting';
+import ForgotPassword from "./screens/Authen/ForgotPassword";
 // import Register from "./screens/Register.jsx";
 
 
@@ -31,7 +32,7 @@ export default function App() {
 
   return (
     <>
-    <ToastContainer/>
+      <ToastContainer />
       <Router>
         <Switch>
 
@@ -71,10 +72,12 @@ export default function App() {
           <Route path="/login">
             <Login />
           </Route>
-
           {/* Register */}
           <Route path="/signup">
             <SignUp />
+          </Route>
+          <Route path="/forgot">
+            <ForgotPassword />
           </Route>
           <AuthenciatedRoute path="/profile">
             <UserProfile />
@@ -95,7 +98,7 @@ export default function App() {
           <AdminRoute path="/admin" >
             <AdminDashboard />
           </AdminRoute>
-          
+
           <Route exact path="/">
             <Landing />
           </Route>
