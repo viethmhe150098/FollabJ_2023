@@ -24,15 +24,6 @@ export const getInvitationsByUserId = createAsyncThunk("FETCH_INVITATIONS_BY_USE
 })
 
 
-export const addInvitation = createAsyncThunk("ADD_INVITATION", async ({project_id, email}) => {
-    try {
-        const response = await invitationAPI.addInvitation(project_id, email)
-        return response.data
-    } catch (error) {
-        console.log(error);
-    }
-})
-
 export const acceptInvitation = createAsyncThunk("ACCEPT_INVITATION", async ({user_id, invitation}) => {
     try {
         const response = await invitationAPI.acceptInvitationsToJoinProject(user_id, invitation)

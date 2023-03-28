@@ -53,7 +53,7 @@ instance.interceptors.response.use(function (response) {
 
                 return instance(originalConfig)
 
-            }   
+            }   else return;
         default:
             break;
     }
