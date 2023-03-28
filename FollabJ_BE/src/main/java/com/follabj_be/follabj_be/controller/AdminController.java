@@ -2,14 +2,17 @@ package com.follabj_be.follabj_be.controller;
 
 import com.follabj_be.follabj_be.dto.AppUserDTO;
 import com.follabj_be.follabj_be.dto.LeaderRequestDTO;
+import com.follabj_be.follabj_be.dto.ProjectCountDTO;
 import com.follabj_be.follabj_be.dto.UserDTO;
 import com.follabj_be.follabj_be.entity.AppUser;
 import com.follabj_be.follabj_be.entity.LeaderRequest;
+import com.follabj_be.follabj_be.entity.Project;
 import com.follabj_be.follabj_be.service.impl.LeaderRequestService;
 import com.follabj_be.follabj_be.service.impl.ProjectService;
 import com.follabj_be.follabj_be.service.impl.UserService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -73,11 +76,32 @@ public class AdminController {
     }
 
     @GetMapping("/admin/cp")
-    public ResponseEntity<Map<String, String>> countProject(@RequestParam String by){
-        String result = projectService.count(by);
-        Map<String, String> res = new HashMap<>();
+    public ResponseEntity<Map<Object, Object>> countProject(){
+        String month = projectService.count("MONTH");
+        String year = projectService.count("YEAR");
+        String day = projectService.count("DAY");
+        List<ProjectCountDTO> projectsPerMonth = projectService.projectsPerMonth();
+        List<ProjectCountDTO> projectsPerDay = projectService.projectsPerDay();
+        List<ProjectCountDTO> projectsPerYear = projectService.projectsPerYear();
+        Map<Object, Object> res = new HashMap<>();
         res.put("status", "200");
-        res.put("message", result);
+        res.put("by_day", day);
+        res.put("by_month", month);
+        res.put("by_year", year);
+        res.put("projectsPerDay", projectsPerDay);
+        res.put("projectsPerMonth", projectsPerMonth);
+        res.put("projectsPerYear", projectsPerYear);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @GetMapping("/admin/getproject")
+    public ResponseEntity<Map<Object, Object>> getAllProject(@RequestParam int page){
+        Map<Object, Object> res = new HashMap<>();
+        Page<Project> result =  projectService.getAll(page);
+        res.put("status", "200");
+        res.put("curr_page", result.getNumber());
+        res.put("total_page", result.getTotalPages());
+        res.put("data", result);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }

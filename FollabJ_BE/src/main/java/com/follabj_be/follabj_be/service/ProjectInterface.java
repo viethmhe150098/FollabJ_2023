@@ -4,6 +4,7 @@ import com.follabj_be.follabj_be.dto.CreateProjectDTO;
 import com.follabj_be.follabj_be.dto.UserDTO;
 import com.follabj_be.follabj_be.entity.Project;
 import com.follabj_be.follabj_be.exception.GroupException;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -27,4 +28,6 @@ public interface ProjectInterface {
     void dactivateProject(Long p_id);
 
     String count(String by);
+
+    Page<Project> getAll(int page);
 }

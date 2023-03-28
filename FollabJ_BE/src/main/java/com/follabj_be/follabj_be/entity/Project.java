@@ -49,4 +49,11 @@ public class Project {
         this.leader = leader;
         this.members = members;
     }
+
+    public Project(Long id, String createdDate, ProjectStatus status, AppUser leader) {
+        this.id = id;
+        this.createdDate = createdDate;
+        this.status = status;
+        this.leader = leader;
+    }
 }
