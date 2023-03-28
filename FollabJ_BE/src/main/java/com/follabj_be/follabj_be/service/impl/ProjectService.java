@@ -1,6 +1,7 @@
 package com.follabj_be.follabj_be.service.impl;
 
 import com.follabj_be.follabj_be.dto.CreateProjectDTO;
+import com.follabj_be.follabj_be.dto.ProjectCountDTO;
 import com.follabj_be.follabj_be.dto.UserDTO;
 import com.follabj_be.follabj_be.entity.*;
 import com.follabj_be.follabj_be.errorMessge.CustomErrorMessage;
@@ -11,6 +12,9 @@ import com.follabj_be.follabj_be.service.ProjectInterface;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ObjectNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -197,6 +201,13 @@ public class ProjectService implements ProjectInterface {
         return result;
     }
 
+    @Override
+    public Page<Project> getAll(int page) {
+        Pageable paging = PageRequest.of(page, 6);
+
+        return projectRepository.getAllProject(paging);
+    }
+
     public Map<Object, Object> leaveGroup(Long p_id, Long u_id){
         String userEmail = userRepository.findById(u_id).orElseThrow(()-> new ObjectNotFoundException("Not found project", p_id.toString())).getEmail();
         Map<Object, Object> res = new HashMap<>();
@@ -248,5 +259,17 @@ public class ProjectService implements ProjectInterface {
         }else{
             return false;
         }
+    }
+
+    public List<ProjectCountDTO>  projectsPerMonth() {
+        return projectRepository.projectPerMonth();
+    }
+
+    public List<ProjectCountDTO> projectsPerDay() {
+        return projectRepository.projectPerDay();
+    }
+
+    public List<ProjectCountDTO> projectsPerYear() {
+        return projectRepository.projectPerYear();
     }
 }
