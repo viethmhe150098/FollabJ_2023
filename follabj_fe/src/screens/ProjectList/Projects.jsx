@@ -71,7 +71,7 @@ const Projects = () => {
             <h1 className="font30 extraBold textCenter">My Projects</h1>
           </HeaderInfo>
           {projects.length === 0 ?
-            <EmptyMessage>No invitations found!</EmptyMessage> :
+            <EmptyMessage>No projects found!</EmptyMessage> :
             <div className="row textCenter">
               {
                 currentProjects.map((project) =>
