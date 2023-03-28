@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import * as projectAPI from "./projectAPI";
 export const getProjectsByUserId = createAsyncThunk("FETCH_PROJECTS_BY_USER_ID", async (user_id) => {
     try {
@@ -13,6 +14,16 @@ export const getProjectsByUserId = createAsyncThunk("FETCH_PROJECTS_BY_USER_ID",
 export const getProjectMembersByProjectId = createAsyncThunk("FETCH_PROJECT_MEMBERS_BY_PRJ_ID", async (project_id) => {
     try {
         const response = await projectAPI.fetchProjectMemberByProjectId(project_id)
+        //console.log(response)
+        return response.data
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+export const inviteMember = createAsyncThunk("INVITE_MEMBER", async ({project_id, userdto}) => {
+    try {
+        const response = await projectAPI.inviteMember(project_id, userdto)
         //console.log(response)
         return response.data
     } catch (error) {
@@ -41,6 +52,8 @@ export const deleteProject = createAsyncThunk("DELETE_PROJECT", async(project_id
         console.log(error);
     }
 })
+
+
 
 export const assignLeader = createAsyncThunk("ASSIGN_LEADER", async({project_id, user_id, new_leader_id}) => {
     try {
