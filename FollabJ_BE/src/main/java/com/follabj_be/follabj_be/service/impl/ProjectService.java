@@ -63,11 +63,16 @@ public class ProjectService implements ProjectInterface {
     @Override
     public String sendInvitation(UserDTO user, Long project_id) {
         Project p = projectRepository.findById(project_id).orElseThrow(()-> new ObjectNotFoundException("Not found project", project_id.toString()));
-        boolean existedUser = userRepository.existsById(user.getId());
-        if(!existedUser){
+        AppUser to = userRepository.findByEmail(user.getEmail());
+        boolean invitationExisted = invitationRepository.existsByReceiverIdAndProjectId(to.getId(),p.getId());
+
+        if(invitationExisted) {
+            return "Invitation sent. Wait for user acceptance";
+        }
+
+        if(to == null){
             return "Not found user";
         }
-        AppUser to = new AppUser(user.getId(), user.getUsername(), user.getEmail());
         //check existed user
         boolean existed  = p.getMembers().contains(to);
         if(existed) {

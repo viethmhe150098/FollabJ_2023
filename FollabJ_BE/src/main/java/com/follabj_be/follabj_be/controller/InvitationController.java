@@ -47,19 +47,6 @@ public class InvitationController {
         return invitationDTOList;
     }
 
-    @PostMapping(value="/project/{p_id}/invitation/invite")
-    @PreAuthorize("hasAuthority('ACTIVE_USER')")
-    public Invitation inviteUserByEmail(@PathVariable Long p_id, @RequestParam String email) {
-        AppUser invitedUser = userService.getUserByEmail(email);
-
-        Invitation invitation = new Invitation();
-        invitation.setProject(new Project());
-        invitation.getProject().setId(p_id);
-        invitation.setReceiver(invitedUser);
-
-        return invitationService.addInvitation(invitation);
-    }
-
     @GetMapping("/user/{user_id}/invitation")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
     public List<InvitationDTO> getAllInvitationByUserId(@PathVariable Long user_id) {

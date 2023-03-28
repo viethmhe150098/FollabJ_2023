@@ -38,6 +38,8 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
 
     AppUser findByEmail(String email);
 
+    boolean existsByEmail(String email);
+
     AppUser findByUsername(String username);
 
     @Query(nativeQuery = true, value = "SELECT * FROM app_user u where u.id in (SELECT receiver_id from invitation where project_id=?1);")
