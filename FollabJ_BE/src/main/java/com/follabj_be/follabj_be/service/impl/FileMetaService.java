@@ -41,7 +41,7 @@ public class FileMetaService implements FileMetaInterface {
     }
 
     @Override
-    public void upload(MultipartFile file, Long p_id, Long u_id) throws IOException {
+    public FileMeta upload(MultipartFile file, Long p_id, Long u_id) throws IOException {
         if (file.isEmpty()) throw new IllegalStateException("Cannot upload empty file");
 
         Map<String, String> metadata = new HashMap<>();
@@ -60,7 +60,7 @@ public class FileMetaService implements FileMetaInterface {
         Project p = projectRepository.findById(p_id).orElseThrow(() -> new ObjectNotFoundException("Project not found", p_id.toString()));
         AppUser ap = userRepository.getAppUserById(u_id);
         // Saving metadata to db
-        fileMetaRepository.save(new FileMeta(fileName, path, uploadDate, p, ap));
+        return fileMetaRepository.save(new FileMeta(fileName, path, uploadDate, p, ap));
     }
 
     @Override
@@ -72,6 +72,6 @@ public class FileMetaService implements FileMetaInterface {
     @Override
     public Page<FileMeta> list(Long p_id, int page) {
         Pageable paging = PageRequest.of(page, 6);
-        return fileMetaRepository.findFileMetaByProjectId(p_id, paging);
+        return fileMetaRepository.findFileMetaByProjectIdAndPage(p_id, paging);
     }
 }

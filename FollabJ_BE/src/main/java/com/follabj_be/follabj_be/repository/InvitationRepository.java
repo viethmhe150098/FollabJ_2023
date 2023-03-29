@@ -11,11 +11,17 @@ import java.util.List;
 
 @Repository
 public interface InvitationRepository extends JpaRepository<Invitation, Long> {
-    @Query("select i from Invitation i where i.to.id=?1")
+
+    @Query("select i from Invitation i where i.project.id=?1 and i.status=0")
+    List<Invitation> findByProjectId(Long project_id);
+
+    @Query("select i from Invitation i where i.receiver.id=?1 and i.status=0")
     List<Invitation> findByUserId(Long user_id);
 
     @Modifying
     @Transactional
     @Query("update from Invitation i set i.status = ?1 where i.id = ?2")
     void updateStatus(int status, Long in_id);
+
+    boolean existsByReceiverIdAndProjectId(Long receiver_id, Long project_id);
 }

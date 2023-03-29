@@ -16,7 +16,7 @@ public class HandlerObjectNotFoundException {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Map<String, String> handleException(ObjectNotFoundException ex, WebRequest request){
         Map<String, String> res = new HashMap<>();
-        res.put("status", HttpStatus.FORBIDDEN.toString());
+        res.put("status", "500");
         res.put("message", ex.getMessage());
         return res;
     }

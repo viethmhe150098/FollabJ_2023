@@ -40,13 +40,13 @@ public class JWTService implements JWTInterface {
                 String username = decodedJWT.getSubject();
                 AppUser user = userService.getUserByEmail(username);
                 String accessToken = JWT.create()
-                        .withSubject(user.getUsername())
+                        .withSubject(user.getEmail())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000)) //10m
                         .withClaim("roles", user.getRoles().stream().map(Role::getName).collect(Collectors.toList()))
                         .sign(algorithm);
                 Map<String, String> tokens = new HashMap<>();
-                tokens.put("access token", accessToken);
-                tokens.put("refresh token", refreshToken);
+                tokens.put("access_token", accessToken);
+                tokens.put("refresh_token", refreshToken);
                 return tokens;
 
             } catch (JwtException e) {

@@ -6,6 +6,8 @@ public class CustomErrorMessage {
     public static final CustomErrorMessage NO_PERMISSION = new CustomErrorMessage("FL03", "YOU DON'T HAVE PERMISSION");
 
     public static final CustomErrorMessage WRONG_CREDENTIAL = new CustomErrorMessage("FL04", "WRONG_CREDENTIAL");
+    public static final CustomErrorMessage WRONG_PASSWORD = new CustomErrorMessage("FL05", "PASSWORD MUST MATCHES OLD PASSWORD");
+    public static final CustomErrorMessage NOT_TEAMMEMBER = new CustomErrorMessage("FL06", "MEMBER NOT IN GROUP");
     private final String code;
     private final String message;
 

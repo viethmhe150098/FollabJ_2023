@@ -1,27 +1,26 @@
 // import Kanban from "../../components/Sections/Kanban";
-import AddTask from "../../components/Modals/AddTask";
 import Sidebar from "../../components/Nav/Sidebar";
-import AboutProject from "./AboutProject";
+import AboutProject from "./About/AboutProject";
 // import Note from "../components/Sections/Note";
-import MeetingCreation from "../ProjectWorkspace/MeetingCreation";
-import Calendar from "../ProjectWorkspace/Calendar";
-import Note from "./NoteList";
-
+import MeetingCreation from "../ProjectWorkspace/Meeting/MeetingCreation";
+import Calendar from "../ProjectWorkspace/Event/Calendar";
+import Note from "./Note/Note";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
-import Kanban from "./Kanban";
-import FileWorkspace from "./File";
+import Kanban from "./Task/Kanban";
+import FileWorkspace from "./File/File";
+import NoteEditor from "./Note/NoteEditor";
+import Chat from "./Chat/Chat";
 
 
 
 
-export default function TaskManagement() {
+export default function ProjectManagement() {
   return (
-    <Router>
-
+    <>
       <Sidebar>
         <Switch>
           {/* Task */}
@@ -33,15 +32,25 @@ export default function TaskManagement() {
           <Route path="/notes">
             <Note />
           </Route>
-          
-          {/* Notes */}
+
+          {/* Note Edit */}
+          <Route exact path="/noteEdit">
+            <NoteEditor />
+          </Route>
+
+          {/* Event */}
           <Route path="/events">
             <Calendar />
           </Route>
 
-          {/* Notes */}
+          {/* Files */}
           <Route path="/files">
             <FileWorkspace />
+          </Route>
+
+          {/* Chat */}
+          <Route path="/chat">
+            <Chat />
           </Route>
 
           {/* Meeting */}
@@ -52,9 +61,9 @@ export default function TaskManagement() {
           <Route path="/aboutProject">
             <AboutProject />
           </Route>
-          
+
         </Switch>
       </Sidebar>
-    </Router>
+    </>
   );
 }

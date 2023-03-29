@@ -79,7 +79,6 @@ public class TaskServiceTests {
         when(taskRepository.findByProjectId(projectID)).thenReturn(mockTasks);
         List<Task> foundTask = taskService.getTasksByProjectId(projectID);
 //        assertThat(mockTasks).isEqualTo(foundTask);
-//        verify(taskRepository).findById(projectID);
         assertThat(1).isEqualTo(1);
     }
 

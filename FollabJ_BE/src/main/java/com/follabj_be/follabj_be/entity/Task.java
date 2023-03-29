@@ -28,9 +28,6 @@ public class Task {
     private Date endDate;
     @Column(columnDefinition = "integer default 1")
     private int statusId;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reporter_id", referencedColumnName = "id")
-    private AppUser reporter;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.follabj_be.follabj_be.errorMessge.CustomErrorMessage;
+import com.follabj_be.follabj_be.repository.ProjectRepository;
 import com.follabj_be.follabj_be.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -30,10 +31,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
-
-    public CustomAuthenticationFilter(AuthenticationManager authenticationManager, UserRepository userRepository) {
+    private final ProjectRepository projectRepository;
+    public CustomAuthenticationFilter(AuthenticationManager authenticationManager, UserRepository userRepository, ProjectRepository projectRepository) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
+        this.projectRepository = projectRepository;
     }
 
     @Override
@@ -53,7 +55,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         Algorithm algorithm = Algorithm.HMAC256("viet".getBytes());
         String access_token = JWT.create() //create access token
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 60 * 1000))//10m
+                .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))//10m
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 //get user roles
                 .sign(algorithm);
@@ -63,11 +65,14 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 60 * 1000))//60m
                 .sign(algorithm);
         //send token back to user as JSON
-        Map<String, String> tokens = new HashMap<>();
+        Long user_id = Long.parseLong(userRepository.findAppUserByEmail(user.getUsername()).get().getId().toString());
+        Map<Object, Object> tokens = new HashMap<>();
         tokens.put("access_token", access_token);
         tokens.put("refresh_token", refresh_token);
         tokens.put("email", user.getUsername());
-        tokens.put("id", userRepository.findAppUserByEmail(user.getUsername()).get().getId().toString());
+        tokens.put("id", user_id);
+        tokens.put("status", String.valueOf(userRepository.findAppUserByEmail(user.getUsername()).get().getStatus()));
+        tokens.put("isLeaderOf", projectRepository.getProjectIdByLeaderID(user_id));
         response.setContentType(APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
     }

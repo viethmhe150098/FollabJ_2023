@@ -1,5 +1,6 @@
 import React from 'react';
-
+import { useSelector } from "react-redux";
+import { useEffect,useState } from 'react';
 // Sections
 import TopNavbar from "../../components/Nav/TopNavbar";
 import Header from "../../components/Sections/Header";
@@ -9,14 +10,16 @@ import Contact from "../../components/Sections/Contact";
 import Footer from "../../components/Sections/Footer"
 import About from "../../components/Sections/About"
 
+
 export default function Landing() {
-  
+
+
   return (
     <>
       <TopNavbar />
       <Header />
       <Services />
-      <About/>
+      <About />
       <Pricing />
       <Contact />
       <Footer />

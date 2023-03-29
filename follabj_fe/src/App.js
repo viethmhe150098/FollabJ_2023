@@ -4,12 +4,13 @@ import React, { useState } from 'react';
 import ProjectList from "./screens/ProjectList/ProjectList"
 import Login from "./screens/Authen/Login.jsx";
 import SignUp from './screens/Authen/SignUp.jsx';
-import AboutProject from './screens/ProjectWorkspace/AboutProject'
+import AboutProject from './screens/ProjectWorkspace/About/AboutProject'
 import ProjectManagement from "./screens/ProjectWorkspace/ProjectManagement";
 import UserProfile from './screens/UserProfile';
-import Meeting from './screens/ProjectWorkspace/Meeting';
-import FileWorkspace from './screens/ProjectWorkspace/File';
+import Meeting from './screens/ProjectWorkspace/Meeting/Meeting';
+import ForgotPassword from "./screens/Authen/ForgotPassword";
 // import Register from "./screens/Register.jsx";
+import { isLoggedIn } from '../src/Redux/auth/auth';
 
 
 //Library
@@ -19,7 +20,11 @@ import {
   Route,
 } from "react-router-dom";
 import Landing from './screens/Landing/Landing';
-
+import AdminDashboard from './screens/Admin/AdminDashboard';
+import AdminRoute from './components/Routes/AdminRoute';
+import AuthenciatedRoute from './components/Routes/AuthenciatedRoute';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 
@@ -28,63 +33,73 @@ export default function App() {
 
   return (
     <>
+      <ToastContainer />
       <Router>
         <Switch>
 
-          <Route path="/projectManagement">
+          <AuthenciatedRoute path="/projectManagement">
             <ProjectManagement />
-          </Route>
+          </AuthenciatedRoute>
 
-          <Route path="/tasks">
+          <AuthenciatedRoute path="/tasks">
             <ProjectManagement />
-          </Route>
+          </AuthenciatedRoute>
 
           {/* Meeting */}
-          <Route path="/meetingCreate">
+          <AuthenciatedRoute path="/meetingCreate">
             <ProjectManagement />
-          </Route>
+          </AuthenciatedRoute>
 
-          <Route path="/meeting">
+          <AuthenciatedRoute path="/meeting">
             <Meeting />
-          </Route>
+          </AuthenciatedRoute>
 
-          <Route path="/files">
+          <AuthenciatedRoute path="/notes">
             <ProjectManagement />
-          </Route>
+          </AuthenciatedRoute>
 
-          {/* Task */}
-          {/* <Route path="/notes">
-            <TaskManagement />
-          </Route>
-          </Route> */}
+          <AuthenciatedRoute exact path="/noteEdit">
+            <ProjectManagement />
+          </AuthenciatedRoute>
+
+          <AuthenciatedRoute path="/files">
+            <ProjectManagement />
+          </AuthenciatedRoute>
+
+          <AuthenciatedRoute path="/chat">
+            <ProjectManagement />
+          </AuthenciatedRoute>
 
           <Route path="/login">
-            <Login />
+            {isLoggedIn() ? <Landing /> : <Login />}
           </Route>
-
           {/* Register */}
           <Route path="/signup">
-            <SignUp />
+            {isLoggedIn() ? <Landing /> : <SignUp />}
           </Route>
-          <Route path="/profile">
+          <Route path="/forgot">
+            {isLoggedIn() ? <Landing /> : <ForgotPassword />}
+          </Route>
+          <AuthenciatedRoute path="/profile">
             <UserProfile />
-          </Route>
+          </AuthenciatedRoute>
 
-          {/* Meeting */}
-          <Route path="/events">
+          <AuthenciatedRoute path="/events">
             <ProjectManagement />
-          </Route>
+          </AuthenciatedRoute>
 
-          {/* <Route path="/projects">
+          <AuthenciatedRoute path="/aboutProject" >
+            <ProjectManagement />
+          </AuthenciatedRoute>
+
+          <AuthenciatedRoute exact path="/projects">
             <ProjectList />
-          </Route> */}
-          <Route path="/aboutProject" >
-            <AboutProject />
-          </Route>
-          <Route exact path="/projects">
-            <ProjectList />
-          </Route>
-          {/* Landing */}
+          </AuthenciatedRoute>
+
+          <AdminRoute path="/admin" >
+            <AdminDashboard />
+          </AdminRoute>
+
           <Route exact path="/">
             <Landing />
           </Route>

@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getProjectMembersByProjectId, getProjectsByUserId } from "./projectActions";
+import { acceptInvitation } from "../invitation/invitationActions";
+import { assignLeader, deleteMember, deleteProject, getProjectMembersByProjectId, getProjectsByUserId, inviteMember, leaveProject, updateProject, } from "./projectActions";
 
 const projectSlice = createSlice({
     name:"project",
@@ -57,6 +58,24 @@ const projectSlice = createSlice({
             })
             .addCase(getProjectMembersByProjectId.fulfilled, (state, action) => {
                 state.currentProject.members = action.payload
+            })
+            .addCase(updateProject.fulfilled, (state, action) => {
+                state.currentProject.allProjects = state.currentProject.allProjects.map((project) => project.id == action.payload.id ? action.payload : project)
+            })
+            .addCase(deleteProject.fulfilled, (state, action) => {
+                state.currentProject.allProjects = state.currentProject.allProjects.filter((project) => project.id != action.payload)
+            })
+            .addCase(acceptInvitation.fulfilled, (state, action) => {
+                state.projects.allProjects.push(action.payload.joinedProject)
+            })
+            .addCase(leaveProject.fulfilled, (state, action) => {
+                state.projects.allProjects = state.projects.allProjects.filter((project) => project.id != action.payload)
+            })
+            .addCase(assignLeader.fulfilled, (state, action) => {
+                
+            })
+            .addCase(deleteMember.fulfilled, (state, action) => {
+                state.currentProject.members = state.currentProject.members.filter((member)=> member.id != action.payload)
             })
     },
 })

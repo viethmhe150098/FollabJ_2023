@@ -28,9 +28,9 @@ const SignUp = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     const newUser = {
-      username: username,
-      email: email,
-      password: password
+      username: username.trim(),
+      email: email.trim(),
+      password: password.trim()
     };
     registerUser(newUser, dispatch, navigate);
 

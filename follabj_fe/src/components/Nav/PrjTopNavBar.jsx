@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link as RouterLink } from "react-router-dom";
 import Popup from "reactjs-popup";
 import Content from "../Modals/CreateProject";
+import { toast } from "react-toastify";
 
 // Components
 import Sidebar from "./MobileSideBar";
@@ -11,6 +12,8 @@ import FullButton from "../Buttons/FullButton";
 // Assets
 import LogoIcon from "../../assets/svg/Logo";
 import BurgerIcon from "../../assets/svg/BurgerIcon";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 export default function PrjTopNavBar() {
   const [y, setY] = useState(window.scrollY);
@@ -23,6 +26,27 @@ export default function PrjTopNavBar() {
     };
   }, [y]);
 
+  const roles = localStorage.getItem("role_name")
+
+  const user_id = useSelector((state) => state.auth.login.currentUser.id)
+  const user_email = useSelector((state) => state.auth.login.currentUser.email)
+
+
+  const handleSendRequest = () => {
+    const leaderRequest = {
+      u_id: user_id,
+      u_fullname : user_email,
+      u_id_number : "placeholder",
+    }
+
+    axios.post("http://localhost:8080/user/request", leaderRequest, {
+      headers : {
+          'Authorization' : "Bearer "+ localStorage.getItem("access_token")
+      }
+    })
+    toast.success("Your request is being verified, please wait!");
+
+  }
 
   return (
     <>
@@ -41,6 +65,7 @@ export default function PrjTopNavBar() {
           </BurderWrapper>
           <UlWrapper className="flexNullCenter">
           </UlWrapper>
+          { roles.includes("LEADER") &&
           <UlWrapperRight className="flexNullCenter">
 
             <Popup modal trigger={<li className="semiBold pointer font15 flexCenter">
@@ -49,6 +74,13 @@ export default function PrjTopNavBar() {
               {close => <Content close={close} />}
             </Popup>
           </UlWrapperRight>
+          }
+          {
+            !roles.includes("LEADER") &&
+            <UlWrapperRight className="flexNullCenter">
+                <FullButton title="Send Leader Request" action={()=>{handleSendRequest()}}/>
+            </UlWrapperRight>
+          }
         </NavInner>
       </Wrapper>
     </>

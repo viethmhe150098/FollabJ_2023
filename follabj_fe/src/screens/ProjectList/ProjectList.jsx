@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 // Sections
 import PrjTopNavBar from "../../components/Nav/PrjTopNavBar";
-import Projects from "../../components/Sections/Projects";
+import Projects from "./Projects";
 import Footer from "../../components/Sections/Footer"
+import Invitations from './Invitations';
 
 export default function ProjectList() {
 
@@ -10,6 +11,7 @@ export default function ProjectList() {
         <>
             <PrjTopNavBar />
             <Projects />
+            <Invitations />
             <Footer />
         </>
     );

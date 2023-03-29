@@ -56,8 +56,8 @@ public class NoteController {
     }
 
     @PutMapping("/notes/{user_id}")
-    public NoteDTO updateNote(@RequestParam Long note_id, @RequestBody Note note) {
-        Note updatedNote = noteService.updateNote(note_id, note);
+    public NoteDTO updateNote(@RequestBody Note note) {
+        Note updatedNote = noteService.updateNote(note);
         NoteDTO noteDTO = modelMapper.map(note, NoteDTO.class);
         return noteDTO;
     }

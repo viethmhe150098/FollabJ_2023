@@ -13,12 +13,20 @@ import java.util.Set;
 @Getter
 @Setter
 public class Project {
+    public enum ProjectStatus {
+        ACTIVE,
+        DEACTIVATE
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String des;
     private String createdDate;
+
+    @Column(columnDefinition = "varchar(255) default 'ACTIVE'")
+    @Enumerated(value = EnumType.STRING)
+    private ProjectStatus status = ProjectStatus.ACTIVE;
     @ManyToOne
     @JoinColumn(
             name = "leader_id"
@@ -26,13 +34,12 @@ public class Project {
     @JsonIgnore
     private AppUser leader;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "project_members",
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    @JsonIgnore
     private Set<AppUser> members;
 
     public Project(String name, String des, String createdDate, AppUser leader, Set<AppUser> members) {
@@ -41,5 +48,12 @@ public class Project {
         this.createdDate = createdDate;
         this.leader = leader;
         this.members = members;
+    }
+
+    public Project(Long id, String createdDate, ProjectStatus status, AppUser leader) {
+        this.id = id;
+        this.createdDate = createdDate;
+        this.status = status;
+        this.leader = leader;
     }
 }

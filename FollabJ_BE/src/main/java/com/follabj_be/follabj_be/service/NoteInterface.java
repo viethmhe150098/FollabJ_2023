@@ -13,7 +13,7 @@ public interface NoteInterface {
 
     Note addNote(Note note);
 
-    Note updateNote(Long id, Note note);
+    Note updateNote (Note note);
 
     void deleteNote(Long id);
 

@@ -43,13 +43,11 @@ input {
   border-radius: 10px;
 }
 
-
-
 .link-btn {
   background: none;
   color: #fd9309;
   text-decoration: underline;
-  margin: 50px;
+  margin: 20px 50px 10px 50px;
 }
 
 .error-wrapper {
@@ -95,3 +93,5 @@ input {
 input:invalid[focused="true"] ~ .spanError{
   display: block;
 }
+
+

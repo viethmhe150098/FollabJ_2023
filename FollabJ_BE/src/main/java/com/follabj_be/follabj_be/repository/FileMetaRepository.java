@@ -7,8 +7,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface FileMetaRepository extends JpaRepository<FileMeta, Long> {
     @Query("select f from FileMeta f where f.project.id=?1")
-    Page<FileMeta> findFileMetaByProjectId(Long p_id, Pageable pageable);
+    Page<FileMeta> findFileMetaByProjectIdAndPage(Long p_id, Pageable pageable);
+
+    List<FileMeta> findByProjectId(Long p_id);
+
 }
