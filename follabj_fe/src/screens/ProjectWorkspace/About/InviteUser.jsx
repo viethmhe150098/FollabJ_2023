@@ -14,13 +14,13 @@ const InviteUser = () => {
 
   const project_id = useSelector((state) => state.project.currentProject.id);
 
-  const project_invitations = useSelector((state)=> state.invitation.project_invitations)
+  const project_invitations = useSelector((state) => state.invitation.project_invitations)
 
   const dispatch = useDispatch();
 
-  useEffect(()=> {
+  useEffect(() => {
     dispatch(getInvitationsByProjectId(project_id))
-  },[])
+  }, [])
 
   const handleInputChange = (e) => {
     setEmail(e.target.value);
@@ -35,23 +35,38 @@ const InviteUser = () => {
     }
 
 
-    project_invitations.map((invitation,index) =>{
-      if (invitation.receiver.email == email) {
-        // setFeedbackMessage("This email has already been invited.");
-        // setFeedbackMessageClass("already-invited");
-        toast.info("This email has already been invited.")
-        return;
-      }
-    })
+    // project_invitations.map((invitation,index) =>{
+    //   if (invitation.receiver.email == email) {
+    //     // setFeedbackMessage("This email has already been invited.");
+    //     // setFeedbackMessageClass("already-invited");
+    //     toast.info("This email has already been invited.")
+    //     return;
+    //   }
+    // })
 
     const userdto = {
       email
     }
 
-    dispatch(inviteMember({project_id, userdto})).unwrap().then((result) => {
+    dispatch(inviteMember({ project_id, userdto })).unwrap().then((result) => {
       const message = result.message
-      toast.success(message)
+
+      switch (message) {
+        case 'already in project':
+          toast.warn('Can not invite yourself or members already in your project!')
+          break;
+        case 'already invited':
+          toast.warn('This email has already been invited!')
+          break;
+        case 'success':
+          toast.success('Invitation sent. Wait for user acceptance!')
+          break;
+        default:
+          break;
+      }
+
       dispatch(getInvitationsByProjectId(project_id))
+      setEmail("");
     })
 
     //setInvitedEmails([...invitedEmails, email]);
@@ -104,8 +119,9 @@ const InviteUser = () => {
           {/* {invitedEmails.map((invitedEmail, index) => (
             <li key={index}>{invitedEmail}</li>
           ))} */}
+
           {
-            project_invitations.map((invitation, index) => 
+            project_invitations.map((invitation, index) =>
               <li key={index}>{invitation.receiver.email}</li>
             )
           }

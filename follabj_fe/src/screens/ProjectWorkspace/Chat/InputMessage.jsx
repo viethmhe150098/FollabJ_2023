@@ -28,7 +28,7 @@ const InputMessage = ({ scroll }) => {
 
   const sendMessage = async (e) => {
     e.preventDefault()
-    if (input === '') {
+    if (input.trim() === '') {
       toast.warn('Empty message!', {
         autoClose: 5000,
       });
