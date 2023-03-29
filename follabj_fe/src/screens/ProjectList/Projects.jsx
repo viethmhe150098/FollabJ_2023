@@ -101,25 +101,23 @@ const Projects = () => {
             <h1 className="font30 extraBold textCenter">My Projects</h1>
           </HeaderInfo>
           {projects.length === 0 ?
-          <EmptyMessage>No invitations found!</EmptyMessage> :
-          <div className="row textCenter">
-            {
-              projects.map((project,index) => 
-              <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4" key={project.id.toString()}>
-                <ProjectBox
-                  // img={images[index]}
-                  img={ProjectImg1}
-                  title={project.name}    
-                  action={() => {setCurrentProject(project.id)}}
-                  rightClickAction={() => {openProjectModal(project)}}
-                />
-                <Popup modal trigger={<button id={"project_"+project.id}></button>}>
-                    {close => <ViewProjectModal close={close} project={project} type="readonly"/>}
-                </Popup>
-              </div>)
-            }
-            
-          </div>
+            <EmptyMessage>No projects found!</EmptyMessage> :
+            <div className="row textCenter">
+              {
+                currentProjects.map((project) =>
+                <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4" key={project.id.toString()}>
+                    <ProjectBox
+                      img={ProjectImg1}
+                      title={project.name}
+                      action={() => { setCurrentProject(project.id) }}
+                      rightClickAction={() => {openProjectModal(project)}}
+                    />
+                    <Popup modal trigger={<button id={"project_"+project.id}></button>}>
+                      {close => <ViewProjectModal close={close} project={project} type="readonly"/>}
+                    </Popup>
+                </div>)
+              }
+            </div>
           }
 
         </div>

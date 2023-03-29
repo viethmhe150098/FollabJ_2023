@@ -35,7 +35,7 @@ const ChangePasswordModal = ({ close }) => {
 
     // Check if new password meets regex requirements
     if (!passwordRegex.test(newPassword)) {
-      toast.warn("New password must be at least 8 characters long and contain at least one number and one lowercase letter.");
+      toast.warn("New password must be 8+ characters, at least 1 digit and do not have special characters, include space.");
       return;
     }
     // check backend PasswordDTO to know the name of the field
