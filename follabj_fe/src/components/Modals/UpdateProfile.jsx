@@ -3,6 +3,7 @@ import { Result } from "postcss";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import styled from "styled-components";
 import { getUserProfileByUserId, updateUserProfile } from "../../Redux/userProfile/userProfileAction";
@@ -25,8 +26,8 @@ const UpdateProfileModal = ({ close }) => {
   //   const [reNewPassword, setReNewPassword] = useState("");
 
   //   // Regex to validate password
-  //   const passwordRegex = /^(?=.*\d)(?=.*[a-z])[0-9a-zA-Z]{8,}$/;
-
+  const phoneRegex = /^0\d{8}$/;
+  const usernameRegex = /^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$/;
 
   //   const user_id = useSelector((state) => state.auth.login.currentUser.id);
 
@@ -80,6 +81,18 @@ const UpdateProfileModal = ({ close }) => {
   //   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (fullname === oldfullname && username === oldusername && phone_number === oldphonenumber) {
+      toast.warn('No changes were made to your information.')
+      return;
+    }
+    if (!usernameRegex.test(username)) {
+      toast.warn("Username must not contain space and special characters");
+      return;
+    }
+    if (!phoneRegex.test(phone_number)) {
+      toast.warn("Phone number must have 9 numerics and start with '0'");
+      return;
+    }
     const updateDataProfile = {
       u_id: user_id,
       fullname,
@@ -90,6 +103,7 @@ const UpdateProfileModal = ({ close }) => {
       user_id,
       updateDataProfile
     })).unwrap().then((result) => { dispatch(getUserProfileByUserId(user_id)) });
+    toast.success('Updated informations successfully!')
     close();
   }
 
