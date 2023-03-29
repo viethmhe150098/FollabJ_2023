@@ -8,3 +8,5 @@ export const fetchInvitationsByProjectId = (project_id) => instance.get(projectI
 export const fetchInvitationsByUserId = (user_id) => instance.get(userInvitationUrl(user_id));
 
 export const acceptInvitationsToJoinProject = (user_id, invitation) => instance.post(userInvitationUrl(user_id)+"/accept",invitation)
+
+export const rejectInvitaion = (user_id, invitation_id) => instance.delete(userInvitationUrl(user_id)+"/"+invitation_id)

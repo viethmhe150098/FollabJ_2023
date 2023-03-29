@@ -72,5 +72,9 @@ public class InvitationController {
         return projectDTO;
     }
 
-
+    @DeleteMapping("/user/{user_id}/invitation/{invitation_id}")
+    @PreAuthorize("hasAuthority('ACTIVE_USER')")
+    public void rejectInvitation(@PathVariable Long invitation_id) {
+        invitationService.deleteInvitation(invitation_id);
+    }
 }

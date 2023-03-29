@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { acceptInvitation, getInvitationsByUserId } from '../../Redux/invitation/invitationActions';
+import { acceptInvitation, getInvitationsByUserId, rejectInvitation } from '../../Redux/invitation/invitationActions';
 //table libraby
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -27,6 +27,11 @@ const Invitations = () => {
     const handleAccept = (invitation) => {
         dispatch(acceptInvitation({ user_id, invitation }))
     }
+
+    const handleReject = (invitation) => {
+        dispatch(rejectInvitation({ user_id, invitation }))
+    }
+
     const makeStyle = (status) => {
         if (status === 'Accept') {
             return {
@@ -78,7 +83,7 @@ const Invitations = () => {
                                         </TableCell>
                                         <TableCell align="right">
                                             <button onClick={() => handleAccept(invitation)} className="status" style={makeStyle('Accept')}>Accept</button>
-                                            <button className="status" style={makeStyle('Decline')}>Decline</button>
+                                            <button  onClick={() => handleReject(invitation)} className="status" style={makeStyle('Decline')}>Decline</button>
                                         </TableCell>
 
                                     </TableRow>
