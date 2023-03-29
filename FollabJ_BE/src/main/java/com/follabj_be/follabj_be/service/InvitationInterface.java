@@ -10,6 +10,8 @@ public interface InvitationInterface  {
 
     Invitation addInvitation(Invitation invitation);
 
+    void deleteInvitation(Long invitation_id);
+
     List<Invitation> getInvitationsByUserId(Long user_id);
 
     void updateStatus(int status, Long i_id);

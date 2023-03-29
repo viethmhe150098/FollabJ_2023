@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { acceptInvitation } from "../invitation/invitationActions";
-import { assignLeader, deleteMember, deleteProject, getProjectMembersByProjectId, getProjectsByUserId, leaveProject, updateProject, } from "./projectActions";
+import { assignLeader, deleteMember, deleteProject, getProjectMembersByProjectId, getProjectsByUserId, inviteMember, leaveProject, updateProject, } from "./projectActions";
 
 const projectSlice = createSlice({
     name:"project",

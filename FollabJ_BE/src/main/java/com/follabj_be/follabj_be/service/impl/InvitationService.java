@@ -35,7 +35,10 @@ public class InvitationService implements InvitationInterface {
         return invitationRepository.save(invitation);
     }
 
-
+    @Override
+    public void deleteInvitation(Long invitation_id) {
+        invitationRepository.deleteById(invitation_id);
+    }
 
     @Override
     public List<Invitation> getInvitationsByUserId(Long user_id) {

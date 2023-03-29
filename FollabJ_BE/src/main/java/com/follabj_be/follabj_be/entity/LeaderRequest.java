@@ -26,15 +26,11 @@ public class LeaderRequest {
     @JoinColumn(name = "u_id", referencedColumnName = "id")
     @JsonIgnore
     private AppUser user;
-    private String user_fullname;
-    private String user_id_number;
+
+    private String message;
+
     @Column(columnDefinition = "varchar(255) default 'PENDING'")
     @Enumerated(value = EnumType.STRING)
     private requestStatus status = requestStatus.PENDING;
 
-    public LeaderRequest(AppUser user, String user_fullname, String user_id_number) {
-        this.user = user;
-        this.user_fullname = user_fullname;
-        this.user_id_number = user_id_number;
-    }
 }

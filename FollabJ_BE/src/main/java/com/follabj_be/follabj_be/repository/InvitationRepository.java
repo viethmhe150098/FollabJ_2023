@@ -22,4 +22,6 @@ public interface InvitationRepository extends JpaRepository<Invitation, Long> {
     @Transactional
     @Query("update from Invitation i set i.status = ?1 where i.id = ?2")
     void updateStatus(int status, Long in_id);
+
+    boolean existsByReceiverIdAndProjectId(Long receiver_id, Long project_id);
 }

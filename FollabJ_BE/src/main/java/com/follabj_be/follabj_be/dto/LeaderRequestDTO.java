@@ -9,7 +9,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter @Setter
 public class LeaderRequestDTO {
-    private Long u_id;
-    private String u_fullname;
-    private String u_id_number;
+    private Long id;
+    private String message;
+
+    private UserDTO user;
 }

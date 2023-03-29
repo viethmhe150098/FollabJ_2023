@@ -42,12 +42,14 @@ public class LeaderRequestService implements LeaderRequestInterface {
 
     @Override
     public String saveRequest(LeaderRequestDTO leaderRequestDTO) {
-        Long user_id = leaderRequestDTO.getU_id();
+        Long user_id = leaderRequestDTO.getUser().getId();
         if(isPendingRequest(user_id)){
             return "You have 1 request waiting to be approved, please wait";
         }else{
             AppUser user = userRepository.findById(user_id).orElseThrow(()-> new ObjectNotFoundException("Not found user", user_id.toString()));
-            LeaderRequest l = new LeaderRequest(user, leaderRequestDTO.getU_fullname(), leaderRequestDTO.getU_id_number());
+            LeaderRequest l = new LeaderRequest();
+            l.setUser(user);
+            l.setMessage(leaderRequestDTO.getMessage());
             leaderRequestRepository.save(l);
             return "The request has been sent to the administrator";
         }

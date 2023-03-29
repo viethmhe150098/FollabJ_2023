@@ -15,6 +15,9 @@ import { useEffect, useState } from "react";
 import {
   FaAngleLeft, FaAngleRight
 } from "react-icons/fa";
+import axios from "axios";
+import ViewProjectModal from "../../components/Modals/ViewProject";
+import Popup from "reactjs-popup";
 
 const Projects = () => {
 
@@ -22,10 +25,6 @@ const Projects = () => {
   const history = useHistory();
 
   const user_id = useSelector((state) => state.auth.login.currentUser.id)
-
-  useEffect(() => {
-    dispatch(getProjectsByUserId(user_id))
-  }, [])
 
   const projects = useSelector((state) => state.project.projects.allProjects)
 
@@ -40,6 +39,39 @@ const Projects = () => {
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+  const [images, setImages] = useState([])
+
+  const fetchImages = async () => {
+    const images = new Array(projects.length)
+
+    const imageRequests = 
+      new Array(projects.length)
+        .fill("https://random.imagecdn.app/500/500")
+            
+    imageRequests.map(async (request) => {
+      const response = await axios.get(request)
+      images.push(response.request.responseURL)
+    })
+    
+    setImages(images)       
+  }
+
+  useEffect(() => {
+
+    dispatch(getProjectsByUserId(user_id))
+
+    fetchImages()
+
+    // console.log(images)
+    
+  },[])
+
+  const openProjectModal = (project) => {
+    const button = document.getElementById("project_"+project.id)
+
+    button.click()
+  }
+
   const setCurrentProject = (project_id) => {
 
     dispatch(setCurrentProjectId(project_id));
@@ -59,8 +91,6 @@ const Projects = () => {
   }
 
 
-
-
   return (
 
     <Wrapper id="projects" className="lightBg" style={{ paddingBottom: "50px" }}>
@@ -75,16 +105,21 @@ const Projects = () => {
             <div className="row textCenter">
               {
                 currentProjects.map((project) =>
-                  <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4" key={project.id.toString()}>
+                <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4" key={project.id.toString()}>
                     <ProjectBox
                       img={ProjectImg1}
                       title={project.name}
                       action={() => { setCurrentProject(project.id) }}
+                      rightClickAction={() => {openProjectModal(project)}}
                     />
-                  </div>)
+                    <Popup modal trigger={<button id={"project_"+project.id}></button>}>
+                      {close => <ViewProjectModal close={close} project={project} type="readonly"/>}
+                    </Popup>
+                </div>)
               }
             </div>
           }
+
         </div>
 
       </div>

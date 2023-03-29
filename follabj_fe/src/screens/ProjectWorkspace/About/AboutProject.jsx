@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import Popup from 'reactjs-popup';
 import LeaveGroupModal from '../../../components/Modals/LeaveGroup';
-import InviteUser from '../../../components/Sections/inviteUser/InviteUser';
 import { leaveProject } from '../../../Redux/project/projectActions';
+import InviteUser from './InviteUser';
 import MemberList from './MemberList';
 // Sections
 export default function AboutProject() {
