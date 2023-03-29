@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<AppUser, Long> {
-    @Query(nativeQuery = true , value = "select * from AppUser where BINARY email = ?1")
+    @Query(nativeQuery = true , value = "select * from app_user where BINARY email = ?1")
 //    @Query("Select a from AppUser a where a.email = binary'"+ ?1+"'")
     Optional<AppUser> findAppUserByEmail(String email);
 
