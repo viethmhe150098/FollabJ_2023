@@ -7,7 +7,7 @@ import '../../style/authen.css'
 import FullButton from "../../components/Buttons/FullButton";
 import AuthenNavbar from "../../components/Nav/AuthenNavbar";
 import { useState, useEffect } from 'react';
-
+import { LENGTH30, LENGTH50, LENGTH100 } from '../../components/Modals/regexs';
 const Login = () => {
   const navigate = useHistory();
   // isLoggedIn && navigate.push("/");
