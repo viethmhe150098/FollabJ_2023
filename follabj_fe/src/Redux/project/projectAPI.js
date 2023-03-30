@@ -1,6 +1,11 @@
 import instance from "../axiosInstance";
 
 const projectUrl =(project_id) => "/project/"+project_id;
+const adminUrl = () => "/admin"
+
+export const fetchAllProjects = (page_number) => instance.get("/project"+adminUrl+"?page="+page_number)
+
+export const getProjectStatistics = () => instance.get(adminUrl()+"/cp")
 
 export const fetchProjectsByUserId = (user_id) => instance.get("/"+user_id);
 

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { acceptInvitation } from "../invitation/invitationActions";
-import { assignLeader, deleteMember, deleteProject, getProjectMembersByProjectId, getProjectsByUserId, inviteMember, leaveProject, updateProject, } from "./projectActions";
+import { assignLeader, deleteMember, deleteProject, fetchAllProjects, getProjectMembersByProjectId, getProjectsByUserId, getProjectStatistics, inviteMember, leaveProject, updateProject, } from "./projectActions";
 
 const projectSlice = createSlice({
     name:"project",
@@ -14,6 +14,9 @@ const projectSlice = createSlice({
             allProjects:[],
             isFetching:false,
             error:false
+        },
+        statistics: {
+
         },
         msg:"",
     },
@@ -53,6 +56,12 @@ const projectSlice = createSlice({
     extraReducers: (builder) => {
 
         builder
+            .addCase(fetchAllProjects.fulfilled, (state, action) => {
+                state.projects.allProjects = action.payload.data
+            })
+            .addCase(getProjectStatistics.fulfilled, (state, action) => {
+                state.statistics = action.payload
+            })
             .addCase(getProjectsByUserId.fulfilled, (state, action) => {
                 state.projects.allProjects = action.payload.projects
             })
