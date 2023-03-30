@@ -48,7 +48,7 @@ export default function MemberList() {
     return (
         <>
             <div className="Table">
-                <h3 style={{ marginBottom: '30px' }}>Projects List</h3>
+                <h3 style={{ marginBottom: '30px' }}>Members List</h3>
                 <TableContainer
                     component={Paper}
                     style={{ boxShadow: "0px 13px 20px 10px #80808029", minHeight: '381px' }}

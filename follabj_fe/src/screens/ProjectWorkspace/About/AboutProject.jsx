@@ -31,15 +31,6 @@ export default function AboutProject() {
 
         history.push("/projects")
     }
-    const makeStyle = (status) => {
-        if (status === 'Member') {
-            return {
-                background: 'rgb(145 254 159 / 47%)',
-                color: 'green',
-            }
-        }
-
-    }
 
     return (
         <>
