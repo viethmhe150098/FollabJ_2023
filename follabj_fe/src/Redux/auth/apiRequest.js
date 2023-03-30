@@ -1,5 +1,4 @@
 import axios from "axios";
-import { async } from "q";
 import jwtDecode from 'jwt-decode';
 import { loginFailed, loginStart, loginSuccess, registerFailed, registerStart, registerSuccess } from "./authSlice";
 import { createProjectFailed, createProjectStart, createProjectSuccess, getProjectStart } from "../project/projectSlice";
@@ -40,10 +39,18 @@ export const loginUser = async (user, dispatch, navigate) => {
 
 
         //console.log(res)
-        dispatch(loginSuccess(res.data));
+        if(res.data.status === "1") {
+            dispatch(loginSuccess(res.data));
+            navigate.push("/")
+        } else if(res.data.status === "0") {
+            toast.error("You need to confirm your email")
+            localStorage.clear()
+        } else {
+            toast.error("You have been banned")
+            localStorage.clear()
+        }
         // go to home page'
-        toast.success('Welcome back! 🧡',)
-        navigate.push("/")
+        //toast.success('Welcome back! 🧡',)
     } catch (error) {
         //console.log(error)
         toast.error('Invalid username or password')
