@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -19,9 +20,9 @@ public class LeaderRequestController {
     private final LeaderRequestService leaderRequestService;
     @GetMapping("/admin/request")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Map<Object, Object>> getIsPending(@RequestParam int page){
+    public ResponseEntity<Map<Object, Object>> getIsPending(@RequestParam int page, @RequestParam Optional<LeaderRequest.requestStatus> status){
         Map<Object, Object> res = new HashMap<>();
-        Page<LeaderRequest> pageRequest = leaderRequestService.getListRequest(page);
+        Page<LeaderRequest> pageRequest = leaderRequestService.getListRequest(page, status.orElse(LeaderRequest.requestStatus.PENDING));
         res.put("status", HttpStatus.OK);
         res.put("content", pageRequest);
         res.put("curr_Page", pageRequest.getNumber());
@@ -39,7 +40,8 @@ public class LeaderRequestController {
         }else{
             res.put("message", "Update status to decline for request id "+ req_id);
         }
-
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
+
+
 }

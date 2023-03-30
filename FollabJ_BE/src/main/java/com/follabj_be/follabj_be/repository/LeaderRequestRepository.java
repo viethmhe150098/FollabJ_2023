@@ -1,5 +1,6 @@
 package com.follabj_be.follabj_be.repository;
 
+import com.follabj_be.follabj_be.dto.LeaderRequestDTO;
 import com.follabj_be.follabj_be.entity.LeaderRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,5 +18,10 @@ public interface LeaderRequestRepository extends JpaRepository<LeaderRequest, Lo
 
     @Query("select l from LeaderRequest l where l.status='PENDING'")
     Page<LeaderRequest> getPendingRequest(Pageable pageable);
+
+    LeaderRequest findByUserId(Long u_id);
+
+    @Query("select l from LeaderRequest l where l.status=?2")
+    Page<LeaderRequest> getRequestsByStatus(Pageable pageable, LeaderRequest.requestStatus status);
 
 }
