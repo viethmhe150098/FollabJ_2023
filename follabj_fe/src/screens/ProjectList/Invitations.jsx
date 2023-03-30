@@ -2,6 +2,8 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { toast } from "react-toastify";
+
 import { acceptInvitation, getInvitationsByUserId, rejectInvitation } from '../../Redux/invitation/invitationActions';
 //table libraby
 import Table from "@mui/material/Table";
@@ -26,10 +28,13 @@ const Invitations = () => {
 
     const handleAccept = (invitation) => {
         dispatch(acceptInvitation({ user_id, invitation }))
+        toast.success(`Accepted to join project ${invitation.project.name}!` )
     }
 
     const handleReject = (invitation) => {
         dispatch(rejectInvitation({ user_id, invitation }))
+        toast.success(`Rejected to join project ${invitation.project.name}!` )
+
     }
 
     const makeStyle = (status) => {

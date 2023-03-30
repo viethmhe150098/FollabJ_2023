@@ -27,6 +27,7 @@ export const inviteMember = createAsyncThunk("INVITE_MEMBER", async ({project_id
         //console.log(response)
         return response.data
     } catch (error) {
+        toast.error('This email address is not registered!')
         console.log(error);
     }
 })

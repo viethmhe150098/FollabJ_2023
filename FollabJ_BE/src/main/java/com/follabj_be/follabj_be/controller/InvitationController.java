@@ -64,9 +64,9 @@ public class InvitationController {
     @PostMapping("/user/{user_id}/invitation/accept")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
     public ProjectDTO acceptInvitationAndJoinProject(@RequestBody Invitation invitation) {
-        invitationService.updateStatus(1, invitation.getId());
+//        invitationService.updateStatus(1, invitation.getId());
+        invitationService.deleteInvitation(invitation.getId());
         Project joinedProject =  projectService.addMember(invitation.getProject().getId(), invitation.getReceiver().getId());
-
         ProjectDTO projectDTO = modelMapper.map(joinedProject, ProjectDTO.class);
 
         return projectDTO;

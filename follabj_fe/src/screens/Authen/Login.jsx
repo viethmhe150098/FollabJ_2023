@@ -1,20 +1,19 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { Link as RouterLink, Navigate } from "react-router-dom";
+import { Link as RouterLink} from "react-router-dom";
 import { loginUser } from "../../Redux/auth/apiRequest";
 import '../../style/authen.css'
 import FullButton from "../../components/Buttons/FullButton";
 import AuthenNavbar from "../../components/Nav/AuthenNavbar";
 import { useState, useEffect } from 'react';
-import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useHistory();
   // isLoggedIn && navigate.push("/");
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({ username: '', password: '' });
+  const [errors, setErrors] = useState({ email: '', password: '' });
   const dispatch = useDispatch();
 
 
@@ -29,9 +28,11 @@ const Login = () => {
     let usernameError = '';
     let passwordError = '';
 
-    if (!username) {
-      // usernameError = 'Username is required';
-    } else if (!emailRegex.test(username)) {
+
+
+    if (!email) {
+      // usernameError = 'email is required';
+    } else if (!emailRegex.test(email)) {
       usernameError = 'That email does not look quite right';
     }
 
@@ -41,15 +42,15 @@ const Login = () => {
       passwordError = 'Must be 8+ characters and at least 1 digit';
     }
 
-    setErrors({ username: usernameError, password: passwordError });
-  }, [username, password]);
+    setErrors({ email: usernameError, password: passwordError });
+  }, [email, password]);
 
 
   const handleLogin = (e) => {
     e.preventDefault();
     const newUser = {
-      username: username,
-      password: password,
+      username: email.trim(),
+      password: password.trim(),
     };
 
     loginUser(newUser, dispatch, navigate);
@@ -65,12 +66,12 @@ const Login = () => {
           <form className="login-form" onSubmit={handleLogin}>
             <label className="semiBold font15" htmlFor="email">Email</label>
             <input type="text" className="input" placeholder="Enter your email" required
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
-            {/* {errors.username && <p className="spanError marginBot">{errors.username}</p>} */}
-            {errors.username && (
+            {/* {errors.email && <p className="spanError marginBot">{errors.email}</p>} */}
+            {errors.email && (
               <div className="error-wrapper">
-                <p className="error-message">{errors.username}</p>
+                <p className="error-message">{errors.email}</p>
                 <span className="error-icon" role="img" aria-label="Error icon">❌</span>
               </div>
             )}

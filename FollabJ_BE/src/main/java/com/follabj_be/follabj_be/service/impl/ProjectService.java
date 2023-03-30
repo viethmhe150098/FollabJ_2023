@@ -66,18 +66,19 @@ public class ProjectService implements ProjectInterface {
         AppUser to = userRepository.findByEmail(user.getEmail());
         boolean invitationExisted = invitationRepository.existsByReceiverIdAndProjectId(to.getId(),p.getId());
 
+        boolean existed  = p.getMembers().contains(to);
+        if(existed) {
+            return "already in project"; //Can not invite yourself or members already in your project!
+        }
         if(invitationExisted) {
-            return "Invitation sent. Wait for user acceptance";
+            return "already invited";// This email has already been invited!
         }
 
         if(to == null){
-            return "Not found user";
+            return "Not found user"; //Not found user
         }
         //check existed user
-        boolean existed  = p.getMembers().contains(to);
-        if(existed) {
-            return "Member already in your project";
-        }
+
 //        String content = p.getName();
 //        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 //        LocalDateTime now = LocalDateTime.now();
@@ -87,7 +88,7 @@ public class ProjectService implements ProjectInterface {
         i.setReceiver(to);
         i.setProject(p);
         invitationRepository.save(i);
-        return "Invite member success";
+        return "success";
     }
 
     @Override
