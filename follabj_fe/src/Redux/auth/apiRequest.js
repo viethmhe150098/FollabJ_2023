@@ -36,18 +36,23 @@ export const loginUser = async (user, dispatch, navigate) => {
 
         localStorage.setItem("role_name", role_name);
 
-        //console.log("role_name", role_name);
+        console.log("role_name", role_name);
+
 
 
         //console.log(res)
         dispatch(loginSuccess(res.data));
         // go to home page'
         toast.success('Welcome back! 🧡',)
-        navigate.push("/")
+        if (role_name.includes("ADMIN")) {
+            navigate.push("/admin")
+        } else {
+            navigate.push("/")
+        }
     } catch (error) {
         //console.log(error)
         toast.error('Invalid username or password')
-       
+
     }
 }
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-
+import { toast } from "react-toastify";
 import styled from "styled-components";
 import { addNote } from "../../Redux/note/noteActions";
 
@@ -10,14 +10,17 @@ const NoteModal = ({ close }) => {
 
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
-
   const user_id = useSelector((state) => state.auth.login.currentUser.id)
-
+  const LENGTH30 =  /^[\S\s]{0,30}$/   
   const handleSubmit = (e) => {
     e.preventDefault()
-    const defaultTitle = "Untitled Note"; // set default title
+
+    if (!LENGTH30.test(title)) {
+      toast.warn('Title must be up to 30 characters long!')
+      return;
+    }
     const note = {
-      title: title || defaultTitle, // use the input title if it exists, otherwise use the default title
+      title: title.trim() || "Untitled Note", // use the input title if it exists, otherwise use the default title
       content: ""
     }
 

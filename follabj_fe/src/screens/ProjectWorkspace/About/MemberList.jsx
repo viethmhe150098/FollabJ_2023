@@ -38,13 +38,7 @@ export default function MemberList() {
                 color: 'green',
             }
         }
-        else if (status === 'Delete') {
-            return {
-                background: '#ffadad8f',
-                color: 'red',
-
-            }
-        } else {
+       else {
             return {
                 background: '#59bfff',
                 color: 'white',
@@ -54,7 +48,7 @@ export default function MemberList() {
     return (
         <>
             <div className="Table">
-                <h3 style={{ marginBottom: '30px' }}>Projects List</h3>
+                <h3 style={{ marginBottom: '30px' }}>Members List</h3>
                 <TableContainer
                     component={Paper}
                     style={{ boxShadow: "0px 13px 20px 10px #80808029", minHeight: '381px' }}
@@ -70,14 +64,14 @@ export default function MemberList() {
                         <TableBody style={{ color: "white" }}>
                             {members.map((item, index) => (
                                 <TableRow key={index}>
-                                    <TableCell component="th" scope="row">
+                                    <TableCell>
                                         {item.username}
                                     </TableCell>
                                     <TableCell align="left">
-                                        <button className="status" style={makeStyle('Member')}>Team member</button>
+                                        {index === 0 ? <button className="status" style={makeStyle('Leader')}>Leader</button> : <button className="status" style={makeStyle('Member')}>Team member</button>}
                                     </TableCell>
                                     <TableCell align="left">
-                                        {user_role == "LEADER" && user_id != item.id && <button onClick={() => handleDeleteMember(item.id)} className="status" style={makeStyle('Delete')} >Delete</button>}
+                                        {user_role == "LEADER" && user_id != item.id && <button onClick={() => handleDeleteMember(item.id)} className="status red-btn animate" >Delete</button>}
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -88,5 +82,6 @@ export default function MemberList() {
         </>
     );
 }
+
 
 
