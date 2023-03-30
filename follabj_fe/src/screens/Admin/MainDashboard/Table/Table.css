@@ -1,13 +1,15 @@
-.MuiTableRow-root > * {
+.MuiTableRow-root>* {
   padding: 10px;
 }
 
-.MuiTableRow-root.MuiTableRow-head > * {
+.MuiTableRow-root.MuiTableRow-head>* {
   font-weight: bold !important;
 }
+
 .Table {
   margin-top: 40px;
 }
+
 .Table td,
 th {
   border: none !important;
@@ -16,6 +18,7 @@ th {
 .Table:first-child {
   border-radius: 0.7rem !important;
 }
+
 .status {
   padding: 8px;
   border-radius: 9px;
@@ -36,7 +39,7 @@ th {
 
 
 @media screen and (max-width: 768px) {
-  .Table{
+  .Table {
     position: relative;
     display: flex;
     flex-direction: column;

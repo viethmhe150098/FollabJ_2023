@@ -5,58 +5,71 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { getFiles, uploadFile } from "../../Redux/file/fileActions";
 import { toast } from 'react-toastify';
+import FullButton from "../../components/Buttons/FullButton"
+const FileModal = ({ type, close }) => {
+  const dispatch = useDispatch();
+  const [file, setFile] = useState(null);
+  const [fileSize, setFileSize] = useState(0);
 
-const FileModal = ({type, close}) => {
-    const dispatch  = useDispatch();
-    const [file, setFile] = useState(null);
+  const project_id = useSelector((state) => state.project.currentProject.id);
+  const user_id = useSelector((state) => state.auth.login.currentUser.id);
 
-    const project_id = useSelector((state)=> state.project.currentProject.id);
-    const user_id = useSelector((state)=> state.auth.login.currentUser.id);
-    const handleSubmit = (e) => {
-      const formData = new FormData()
-      formData.append("file", file)
-      formData.append("u_id", user_id)
-      e.preventDefault();
-      if (file != null ) {
-          //console.log(file);
-          dispatch(uploadFile({project_id, data: formData}));
-          close()
-      } else {
-        toast.warn("Please choose a file!"); // display the toast notification
-      }
+  const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50Mb in bytes
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (file != null && fileSize <= MAX_FILE_SIZE) {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("u_id", user_id);
+      dispatch(uploadFile({ project_id, data: formData }));
+      close();
+    } else if (file != null && fileSize > MAX_FILE_SIZE) {
+      toast.warn("File size should be less than 50Mb!"); // display the toast notification
+    } else {
+      toast.warn("Please choose a file!"); // display the toast notification
+    }
   }
 
-    return (
-        <>
-            <Modal>
-                <a className="close" onClick={close}>
-                    &times;
-                </a>
-                {type=="update" && (
-                  <>
-                  <h2>File Detail</h2>
-                  <button onClick={()=> {}} className='greenBg font25 radius6 lightColor tag'>Download</button>
-                  </>
-                )}
-                {type==null && (<h2>Upload File</h2>)}
-                
-                <form id="taskForm" onSubmit={(e)=>{handleSubmit(e)}} encType="multipart/form-data">
-                <   div className="form-group">
-                        <label htmlFor="title">File Upload: </label>
-                        <input
-                            type="file"
-                            id="file"
-                            onChange={(e) => {setFile(e.target.files[0])}}
-                        ></input>
-                    </div>
-                    {/* {modalType=="update" && (<button type="submit">Update Task</button>)} */}
-                    {type==null && (<button type="submit">Upload File</button>)}
-                </form>
-            </Modal>
-        </>
-    );
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+    setFileSize(selectedFile.size);
+  }
+
+  return (
+    <>
+      <Modal>
+        <a className="close" onClick={close}>
+          &times;
+        </a>
+        {type == "update" && (
+          <>
+            <h2>File Detail</h2>
+            <button onClick={() => { }} className='greenBg font25 radius6 lightColor tag'>Download</button>
+          </>
+        )}
+        {type == null && (<h2>Upload File</h2>)}
+
+        <form id="taskForm" onSubmit={(e) => { handleSubmit(e) }} encType="multipart/form-data">
+          <div className="form-group">
+            <label htmlFor="title" className="font18">File Upload: </label>
+            <input
+              type="file"
+              id="file"
+              onChange={handleFileChange}
+            ></input>
+            {fileSize > 0 && (
+              <p className="font18 extraBold" style={{ marginTop: '30px' }}>File size: {(fileSize / (1024)).toFixed(2)}Kb = {(fileSize / (1024 * 1024)).toFixed(2)}Mb</p>
+            )}
+          </div>
+          {type == null && (<FullButton title="Upload File" ></FullButton>)}
+        </form>
+      </Modal>
+    </>
+  );
 }
+
 
 const Modal = styled.div`
 

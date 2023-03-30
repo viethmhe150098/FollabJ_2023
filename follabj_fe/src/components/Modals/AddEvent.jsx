@@ -7,7 +7,8 @@ import DatePicker from "react-datepicker";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { LENGTH30, LENGTH100 } from './regexs.js';
+import FullButton from '../Buttons/FullButton'
 const CreateEventForm = ({ type, close, event }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -62,6 +63,14 @@ const CreateEventForm = ({ type, close, event }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (!LENGTH30.test(title)) {
+      toast.warn('Title must not only contain spaces and be up to 30 characters long!')
+      return;
+    }
+    if (!LENGTH100.test(description)) {
+      toast.warn('Description must be up to 100 characters long!')
+      return;
+    }
     if (startDate > endDate) {
       toast.warn("Start date cannot be after finish date", {
       });
@@ -69,8 +78,8 @@ const CreateEventForm = ({ type, close, event }) => {
     }
 
     const event = {
-      title,
-      description,
+      title: title.trim(),
+      description: description.trim(),
       startDate,
       endDate,
       project_id,
@@ -113,15 +122,24 @@ const CreateEventForm = ({ type, close, event }) => {
 
 
   const handleCommitUpdate = () => {
+    if (!LENGTH30.test(title)) {
+      toast.warn('Title must not only contain spaces and be up to 30 characters long!')
+      return;
+    }
+    if (!LENGTH100.test(description)) {
+      toast.warn('Description must be up to 100 characters long!')
+      return;
+    }
     if (startDate > endDate) {
       toast.warn("Start date cannot be after finish date", {
       });
       return;
     }
+
     const updatedEvent = {
       id: event.id,
-      title,
-      description,
+      title: title.trim(),
+      description: description.trim(),
       startDate,
       endDate,
       project_id,
@@ -184,6 +202,7 @@ const CreateEventForm = ({ type, close, event }) => {
               onChange={(date) => setStartDate(date)}
               dateFormat="dd/MM/yyyy hh:mm a"
               showTimeSelect
+              required
             />
             <label htmlFor="end-date">End Date</label>
             <DatePicker
@@ -193,6 +212,7 @@ const CreateEventForm = ({ type, close, event }) => {
               onChange={(date) => setEndDate(date)}
               dateFormat="dd/MM/yyyy hh:mm a"
               showTimeSelect
+              required
             />
           </div>
           {modalType != null &&
@@ -218,7 +238,7 @@ const CreateEventForm = ({ type, close, event }) => {
               </div>
             ))}
           </div>
-          {modalType == null && (<button type="submit">Create Event</button>)}
+          {modalType == null && (<FullButton title={"Create Event"}></FullButton>)}
         </form>
       </div>
     </Modal>
