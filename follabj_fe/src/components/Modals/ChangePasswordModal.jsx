@@ -28,7 +28,7 @@ const ChangePasswordModal = ({ close }) => {
       return;
     }
     if (!PASSWORD_REGEX.test(newPassword)) {
-      toast.warn("New password must be 8+ characters, at least 1 digit and do not have special characters, include space.");
+      toast.warn("New password must be 8+ characters, at least 1 digit and do not have special characters or space.");
       return;
     }
     // Check if new password and re-entered new password match

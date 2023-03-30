@@ -18,7 +18,7 @@ const Login = () => {
 
 
   // Regex to validate email
-  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+  const emailRegex = /^\s*([a-zA-Z0-9_.-]{1,60})@([a-zA-Z0-9_.-]+\.[a-zA-Z0-9_.-]+)\s*$/;
 
   // Regex to validate password
   const passwordRegex = /^(?=.*\d)(?=.*[a-z])[0-9a-zA-Z]{8,}$/;
@@ -33,13 +33,14 @@ const Login = () => {
     if (!email) {
       // usernameError = 'email is required';
     } else if (!emailRegex.test(email)) {
-      usernameError = 'That email does not look quite right';
+        usernameError = 'Email must be up to 60 characters long and may only contain hyphens, dots, underscores, and alphanumeric characters.'
+
     }
 
     if (!password) {
       // passwordError = 'Password is required';
     } else if (!passwordRegex.test(password)) {
-      passwordError = 'Must be 8+ characters and at least 1 digit';
+      passwordError = 'New password must be 8+ characters, at least 1 digit and do not have special characters or space.';
     }
 
     setErrors({ email: usernameError, password: passwordError });
@@ -72,7 +73,6 @@ const Login = () => {
             {errors.email && (
               <div className="error-wrapper">
                 <p className="error-message">{errors.email}</p>
-                <span className="error-icon" role="img" aria-label="Error icon">❌</span>
               </div>
             )}
             <label className="semiBold font15 " htmlFor="password">Password</label>
@@ -82,9 +82,8 @@ const Login = () => {
             {/* {errors.password && <p className="spanError marginBot">{errors.password}</p>} */}
             {errors.password && (
               <div className="error-wrapper">
-                <p className="error-message">  {errors.password}
+                <p className="error-message ">  {errors.password}
                 </p>
-                <span className="error-icon" role="img" aria-label="Error icon">❌</span>
               </div>
             )}
             <div style={{ marginTop: '10px ' }}></div>
