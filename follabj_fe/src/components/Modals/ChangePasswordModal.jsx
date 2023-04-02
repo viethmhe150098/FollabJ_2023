@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from 'react-toastify';
 import styled from "styled-components";
+import {PASSWORD_REGEX} from './regexs.js';
 
 const ChangePasswordModal = ({ close }) => {
   const [oldPassword, setOldPassword] = useState("");
@@ -10,7 +11,6 @@ const ChangePasswordModal = ({ close }) => {
   const [reNewPassword, setReNewPassword] = useState("");
 
   // Regex to validate password
-  const passwordRegex = /^(?=.*\d)(?=.*[a-z])[0-9a-zA-Z]{8,}$/;
 
 
   const user_id = useSelector((state) => state.auth.login.currentUser.id);
@@ -27,21 +27,16 @@ const ChangePasswordModal = ({ close }) => {
       toast.warn("New password cannot be the same as the current password!");
       return;
     }
+    if (!PASSWORD_REGEX.test(newPassword)) {
+      toast.warn("New password must be 8+ characters, at least 1 digit and do not have special characters or space.");
+      return;
+    }
     // Check if new password and re-entered new password match
     if (newPassword !== reNewPassword) {
       toast.warn("New passwords do not match! ");
       return;
     }
-
-    // Check if new password meets regex requirements
-    if (!passwordRegex.test(newPassword)) {
-      toast.warn("New password must be 8+ characters, at least 1 digit and do not have special characters, include space.");
-      return;
-    }
-    // check backend PasswordDTO to know the name of the field
-
-    // const passwordFormData =
-    // {
+   
     const passwordFormData = {
       req_u_id: user_id,
       old_password: oldPassword,

@@ -1,6 +1,4 @@
 import React from 'react';
-import { useSelector } from "react-redux";
-import { useEffect,useState } from 'react';
 // Sections
 import TopNavbar from "../../components/Nav/TopNavbar";
 import Header from "../../components/Sections/Header";

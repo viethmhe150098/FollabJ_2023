@@ -4,6 +4,8 @@ import styled from "styled-components";
 import "react-datepicker/dist/react-datepicker.css";
 import { addTask, deleteTask, updateTask } from "../../Redux/task/taskActions";
 import { useDispatch } from "react-redux";
+import moment from "moment";
+import { LENGTH30, LENGTH50, LENGTH100 } from './regexs.js';
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -82,17 +84,30 @@ const AddTaskModal = ({ type, close, statusId = 1, task }) => {
   const handleCreateTask = (event) => {
     event.preventDefault();
 
+    if (!LENGTH30.test(title)) {
+      toast.warn('Title must not only contain spaces and be up to 30 characters long!')
+      return;
+    }
+    if (!LENGTH100.test(description)) {
+      toast.warn('Description must be up to 100 characters long!')
+      return;
+    }
+    if (!LENGTH50.test(label)) {
+      toast.warn('Label must be up to 50 characters long!')
+      return;
+    }
     if (startDate > endDate) {
       toast.warn("Start date cannot be after finish date", {
       });
       return;
     }
+
     const taskData = {
       project_id,
       task: {
-        title,
-        description,
-        label,
+        title: title.trim(),
+        description: description.trim(),
+        label: label.trim(),
         startDate,
         endDate,
         statusId,
@@ -119,6 +134,18 @@ const AddTaskModal = ({ type, close, statusId = 1, task }) => {
   }
 
   const handleCommitUpdate = () => {
+    if (!LENGTH30.test(title)) {
+      toast.warn('Title must not only contain spaces and be up to 30 characters long!')
+      return;
+    }
+    if (!LENGTH100.test(description)) {
+      toast.warn('Description must be up to 100 characters long!')
+      return;
+    }
+    if (!LENGTH50.test(label)) {
+      toast.warn('Label must be up to 50 characters long!')
+      return;
+    }
     if (startDate > endDate) {
       toast.warn("Start date cannot be after finish date", {
       });
@@ -126,9 +153,9 @@ const AddTaskModal = ({ type, close, statusId = 1, task }) => {
     }
     const updatedTask = {
       id: task.id,
-      title,
-      description,
-      label,
+      title: title.trim(),
+      description: description.trim(),
+      label: label.trim(),
       startDate,
       endDate,
       statusId,

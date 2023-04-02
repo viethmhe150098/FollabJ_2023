@@ -47,6 +47,7 @@ h1:hover {
   color: black;
 }
 
+
 body {
   background: #fff;
   color: #0B093B;
@@ -297,11 +298,15 @@ body {
 }
 /* BUTTONS*/
 .red-btn {
-    color: red;
-    cursor: pointer;
-    background-color: transparent;
+  background: #ffadad8f;
+  color: red;
+  cursor: pointer;
 }
 
+.red-btn:hover {
+  background-color: #ff0000;
+    color: white;
+}
 /* BACKGROUNDS */
 .darkBg {
   background-color: #211207;

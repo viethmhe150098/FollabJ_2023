@@ -60,13 +60,9 @@ input {
 .error-message {
   color: #ff4d4d;
   font-size: 0.9rem;
-}
-
-.error-icon {
-  font-size: 1.1rem;
-  margin-right: 0.5rem;
   animation: shake 0.3s ease-in-out;
 }
+
 
 @keyframes shake {
   0% {
