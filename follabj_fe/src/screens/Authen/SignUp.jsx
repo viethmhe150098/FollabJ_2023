@@ -6,7 +6,8 @@ import { Link as RouterLink } from "react-router-dom";
 import '../../style/authen.css'
 import FullButton from "../../components/Buttons/FullButton";
 import AuthenNavbar from "../../components/Nav/AuthenNavbar"
-import {PASSWORD_REGEX} from '../../components/Modals/regexs';
+import { PASSWORD_REGEX } from '../../components/Modals/regexs';
+import { toast } from 'react-toastify';
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -14,6 +15,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
 
   const [errors, setErrors] = useState({ username: '', password: '', email: '' });
+  const [disableRegister, setDisableRegister] = useState(true);
 
   const dispatch = useDispatch();
   const navigate = useHistory();
@@ -29,6 +31,11 @@ const SignUp = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
+    console.log(errors)
+    if(errors.username !=='' || errors.password !== '' || errors.email !== '') {
+      toast.error('Please ensure that all registration information is accurate and complete!')
+      return;
+    }
     const newUser = {
       username: username.trim(),
       email: email.trim(),
@@ -62,7 +69,9 @@ const SignUp = () => {
     }
 
     setErrors({ email: emailError, username: usernameError, password: passwordError });
+    setDisableRegister(emailError || usernameError || passwordError); // Set disableRegister to true if there are any errors
   }, [email, username, password]);
+
 
   return (
     <>
@@ -104,7 +113,8 @@ const SignUp = () => {
               </div>
             )}
             <div style={{ marginTop: '10px ' }}></div>
-            <FullButton title={"Register"} />
+            <FullButton title={"Register"} disabled={disableRegister} />
+
           </form>
           <RouterLink to="/login">
             <button className="link-btn">Already have an account? <span className="semiBold"> Login here.</span></button>
