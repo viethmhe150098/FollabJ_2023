@@ -86,63 +86,65 @@ const Cards = () => {
     return numberArray;
   }
 
-  const cardsData = [
-  {
-    title: "New project in day",
-    color: {
-      backGround: "linear-gradient(180deg, #bb67ff 0%, #c484f3 100%)",
-      boxShadow: "0px 10px 20px 0px #e0c6f5",
-    },
-    barValue: 20,
-    value: projectStatistic.by_day,
-    png: UilClipboardAlt,
-    series: [
-      {
-        name: "New project per day",
-        data: getProjectNumberPerDay(),
-      },
-    ],
-    categories: getDaysInMonth()
-  },
-  {
-    title: "New project in month",
-    color: {
-      backGround: "linear-gradient(180deg, #FF919D 0%, #FC929D 100%)",
-      boxShadow: "0px 10px 20px 0px #FDC0C7",
-    },
-    barValue: 40,
-    value: projectStatistic.by_month,
-    png: UilClipboardAlt,
-    series: [
-      {
-        name: "New project per month",
-        data: getProjectNumberPerMonth(),
-      },
-    ],
-    categories: [1,2,3,4,5,6,7,8,9,10,11,12]
-  },
-  {
-    title: "New project in year",
-    color: {
-      backGround:
-        "linear-gradient(rgb(248, 212, 154) -146.42%, rgb(255 202 113) -46.42%)",
-      boxShadow: "0px 10px 20px 0px #F9D59B",
-    },
-    barValue: 60,
-    value: projectStatistic.by_year,
-    png: UilClipboardAlt,
-    series: [
-      {
-        name: "New project per year",
-        data: getProjectNumberPerYear(),
-      },
-    ],
-    categories: [2019,2020,2021,2022,2023]
-  },
-];
+  const [cardsData, setData] = useState([])
 
   useEffect(()=>{
-    dispatch(getProjectStatistics())
+    dispatch(getProjectStatistics()).unwrap().then((result) => {
+      setData([
+        {
+          title: "New project in day",
+          color: {
+            backGround: "linear-gradient(180deg, #bb67ff 0%, #c484f3 100%)",
+            boxShadow: "0px 10px 20px 0px #e0c6f5",
+          },
+          barValue: 20,
+          value: projectStatistic.by_day,
+          png: UilClipboardAlt,
+          series: [
+            {
+              name: "New project per day",
+              data: getProjectNumberPerDay(),
+            },
+          ],
+          categories: getDaysInMonth()
+        },
+        {
+          title: "New project in month",
+          color: {
+            backGround: "linear-gradient(180deg, #FF919D 0%, #FC929D 100%)",
+            boxShadow: "0px 10px 20px 0px #FDC0C7",
+          },
+          barValue: 40,
+          value: projectStatistic.by_month,
+          png: UilClipboardAlt,
+          series: [
+            {
+              name: "New project per month",
+              data: getProjectNumberPerMonth(),
+            },
+          ],
+          categories: [1,2,3,4,5,6,7,8,9,10,11,12]
+        },
+        {
+          title: "New project in year",
+          color: {
+            backGround:
+              "linear-gradient(rgb(248, 212, 154) -146.42%, rgb(255 202 113) -46.42%)",
+            boxShadow: "0px 10px 20px 0px #F9D59B",
+          },
+          barValue: 60,
+          value: projectStatistic.by_year,
+          png: UilClipboardAlt,
+          series: [
+            {
+              name: "New project per year",
+              data: getProjectNumberPerYear(),
+            },
+          ],
+          categories: [2019,2020,2021,2022,2023]
+        },
+      ]);
+    })
   },[])
 
   return (
