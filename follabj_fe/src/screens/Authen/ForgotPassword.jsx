@@ -30,13 +30,15 @@ const ForgotPassword = () => {
   const handleSubmit = (e) => {
 
     e.preventDefault();
+    toast.info('Loading your information. This may take a few moments')
     axios
       .post("http://localhost:8080/user/forgot", { email: email.trim() })
       .then((response) => {
+        toast.dismiss()
         toast.success(response.data.message);
       })
       .catch((error) => {
-        console.log(error.response.data);
+        toast.dismiss()
         toast.error(error.response.data.message);
       });
   }
