@@ -58,6 +58,7 @@ export const loginUser = async (user, dispatch, navigate) => {
 
 export const registerUser = async (user, dispatch, navigate) => {
     dispatch(registerStart());
+    toast.info('Loading your information. This may take a few moments.');
     try {
         await axios.post("http://localhost:8080/signup",
             user,
@@ -67,6 +68,7 @@ export const registerUser = async (user, dispatch, navigate) => {
                 // }
             });
         dispatch(registerSuccess());
+        toast.dismiss();
         toast.success('Register successfully, please CHECK your email!', {
             autoClose: 10000
         })
