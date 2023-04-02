@@ -1,13 +1,14 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { Link as RouterLink} from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { loginUser } from "../../Redux/auth/apiRequest";
 import '../../style/authen.css'
 import FullButton from "../../components/Buttons/FullButton";
 import AuthenNavbar from "../../components/Nav/AuthenNavbar";
 import { useState, useEffect } from 'react';
-import { LENGTH30, LENGTH50, LENGTH100 } from '../../components/Modals/regexs';
+import { toast } from 'react-toastify';
+
 const Login = () => {
   const navigate = useHistory();
   // isLoggedIn && navigate.push("/");
@@ -33,7 +34,7 @@ const Login = () => {
     if (!email) {
       // usernameError = 'email is required';
     } else if (!emailRegex.test(email)) {
-        usernameError = 'Email must be up to 60 characters long and may only contain hyphens, dots, underscores, and alphanumeric characters.'
+      usernameError = 'Email must be up to 60 characters long and may only contain hyphens, dots, underscores, and alphanumeric characters.'
 
     }
 
@@ -49,6 +50,10 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    if ( errors.password !== '' || errors.email !== '') {
+      toast.error('Please ensure that all information is accurate and complete!')
+      return;
+    }
     const newUser = {
       username: email.trim(),
       password: password.trim(),

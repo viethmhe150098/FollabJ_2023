@@ -28,12 +28,12 @@ const Invitations = () => {
 
     const handleAccept = (invitation) => {
         dispatch(acceptInvitation({ user_id, invitation }))
-        toast.success(`Accepted to join project ${invitation.project.name}!` )
+        toast.success(`Accepted to join project ${invitation.project.name}!`)
     }
 
     const handleReject = (invitation) => {
         dispatch(rejectInvitation({ user_id, invitation }))
-        toast.success(`Rejected to join project ${invitation.project.name}!` )
+        toast.success(`Rejected to join project ${invitation.project.name}!`)
 
     }
 
@@ -59,45 +59,42 @@ const Invitations = () => {
     return (
 
         <div className="container">
-
             <h1>Invitations</h1>
-            {user_invitations.length === 0 ?
-                <EmptyMessage>No invitations found!</EmptyMessage> :
-                <div className="Table">
-                    <TableContainer
-                        component={Paper}
-                        style={{ boxShadow: "0px 13px 20px 10px #80808029", marginBottom: '50px' }}
-                    >
-
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Project Name</TableCell>
-                                    <TableCell align="left">Project Leader's Mail</TableCell>
-
-                                </TableRow>
-                            </TableHead>
-                            <TableBody style={{ color: "white" }}>
-                                {user_invitations.map((invitation, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell component="th" scope="row">
-                                            {invitation.project.name}
-                                        </TableCell>
-                                        <TableCell component="th" scope="row">
-                                            {invitation.email}
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            <button onClick={() => handleAccept(invitation)} className="status" style={makeStyle('Accept')}>Accept</button>
-                                            <button  onClick={() => handleReject(invitation)} className="status" style={makeStyle('Decline')}>Decline</button>
-                                        </TableCell>
-
+            {user_invitations === undefined ?
+                <div>Loading...</div> :
+                (user_invitations.length === 0 ?
+                    <EmptyMessage>No invitations found!</EmptyMessage> :
+                    <div className="Table">
+                        <TableContainer
+                            component={Paper}
+                            style={{ boxShadow: "0px 13px 20px 10px #80808029", marginBottom: '50px' }}
+                        >
+                            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Project Name</TableCell>
+                                        <TableCell align="left">Project Leader's Mail</TableCell>
                                     </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </div>
-            }
+                                </TableHead>
+                                <TableBody style={{ color: "white" }}>
+                                    {user_invitations.map((invitation, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell component="th" scope="row">
+                                                {invitation.project.name}
+                                            </TableCell>
+                                            <TableCell component="th" scope="row">
+                                                {invitation.email}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <button onClick={() => handleAccept(invitation)} className="status" style={makeStyle('Accept')}>Accept</button>
+                                                <button onClick={() => handleReject(invitation)} className="status" style={makeStyle('Decline')}>Decline</button>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </div>)}
         </div>
     )
 }

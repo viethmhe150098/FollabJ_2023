@@ -82,6 +82,7 @@ export const deleteMember = createAsyncThunk("DELETE_MEMBER", async({project_id,
     try {
         const response = await projectAPI.deleteMember(project_id, member_id)
         //console.log(response)
+        toast.success('Deleted member successfully!')
         return member_id
     } catch (error) {
         console.log(error);

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-
 import styled from "styled-components";
 import { assignLeader, leaveProject, leaveProjectAndAssignNewLeader } from "../../Redux/project/projectActions";
 

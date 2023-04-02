@@ -11,8 +11,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import Popup from "reactjs-popup";
 import "../../Admin/MainDashboard/Table/Table.css";
-
+import ConfirmationModal from "../../../components/Modals/ConfirmationModal";
 export default function MemberList() {
 
     const dispatch = useDispatch();
@@ -38,7 +39,7 @@ export default function MemberList() {
                 color: 'green',
             }
         }
-       else {
+        else {
             return {
                 background: '#59bfff',
                 color: 'white',
@@ -70,9 +71,17 @@ export default function MemberList() {
                                     <TableCell align="left">
                                         {index === 0 ? <button className="status" style={makeStyle('Leader')}>Leader</button> : <button className="status" style={makeStyle('Member')}>Team member</button>}
                                     </TableCell>
-                                    <TableCell align="left">
-                                        {user_role == "LEADER" && user_id != item.id && <button onClick={() => handleDeleteMember(item.id)} className="status red-btn animate" >Delete</button>}
-                                    </TableCell>
+
+                                    <Popup modal trigger={<TableCell align="left">
+                                        {user_role == "LEADER" && user_id != item.id &&
+                                            <button className="status red-btn animate">
+                                                Delete
+                                            </button>}
+                                    </TableCell>}>
+                                        {close => <ConfirmationModal message="Are you sure you want to delete?"
+                                            onConfirm={() => handleDeleteMember(item.id)}
+                                            onCancel={close} />}
+                                    </Popup>
                                 </TableRow>
                             ))}
                         </TableBody>
