@@ -10,6 +10,8 @@ public interface InvitationInterface  {
 
     Invitation addInvitation(Invitation invitation);
 
+    Invitation getInvitationByReceiverIdAndProjectId(Long receiver_id, Long project_id);
+
     void deleteInvitation(Long invitation_id);
 
     List<Invitation> getInvitationsByUserId(Long user_id);

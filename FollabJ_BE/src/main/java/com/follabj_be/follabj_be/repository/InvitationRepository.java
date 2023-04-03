@@ -18,6 +18,8 @@ public interface InvitationRepository extends JpaRepository<Invitation, Long> {
     @Query("select i from Invitation i where i.receiver.id=?1 and i.status=0")
     List<Invitation> findByUserId(Long user_id);
 
+    Invitation findByReceiverIdAndProjectId(Long receiver_id, Long project_id);
+
     @Modifying
     @Transactional
     @Query("update from Invitation i set i.status = ?1 where i.id = ?2")

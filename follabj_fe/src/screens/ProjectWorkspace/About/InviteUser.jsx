@@ -120,11 +120,11 @@ const InviteUser = () => {
             <li key={index}>{invitedEmail}</li>
           ))} */}
 
-          {
+          {/* {
             project_invitations.map((invitation, index) =>
               <li key={index}>{invitation.receiver.email}</li>
             )
-          }
+          } */}
         </ul>
       </div>
     </div>

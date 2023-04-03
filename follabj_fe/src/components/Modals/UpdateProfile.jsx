@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { LENGTH30 } from './regexs.js';
 
 import styled from "styled-components";
 import { getUserProfileByUserId, updateUserProfile } from "../../Redux/userProfile/userProfileAction";
@@ -20,73 +21,22 @@ const UpdateProfileModal = ({ close }) => {
 
   const dispatch = useDispatch();
 
-
-  //   const [oldPassword, setOldPassword] = useState("");
-  //   const [newPassword, setNewPassword] = useState("");
-  //   const [reNewPassword, setReNewPassword] = useState("");
-
   //   // Regex to validate password
-  const phoneRegex = /^0\d{8}$/;
-  const usernameRegex = /^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$/;
-
-  //   const user_id = useSelector((state) => state.auth.login.currentUser.id);
-
-  //   const handleSubmit = (e) => {
-  //     e.preventDefault();
-
-  //     // Check if old password is not empty
-  //   if (!oldPassword) {
-  //     alert("Please enter your old password.");
-  //     return;
-  //   }
-
-  //   // Check if new password and re-entered new password match
-  //   if (newPassword !== reNewPassword) {
-  //     alert("New passwords do not match.");
-  //     return;
-  //   }
-
-  //   // Check if new password meets regex requirements
-  //   if (!passwordRegex.test(newPassword)) {
-  //     alert("New password must be at least 8 characters long and contain at least one number and one lowercase letter.");
-  //     return;
-  //   }
-  //     // check backend PasswordDTO to know the name of the field
-
-  //     // const passwordFormData =
-  //     // {
-  //     const passwordFormData = {
-  //       req_u_id: user_id,
-  //       old_password: oldPassword,
-  //       new_password: newPassword,
-  //     };
-  //     // }
-
-  //     // using axios.post to send data with access token
-  //     //axios.post(url, data, config)
-  //     axios.post("http://localhost:8080/user/password/"+user_id, passwordFormData, {
-  //         headers : {
-  //           'Authorization' : "Bearer "+ localStorage.getItem("access_token")
-  //       }
-  //       })
-  //       .then((response) => {
-  //         console.log(response);
-  //         // Handle success
-  //         close();
-  //       })
-  //       .catch((error) => {
-  //         console.error(error);
-  //         // Handle error
-  //       });
-  //   };
+  const phoneRegex = /^0\d{8}$/
+  const usernameRegex = /^\s*[a-zA-Z0-9]{5,30}\s*$/
+  const fullnameRegex = /^\s*[a-zA-Z]{2,}(?:\s+[a-zA-Z]+){1,4}\s*$/
   const handleSubmit = (e) => {
     e.preventDefault();
     if (fullname === oldfullname && username === oldusername && phone_number === oldphonenumber) {
       toast.warn('No changes were made to your information.')
       return;
     }
+    if (!fullnameRegex.test(fullname)) {
+      toast.warn("Fullname must be between 5 and 30 characters long and must not contain any special characters.");
+      return;
+    }
     if (!usernameRegex.test(username)) {
-      toast.warn("Username must not contain space and special characters");
+      toast.warn("Username must be between 5 and 30 characters long and must not contain any spaces or special characters.");
       return;
     }
     if (!phoneRegex.test(phone_number)) {
@@ -95,9 +45,9 @@ const UpdateProfileModal = ({ close }) => {
     }
     const updateDataProfile = {
       u_id: user_id,
-      fullname,
-      username,
-      phone_number
+      fullname: fullname.trim(),
+      username: username.trim(),
+      phone_number: phone_number.trim()
     };
     dispatch(updateUserProfile({
       user_id,

@@ -24,7 +24,6 @@ public class LeaderRequest {
 
     @ManyToOne
     @JoinColumn(name = "u_id", referencedColumnName = "id")
-    @JsonIgnore
     private AppUser user;
 
     private String message;

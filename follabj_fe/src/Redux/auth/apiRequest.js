@@ -1,5 +1,4 @@
 import axios from "axios";
-import { async } from "q";
 import jwtDecode from 'jwt-decode';
 import { loginFailed, loginStart, loginSuccess, registerFailed, registerStart, registerSuccess } from "./authSlice";
 import { createProjectFailed, createProjectStart, createProjectSuccess, getProjectStart } from "../project/projectSlice";
@@ -36,23 +35,35 @@ export const loginUser = async (user, dispatch, navigate) => {
 
         localStorage.setItem("role_name", role_name);
 
-        //console.log("role_name", role_name);
+        console.log("role_name", role_name);
+
 
 
         //console.log(res)
-        dispatch(loginSuccess(res.data));
-        // go to home page'
-        toast.success('Welcome back! 🧡',)
-        navigate.push("/")
+        if (res.data.status === "1") {
+            dispatch(loginSuccess(res.data));
+            toast.success('Welcome back! 🧡')
+            navigate.push("/")
+        } else if (res.data.status === "0") {
+            toast.info("You need to active your account first with the code sent to your email address!")
+            localStorage.clear()
+        } else {
+            toast.error("You have been banned!")
+            localStorage.clear()
+        }
+        if (role_name.includes("ADMIN")) {
+            navigate.push("/admin/dashboard")
+        }
     } catch (error) {
         //console.log(error)
         toast.error('Invalid username or password')
-       
+
     }
 }
 
 export const registerUser = async (user, dispatch, navigate) => {
     dispatch(registerStart());
+    toast.info('Loading your information. This may take a few moments.');
     try {
         await axios.post("http://localhost:8080/signup",
             user,
@@ -62,6 +73,7 @@ export const registerUser = async (user, dispatch, navigate) => {
                 // }
             });
         dispatch(registerSuccess());
+        toast.dismiss();
         toast.success('Register successfully, please CHECK your email!', {
             autoClose: 10000
         })

@@ -35,6 +35,7 @@ public class LeaderRequestService implements LeaderRequestInterface {
             //emailSender.sendEmail(l.getUser().getEmail(), buildEmail.becomeLeader(l.getUser().getUsername()));
 
         }else{
+
             l.setStatus(LeaderRequest.requestStatus.REJECT);
         }
         leaderRequestRepository.save(l);
@@ -50,6 +51,7 @@ public class LeaderRequestService implements LeaderRequestInterface {
             LeaderRequest l = new LeaderRequest();
             l.setUser(user);
             l.setMessage(leaderRequestDTO.getMessage());
+
             leaderRequestRepository.save(l);
             return "The request has been sent to the administrator";
         }
@@ -59,6 +61,17 @@ public class LeaderRequestService implements LeaderRequestInterface {
     public Page<LeaderRequest> getListRequest(int page) {
         Pageable paging = PageRequest.of(page,7);
         return leaderRequestRepository.getPendingRequest(paging);
+    }
+
+    @Override
+    public LeaderRequest getRequestByUserId(Long u_id) {
+        return leaderRequestRepository.findByUserId(u_id);
+    }
+
+    @Override
+    public Page<LeaderRequest> getListRequest(int page, LeaderRequest.requestStatus status) {
+        Pageable paging = PageRequest.of(page,7);
+        return leaderRequestRepository.getRequestsByStatus(paging, status);
     }
 
 

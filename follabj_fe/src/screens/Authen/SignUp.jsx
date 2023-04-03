@@ -6,27 +6,36 @@ import { Link as RouterLink } from "react-router-dom";
 import '../../style/authen.css'
 import FullButton from "../../components/Buttons/FullButton";
 import AuthenNavbar from "../../components/Nav/AuthenNavbar"
+import { PASSWORD_REGEX } from '../../components/Modals/regexs';
+import { toast } from 'react-toastify';
+
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const [errors, setErrors] = useState({ username: '', password: '', email: '' });
+  const [disableRegister, setDisableRegister] = useState(true);
 
   const dispatch = useDispatch();
   const navigate = useHistory();
 
   // Regex to validate email
-  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+  const emailRegex = /^\s*([a-zA-Z0-9_.-]{1,60})@([a-zA-Z0-9_.-]+\.[a-zA-Z0-9_.-]+)\s*$/;
 
   // Regex to validate password
-  const passwordRegex = /^(?=.*\d)(?=.*[a-z])[0-9a-zA-Z]{8,}$/;
+  const PASSWORD_REGEX = /^(?=.*\d)[a-zA-Z0-9]{8,}$/
 
   // Regex to validate username
-  const usernameRegex = /^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$/;
+  const usernameRegex = /^\s*[a-zA-Z0-9]{5,30}\s*$/
 
   const handleRegister = (e) => {
     e.preventDefault();
+    console.log(errors)
+    if(errors.username !=='' || errors.password !== '' || errors.email !== '') {
+      toast.error('Please ensure that all registration information is accurate and complete!')
+      return;
+    }
     const newUser = {
       username: username.trim(),
       email: email.trim(),
@@ -44,23 +53,25 @@ const SignUp = () => {
     if (!email) {
       // emailError = 'Email is required';
     } else if (!emailRegex.test(email)) { // Validate email format
-      emailError = 'That email does not look quite right';
+      emailError = 'Email must be up to 60 characters long and may only contain hyphens, dots, underscores, and alphanumeric characters.'
     }
 
     if (!username) {
       // usernameError = 'Username is required';
     } else if (!usernameRegex.test(username)) { // Validate username format
-      usernameError = 'Username cannot contain special characters';
+      usernameError = 'Username must be between 5 and 30 characters long and must not contain any spaces or special characters.';
     }
 
     if (!password) {
       // passwordError = 'Password is required';
-    } else if (!passwordRegex.test(password)) {
-      passwordError = 'Must be 8+ characters and at least 1 digit';
+    } else if (!PASSWORD_REGEX.test(password)) {
+      passwordError = 'New password must be 8+ characters, at least 1 digit and do not have special characters or space.';
     }
 
     setErrors({ email: emailError, username: usernameError, password: passwordError });
+    setDisableRegister(emailError || usernameError || passwordError); // Set disableRegister to true if there are any errors
   }, [email, username, password]);
+
 
   return (
     <>
@@ -77,10 +88,9 @@ const SignUp = () => {
             {errors.email && (
               <div className="error-wrapper">
                 <p className="error-message">{errors.email}</p>
-                <span className="error-icon" role="img" aria-label="Error icon">❌</span>
               </div>
             )}
-            <label className="semiBold font15" htmlFor="email">Username</label>
+            <label className="semiBold font15" htmlFor="username">Username</label>
             <input type="text" placeholder="Enter your username" required
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -88,7 +98,6 @@ const SignUp = () => {
             {errors.username && (
               <div className="error-wrapper">
                 <p className="error-message">{errors.username}</p>
-                <span className="error-icon" role="img" aria-label="Error icon">❌</span>
               </div>
             )}
             <label className="semiBold font15" htmlFor="email">Password</label>
@@ -101,11 +110,11 @@ const SignUp = () => {
                 <p className="error-message">
                   {errors.password}
                 </p>
-                <span className="error-icon" role="img" aria-label="Error icon">❌</span>
               </div>
             )}
             <div style={{ marginTop: '10px ' }}></div>
-            <FullButton title={"Register"} />
+            <FullButton title={"Register"} disabled={disableRegister} />
+
           </form>
           <RouterLink to="/login">
             <button className="link-btn">Already have an account? <span className="semiBold"> Login here.</span></button>

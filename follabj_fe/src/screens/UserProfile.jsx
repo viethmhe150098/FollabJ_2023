@@ -3,83 +3,85 @@ import styled from "styled-components";
 import { useHistory } from "react-router";
 import Popup from "reactjs-popup";
 import ChangePasswordModal from "../components/Modals/ChangePasswordModal";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getUserProfileByUserId } from "../Redux/userProfile/userProfileAction";
 import UpdateProfileModal from "../components/Modals/UpdateProfile";
-import TopNavbar from "../components/Nav/TopNavbar";
-
+import AuthenNavBar from "../components/Nav/AuthenNavbar";
+import Invitations from '../screens/ProjectList/Invitations'
 const UserProfile = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
-    const history = useHistory();
-    const dispatch = useDispatch();
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const history = useHistory();
+  const dispatch = useDispatch();
 
-    const user_id = useSelector((state) => state.auth.login.currentUser.id);
+  const user_id = useSelector((state) => state.auth.login.currentUser.id);
 
-    const userProfile = useSelector((state) => state.userProfile.userInfo);
+  const userProfile = useSelector((state) => state.userProfile.userInfo);
 
-    useEffect(() => {
-        dispatch(getUserProfileByUserId(user_id));
-    }, []);
+  useEffect(() => {
+    dispatch(getUserProfileByUserId(user_id));
+  }, []);
 
-    // handle logout hear
-    const handleLogout = () => {
-        localStorage.clear();
-        setIsLoggedIn(false);
-        history.push("/login");
-    };
+  // handle logout hear
+  const handleLogout = () => {
+    localStorage.clear();
+    setIsLoggedIn(false);
+    history.push("/login");
+  };
 
-    return (
-        <>
-            <TopNavbar />
-            <UserProfileContainer>
-                <UserProfileHeader>User Profile</UserProfileHeader>
-                <UserInformation>
-                    <Label>Email:</Label>
-                    <UserInfo>{userProfile?.email}</UserInfo>
-                </UserInformation>
-                <UserInformation>
-                    <Label>Username:</Label>
-                    <UserInfo>{userProfile?.username}</UserInfo>
-                </UserInformation>
-                {/* <UserInformation>
+  return (
+    <>
+      <AuthenNavBar />
+      <UserProfileContainer>
+        <div className="infomations">
+          <UserProfileHeader>User Profile</UserProfileHeader>
+          <UserInformation>
+            <Label>Email:</Label>
+            <UserInfo>{userProfile?.email}</UserInfo>
+          </UserInformation>
+          <UserInformation>
+            <Label>Username:</Label>
+            <UserInfo>{userProfile?.username}</UserInfo>
+          </UserInformation>
+          {/* <UserInformation>
                     <Label>ID:</Label>
                     <UserInfo>{userProfile?.id}</UserInfo>
                 </UserInformation> */}
-                <UserInformation>
-                    <Label>Fullname:</Label>
-                    <UserInfo>{userProfile?.fullname}</UserInfo>
-                </UserInformation>
-                <UserInformation>
-                    <Label>Phone number:</Label>
-                    <UserInfo>{userProfile?.phone_number}</UserInfo>
-                </UserInformation>
-                <div style={{ display: 'inline-flex' }}>
-                    <Popup modal trigger={
-                        <ChangePasswordButton className="animate">
-                            Change password
-                        </ChangePasswordButton>
-                    }
-                    >
-                        {(close) => <ChangePasswordModal close={close} />}
-                    </Popup>
+          <UserInformation>
+            <Label>Fullname:</Label>
+            <UserInfo>{userProfile?.fullname}</UserInfo>
+          </UserInformation>
+          <UserInformation>
+            <Label>Phone number:</Label>
+            <UserInfo>{userProfile?.phone_number}</UserInfo>
+          </UserInformation>
+          <div style={{ display: 'inline-flex' }}>
+            <Popup modal trigger={
+              <ChangePasswordButton className="animate">
+                Change password
+              </ChangePasswordButton>
+            }
+            >
+              {(close) => <ChangePasswordModal close={close} />}
+            </Popup>
 
-                    <Popup modal trigger={
-                        <UpdateButton className="animate">
-                            Update profile
-                        </UpdateButton>
-                    }
-                    >
-                        {(close) => <UpdateProfileModal close={close} />}
-                    </Popup>
+            <Popup modal trigger={
+              <UpdateButton className="animate">
+                Update profile
+              </UpdateButton>
+            }
+            >
+              {(close) => <UpdateProfileModal close={close} />}
+            </Popup>
 
-                    <LogoutButton className="animate" onClick={() => handleLogout()}>
-                        Logout
-                    </LogoutButton>
-                </div>
-            </UserProfileContainer>
-        </>
-    );
+            <LogoutButton className="animate" onClick={() => handleLogout()}>
+              Logout
+            </LogoutButton>
+          </div>
+        </div>
+        <div className="invitations"> <Invitations/></div>
+      </UserProfileContainer>
+    </>
+  );
 };
 
 const UserProfileContainer = styled.div`
@@ -88,11 +90,11 @@ const UserProfileContainer = styled.div`
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+  display: flex; 
+  flex-wrap: wrap;
 `;
 
 const UserProfileHeader = styled.h1`
-  font-size: 36px;
-  font-weight: 700;
   margin-bottom: 40px;
 `;
 

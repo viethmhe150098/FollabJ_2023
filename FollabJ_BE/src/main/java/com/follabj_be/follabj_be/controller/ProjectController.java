@@ -1,13 +1,17 @@
 package com.follabj_be.follabj_be.controller;
 
 import com.follabj_be.follabj_be.dto.CreateProjectDTO;
+import com.follabj_be.follabj_be.dto.InvitationDTO;
 import com.follabj_be.follabj_be.dto.UserDTO;
 import com.follabj_be.follabj_be.entity.AppUser;
+import com.follabj_be.follabj_be.entity.Invitation;
 import com.follabj_be.follabj_be.entity.Project;
 import com.follabj_be.follabj_be.exception.GroupException;
+import com.follabj_be.follabj_be.service.impl.InvitationService;
 import com.follabj_be.follabj_be.service.impl.ProjectService;
 import com.follabj_be.follabj_be.service.impl.UserService;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,7 +27,11 @@ import java.util.Map;
 public class ProjectController {
     private final ProjectService projectService;
 
+    private final InvitationService invitationService;
+
     private UserService userService;
+
+    private ModelMapper modelMapper;
 
     @PostMapping(value = "/createproject")
     @PreAuthorize("hasAuthority('LEADER')")
@@ -35,11 +43,15 @@ public class ProjectController {
 
     @PostMapping(value = "/project/{p_id}/addmembers/leader")
     @PreAuthorize("hasAuthority('LEADER')")
-    public ResponseEntity<Map<String, String>> sendInvitation(@RequestBody UserDTO userDTO, @PathVariable("p_id") Long p_id) {
+    public ResponseEntity<Map<String, Object>> sendInvitation(@RequestBody UserDTO userDTO, @PathVariable("p_id") Long p_id) {
         String message = projectService.sendInvitation(userDTO, p_id);
-        Map<String, String> res = new HashMap<>();
+        Map<String, Object> res = new HashMap<>();
         res.put("status", HttpStatus.OK.toString());
         res.put("message", message);
+
+        Invitation invitation = invitationService.getInvitationByReceiverIdAndProjectId(userDTO.getId(), p_id);
+        InvitationDTO invitationDTO = modelMapper.map(invitation, InvitationDTO.class);
+        res.put("content", invitationDTO);
 
         return new ResponseEntity<>(res, HttpStatus.OK);
     }

@@ -36,6 +36,18 @@ public class UserController {
 //        return new ResponseEntity<>(list, HttpStatus.OK);
 //    }
 
+    @GetMapping("/{u_id}/request")
+    @PreAuthorize("hasAuthority('ACTIVE_USER')")
+    public ResponseEntity<Map<Object, Object>> getUserRequest(@PathVariable Long u_id){
+        Map<Object, Object> res = new HashMap<>();
+        LeaderRequest request = leaderRequestService.getRequestByUserId(u_id);
+
+        res.put("status", HttpStatus.OK);
+        res.put("content", request);
+
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
     @PostMapping("/request")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
     public ResponseEntity<String> sendRequest(@RequestBody LeaderRequestDTO leaderRequestDTO) {

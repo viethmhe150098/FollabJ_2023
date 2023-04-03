@@ -36,6 +36,11 @@ public class InvitationService implements InvitationInterface {
     }
 
     @Override
+    public Invitation getInvitationByReceiverIdAndProjectId(Long receiver_id, Long project_id) {
+        return invitationRepository.findByReceiverIdAndProjectId(receiver_id, project_id);
+    }
+
+    @Override
     public void deleteInvitation(Long invitation_id) {
         invitationRepository.deleteById(invitation_id);
     }
@@ -49,6 +54,5 @@ public class InvitationService implements InvitationInterface {
     public void updateStatus(int status, Long i_id) {
         Invitation i = invitationRepository.findById(i_id).orElseThrow(() -> new ObjectNotFoundException("Not found invitation", i_id.toString()));
         invitationRepository.updateStatus(status, i_id);
-
     }
 }

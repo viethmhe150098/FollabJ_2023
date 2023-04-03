@@ -13,7 +13,8 @@ import FullButton from "../Buttons/FullButton";
 import LogoIcon from "../../assets/svg/Logo";
 import BurgerIcon from "../../assets/svg/BurgerIcon";
 import { useSelector } from "react-redux";
-import axios from "axios";
+import instance from "../../Redux/axiosInstance";
+import SendLeaderRequestModal from "../Modals/SendLeaderRequest";
 
 export default function PrjTopNavBar() {
   const [y, setY] = useState(window.scrollY);
@@ -30,23 +31,6 @@ export default function PrjTopNavBar() {
 
   const user_id = useSelector((state) => state.auth.login.currentUser.id)
   const user_email = useSelector((state) => state.auth.login.currentUser.email)
-
-
-  const handleSendRequest = () => {
-    const leaderRequest = {
-      u_id: user_id,
-      u_fullname : user_email,
-      u_id_number : "placeholder",
-    }
-
-    axios.post("http://localhost:8080/user/request", leaderRequest, {
-      headers : {
-          'Authorization' : "Bearer "+ localStorage.getItem("access_token")
-      }
-    })
-    toast.success("Your request is being verified, please wait!");
-
-  }
 
   return (
     <>
@@ -78,7 +62,11 @@ export default function PrjTopNavBar() {
           {
             !roles.includes("LEADER") &&
             <UlWrapperRight className="flexNullCenter">
-                <FullButton title="Send Leader Request" action={()=>{handleSendRequest()}}/>
+                <Popup modal trigger={<li>
+                    <FullButton title="Send Leader Request" />
+                </li>}>
+                    {close => <SendLeaderRequestModal close={close} />}
+                </Popup>
             </UlWrapperRight>
           }
         </NavInner>

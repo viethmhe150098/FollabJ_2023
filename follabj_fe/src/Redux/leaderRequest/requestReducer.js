@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { acceptRequest, getRequests } from "./requestActions";
+import { acceptRequest, declineRequest, getRequests } from "./requestActions";
 
 
 const initialState = []
@@ -10,6 +10,9 @@ export const requestReducer = createReducer(initialState,(builder)=>{
         return action.payload.content.content
     })
     .addCase(acceptRequest.fulfilled, (state,action) => {
+        return state.filter((request) => request.id != action.payload)
+    })
+    .addCase(declineRequest.fulfilled, (state,action) => {
         return state.filter((request) => request.id != action.payload)
     })
 })

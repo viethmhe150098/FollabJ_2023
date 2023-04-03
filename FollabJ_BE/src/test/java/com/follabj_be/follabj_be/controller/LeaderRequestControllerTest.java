@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -33,7 +34,7 @@ class LeaderRequestControllerTest {
     void getIsPendingReturnsEmptyMapWhenNoPendingRequests() {
         Page<LeaderRequest> pageRequest = new PageImpl<>(Collections.emptyList());
         when(leaderRequestService.getListRequest(1)).thenReturn(pageRequest);
-        ResponseEntity<Map<Object, Object>> response = leaderRequestController.getIsPending(1);
+        ResponseEntity<Map<Object, Object>> response = leaderRequestController.getIsPending(1, Optional.of(LeaderRequest.requestStatus.PENDING));
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody().get("status")).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody().get("content")).isEqualTo(pageRequest);
@@ -47,7 +48,7 @@ class LeaderRequestControllerTest {
         LeaderRequest leaderRequest = new LeaderRequest();
         Page<LeaderRequest> pageRequest = new PageImpl<>(Collections.singletonList(leaderRequest));
         when(leaderRequestService.getListRequest(1)).thenReturn(pageRequest);
-        ResponseEntity<Map<Object, Object>> response = leaderRequestController.getIsPending(1);
+        ResponseEntity<Map<Object, Object>> response = leaderRequestController.getIsPending(1, Optional.of(LeaderRequest.requestStatus.PENDING));
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody().get("status")).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody().get("content")).isEqualTo(pageRequest);
@@ -63,7 +64,7 @@ class LeaderRequestControllerTest {
         Page<LeaderRequest> pageRequest = new PageImpl<>(Collections.singletonList(leaderRequest));
         when(leaderRequestService.getListRequest(page)).thenReturn(pageRequest);
 
-        ResponseEntity<Map<Object, Object>> response = leaderRequestController.getIsPending(page);
+        ResponseEntity<Map<Object, Object>> response = leaderRequestController.getIsPending(page, Optional.of(LeaderRequest.requestStatus.PENDING));
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody().get("status")).isEqualTo(HttpStatus.OK);

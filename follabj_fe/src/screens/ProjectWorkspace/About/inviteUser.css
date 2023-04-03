@@ -36,23 +36,6 @@
   background-color: #d3690d;
 }
 
-.feedback-message {
-  font-size: 14px;
-  font-weight: bold;
-  margin-left: 20px;
-  padding: 10px;
-  border-radius: 4px;
-  color: #fff;
-  text-align: center;
-  min-width: 252px;
-  opacity: 0;
-  animation-name: fadeOut;
-  animation-duration: 3s;
-}
-
-.feedback-message.success {
-  background-color: #28a745;
-}
 
 .feedback-message.invalid,
 .feedback-message.already-invited {

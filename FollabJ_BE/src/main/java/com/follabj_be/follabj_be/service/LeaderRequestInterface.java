@@ -12,4 +12,10 @@ public interface LeaderRequestInterface {
     String saveRequest(LeaderRequestDTO leaderRequestDTO);
 
     Page<LeaderRequest> getListRequest(int page);
+
+    LeaderRequest getRequestByUserId(Long u_id);
+
+    Page<LeaderRequest> getListRequest(int page, LeaderRequest.requestStatus status);
+
+
 }

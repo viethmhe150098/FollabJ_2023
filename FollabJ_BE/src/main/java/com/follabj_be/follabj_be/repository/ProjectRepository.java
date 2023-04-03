@@ -16,7 +16,7 @@ import java.util.Optional;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
-
+    // %dd/%MM/%YYYY
 
     @Query("Select p.members from Project p where p.id=?1")
     List<AppUser> getMembersById(Long project_id);
@@ -35,35 +35,35 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query("select p.id from Project p where p.leader.id=?1")
     List<Long> getProjectIdByLeaderID(Long u_id);
 
-    @Query(nativeQuery = true, value = "select COUNT(id) from project where YEAR(str_to_date(created_date, '%Y/%m/%d %T')) = ?1")
+    @Query(nativeQuery = true, value = "select COUNT(id) from project where YEAR(str_to_date(created_date, '%d/%c/%Y')) = ?1")
     String countByYear(int year);
 
-    @Query(nativeQuery = true, value = "select COUNT(id) from project where MONTH(str_to_date(created_date, '%Y/%m/%d %T')) = ?1")
+    @Query(nativeQuery = true, value = "select COUNT(id) from project where MONTH(str_to_date(created_date, '%d/%c/%Y')) = ?1")
     String countByMonth(int month);
 
-    @Query(nativeQuery = true, value = "select COUNT(id) from project where DAY(str_to_date(created_date, '%Y/%m/%d %T')) = ?1")
+    @Query(nativeQuery = true, value = "select COUNT(id) from project where DAY(str_to_date(created_date, '%d/%c/%Y')) = ?1")
     String countByDay(int day);
 
     @Query("Select p from Project p")
     Page<Project> getAllProject(Pageable pageable);
 
     @Query(nativeQuery = true, value="SELECT COUNT(ID) as count, \n" +
-            "MONTH(str_to_date(created_date, '%Y/%m/%d %T')) as countBy\n" +
+            "MONTH(str_to_date(created_date, '%d/%c/%Y')) as countBy\n" +
             "FROM project\n" +
-            "where YEAR(str_to_date(created_date, '%Y/%m/%d %T')) = YEAR(CURDATE()) \n" +
-            "group by MONTH(str_to_date(created_date, '%Y/%m/%d %T'))")
+            "where YEAR(str_to_date(created_date, '%d/%c/%Y')) = YEAR(CURDATE()) \n" +
+            "group by MONTH(str_to_date(created_date, '%d/%c/%Y'))")
     List<ProjectCountDTO> projectPerMonth();
 
     @Query(nativeQuery = true, value = "SELECT COUNT(ID) as count, \n" +
-            "DAY(str_to_date(created_date, '%Y/%m/%d %T')) as countBy\n" +
+            "DAY(str_to_date(created_date, '%d/%c/%Y')) as countBy\n" +
             "FROM project\n" +
-            "where MONTH(str_to_date(created_date, '%Y/%m/%d %T')) = MONTH(CURDATE()) \n" +
-            "group by DAY(str_to_date(created_date, '%Y/%m/%d %T'))")
+            "where MONTH(str_to_date(created_date, '%d/%c/%Y')) = MONTH(CURDATE()) \n" +
+            "group by DAY(str_to_date(created_date, '%d/%c/%Y'))")
     List<ProjectCountDTO> projectPerDay();
 
     @Query(nativeQuery = true, value = "SELECT COUNT(ID) as count, \n" +
-            "YEAR(str_to_date(created_date, '%Y/%m/%d %T')) as countBy\n" +
+            "YEAR(str_to_date(created_date, '%d/%c/%Y')) as countBy\n" +
             "FROM project\n" +
-            "group by YEAR(str_to_date(created_date, '%Y/%m/%d %T'))")
+            "group by YEAR(str_to_date(created_date, '%d/%c/%Y'))")
     List<ProjectCountDTO> projectPerYear();
 }

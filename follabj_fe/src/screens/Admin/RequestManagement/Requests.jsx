@@ -3,7 +3,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { acceptRequest, getRequests } from "../../../Redux/leaderRequest/requestActions";
+import { acceptRequest, declineRequest, getRequests } from "../../../Redux/leaderRequest/requestActions";
 import styled from "styled-components";
 
 //table libraby
@@ -30,6 +30,12 @@ const Requests = () => {
         dispatch(acceptRequest(request))
         //console.log("accepeted")
     }
+
+    const handleDecline = (request) => {
+        dispatch(declineRequest(request))
+        //console.log("accepeted")
+    }
+
     const makeStyle = (status) => {
         if (status === 'Accept') {
             return {
@@ -81,7 +87,7 @@ const Requests = () => {
 
                                         <TableCell align="left">
                                             <button onClick={() => handleAccept(item)} className="status" style={makeStyle('Accept')}>Accept</button>
-
+                                            <button onClick={() => handleDecline(item)} className="status" style={makeStyle('Decline')}>Decline</button>
                                         </TableCell>
                                     </TableRow>
                                 ))}

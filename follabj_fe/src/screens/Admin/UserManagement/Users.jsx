@@ -121,7 +121,7 @@ function Pagination({ usersPerPage, totalUsers, paginate, currentPage }) {
     for (let i = 1; i <= Math.ceil(totalUsers / usersPerPage); i++) {
         pageNumbers.push(i);
     }
-
+// 1 -> 0
     return (
         <div className="pagination">
             {pageNumbers.map((number) => (
