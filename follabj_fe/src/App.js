@@ -97,7 +97,7 @@ export default function App() {
             <ProjectList />
           </AuthenciatedRoute>
 
-          <AdminRoute path="/admin/dashboard" >
+          <AdminRoute path="/admin" >
             <AdminDashboard />
           </AdminRoute>
 

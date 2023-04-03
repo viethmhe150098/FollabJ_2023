@@ -20,9 +20,9 @@ public class LeaderRequestController {
     private final LeaderRequestService leaderRequestService;
     @GetMapping("/admin/request")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Map<Object, Object>> getIsPending(@RequestParam int page, @RequestParam Optional<LeaderRequest.requestStatus> status){
+    public ResponseEntity<Map<Object, Object>> getIsPending(@RequestParam int page){
         Map<Object, Object> res = new HashMap<>();
-        Page<LeaderRequest> pageRequest = leaderRequestService.getListRequest(page, status.orElse(LeaderRequest.requestStatus.PENDING));
+        Page<LeaderRequest> pageRequest = leaderRequestService.getListRequest(page);
         res.put("status", HttpStatus.OK);
         res.put("content", pageRequest);
         res.put("curr_Page", pageRequest.getNumber());

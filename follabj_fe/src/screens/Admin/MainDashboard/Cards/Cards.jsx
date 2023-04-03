@@ -39,14 +39,22 @@ const Cards = () => {
     //console.log(projectStatistic.projectsPerDay)
     for (let i = 1; i <= getDaysInMonth().length; i++) {
       numberArray.push(0)
-      projectStatistic.projectsPerDay.some( function callback(number) {
-        // condition of the callback function.
-        if (parseInt(number.countBy) === i) {
-          numberArray.pop()
-          numberArray.push(number.count)
-          return true;
-        }
-     });
+      if (projectStatistic.projectsPerDay.length === 0) 
+      {
+        return 0;
+      }
+      else 
+      {
+        projectStatistic.projectsPerDay.some(function callback(number) 
+        {
+          // condition of the callback function.
+          if (parseInt(number.countBy) === i) {
+            numberArray.pop()
+            numberArray.push(number.count)
+            return true;
+          }
+        });
+      }
     }
     return numberArray;
   }
@@ -56,14 +64,14 @@ const Cards = () => {
     //console.log(projectStatistic.projectsPerDay)
     for (let i = 1; i <= 12; i++) {
       numberArray.push(0)
-      projectStatistic.projectsPerMonth.some( function callback(number) {
+      projectStatistic.projectsPerMonth.some(function callback(number) {
         // condition of the callback function.
         if (parseInt(number.countBy) === i) {
           numberArray.pop()
           numberArray.push(number.count)
           return true;
         }
-     });
+      });
     }
     return numberArray;
   }
@@ -72,23 +80,23 @@ const Cards = () => {
     const numberArray = []
     const date = new Date()
     //console.log(projectStatistic.projectsPerDay)
-    for (let i = 2019; i <= date.getYear()+1900; i++) {
+    for (let i = 2019; i <= date.getYear() + 1900; i++) {
       numberArray.push(0)
-      projectStatistic.projectsPerYear.some( function callback(number) {
+      projectStatistic.projectsPerYear.some(function callback(number) {
         // condition of the callback function.
         if (parseInt(number.countBy) === i) {
           numberArray.pop()
           numberArray.push(number.count)
           return true;
         }
-     });
+      });
     }
     return numberArray;
   }
 
   const [cardsData, setData] = useState([])
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getProjectStatistics()).unwrap().then((result) => {
       setData([
         {
@@ -123,7 +131,7 @@ const Cards = () => {
               data: getProjectNumberPerMonth(),
             },
           ],
-          categories: [1,2,3,4,5,6,7,8,9,10,11,12]
+          categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
         },
         {
           title: "New project in year",
@@ -141,15 +149,15 @@ const Cards = () => {
               data: getProjectNumberPerYear(),
             },
           ],
-          categories: [2019,2020,2021,2022,2023]
+          categories: [2019, 2020, 2021, 2022, 2023]
         },
       ]);
     })
-  },[])
+  }, [])
 
   return (
     <div className="Cards">
-      {projectStatistic!= null && cardsData.map((card, id) => {
+      {projectStatistic != null && cardsData.map((card, id) => {
         return (
           <div className="parentContainer" key={id}>
             <Card
