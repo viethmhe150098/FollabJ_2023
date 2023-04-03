@@ -12,7 +12,6 @@ import com.follabj_be.follabj_be.service.UserInterface;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;

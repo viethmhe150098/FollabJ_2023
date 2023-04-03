@@ -25,6 +25,7 @@ import AdminRoute from './components/Routes/AdminRoute';
 import AuthenciatedRoute from './components/Routes/AuthenciatedRoute';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ConfirmToken from './screens/ConfirmToken/ConfirmToken';
 
 
 
@@ -103,7 +104,9 @@ export default function App() {
           <Route exact path="/">
             <Landing />
           </Route>
-
+          <Route path="/confirm/:token">
+            <ConfirmToken />
+          </Route>
         </Switch>
       </Router>
     </>
