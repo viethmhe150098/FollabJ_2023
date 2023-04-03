@@ -24,7 +24,7 @@ const SignUp = () => {
   const emailRegex = /^\s*([a-zA-Z0-9_.-]{1,60})@([a-zA-Z0-9_.-]+\.[a-zA-Z0-9_.-]+)\s*$/;
 
   // Regex to validate password
-  const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-z])[0-9a-zA-Z]{8,}$/;
+  const PASSWORD_REGEX = /^(?=.*\d)[a-zA-Z0-9]{8,}$/
 
   // Regex to validate username
   const usernameRegex = /^\s*[a-zA-Z0-9]{5,30}\s*$/
@@ -90,7 +90,7 @@ const SignUp = () => {
                 <p className="error-message">{errors.email}</p>
               </div>
             )}
-            <label className="semiBold font15" htmlFor="email">Username</label>
+            <label className="semiBold font15" htmlFor="username">Username</label>
             <input type="text" placeholder="Enter your username" required
               onChange={(e) => setUsername(e.target.value)}
             />

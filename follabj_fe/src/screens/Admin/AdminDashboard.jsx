@@ -18,13 +18,12 @@ export default function AdminDashboard() {
           <Route path="/admin/users">
             <Users />
           </Route>
-          <Route path="/admin">
-                <MainDash />
-          </Route>
           <Route path="/admin/requests">
             <Requests />
           </Route>
-
+          <Route path="/admin/dashboard">
+                <MainDash />
+          </Route>
         </Switch>
       </AdminSidebar>
     </>

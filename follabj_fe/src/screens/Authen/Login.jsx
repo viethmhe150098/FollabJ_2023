@@ -22,7 +22,7 @@ const Login = () => {
   const emailRegex = /^\s*([a-zA-Z0-9_.-]{1,60})@([a-zA-Z0-9_.-]+\.[a-zA-Z0-9_.-]+)\s*$/;
 
   // Regex to validate password
-  const passwordRegex = /^(?=.*\d)(?=.*[a-z])[0-9a-zA-Z]{8,}$/;
+  const passwordRegex = /^(?=.*\d)[a-zA-Z0-9]{8,}$/
   const loginError = useSelector(state => state.auth.login.error);
 
   useEffect(() => {

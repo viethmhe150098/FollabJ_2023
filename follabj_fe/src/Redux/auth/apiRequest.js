@@ -40,22 +40,19 @@ export const loginUser = async (user, dispatch, navigate) => {
 
 
         //console.log(res)
-        if(res.data.status === "1") {
+        if (res.data.status === "1") {
             dispatch(loginSuccess(res.data));
+            toast.success('Welcome back! 🧡')
             navigate.push("/")
-        } else if(res.data.status === "0") {
-            toast.error("You need to confirm your email")
+        } else if (res.data.status === "0") {
+            toast.info("You need to active your account first with the code sent to your email address!")
             localStorage.clear()
         } else {
-            toast.error("You have been banned")
+            toast.error("You have been banned!")
             localStorage.clear()
         }
-        // go to home page'
-        toast.success('Welcome back! 🧡',)
         if (role_name.includes("ADMIN")) {
-            navigate.push("/admin")
-        } else {
-            navigate.push("/")
+            navigate.push("/admin/dashboard")
         }
     } catch (error) {
         //console.log(error)

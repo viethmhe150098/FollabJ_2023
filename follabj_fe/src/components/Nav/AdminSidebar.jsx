@@ -5,7 +5,6 @@ import {
     FaSignal
 } from "react-icons/fa";
 import { NavLink } from 'react-router-dom';
-import { Link as RouterLink } from "react-router-dom";
 
 // Assets
 import LogoIcon from "../../assets/svg/Logo";

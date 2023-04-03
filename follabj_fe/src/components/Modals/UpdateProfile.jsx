@@ -24,15 +24,15 @@ const UpdateProfileModal = ({ close }) => {
   //   // Regex to validate password
   const phoneRegex = /^0\d{8}$/
   const usernameRegex = /^\s*[a-zA-Z0-9]{5,30}\s*$/
-
+  const fullnameRegex = /^\s*[a-zA-Z]{2,}(?:\s+[a-zA-Z]+){1,4}\s*$/
   const handleSubmit = (e) => {
     e.preventDefault();
     if (fullname === oldfullname && username === oldusername && phone_number === oldphonenumber) {
       toast.warn('No changes were made to your information.')
       return;
     }
-    if (!LENGTH30.test(fullname)) {
-      toast.warn("Fullname must be between 5 and 30 characters long.");
+    if (!fullnameRegex.test(fullname)) {
+      toast.warn("Fullname must be between 5 and 30 characters long and must not contain any special characters.");
       return;
     }
     if (!usernameRegex.test(username)) {
