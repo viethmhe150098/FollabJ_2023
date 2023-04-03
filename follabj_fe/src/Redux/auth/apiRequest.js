@@ -63,8 +63,9 @@ export const loginUser = async (user, dispatch, navigate) => {
 
 export const registerUser = async (user, dispatch, navigate) => {
     dispatch(registerStart());
-    toast.info('Loading your information. This may take a few moments.');
+    
     try {
+        toast.info('Loading your information. This may take a few moments.');
         await axios.post("http://localhost:8080/signup",
             user,
             {
@@ -72,6 +73,7 @@ export const registerUser = async (user, dispatch, navigate) => {
                 //     'Content-Type': 'application/x-www-form-urlencoded'
                 // }
             });
+       
         dispatch(registerSuccess());
         toast.dismiss();
         toast.success('Register successfully, please CHECK your email!', {
@@ -80,6 +82,7 @@ export const registerUser = async (user, dispatch, navigate) => {
         navigate.push("/login");
     } catch (error) {
         dispatch(registerFailed());
+        toast.dismiss();
         toast.error(error.response.data.message);
     }
 }
