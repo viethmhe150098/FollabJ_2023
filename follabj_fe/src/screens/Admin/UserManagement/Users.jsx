@@ -32,24 +32,28 @@ const Users = () => {
                 user.email.toLowerCase().includes(searchQuery.toLowerCase())
             );
             if (results.length === 0) {
-                toast.error('Not found user!')
+                toast.error('Not found user with that information!')
             }
 
             setFilteredUsers(results);
         }
     };
-
+    const handleClear = () => {
+        setFilteredUsers([])
+        setSearchQuery('')
+    }
     useEffect(() => {
         dispatch(getUsers());
         //console.log("dispatched")
     }, [])
 
     const handleBan = (user) => {
-        banUser(user);
+        dispatch(banUser(user))
     };
 
     const handleUnban = (user) => {
-        unbanUser(user);
+        dispatch(unbanUser(user))
+
     };
 
     const makeStyle = (status) => {
@@ -82,6 +86,8 @@ const Users = () => {
                         onChange={(e) => setSearchQuery(e.target.value.trim())}
                     />
                     <button className="search-button semiBold" onClick={handleSearch}>Search</button>
+                    <button className="clear-button semiBold" onClick={handleClear}>Clear search</button>
+
                 </div>
             </div>
             <div>
@@ -129,7 +135,7 @@ const Users = () => {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        </div>
+                    </div>
                     : <></>)
                 }
             </div>

@@ -320,6 +320,25 @@ body {
 .search-button:hover {
   background-color: #d3690d;
 }
+.clear-button {
+  margin-left: 10px;
+  background-color: #ffadad8f;
+  color: red;
+  border-radius: 5px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  padding: 0 9px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.clear-button:hover {
+  background-color: #ff0000;
+  color: white;
+}
+
 
 
 .red-btn:hover {
