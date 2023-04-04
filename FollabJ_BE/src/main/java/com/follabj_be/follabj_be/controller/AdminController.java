@@ -98,9 +98,9 @@ public class AdminController {
     public ResponseEntity<Map<Object, Object>> getAllProject(@RequestParam int page){
         Map<Object, Object> res = new HashMap<>();
         Page<Project> result =  projectService.getAll(page);
-        res.put("status", "200");
-        res.put("curr_page", result.getNumber());
-        res.put("total_page", result.getTotalPages());
+//        res.put("status", "200");
+//        res.put("curr_page", result.getNumber());
+//        res.put("total_page", result.getTotalPages());
         res.put("data", result);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }

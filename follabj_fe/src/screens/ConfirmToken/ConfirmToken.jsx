@@ -10,6 +10,7 @@ const ConfirmToken = () => {
       try{
         const res = await axios.get(`http://localhost:8080/confirm?token=${token}`);
         // const data = res.data.message;
+        setMeassage(res.data.message)
         
       }catch(err){
         console.log(err);
@@ -20,7 +21,7 @@ const ConfirmToken = () => {
   
   console.log(token);
   return (
-    <div>ConfirmToken</div>
+    <div>ConfirmToken {message}</div>
   )
 }
 
