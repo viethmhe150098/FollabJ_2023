@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { getInvitationsByProjectId } from "../../../Redux/invitation/invitationActions";
 import { inviteMember } from "../../../Redux/project/projectActions";
-import "./inviteUser.css";
 
 const InviteUser = () => {
   const [email, setEmail] = useState("");
@@ -28,22 +27,9 @@ const InviteUser = () => {
 
   const handleInvite = () => {
     if (!isValidEmail(email)) {
-      // setFeedbackMessage("Please enter a valid email address.");
-      // setFeedbackMessageClass("invalid");
       toast.error("Please enter a valid email address.")
       return;
     }
-
-
-    // project_invitations.map((invitation,index) =>{
-    //   if (invitation.receiver.email == email) {
-    //     // setFeedbackMessage("This email has already been invited.");
-    //     // setFeedbackMessageClass("already-invited");
-    //     toast.info("This email has already been invited.")
-    //     return;
-    //   }
-    // })
-
     const userdto = {
       email
     }
@@ -68,29 +54,14 @@ const InviteUser = () => {
       dispatch(getInvitationsByProjectId(project_id))
       setEmail("");
     })
-
-    //setInvitedEmails([...invitedEmails, email]);
-    // setEmail("");
-    // setFeedbackMessage("Invitation sent successfully.");
-    // setFeedbackMessageClass("success");
   };
 
   const isValidEmail = (email) => {
-    // A simple email validation regular expression
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^\s*([a-zA-Z0-9_.-]{1,60})@([a-zA-Z0-9_.-]+\.[a-zA-Z0-9_.-]+)\s*$/;
     return emailRegex.test(email);
   };
 
-  // useEffect(() => {
-  //   const timeoutId = setTimeout(() => {
-  //     setFeedbackMessage("");
-  //     setFeedbackMessageClass("");
-  //   }, 2500);
 
-  //   return () => {
-  //     clearTimeout(timeoutId);
-  //   };
-  // }, [feedbackMessage]);
 
   return (
     <div className="invite-user-container">
@@ -104,12 +75,6 @@ const InviteUser = () => {
         <button className="invite-button semiBold" onClick={handleInvite}>
           Invite
         </button>
-        {/* <div>{feedbackMessage && (
-          <div className={`feedback-message ${feedbackMessageClass}`}>
-            {feedbackMessage}
-          </div>
-        )}</div> */}
-
       </div>
 
 

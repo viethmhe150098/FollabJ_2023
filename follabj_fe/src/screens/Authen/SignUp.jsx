@@ -6,7 +6,6 @@ import { Link as RouterLink } from "react-router-dom";
 import '../../style/authen.css'
 import FullButton from "../../components/Buttons/FullButton";
 import AuthenNavbar from "../../components/Nav/AuthenNavbar"
-import { PASSWORD_REGEX } from '../../components/Modals/regexs';
 import { toast } from 'react-toastify';
 
 const SignUp = () => {

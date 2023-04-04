@@ -23,8 +23,8 @@ const Users = () => {
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
     const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
 
-
     const handleSearch = () => {
+
         if (searchQuery.trim() === "") {
             setFilteredUsers([]);
         } else {
@@ -72,61 +72,71 @@ const Users = () => {
     };
     return (
         <>
-            <div>
-                <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                <button onClick={handleSearch}>Search</button>
+            <div >
+                <h3>Search users by email</h3>
+                <div className="input-container">
+                    <input
+                        id="search"
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value.trim())}
+                    />
+                    <button className="search-button semiBold" onClick={handleSearch}>Search</button>
+                </div>
             </div>
             <div>
                 {(filteredUsers.length > 0 ?
-                    <TableContainer
-                        component={Paper}
-                        style={{ boxShadow: "0px 13px 20px 10px #80808029" }}
-                    >
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>User Name</TableCell>
-                                    <TableCell align="left">User Mail</TableCell>
-                                    <TableCell align="left">User options</TableCell>
+                    <div className="Table">
+                        <h3>Searched results:</h3>
+                        <TableContainer
+                            id="search-table"
+                            component={Paper}
+                            style={{ boxShadow: "0px 13px 20px 10px #80808029", marginTop: '20px' }}
+                        >
+                            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>User Name</TableCell>
+                                        <TableCell align="left">User Mail</TableCell>
+                                        <TableCell align="left">User options</TableCell>
 
-                                </TableRow>
-                            </TableHead>
-                            <TableBody style={{ color: "white" }}>
-                                {filteredUsers.map((user, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell component="th" scope="row">
-                                            {user.username}
-                                        </TableCell>
-                                        <TableCell component="th" scope="row">
-                                            {user.email}
-                                        </TableCell>
-
-                                        <TableCell align="left">
-
-                                            {user.status == 1 &&
-                                                <button onClick={() => handleBan(user)} className="status" style={makeStyle('Ban')}>Ban User</button>
-                                            }
-                                            {user.status == 2 &&
-                                                <button onClick={() => handleUnban(user)} className="status" style={makeStyle('Unban')}>Unban User</button>
-                                            }
-                                            {user.status == 0 &&
-                                                <button className="status" style={makeStyle('Verify')}>Verifing</button>
-                                            }
-                                        </TableCell>
                                     </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                                </TableHead>
+                                <TableBody style={{ color: "white" }}>
+                                    {filteredUsers.map((user, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell component="th" scope="row">
+                                                {user.username}
+                                            </TableCell>
+                                            <TableCell component="th" scope="row">
+                                                {user.email}
+                                            </TableCell>
+
+                                            <TableCell align="left">
+
+                                                {user.status == 1 &&
+                                                    <button onClick={() => handleBan(user)} className="status" style={makeStyle('Ban')}>Ban User</button>
+                                                }
+                                                {user.status == 2 &&
+                                                    <button onClick={() => handleUnban(user)} className="status" style={makeStyle('Unban')}>Unban User</button>
+                                                }
+                                                {user.status == 0 &&
+                                                    <button className="status" style={makeStyle('Verify')}>Verifing</button>
+                                                }
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                        </div>
                     : <></>)
                 }
             </div>
 
+
             <div className="Table">
+                <h3 style={{ marginBottom: '10px' }}>All users</h3>
                 <TableContainer
                     component={Paper}
                     style={{ boxShadow: "0px 13px 20px 10px #80808029" }}

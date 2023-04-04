@@ -296,6 +296,7 @@ body {
 .whiteColor {
   color: #fff;
 }
+
 /* BUTTONS*/
 .red-btn {
   background: #ffadad8f;
@@ -303,10 +304,29 @@ body {
   cursor: pointer;
 }
 
+.search-button {
+  background-color: #f58025;
+  color: white;
+  border-radius: 5px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  padding: 0 9px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.search-button:hover {
+  background-color: #d3690d;
+}
+
+
 .red-btn:hover {
   background-color: #ff0000;
-    color: white;
+  color: white;
 }
+
 /* BACKGROUNDS */
 .darkBg {
   background-color: #211207;
@@ -366,61 +386,72 @@ body {
   }
 }
 
-.sidebarContainer{
-  display:flex;
+.sidebarContainer {
+  display: flex;
 }
-main{
+
+main {
   width: 100%;
   padding: 100px;
 }
-.sidebar_sidebar{
+
+.sidebar_sidebar {
   background: #F5B17B;
   color: #fff;
   min-height: 100vh;
   min-width: 300px;
   border-right: 10px solid #F5B17B;
 }
-.sidebar_top_section{
+
+.sidebar_top_section {
   display: flex;
-  align-items:center;
-  padding:20px 15px;
+  align-items: center;
+  padding: 20px 15px;
   border-bottom: 3px solid #fd9300;
 }
-.sidebar_bars{
+
+.sidebar_bars {
   display: flex;
   font-size: 25px;
   margin-left: 50px;
 }
-.sidebar_link{
+
+.sidebar_link {
   display: flex;
   color: #fff;
   padding: 20px 15px;
   gap: 20px;
   border-radius: 10px;
   transition: all 0.3s;
-  box-shadow:  1px 1px 4px #fd9300;
+  box-shadow: 1px 1px 4px #fd9300;
 }
+
 .sidebar_link:hover {
-  background:#FFD495;
+  background: #FFD495;
   color: #000;
   transition: all 0.3s;
 }
+
 .sidebar_link:hover .sidebar_link_text {
   color: #fd9309;
   transition: all 0.3s;
 }
+
 .sidebar_link:hover .sidebar_icon {
   color: #fd9309;
   transition: all 0.3s;
 }
-.sidebar_active{
+
+.sidebar_active {
   background: #fd9309;
 }
-.sidebar_link_text{
+
+.sidebar_link_text {
   font-size: 1rem;
   color: #434242;
   font-weight: 400;
 }
+
 .sidebar_icon {
   font-size: 1rem;
   color: #434242;
@@ -435,34 +466,40 @@ main{
   width: 700px;
   background: #F2EEE5;
   border-radius: 15px;
-  box-shadow:  1px 1px 4px 4px #ded5c1;
+  box-shadow: 1px 1px 4px 4px #ded5c1;
 }
-.modal > .header {
+
+.modal>.header {
   width: 100%;
   font-size: 26px;
   text-align: center;
   padding: 30px;
 }
-.modal  input {
+
+.modal input {
   width: 100%;
   min-height: 40px;
   margin: 20px 0;
   border: #ded5c1 solid 1px;
   border-radius: 7px;
 }
-.modal > .content {
+
+.modal>.content {
   width: 100%;
   padding: 40px 40px;
 }
-.modal > .actions {
+
+.modal>.actions {
   margin: auto;
 }
-.modal > .actions {
+
+.modal>.actions {
   width: 100%;
   padding: 10px 5px;
   text-align: center;
 }
-.modal > .close {
+
+.modal>.close {
   cursor: pointer;
   position: absolute;
   display: block;
@@ -475,10 +512,84 @@ main{
   border-radius: 18px;
   border: 1px solid #cfcece;
 }
+
 textarea {
   width: 100%;
   font-family: 'Khula', sans-serif;
   border-radius: 7px;
   margin: 20px 0 40px 0;
 }
+.invite-user-container {
+  align-items: center;
+  margin: 20px;
+}
 
+.input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.input-container input {
+  border: 2px solid #f58025;
+  border-radius: 5px;
+  height: 40px !important;
+  padding: 5px;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.invite-button {
+  background-color: #f58025;
+  color: white;
+  border-radius: 5px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  padding: 0 9px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.invite-button:hover {
+  background-color: #d3690d;
+}
+
+
+.feedback-message.invalid,
+.feedback-message.already-invited {
+  color: #fff;
+  background-color: #dc3545;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.invited-emails-container {
+
+  width: 100%;
+  margin-top: 40px;
+}
+
+.invited-emails-container h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.invited-emails-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.invited-emails-container li {
+  font-size: 16px;
+}
