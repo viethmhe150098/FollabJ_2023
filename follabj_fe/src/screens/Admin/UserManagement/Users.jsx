@@ -18,43 +18,64 @@ const Users = () => {
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [usersPerPage, setUsersPerPage] = useState(10);
-
+  
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
     const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
-
+  
     const handleSearch = () => {
-
-        if (searchQuery.trim() === "") {
-            setFilteredUsers([]);
-        } else {
-            const results = users.filter((user) =>
-                user.email.toLowerCase().includes(searchQuery.toLowerCase())
-            );
-            if (results.length === 0) {
-                toast.error('Not found user with that information!')
-            }
-
-            setFilteredUsers(results);
+      if (searchQuery.trim() === "") {
+        setFilteredUsers([]);
+      } else {
+        const results = users.filter((user) =>
+          user.email.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        if (results.length === 0) {
+          toast.error("Not found user with that information!");
         }
+        setFilteredUsers(results);
+      }
     };
+  
     const handleClear = () => {
-        setFilteredUsers([])
-        setSearchQuery('')
-    }
+      setFilteredUsers([]);
+      setSearchQuery("");
+    };
+  
     useEffect(() => {
-        dispatch(getUsers());
-        //console.log("dispatched")
-    }, [])
-
+      dispatch(getUsers());
+    }, []);
+  
+    useEffect(() => {
+      setFilteredUsers((prevFilteredUsers) =>
+        prevFilteredUsers.map((filteredUser) =>
+          users.find((user) => user.email === filteredUser.email)
+        )
+      );
+    }, [users]);
+  
     const handleBan = (user) => {
-        dispatch(banUser(user))
+      dispatch(banUser(user));
+      setFilteredUsers((prevFilteredUsers) =>
+        prevFilteredUsers.map((filteredUser) =>
+          filteredUser.email === user.email
+            ? { ...filteredUser, status: 2 }
+            : filteredUser
+        )
+      );
     };
-
+  
     const handleUnban = (user) => {
-        dispatch(unbanUser(user))
-
+      dispatch(unbanUser(user));
+      setFilteredUsers((prevFilteredUsers) =>
+        prevFilteredUsers.map((filteredUser) =>
+          filteredUser.email === user.email
+            ? { ...filteredUser, status: 1 }
+            : filteredUser
+        )
+      );
     };
+  
 
     const makeStyle = (status) => {
         if (status === "Unban") {

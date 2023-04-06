@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import FullButton from "../../../components/Buttons/FullButton";
-
-
-
+import { randomID } from "./Meeting";
+import { toast } from 'react-toastify';
+import MeetingLater from "../../../components/Modals/MeetingLater";
+import Popup from "reactjs-popup";
 
 const MeetingCreation = () => {
 
@@ -14,8 +15,11 @@ const MeetingCreation = () => {
 
   const handleScheduledMeeting = () => {
     // Add logic for scheduling a meeting here
-    alert("Create scheduled meeting clicked");
+    const roomID = randomID(7);
+    alert(`http://localhost:3000/meeting?roomID=${roomID}`);
+
   };
+
 
   return (
     <>
@@ -25,8 +29,17 @@ const MeetingCreation = () => {
       <Wrapper>
         <FullButton title={'Create Instant Meeting'} action={() => { handleInstantMeeting() }}></FullButton>
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <FullButton title={' Create Meeting for Later'} action={handleScheduledMeeting}>
-        </FullButton>
+
+        <Popup
+          modal
+          trigger={
+            <div style={{width:'100%'}}>
+              <FullButton title={' Create Meeting for Later'} />
+            </div>
+          }
+        >
+          {(close) => <MeetingLater close={close} />}
+        </Popup>
       </Wrapper>
     </>
   );
