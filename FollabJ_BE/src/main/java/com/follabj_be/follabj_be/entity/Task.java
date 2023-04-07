@@ -29,6 +29,8 @@ public class Task {
     @Column(columnDefinition = "integer default 1")
     private int statusId;
 
+    private int columnPosition;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "task_assignee",

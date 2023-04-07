@@ -43,6 +43,27 @@ export const updateTask = createAsyncThunk("UPDATE_TASK", async ({project_id, ta
     }
 })
 
+export const changeColumn = createAsyncThunk("CHANGE_COLUMN", async ({project_id, task, status, columnPosition}) => {
+    try {
+        const response = await taskAPI.changeColumn(project_id, task.id, status, columnPosition)
+        toast.success("Update task status success!"); // display the toast notification
+        return response.data
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+
+export const changePosition = createAsyncThunk("CHANGE_POSITION", async ({project_id, task, columnPosition}) => {
+    try {
+        const response = await taskAPI.changePosition(project_id, task.id, columnPosition)
+        toast.success("Update "+task.title+" position successfully!"); // display the toast notification
+        return response.data
+    } catch (error) {
+        console.log(error);
+    }
+})
+
 export const deleteTask = createAsyncThunk("DELETE_TASK", async ({project_id, task_id,task_name}) => {
     try {
         const response = await taskAPI.deleteTask(project_id,task_id)

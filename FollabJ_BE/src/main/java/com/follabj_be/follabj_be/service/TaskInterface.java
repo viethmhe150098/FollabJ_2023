@@ -14,6 +14,16 @@ public interface TaskInterface {
 
     Task updateTask(Long id, Task task);
 
+    void updateTaskStatus(Long id, int status);
+
+    void updateTaskColumnPosition(Long id, int columnPosition);
+
+    void updateColumnPositionAfterChangeTaskPosition(Long project_id, Long task_id);
+
+    void updateSourceColumnPositionBeforeChangeTaskStatus(Long project_id, Long task_id);
+
+    void updateDestinationColumnPositionAfterChangeTaskStatus(Long project_id, Long task_id);
+
     void deleteTask(Long taskId);
 
     void addAssigneeToTask(Long task_id, Long assignee_id);

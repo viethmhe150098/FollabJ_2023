@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Popup from "reactjs-popup";
 import AddTaskModal from "../../../components/Modals/AddTask";
 import { useDispatch } from "react-redux";
-import { getTasksByProjectId } from "../../../Redux/task/taskActions";
+import { getTasksByProjectId, changeColumn, changePosition } from "../../../Redux/task/taskActions";
 import { useSelector } from "react-redux";
 // import { ShowTasksApi} from "../../Redux/actions"
 
@@ -25,15 +25,9 @@ const Kanban = () => {
         window.location.href = "/projects";
     }
 
-    useEffect(() => {
-        dispatch(getTasksByProjectId(projectId));
-        // notify();
-    }, [])
 
 
- 
-
-    const columnArray = [
+    const [columnArray,setColumnArray] = useState([
         {
             id: 1,
             title: "To do",
@@ -49,7 +43,47 @@ const Kanban = () => {
             title: "Done",
             tasks: []
         }
-    ]
+    ])
+
+    useEffect(() => {
+        // dispatch(getTasksByProjectId(projectId)).unwrap().then((result) => {
+        //     fetchDataIntoColumn(result)
+        // });
+        dispatch(getTasksByProjectId(projectId))
+    }, [])
+
+    useEffect(() => {
+        console.log("useEffect after tasks")
+        fetchDataIntoColumn(tasks)
+    }, [tasks])
+
+    const fetchDataIntoColumn = (data) => {
+        const newArray = columnArray.map(column => {
+            const newTasks = []
+            data.map((task) => {
+                //console.log(column)
+                if (task.statusId == column.id ) {
+                    newTasks.push(task) 
+                }
+            })
+            newTasks.sort(compare)
+            return {
+                ...column,
+                tasks: newTasks
+            }
+        })
+        setColumnArray(newArray)
+    }
+
+    const  compare = (a,b ) => {
+        if ( a.columnPosition < b.columnPosition){
+          return -1;
+        }
+        if ( a.columnPosition > b.columnPosition ){
+          return 1;
+        }
+        return 0;
+      }
 
     const onDragEnd = result => {
         console.log(result);
@@ -59,42 +93,53 @@ const Kanban = () => {
 
         //move to task to other column
         if (source.droppableId != destination.droppableId) {
-            const sourceColIndex = tasks.findIndex(e => e.id == source.droppableId)
-            const destinationColIndex = tasks.findIndex(e => e.id == destination.droppableId)
 
-            const sourceCol = tasks[sourceColIndex]
-            const destinationCol = tasks[destinationColIndex]
+            const sourceColIndex = columnArray.findIndex(e => e.id == source.droppableId)
+            const destinationColIndex = columnArray.findIndex(e => e.id == destination.droppableId)
 
-            // console.log(sourceCol)
-            // console.log(destinationCol)
-
+            const sourceCol = columnArray[sourceColIndex]
+            const destinationCol = columnArray[destinationColIndex]
+            
             const sourceTasks = [...sourceCol.tasks]
             const destinationTasks = [...destinationCol.tasks]
 
-            const [removed] = sourceTasks.splice(source.index, 1)
-            destinationTasks.splice(destination.index, 0, removed)
+            const [removedTask] = sourceTasks.splice(source.index, 1)
+            destinationTasks.splice(destination.index, 0, removedTask)
 
-            tasks[sourceColIndex].tasks = sourceTasks
-            tasks[destinationColIndex].tasks = destinationTasks
+            dispatch(changeColumn({
+                project_id: projectId, 
+                task: removedTask,
+                status: destinationColIndex + 1,
+                columnPosition: destination.index
+            }))
 
+            columnArray[sourceColIndex].tasks = sourceTasks
+            columnArray[destinationColIndex].tasks = destinationTasks
+        } else {
+            const columnIndex = columnArray.findIndex(e => e.id == destination.droppableId);
 
-        } else { //move task in the one column
-            const columnIndex = tasks.findIndex(e => e.id == destination.droppableId);
-
-            const column = tasks[columnIndex]
+            const column = columnArray[columnIndex]
 
             const columnTasks = [...column.tasks]
             //console.log(columnTasks)
 
-            const [removed] = columnTasks.splice(source.index, 1)
+            const [dragged] = columnTasks.splice(source.index, 1)
             //tasks.splice(destination.index, 0, removed)
-            columnTasks.splice(destination.index, 0, removed)
-            //console.log(columnTasks)
+            columnTasks.splice(destination.index, 0, dragged) 
 
-            tasks[columnIndex].columnTasks = columnTasks
+            // console.log(dragged)
+            // console.log(columnTasks)
+
+            dispatch(changePosition({
+                project_id: projectId,
+                task: dragged,
+                columnPosition: destination.index
+            }))
+
+            columnArray[columnIndex].tasks = columnTasks
         }
-
     }
+
 
     return (
         <Wrapper id='tasks'>
@@ -117,12 +162,12 @@ const Kanban = () => {
                                         <SectionTitle>{column.title}</SectionTitle>
                                         {userRole == "LEADER" &&
                                             <Popup modal trigger={<Card style={{ cursor: "pointer" }}><p className="extraBold" style={{ color: "#434242" }}>+ Add Task</p></Card>}>
-                                                {close => <AddTaskModal close={close} statusId={column.id} />}
+                                                {close => <AddTaskModal close={close} statusId={column.id} columnPosition={column.tasks.length}/>}
                                             </Popup>
                                         }
                                         <SectionContent>
                                             {
-                                                tasks.map((task, index) => task.statusId == column.id ? (
+                                                column.tasks.map((task, index) =>  (
                                                     <Draggable
                                                         key={String(task.id)}
                                                         draggableId={String(task.id)}
@@ -149,7 +194,7 @@ const Kanban = () => {
                                                             </div>
                                                         )}
                                                     </Draggable>
-                                                ) : null)
+                                                ))
                                             }
                                             {provided.placeholder}
                                         </SectionContent>
