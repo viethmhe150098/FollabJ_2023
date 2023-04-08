@@ -7,7 +7,7 @@ import FullButton from "../../components/Buttons/FullButton";
 import ProjectImg1 from "../../assets/img/projects/1.png";
 
 import { useDispatch } from "react-redux";
-import { setCurrentProjectId, setCurrentProjectUserRole } from "../../Redux/project/projectSlice";
+import { setCurrentProjectDescription, setCurrentProjectId, setCurrentProjectName, setCurrentProjectUserRole } from "../../Redux/project/projectSlice";
 import { getProjectMembersByProjectId, getProjectsByUserId } from "../../Redux/project/projectActions";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -72,9 +72,11 @@ const Projects = () => {
     button.click()
   }
 
-  const setCurrentProject = (project_id) => {
+  const setCurrentProject = (project_id, project_name, project_description) => {
 
     dispatch(setCurrentProjectId(project_id));
+    dispatch(setCurrentProjectName(project_name));
+    dispatch(setCurrentProjectDescription(project_description));
 
     dispatch(getProjectMembersByProjectId(project_id)).unwrap().then((result) => {
       if (result != []) {
@@ -109,7 +111,7 @@ const Projects = () => {
                     <ProjectBox
                       img={ProjectImg1}
                       title={project.name}
-                      action={() => { setCurrentProject(project.id) }}
+                      action={() => { setCurrentProject(project.id,project.name,project.des) }}
                       rightClickAction={() => {openProjectModal(project)}}
                     />
                     <Popup modal trigger={<button id={"project_"+project.id}></button>}>

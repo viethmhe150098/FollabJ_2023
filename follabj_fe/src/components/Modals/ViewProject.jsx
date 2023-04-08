@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 import styled from "styled-components";
-import { addNote } from "../../Redux/note/noteActions";
 import { deleteProject, updateProject } from "../../Redux/project/projectActions";
 
 
@@ -91,13 +90,13 @@ const ViewProjectModal = ({type, close, project}) => {
                         ></textarea>
                     </div>
                 </form>
-                {modalType=="update" && project.members[0].id != user_id && (
+                {modalType=="update" && project.members[0].id == user_id && (
                       <>
                       <h2>Update Event</h2>
                       <button onClick={() => handleCommitUpdate()} className='greenBg font25 radius6 lightColor tag'>Commit Update</button>
                       </>
                     )}
-                {modalType == "readonly"  && project.members[0].id != user_id && (<>
+                {modalType == "readonly"  && project.members[0].id == user_id && (<>
                         { 
                         ( <>
                         <button onClick={() => handleUpdate()} className='greenBg font25 radius6 lightColor tag'>Update</button>

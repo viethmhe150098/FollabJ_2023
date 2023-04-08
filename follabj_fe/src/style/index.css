@@ -550,14 +550,17 @@ textarea {
   margin-bottom: 20px;
 }
 
-.input-container input {
+.input-container input,textarea {
   border: 2px solid #f58025;
   border-radius: 5px;
   height: 40px !important;
   padding: 5px;
-  margin-right: 10px;
+  margin: 10px !important;
   font-size: 16px;
+  resize: none; 
+
 }
+
 
 .invite-button {
   background-color: #f58025;
@@ -599,7 +602,6 @@ textarea {
 }
 
 .invited-emails-container h3 {
-  font-size: 18px;
   margin-bottom: 10px;
 }
 
