@@ -56,7 +56,7 @@ export const inviteMember = createAsyncThunk("INVITE_MEMBER", async ({project_id
 export const updateProject = createAsyncThunk("UPDATE_PROJECT", async({project_id, project}) => {
     try {
         const response = await projectAPI.updateProject(project_id, project)
-
+        toast.success('Edit project information successfully!')
         //console.log(response)
         return response
     } catch (error) {

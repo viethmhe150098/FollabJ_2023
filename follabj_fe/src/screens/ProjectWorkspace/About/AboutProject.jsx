@@ -37,9 +37,6 @@ export default function AboutProject() {
 
     return (
         <>
-            <HeaderInfo>
-                <h1 className="font30 extraBold">About Project</h1>
-            </HeaderInfo>
             <Container>
                 <Content>Project Name: <span style={{fontWeight:"normal"}}>{project_name}</span> </Content>
                 <Content>Project Description: <span style={{fontWeight:"normal"}}>{project_des}</span></Content>

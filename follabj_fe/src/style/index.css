@@ -550,7 +550,7 @@ textarea {
   margin-bottom: 20px;
 }
 
-.input-container input,textarea {
+.input-container input {
   border: 2px solid #f58025;
   border-radius: 5px;
   height: 40px !important;
