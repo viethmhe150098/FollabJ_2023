@@ -53,7 +53,6 @@ public class EventController {
     }
 
     @PostMapping("/project/{project_id}/leader/events")
-    @PreAuthorize("hasAuthority('LEADER')")
     public EventDTO addEvent(@RequestBody CreateEventDTO createEventDTO, @PathVariable Long project_id) {
         createEventDTO.setProjectId(project_id);
         Event event = eventService.addEvent(createEventDTO);
@@ -72,7 +71,6 @@ public class EventController {
             method = RequestMethod.PUT,
             path = "/project/{project_id}/leader/events/{event_id}/update"
     )
-    @PreAuthorize("hasAuthority('LEADER')")
     public EventDTO updateEvent(@RequestBody Event event, @PathVariable Long project_id, @PathVariable Long event_id) {
         event.setProject(new Project());
         event.getProject().setId(project_id);
@@ -86,26 +84,7 @@ public class EventController {
             method = RequestMethod.DELETE,
             path = "/project/{project_id}/leader/events/{event_id}/delete"
     )
-    @PreAuthorize("hasAuthority('LEADER')")
     public void deleteEvent(@PathVariable Long event_id) {
         eventService.deleteEvent(event_id);
-    }
-
-    @RequestMapping(
-            method = RequestMethod.POST,
-            path = "/project/{project_id}/leader/events/{event_id}/add"
-    )
-    @PreAuthorize("hasAuthority('LEADER')")
-    public void addParticipantToEvent(@PathVariable Long event_id, @RequestParam Long participant_id) {
-        eventService.addParticipantToEvent(event_id, participant_id);
-    }
-
-    @RequestMapping(
-            method = RequestMethod.DELETE,
-            path = "/project/{project_id}/leader/events/{event_id}/remove"
-    )
-    @PreAuthorize("hasAuthority('LEADER')")
-    public void removeAssigneeFromTask(@PathVariable Long event_id, @RequestParam Long participant_id) {
-        eventService.removeParticipantFromEvent(event_id, participant_id);
     }
 }

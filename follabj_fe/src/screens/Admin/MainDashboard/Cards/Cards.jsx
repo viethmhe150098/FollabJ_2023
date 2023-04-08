@@ -97,8 +97,12 @@ const Cards = () => {
   const [cardsData, setData] = useState([])
 
   useEffect(() => {
-    dispatch(getProjectStatistics()).unwrap().then((result) => {
-      setData([
+    dispatch(getProjectStatistics())
+  }, [])
+
+
+  useEffect(() => {
+    setData([
         {
           title: "New project in day",
           color: {
@@ -152,8 +156,7 @@ const Cards = () => {
           categories: [2019, 2020, 2021, 2022, 2023]
         },
       ]);
-    })
-  }, [])
+  }, [projectStatistic])
 
   return (
     <div className="Cards">

@@ -27,6 +27,8 @@ public class TaskDTO {
 
     private int statusId;
 
+    private int columnPosition;
+
     private List<UserDTO> assigneeList;
 
 }

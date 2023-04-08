@@ -115,7 +115,7 @@ const Projects = () => {
                       rightClickAction={() => {openProjectModal(project)}}
                     />
                     <Popup modal trigger={<button id={"project_"+project.id}></button>}>
-                      {close => <ViewProjectModal close={close} project={project} type="readonly"/>}
+                      {close => <ViewProjectModal close={close} project={project} type={"readonly"}/>}
                     </Popup>
                 </div>)
               }
