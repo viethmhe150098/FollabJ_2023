@@ -5,6 +5,7 @@ import { Link as RouterLink } from "react-router-dom";
 // Assets
 import CloseIcon from "../../assets/svg/CloseIcon";
 import LogoIcon from "../../assets/svg/Logo";
+import { isLoggedIn } from '../../Redux/auth/auth';
 
 export default function Sidebar({ sidebarOpen, toggleSidebar }) {
   return (
@@ -13,7 +14,7 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }) {
         <div className="flexNullCenter">
           <LogoIcon />
           <h1 className="whiteColor font20" style={{ marginLeft: "15px" }}>
-            fanatic
+            FolabiJ
           </h1>
         </div>
         <CloseBtn onClick={() => toggleSidebar(!sidebarOpen)} className="animate pointer">
@@ -106,17 +107,70 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }) {
             Contact
           </Link>
         </li>
-    
-        <li className="semiBold font15 pointer">
-          <RouterLink
-            onClick={() => toggleSidebar(!sidebarOpen)}
-            className="whiteColor"
-            style={{ padding: "10px 15px" }}
-            to="login"
-          >
-            Login
-          </RouterLink>
-        </li>
+        {isLoggedIn() ? (
+          <>
+            <li className="semiBold font15 pointer">
+              <RouterLink
+                onClick={() => toggleSidebar(!sidebarOpen)}
+                activeClass="active"
+                className="whiteColor"
+                style={{ padding: "10px 15px" }}
+                to="/projects"
+                spy={true}
+                smooth={true}
+                offset={-60}
+              >
+                My Projects
+              </RouterLink>
+            </li>
+            <li className="semiBold font15 pointer">
+              <RouterLink
+                onClick={() => toggleSidebar(!sidebarOpen)}
+                activeClass="active"
+                className="whiteColor"
+                style={{ padding: "10px 15px" }}
+                to="/profile"
+                spy={true}
+                smooth={true}
+                offset={-60}
+              >
+                Profile
+              </RouterLink>
+            </li>
+          </>
+        ) : (
+          <>
+            <li className="semiBold font15 pointer">
+              <RouterLink
+                onClick={() => toggleSidebar(!sidebarOpen)}
+                activeClass="active"
+                className="whiteColor"
+                style={{ padding: "10px 15px" }}
+                to="/signup"
+                spy={true}
+                smooth={true}
+                offset={-60}
+              >
+                Sign Up
+              </RouterLink>
+            </li>
+            <li className="semiBold font15 pointer">
+              <RouterLink
+                onClick={() => toggleSidebar(!sidebarOpen)}
+                activeClass="active"
+                className="whiteColor"
+                style={{ padding: "10px 15px" }}
+                to="/login"
+                spy={true}
+                smooth={true}
+                offset={-60}
+              >
+                Login
+              </RouterLink>
+            </li>
+          </>
+        )}
+
       </UlStyle>
     </Wrapper>
   );

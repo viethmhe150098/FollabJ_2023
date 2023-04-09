@@ -320,6 +320,7 @@ body {
 .search-button:hover {
   background-color: #d3690d;
 }
+
 .clear-button {
   margin-left: 10px;
   background-color: #ffadad8f;
@@ -538,6 +539,7 @@ textarea {
   border-radius: 7px;
   margin: 20px 0 40px 0;
 }
+
 .invite-user-container {
   align-items: center;
   margin: 20px;
@@ -557,7 +559,7 @@ textarea {
   padding: 5px;
   margin: 10px !important;
   font-size: 16px;
-  resize: none; 
+  resize: none;
 
 }
 
@@ -590,6 +592,7 @@ textarea {
   0% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }
@@ -613,4 +616,18 @@ textarea {
 
 .invited-emails-container li {
   font-size: 16px;
+}
+
+@media only screen and (max-width: 768px) {
+  .modal {
+    min-width: 300px;
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .modal {
+    min-width: 250px;
+    width: 100%;
+  }
 }

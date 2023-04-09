@@ -10,7 +10,7 @@ const projectSlice = createSlice({
             userRole: null,
             members: [],
             name: "",
-            description: "eqwewqeqưe"
+            des: "eqwewqeqưe"
         },
         projects: {
             allProjects: [],
@@ -58,7 +58,7 @@ const projectSlice = createSlice({
             state.currentProject.name = action.payload;
         },
         setCurrentProjectDescription: (state, action) => {
-            state.currentProject.description = action.payload;
+            state.currentProject.des = action.payload;
         },
     },
     extraReducers: (builder) => {

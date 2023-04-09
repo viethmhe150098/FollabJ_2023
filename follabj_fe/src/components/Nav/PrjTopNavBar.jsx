@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Link as RouterLink } from "react-router-dom";
 import Popup from "reactjs-popup";
 import Content from "../Modals/CreateProject";
-import { toast } from "react-toastify";
 
 // Components
 import Sidebar from "./MobileSideBar";
@@ -12,8 +11,6 @@ import FullButton from "../Buttons/FullButton";
 // Assets
 import LogoIcon from "../../assets/svg/Logo";
 import BurgerIcon from "../../assets/svg/BurgerIcon";
-import { useSelector } from "react-redux";
-import instance from "../../Redux/axiosInstance";
 import SendLeaderRequestModal from "../Modals/SendLeaderRequest";
 
 export default function PrjTopNavBar() {
@@ -28,9 +25,6 @@ export default function PrjTopNavBar() {
   }, [y]);
 
   const roles = localStorage.getItem("role_name")
-
-  const user_id = useSelector((state) => state.auth.login.currentUser.id)
-  const user_email = useSelector((state) => state.auth.login.currentUser.email)
 
   return (
     <>

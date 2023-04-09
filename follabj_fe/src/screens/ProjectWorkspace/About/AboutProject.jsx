@@ -8,6 +8,7 @@ import { leaveProject } from '../../../Redux/project/projectActions';
 import InviteUser from './InviteUser';
 import MemberList from './MemberList';
 import styled from 'styled-components';
+import ViewProjectModal from '../../../components/Modals/ViewProject';
 
 // Sections
 export default function AboutProject() {
@@ -21,10 +22,10 @@ export default function AboutProject() {
     const user_role = useSelector((state) => state.project.currentProject.userRole)
 
     const user_id = useSelector((state) => state.auth.login.currentUser.id)
-
+    const project = useSelector((state) => state.project.currentProject);
     const project_id = useSelector((state) => state.project.currentProject.id);
     const project_name = useSelector((state) => state.project.currentProject.name);
-    const project_des = useSelector((state) => state.project.currentProject.description);
+    const project_des = useSelector((state) => state.project.currentProject.des);
 
     const handleMemberLeave = () => {
         dispatch(leaveProject({
@@ -37,10 +38,15 @@ export default function AboutProject() {
 
     return (
         <>
-            <Container>
-                <Content>Project Name: <span style={{fontWeight:"normal"}}>{project_name}</span> </Content>
-                <Content>Project Description: <span style={{fontWeight:"normal"}}>{project_des}</span></Content>
-            </Container>
+            <Popup modal trigger={
+                <Container>
+                    <Content className='animate'>Project Name: <span style={{ fontWeight: "normal" }}>{project_name}</span> </Content>
+                    <Content className='animate'>Project Description: <span style={{ fontWeight: "normal" }}>{project_des}</span></Content>
+                </Container>
+            }>
+                {close => <ViewProjectModal close={close} project={project} type={"readonly"} />}
+            </Popup>
+
             {user_role == "LEADER" && <InviteUser />}
             <div className="invite-user-container">
                 <MemberList />
@@ -73,6 +79,7 @@ export default function AboutProject() {
 
 const Container = styled.div`
   margin: 20px;
+  cursor: pointer;
 `;
 const Content = styled.h2`
   font-size: 1.17em;
@@ -81,12 +88,8 @@ const Content = styled.h2`
   line-height: 1.5;
   font-weight: bold;
   margin-bottom: 20px;
+  &:hover {
+    color: #f58025; 
+  }
 `;
 
-const HeaderInfo = styled.div`
-margin-bottom: 30px;
-margin-left: 5px;
-@media (max-width: 860px) {
-  text-align: center;
-}
-`
