@@ -10,7 +10,7 @@ import About from "../../components/Sections/About"
 
 
 export default function Landing() {
-
+  
 
   return (
     <>
