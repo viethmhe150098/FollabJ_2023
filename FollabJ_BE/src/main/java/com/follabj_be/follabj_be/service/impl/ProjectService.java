@@ -53,7 +53,7 @@ public class ProjectService implements ProjectInterface {
         String p_des = createProjectDTO.getP_des();
         Set<AppUser> member = new HashSet<>();
         member.add(app_user);
-        if (projectRepository.findByNameLike(p_name).isPresent()) {
+        if (app_user.getLeaded_project().contains(projectRepository.findByNameLike(p_name))) {
             throw new GroupException(CustomErrorMessage.PRJ01);
         }
         Project p = new Project(p_name, p_des, create_date, app_user, member);
