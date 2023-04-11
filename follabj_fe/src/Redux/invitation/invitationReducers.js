@@ -16,6 +16,7 @@ export const invitationReducer = createReducer(initialState, (builder) => {
             state.user_invitations = action.payload
         })
         .addCase(inviteMember.fulfilled, (state, action) => {
+            if(action.payload.message==="success")
             state.project_invitations.push(action.payload.content)
         })
         .addCase(acceptInvitation.fulfilled, (state, action) => {
