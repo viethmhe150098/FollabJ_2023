@@ -11,7 +11,7 @@ import Meeting from './screens/ProjectWorkspace/Meeting/Meeting';
 import ForgotPassword from "./screens/Authen/ForgotPassword";
 // import Register from "./screens/Register.jsx";
 import { isLoggedIn } from '../src/Redux/auth/auth';
-import ErrorPage from '../src/screens/Error'
+import ErrorPage from '../src/screens/ErrorPage'
 //Library
 import {
   BrowserRouter as Router,
@@ -102,7 +102,6 @@ export default function App() {
           <Route path="/error">
             <ErrorPage />
           </Route>
-
           <Route exact path="/">
             <Landing />
           </Route>
