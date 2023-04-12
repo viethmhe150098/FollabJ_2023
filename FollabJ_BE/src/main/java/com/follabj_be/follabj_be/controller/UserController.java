@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +69,7 @@ public class UserController {
 
     @PostMapping("/password/{u_id}")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
-    public ResponseEntity<Map<String, String>> changePassword(@PathVariable Long u_id, @RequestBody PasswordDTO passwordDTO) {
+    public ResponseEntity<Map<String, String>> changePassword(@PathVariable Long u_id,@Valid @RequestBody PasswordDTO passwordDTO) {
         Map<String, String> res = new HashMap<>();
         res.put("message", userService.changePassword(passwordDTO, u_id));
         return new ResponseEntity<>(res, HttpStatus.OK);
@@ -76,13 +77,13 @@ public class UserController {
 
     @PostMapping("/info/{id}")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
-    public ResponseEntity<Map<String, String>> updateProfile(@PathVariable Long id, @RequestBody UpdateUserDTO updateUserDTO) {
+    public ResponseEntity<Map<String, String>> updateProfile(@PathVariable Long id,@Valid @RequestBody UpdateUserDTO updateUserDTO) {
         Map<String, String> res = userService.updateUser(updateUserDTO, id);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @PostMapping("/forgot")
-    public ResponseEntity<Map<String, String>> forgotPassword(@RequestBody ForgotUserDTO forgotUserDTO) {
+    public ResponseEntity<Map<String, String>> forgotPassword(@Valid @RequestBody ForgotUserDTO forgotUserDTO) {
         String message = userService.forgetPassword(forgotUserDTO.getEmail());
         Map<String, String> res = new HashMap<>();
         res.put("status", "200");

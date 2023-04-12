@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -53,7 +54,7 @@ public class EventController {
     }
 
     @PostMapping("/project/{project_id}/leader/events")
-    public EventDTO addEvent(@RequestBody CreateEventDTO createEventDTO, @PathVariable Long project_id) {
+    public EventDTO addEvent(@Valid  @RequestBody CreateEventDTO createEventDTO, @PathVariable Long project_id) {
         createEventDTO.setProjectId(project_id);
         Event event = eventService.addEvent(createEventDTO);
         EventDTO eventDTO = modelMapper.map(event, EventDTO.class);

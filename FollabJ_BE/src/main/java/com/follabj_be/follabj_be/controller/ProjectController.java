@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +36,7 @@ public class ProjectController {
 
     @PostMapping(value = "/createproject")
     @PreAuthorize("hasAuthority('LEADER')")
-    public ResponseEntity<Project> createProject(@RequestBody CreateProjectDTO createProjectDTO) throws GroupException {
+    public ResponseEntity<Project> createProject(@Valid @RequestBody CreateProjectDTO createProjectDTO) throws GroupException {
 
         Project p = projectService.createPrj(createProjectDTO);
         return new ResponseEntity<>(p, HttpStatus.CREATED);

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +20,7 @@ public class RegistrationController {
 
 
     @PostMapping(path = "signup")
-    public ResponseEntity<Map<String, String>> register(@RequestBody RegistrationRequest request) {
+    public ResponseEntity<Map<String, String>> register(@Valid @RequestBody RegistrationRequest request) {
         Map<String, String> res = new HashMap<>();
         String token = registrationInterface.register(request);
         res.put("status", "200");
