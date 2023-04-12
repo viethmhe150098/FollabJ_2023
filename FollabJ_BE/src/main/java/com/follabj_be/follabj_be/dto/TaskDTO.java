@@ -1,10 +1,8 @@
 package com.follabj_be.follabj_be.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import javax.validation.constraints.Max;
 import java.util.Date;
 import java.util.List;
 
@@ -14,9 +12,9 @@ import java.util.List;
 @Setter
 public class TaskDTO {
     private Long id;
-
+    @Max(30)
     private String title;
-
+    @Max(100)
     private String description;
 
     private String label;
@@ -28,7 +26,7 @@ public class TaskDTO {
     private int statusId;
 
     private int columnPosition;
-
+    @NonNull
     private List<UserDTO> assigneeList;
 
 }
