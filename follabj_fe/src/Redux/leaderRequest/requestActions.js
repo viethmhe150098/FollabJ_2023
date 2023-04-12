@@ -33,7 +33,7 @@ export const acceptRequest = createAsyncThunk("ACCEPT_REQUEST", async (request) 
 export const declineRequest = createAsyncThunk("DECLINE_REQUEST", async (request) => {
     try {
         const response = await requestAPI.updateStatusRequest(request.id, 2)
-        toast.success(`Decline user ${request.user_fullname} to be a team leader!`)
+        toast.success(`Decline user ${request.user.email} to be a team leader!`)
         return request.id
     } catch (error) {
         throw error

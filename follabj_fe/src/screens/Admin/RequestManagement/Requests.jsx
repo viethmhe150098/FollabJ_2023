@@ -79,10 +79,10 @@ const Requests = () => {
                                 {leaderRequests.map((item, index) => (
                                     <TableRow key={index}>
                                         <TableCell component="th" scope="row">
-                                            {item.user_fullname}
+                                            {item.user.username}
                                         </TableCell>
                                         <TableCell component="th" scope="row">
-                                            {item.email}
+                                            {item.user.email}
                                         </TableCell>
 
                                         <TableCell align="left">
