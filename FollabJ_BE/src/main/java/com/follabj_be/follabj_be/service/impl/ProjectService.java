@@ -37,11 +37,6 @@ public class ProjectService implements ProjectInterface {
     private final EventRepository eventRepository;
     private final TaskRepository taskRepository;
 
-    private final FileMetaRepository fileMetaRepository;
-    private final MeetingRepository meetingRepository;
-
-    private final BuildEmail buildEmail;
-    private final EmailSender emailSender;
     @Override
     public Project createPrj(CreateProjectDTO createProjectDTO) throws GroupException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -53,10 +48,8 @@ public class ProjectService implements ProjectInterface {
         String p_des = createProjectDTO.getP_des();
         Set<AppUser> member = new HashSet<>();
         member.add(app_user);
-        if (projectRepository.findByName(p_name).isPresent()) {
-            if(projectRepository.findByName(p_name).get().getLeader().getId() == user_id) {
+        if (projectRepository.findByNameAndAndLeader(p_name, user_id).isPresent()) {
                 throw new GroupException(CustomErrorMessage.PRJ01);
-            }
         }
         Project p = new Project(p_name, p_des, create_date, app_user, member);
         return projectRepository.save(p);

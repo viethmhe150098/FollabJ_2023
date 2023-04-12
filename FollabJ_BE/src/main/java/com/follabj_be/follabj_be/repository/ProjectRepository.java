@@ -47,6 +47,9 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query("Select p from Project p")
     Page<Project> getAllProject(Pageable pageable);
 
+    @Query("Select p from Project p where p.name = ?1 and p.leader.id = ?2")
+    Optional<Project> findByNameAndAndLeader(String name, Long u_id);
+
     @Query(nativeQuery = true, value="SELECT COUNT(ID) as count, \n" +
             "MONTH(str_to_date(created_date, '%d/%c/%Y')) as countBy\n" +
             "FROM project\n" +
