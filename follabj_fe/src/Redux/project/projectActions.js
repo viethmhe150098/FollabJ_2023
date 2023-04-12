@@ -2,9 +2,9 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import * as projectAPI from "./projectAPI";
 
-export const fetchAllProjects = createAsyncThunk("FETCH_ALL_PROJECTS", async (page_number) => {
+export const fetchAllProjects = createAsyncThunk("FETCH_ALL_PROJECTS", async () => {
     try {
-        const response = await projectAPI.fetchAllProjects(page_number)
+        const response = await projectAPI.fetchAllProjects()
         //console.log(response)
         return response.data
     } catch (error) {
