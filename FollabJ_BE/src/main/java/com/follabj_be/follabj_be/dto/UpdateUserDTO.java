@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 @NoArgsConstructor
@@ -15,8 +16,8 @@ import javax.validation.constraints.Pattern;
 public class UpdateUserDTO {
     private Long u_id;
     private String fullname;
-    @Min(30)
+    @Pattern(regexp = "^\s*[a-zA-Z0-9]{5,30}\s*$", message = "Not match pattern")
     private String username;
-    @Pattern(regexp = "^0\\d{8}$")
+    @Pattern(regexp = "^0\\d{8}$", message = "Not match pattern")
     private String phone_number;
 }

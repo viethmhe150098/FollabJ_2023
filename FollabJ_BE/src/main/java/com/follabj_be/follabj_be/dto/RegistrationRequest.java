@@ -5,21 +5,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class RegistrationRequest {
-    @Min(5)
-    @Max(30)
+    @Pattern(regexp = "^\s*[a-zA-Z0-9]{5,30}\s*$", message = "Not match pattern")
+    @NotEmpty(message = "Not empty")
     private String username;
-    @Email
+    @Email(message = "Not match pattern")
+    @NotEmpty(message = "Not empty")
     private String email;
-    @Min(8)
+    @Pattern(regexp = "^(?=.*\\d)[a-zA-Z0-9]{8,}$", message = "Not match pattern")
+    @NotEmpty(message = "Not empty")
     private String password;
     private String fullname;
     private String phone_number;
