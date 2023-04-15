@@ -24,8 +24,8 @@ export default function About() {
             <AddRight>
               <h2 className="font40 extraBold">A few words about FollabiJ</h2>
               <p className="font12">
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed
-                diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+              FollabiJ is a powerful collaboration app that helps teams work together seamlessly, no matter where they are located. With FollabiJ, you can easily manage tasks, share files, and communicate with team members in real-time.
+              Our mission is to help teams achieve their goals faster and more efficiently. We understand that collaboration is key to success, and FollabiJ is designed to make collaboration easy and intuitive. Whether you are a small startup or a large enterprise, FollabiJ has the tools you need to collaborate effectively and get things done.
               </p>
               <ButtonsRow className="flexNullCenter" style={{ margin: "30px 0" }}>
                 <div style={{ width: "190px" }}>

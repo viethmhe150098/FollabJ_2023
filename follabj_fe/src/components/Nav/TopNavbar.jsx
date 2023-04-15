@@ -83,7 +83,7 @@ export default function TopNavbar() {
               <>
                 <li className="semiBold font15 pointer">
                   <RouterLink to="/signup" style={{ padding: "10px 30px 10px 0" }}>
-                    Sign Up
+                    Register
                   </RouterLink>
                 </li>
                 <li className="semiBold pointer font15 flexCenter">
