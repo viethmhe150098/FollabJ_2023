@@ -10,6 +10,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { toast } from 'react-toastify';
+import Popup from "reactjs-popup";
+import ConfirmationModal from "../../../components/Modals/ConfirmationModal";
 
 const Users = () => {
     const dispatch = useDispatch();
@@ -18,64 +20,73 @@ const Users = () => {
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [usersPerPage, setUsersPerPage] = useState(10);
-  
+    const [selectedUser, setSelectedUser] = useState(null);
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
     const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
-  
+    const handleUserSelect = (user) => {
+        setSelectedUser(user);
+    };
+
     const handleSearch = () => {
-      if (searchQuery.trim() === "") {
-        setFilteredUsers([]);
-      } else {
-        const results = users.filter((user) =>
-          user.email.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-        if (results.length === 0) {
-          toast.error("Not found user with that information!");
+        if (searchQuery.trim() === "") {
+            setFilteredUsers([]);
+        } else {
+            const results = users.filter((user) =>
+                user.email.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+            if (results.length === 0) {
+                toast.error("Not found user with that information!");
+            }
+            setFilteredUsers(results);
         }
-        setFilteredUsers(results);
-      }
     };
-  
+
     const handleClear = () => {
-      setFilteredUsers([]);
-      setSearchQuery("");
+        setFilteredUsers([]);
+        setSearchQuery("");
     };
-  
+
     useEffect(() => {
-      dispatch(getUsers());
+        dispatch(getUsers());
     }, []);
-  
+
     useEffect(() => {
-      setFilteredUsers((prevFilteredUsers) =>
-        prevFilteredUsers.map((filteredUser) =>
-          users.find((user) => user.email === filteredUser.email)
-        )
-      );
+        setFilteredUsers((prevFilteredUsers) =>
+            prevFilteredUsers.map((filteredUser) =>
+                users.find((user) => user.email === filteredUser.email)
+            )
+        );
     }, [users]);
-  
+
     const handleBan = (user) => {
-      dispatch(banUser(user));
-      setFilteredUsers((prevFilteredUsers) =>
-        prevFilteredUsers.map((filteredUser) =>
-          filteredUser.email === user.email
-            ? { ...filteredUser, status: 2 }
-            : filteredUser
-        )
-      );
+        dispatch(banUser(user));
+        setFilteredUsers((prevFilteredUsers) =>
+            prevFilteredUsers.map((filteredUser) =>
+                filteredUser.email === user.email
+                    ? { ...filteredUser, status: 2 }
+                    : filteredUser
+            )
+        );
+        const updatedUser = { ...user, status: 2 };
+        setSelectedUser(updatedUser);
+
     };
-  
+
     const handleUnban = (user) => {
-      dispatch(unbanUser(user));
-      setFilteredUsers((prevFilteredUsers) =>
-        prevFilteredUsers.map((filteredUser) =>
-          filteredUser.email === user.email
-            ? { ...filteredUser, status: 1 }
-            : filteredUser
-        )
-      );
+        dispatch(unbanUser(user));
+        setFilteredUsers((prevFilteredUsers) =>
+            prevFilteredUsers.map((filteredUser) =>
+                filteredUser.email === user.email
+                    ? { ...filteredUser, status: 1 }
+                    : filteredUser
+            )
+        );
+        const updatedUser = { ...user, status: 1 };
+        setSelectedUser(updatedUser);
+
     };
-  
+
 
     const makeStyle = (status) => {
         if (status === "Unban") {
@@ -111,6 +122,27 @@ const Users = () => {
 
                 </div>
             </div>
+            {selectedUser && (
+                <div>
+                    <h3>Selected User: {selectedUser.username} &nbsp; {selectedUser.status == 1 &&
+                        <button className="status" style={makeStyle('Unban')}>Active User</button>
+                    }
+                        {selectedUser.status == 2 &&
+                            <button className="status" style={makeStyle('Ban')}>Inactive User</button>
+                        }
+                        {selectedUser.status == 0 &&
+                            <button className="status" style={makeStyle('Verify')}>Verifing</button>
+                        }</h3>
+                    <p>User ID: {selectedUser.id}</p>
+                    <p>Email: {selectedUser.email}</p>
+                    <p>Full Name: {selectedUser.fullname === null ?
+                        <span style={{ color: 'red' }}>Not set yet</span>
+                        : selectedUser.fullname}</p>
+                    <p>Phone Number: {selectedUser.phone_number === null ?
+                        <span style={{ color: 'red' }}>Not set yet</span>
+                        : selectedUser.phone_number}</p>
+                </div>
+            )}
             <div>
                 {(filteredUsers.length > 0 ?
                     <div className="Table">
@@ -138,19 +170,31 @@ const Users = () => {
                                             <TableCell component="th" scope="row">
                                                 {user.email}
                                             </TableCell>
-
                                             <TableCell align="left">
 
-                                                {user.status == 1 &&
-                                                    <button onClick={() => handleBan(user)} className="status" style={makeStyle('Ban')}>Ban User</button>
+                                                {user.status == 1 && (
+                                                    <Popup modal trigger={
+                                                        <button className="status" style={makeStyle('Ban')}>Ban User</button>
+                                                    }>
+                                                        {close => <ConfirmationModal message="Are you sure you want to ban this user?"
+                                                            onConfirm={() => handleBan(user)}
+                                                            onCancel={close} />}
+                                                    </Popup>)
                                                 }
-                                                {user.status == 2 &&
-                                                    <button onClick={() => handleUnban(user)} className="status" style={makeStyle('Unban')}>Unban User</button>
+                                                {user.status == 2 && (
+                                                    <Popup modal trigger={
+                                                        <button className="status" style={makeStyle('Unban')}>Unban User</button>
+                                                    }>
+                                                        {close => <ConfirmationModal message="Are you sure you want to unban this user?"
+                                                            onConfirm={() => handleUnban(user)}
+                                                            onCancel={close} />}
+                                                    </Popup>)
                                                 }
                                                 {user.status == 0 &&
                                                     <button className="status" style={makeStyle('Verify')}>Verifing</button>
                                                 }
                                             </TableCell>
+                                            <TableCell onClick={() => handleUserSelect(user)} align="left" className="Details">Details</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -189,19 +233,34 @@ const Users = () => {
 
                                     <TableCell align="left">
 
-                                        {user.status == 1 &&
-                                            <button onClick={() => handleBan(user)} className="status" style={makeStyle('Ban')}>Ban User</button>
+                                        {user.status == 1 && (
+                                            <Popup modal trigger={
+                                                <button className="status" style={makeStyle('Ban')}>Ban User</button>
+                                            }>
+                                                {close => <ConfirmationModal message="Are you sure you want to ban this user?"
+                                                    onConfirm={() => handleBan(user)}
+                                                    onCancel={close} />}
+                                            </Popup>)
                                         }
-                                        {user.status == 2 &&
-                                            <button onClick={() => handleUnban(user)} className="status" style={makeStyle('Unban')}>Unban User</button>
+                                        {user.status == 2 && (
+                                            <Popup modal trigger={
+                                                <button className="status" style={makeStyle('Unban')}>Unban User</button>
+                                            }>
+                                                {close => <ConfirmationModal message="Are you sure you want to unban this user?"
+                                                    onConfirm={() => handleUnban(user)}
+                                                    onCancel={close} />}
+                                            </Popup>)
                                         }
                                         {user.status == 0 &&
                                             <button className="status" style={makeStyle('Verify')}>Verifing</button>
                                         }
                                     </TableCell>
+                                    <TableCell onClick={() => handleUserSelect(user)} align="left" className="Details">Details</TableCell>
                                 </TableRow>
                             ))}
+
                         </TableBody>
+
                     </Table>
                 </TableContainer>
                 <div className="pagination-wrapper">

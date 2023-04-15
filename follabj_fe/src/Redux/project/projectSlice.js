@@ -3,54 +3,62 @@ import { acceptInvitation } from "../invitation/invitationActions";
 import { assignLeader, deleteMember, deleteProject, fetchAllProjects, getProjectMembersByProjectId, getProjectsByUserId, getProjectStatistics, inviteMember, leaveProject, updateProject, } from "./projectActions";
 
 const projectSlice = createSlice({
-    name:"project",
-    initialState:{
+    name: "project",
+    initialState: {
         currentProject: {
-            id : null,
+            id: null,
             userRole: null,
-            members: []
+            members: [],
+            name: "",
+            des: ""
         },
         projects: {
-            allProjects:[],
-            isFetching:false,
-            error:false
+            allProjects: [],
+            isFetching: false,
+            error: false
         },
         statistics: {
 
         },
-        msg:"",
+        msg: "",
     },
-    reducers:{
-        getProjectStart: (state)=>{
-            state.projects.isFetching=true;
+    reducers: {
+        getProjectStart: (state) => {
+            state.projects.isFetching = true;
         },
-        getProjectSuccess: (state,action) =>{
-            state.projects.isFetching=false;
+        getProjectSuccess: (state, action) => {
+            state.projects.isFetching = false;
             state.projects.allProjects = action.payload;
         },
-        getProjectFailed:(state)=>{
-            state.projects.isFetching=false;
-            state.projects.error=true;
+        getProjectFailed: (state) => {
+            state.projects.isFetching = false;
+            state.projects.error = true;
         },
 
-        createProjectStart: (state)=>{
-            state.projects.isFetching=true;
+        createProjectStart: (state) => {
+            state.projects.isFetching = true;
         },
-        createProjectSuccess: (state,action) =>{
-            state.projects.isFetching=false;
+        createProjectSuccess: (state, action) => {
+            state.projects.isFetching = false;
             state.msg = action.payload;
         },
-        createProjectFailed:(state,action)=>{
-            state.projects.isFetching=false;
-            state.projects.error=true;
+        createProjectFailed: (state, action) => {
+            state.projects.isFetching = false;
+            state.projects.error = true;
             state.msg = action.payload;
         },
 
         setCurrentProjectId: (state, action) => {
             state.currentProject.id = action.payload;
         },
-        setCurrentProjectUserRole : (state, action) => {
+        setCurrentProjectUserRole: (state, action) => {
             state.currentProject.userRole = action.payload;
+        },
+        setCurrentProjectName: (state, action) => {
+            state.currentProject.name = action.payload;
+        },
+        setCurrentProjectDescription: (state, action) => {
+            state.currentProject.des = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -81,10 +89,10 @@ const projectSlice = createSlice({
                 state.projects.allProjects = state.projects.allProjects.filter((project) => project.id != action.payload)
             })
             .addCase(assignLeader.fulfilled, (state, action) => {
-                
+
             })
             .addCase(deleteMember.fulfilled, (state, action) => {
-                state.currentProject.members = state.currentProject.members.filter((member)=> member.id != action.payload)
+                state.currentProject.members = state.currentProject.members.filter((member) => member.id != action.payload)
             })
     },
 })
@@ -99,8 +107,9 @@ export const {
     createProjectFailed,
 
     setCurrentProjectId,
-    setCurrentProjectUserRole
-
+    setCurrentProjectUserRole,
+    setCurrentProjectName,
+    setCurrentProjectDescription,
 } = projectSlice.actions;
 
 export default projectSlice.reducer;

@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import FullButton from "../../../components/Buttons/FullButton";
 import { randomID } from "./Meeting";
-import { toast } from 'react-toastify';
 import MeetingLater from "../../../components/Modals/MeetingLater";
 import Popup from "reactjs-popup";
 

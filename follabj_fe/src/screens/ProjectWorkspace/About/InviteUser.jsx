@@ -66,6 +66,7 @@ const InviteUser = () => {
   return (
     <div className="invite-user-container">
       <div className="input-container">
+        <h3>Invite users:</h3>
         <input
           type="text"
           placeholder="Enter email address"
@@ -79,7 +80,7 @@ const InviteUser = () => {
 
 
       <div className="invited-emails-container">
-        <h3>Invited users:</h3>
+
         <ul>
           {/* {invitedEmails.map((invitedEmail, index) => (
             <li key={index}>{invitedEmail}</li>
