@@ -18,6 +18,7 @@ export const getProjectStatistics = createAsyncThunk("GET_PROJECT_STATISTICS", a
         //console.log(response)
         return response.data
     } catch (error) {
+        toast.error('some thing wron')
         console.log(error);
     }
 })
@@ -38,6 +39,7 @@ export const getProjectMembersByProjectId = createAsyncThunk("FETCH_PROJECT_MEMB
         //console.log(response)
         return response.data
     } catch (error) {
+        toast.error('some thing wron')
         console.log(error);
     }
 })
