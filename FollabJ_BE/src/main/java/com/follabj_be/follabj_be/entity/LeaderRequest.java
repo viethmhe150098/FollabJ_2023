@@ -25,7 +25,7 @@ public class LeaderRequest {
     @ManyToOne
     @JoinColumn(name = "u_id", referencedColumnName = "id")
     private AppUser user;
-
+    @Column(nullable = false)
     private String message;
 
     @Column(columnDefinition = "varchar(255) default 'PENDING'")

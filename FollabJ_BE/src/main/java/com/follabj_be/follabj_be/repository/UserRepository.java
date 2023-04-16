@@ -54,4 +54,7 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
 
     @Query(nativeQuery = true, value = "select COUNT(id) from app_user where DAY(str_to_date(created_at, '%Y/%m/%d %T')) = ?1")
     String countByDay(int day);
+
+    @Query("Select ap from AppUser ap where ap.phone_number = ?1")
+    Optional<AppUser> findAppUserByPhone_number(String phone_number);
 }

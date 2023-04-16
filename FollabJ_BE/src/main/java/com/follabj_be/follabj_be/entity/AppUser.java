@@ -20,12 +20,17 @@ public class AppUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(nullable = false)
     private String username;
+    @Column(nullable = false, unique = true)
     private String email;
+    @Column(nullable = false)
     private String password;
 
     private String fullname;
+    @Column(unique = true)
     private String phone_number;
+    @Column(nullable = false)
     private String createdAt;
     private int status;
     @ManyToMany(fetch = FetchType.EAGER)

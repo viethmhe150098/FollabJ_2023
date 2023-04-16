@@ -190,12 +190,17 @@ public class UserService implements UserDetailsService, UserInterface {
         Map<String, String> res = new HashMap<>();
         AppUser appUser = userRepository.findById(u_id).orElseThrow(() -> new ObjectNotFoundException("Not found user", u_id.toString()));
         if(u_id == userDTO.getU_id()){
-            appUser.setFullname(userDTO.getFullname());
-            appUser.setPhone_number(userDTO.getPhone_number());
-            appUser.setUsername(userDTO.getUsername());
-            userRepository.save(appUser);
-            res.put("status", "200");
-            res.put("message", "Update success");
+            if(!userRepository.findAppUserByPhone_number(userDTO.getPhone_number()).isPresent()) {
+                appUser.setFullname(userDTO.getFullname());
+                appUser.setPhone_number(userDTO.getPhone_number());
+                appUser.setUsername(userDTO.getUsername());
+                userRepository.save(appUser);
+                res.put("status", "200");
+                res.put("message", "Update success");
+            }else{
+                res.put("status", "500");
+                res.put("message", "This phone number is already registered");
+            }
         }else {
             res.put("status", "401");
             res.put("message", CustomErrorMessage.NO_PERMISSION.getMessage());
