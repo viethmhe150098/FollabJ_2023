@@ -210,10 +210,9 @@ public class ProjectService implements ProjectInterface {
     }
 
     @Override
-    public Page<Project> getAll(int page) {
-        Pageable paging = PageRequest.of(page, 6);
+    public List<Project> getAll() {
 
-        return projectRepository.getAllProject(paging);
+        return projectRepository.findAll();
     }
 
     public Map<Object, Object> leaveGroup(Long p_id, Long u_id){
