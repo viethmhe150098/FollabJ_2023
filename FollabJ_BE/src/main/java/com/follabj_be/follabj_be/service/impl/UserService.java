@@ -246,8 +246,13 @@ public class UserService implements UserDetailsService, UserInterface {
 
     private String random() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 6; i++) {
             int number = randomNumber(0, ALPHA_NUMERIC.length() - 1);
+            char ch = ALPHA_NUMERIC.charAt(number);
+            sb.append(ch);
+        }
+        for (int i = 0; i < 2; i++) {
+            int number = randomNumber(0, digits.length() - 1);
             char ch = ALPHA_NUMERIC.charAt(number);
             sb.append(ch);
         }
