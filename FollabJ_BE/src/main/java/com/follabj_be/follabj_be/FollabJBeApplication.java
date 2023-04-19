@@ -19,7 +19,6 @@ public class FollabJBeApplication {
     @Autowired
     private static RoleRepository roleRepository;
     public static void main(String[] args) {
-
         SpringApplication.run(FollabJBeApplication.class, args);
         roleRepository.save(new Role(0L, "INACTIVE"));
         roleRepository.save(new Role(1L, "ACTIVE_USER"));
