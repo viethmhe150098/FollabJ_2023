@@ -230,7 +230,7 @@ const CreateEventForm = ({ type, close, event }) => {
                   value={member.id}
                   onChange={handleCheckboxChange}
                   // checked={assigneeList.includes(teamMember.id)}
-                  checked={participantList.some((participant) => participant.id == member.id)}
+                  checked={participantList.some((participant) => participant.id === member.id) || member.id === user_id}
                 />
                 <label htmlFor={`assignee-${member.id}`}>
                   {member.username}

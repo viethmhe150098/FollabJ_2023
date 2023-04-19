@@ -11,8 +11,7 @@ import Meeting from './screens/ProjectWorkspace/Meeting/Meeting';
 import ForgotPassword from "./screens/Authen/ForgotPassword";
 // import Register from "./screens/Register.jsx";
 import { isLoggedIn } from '../src/Redux/auth/auth';
-
-
+import ErrorPage from '../src/screens/ErrorPage'
 //Library
 import {
   BrowserRouter as Router,
@@ -23,7 +22,7 @@ import Landing from './screens/Landing/Landing';
 import AdminDashboard from './screens/Admin/AdminDashboard';
 import AdminRoute from './components/Routes/AdminRoute';
 import AuthenciatedRoute from './components/Routes/AuthenciatedRoute';
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ConfirmToken from './screens/ConfirmToken/ConfirmToken';
 
@@ -100,13 +99,16 @@ export default function App() {
           <AdminRoute path="/admin" >
             <AdminDashboard />
           </AdminRoute>
-
+          <Route path="/error">
+            <ErrorPage />
+          </Route>
           <Route exact path="/">
             <Landing />
           </Route>
           <Route path="/confirm/:token">
             <ConfirmToken />
           </Route>
+
         </Switch>
       </Router>
     </>

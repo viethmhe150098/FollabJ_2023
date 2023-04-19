@@ -21,7 +21,7 @@ export default function AdminDashboard() {
           <Route path="/admin/requests">
             <Requests />
           </Route>
-          <Route path="/admin/dashboard">
+          <Route path="/admin">
                 <MainDash />
           </Route>
         </Switch>

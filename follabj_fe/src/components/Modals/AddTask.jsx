@@ -9,7 +9,7 @@ import { LENGTH30, LENGTH50, LENGTH100 } from './regexs.js';
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const AddTaskModal = ({ type, close, statusId = 1, task }) => {
+const AddTaskModal = ({ type, close, statusId = 1, task, columnPosition}) => {
 
   const dispatch = useDispatch();
 
@@ -111,6 +111,7 @@ const AddTaskModal = ({ type, close, statusId = 1, task }) => {
         startDate,
         endDate,
         statusId,
+        columnPosition,
         assigneeList
       }
     }
@@ -159,6 +160,7 @@ const AddTaskModal = ({ type, close, statusId = 1, task }) => {
       startDate,
       endDate,
       statusId,
+      columnPosition,
       assigneeList
     }
 

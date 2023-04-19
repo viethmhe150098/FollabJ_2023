@@ -21,7 +21,6 @@ public interface LeaderRequestRepository extends JpaRepository<LeaderRequest, Lo
 
     LeaderRequest findByUserId(Long u_id);
 
-    @Query("select l from LeaderRequest l where l.status=?2")
-    Page<LeaderRequest> getRequestsByStatus(Pageable pageable, LeaderRequest.requestStatus status);
-
+    @Query("select l from LeaderRequest l where l.status=?1")
+    Page<LeaderRequest> getRequestsByStatus(LeaderRequest.requestStatus status, Pageable pageable);
 }

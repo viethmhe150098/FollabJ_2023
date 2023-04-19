@@ -26,6 +26,6 @@ public class Invitation {
     @JoinColumn(name = "project_id", referencedColumnName = "id")
     private Project project;
 
-    @Column(columnDefinition = "integer default 0")
+    @Column(columnDefinition = "integer default 0", nullable = false)
     private int status;
 }

@@ -72,22 +72,26 @@ export default function MemberList() {
                                         {index === 0 ? <button className="status" style={makeStyle('Leader')}>Leader</button> : <button className="status" style={makeStyle('Member')}>Team member</button>}
                                     </TableCell>
 
-                                    <Popup modal trigger={<TableCell align="left">
-                                        {user_role == "LEADER" && user_id != item.id &&
-                                            <button className="status red-btn animate">
-                                                Delete
-                                            </button>}
-                                    </TableCell>}>
+                                    <Popup modal trigger={
+                                        user_role == "LEADER" && user_id != item.id && (
+                                            <TableCell align="left">
+                                                <button className="status red-btn animate">
+                                                    Delete
+                                                </button>
+                                            </TableCell>
+                                        )
+                                    }>
                                         {close => <ConfirmationModal message="Are you sure you want to delete?"
                                             onConfirm={() => handleDeleteMember(item.id)}
                                             onCancel={close} />}
                                     </Popup>
+
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
-            </div>
+            </div >
         </>
     );
 }

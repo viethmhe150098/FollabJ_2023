@@ -1,8 +1,9 @@
 import axios from "axios";
 import jwtDecode from 'jwt-decode';
 import { loginFailed, loginStart, loginSuccess, registerFailed, registerStart, registerSuccess } from "./authSlice";
-import { createProjectFailed, createProjectStart, createProjectSuccess, getProjectStart } from "../project/projectSlice";
+import { createProjectFailed, createProjectStart, createProjectSuccess, getProjectStart, setCurrentProjectId } from "../project/projectSlice";
 import { toast } from "react-toastify";
+import { getProjectMembersByProjectId } from "../project/projectActions";
 
 export const loginUser = async (user, dispatch, navigate) => {
     dispatch(loginStart());
@@ -63,8 +64,9 @@ export const loginUser = async (user, dispatch, navigate) => {
 
 export const registerUser = async (user, dispatch, navigate) => {
     dispatch(registerStart());
-    toast.info('Loading your information. This may take a few moments.');
+    
     try {
+        toast.info('Loading your information. This may take a few moments.');
         await axios.post("http://localhost:8080/signup",
             user,
             {
@@ -72,6 +74,7 @@ export const registerUser = async (user, dispatch, navigate) => {
                 //     'Content-Type': 'application/x-www-form-urlencoded'
                 // }
             });
+       
         dispatch(registerSuccess());
         toast.dismiss();
         toast.success('Register successfully, please CHECK your email!', {
@@ -80,6 +83,7 @@ export const registerUser = async (user, dispatch, navigate) => {
         navigate.push("/login");
     } catch (error) {
         dispatch(registerFailed());
+        toast.dismiss();
         toast.error(error.response.data.message);
     }
 }
@@ -100,6 +104,8 @@ export const createProject = async (project, access_token, dispatch, navigate) =
                 });
             dispatch(createProjectSuccess(res.data));
             toast.success('Create project successfully!')
+            dispatch(setCurrentProjectId(res.data.id))
+            dispatch(getProjectMembersByProjectId(res.data.id))
             navigate.push("/aboutProject");
         } catch (error) {
             dispatch(createProjectFailed());

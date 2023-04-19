@@ -22,7 +22,7 @@ const generateToken = async (tokenServerUrl, userID, channelId) => {
         console.error(error);
     }
 };
-function randomID(len) {
+export function randomID(len) {
     let result = '';
     if (result) return result;
     var chars = '12345qwertyuiopasdfgh67890jklmnbvcxzMNBVCZXASDQWERTYHGFUIOLKJP',
@@ -62,7 +62,7 @@ const Meeting = () => {
         );
         console.log(token)
         const kitToken = ZegoUIKitPrebuilt.generateKitTokenForProduction(
-            1445575204,
+            910761865,
             token.token,
             roomID,
             userID,

@@ -39,7 +39,7 @@ public class RegistrationService implements RegistrationInterface {
         LocalDateTime now = LocalDateTime.now();
         roles.add(new Role(0L, AppUserRole.INACTIVE_USER.toString()));
         String email = request.getEmail();
-        String username = request.getEmail();
+        String username = request.getUsername();
         String phone_number = request.getPhone_number();
         String password = request.getPassword();
         String createdAt = dtf.format(now);
@@ -57,7 +57,7 @@ public class RegistrationService implements RegistrationInterface {
 
             //Since, we are running the spring boot application in localhost, we are hardcoding the
             //url of the server. We are creating a POST request with token param
-            String link = "http://localhost:8080/confirm?token=" + tokenForNewUser;
+            String link = "http://localhost:3000/confirm/" + tokenForNewUser;
             emailSender.sendEmail(email, buildEmail.registrationEmail(email, link));
             return tokenForNewUser;
     }

@@ -45,7 +45,6 @@ public class TaskController {
     }
 
     @PostMapping("/project/{project_id}/leader/tasks")
-    @PreAuthorize("hasAuthority('LEADER')")
     public Task addTask(@RequestBody Task task, @PathVariable Long project_id) {
         task.setProject(new Project());
         task.getProject().setId(project_id);
@@ -60,7 +59,6 @@ public class TaskController {
     }
 
     @PutMapping("/project/{project_id}/leader/tasks/{task_id}/update")
-    @PreAuthorize("hasAuthority('LEADER')")
     public TaskDTO updateTask(@RequestBody Task task, @PathVariable Long project_id, @PathVariable Long task_id) {
         task.setProject(new Project());
         task.getProject().setId(project_id);
@@ -69,24 +67,22 @@ public class TaskController {
         return taskDTO;
     }
 
+    @PutMapping("/project/{project_id}/leader/tasks/{task_id}/changeColumn")
+    public void changeColumn(@RequestParam int status, @RequestParam int columnPosition, @PathVariable Long project_id, @PathVariable Long task_id) {
+        taskService.updateSourceColumnPositionBeforeChangeTaskStatus( project_id, task_id);
+        taskService.updateTaskColumnPosition(task_id, columnPosition);
+        taskService.updateTaskStatus(task_id, status);
+        taskService.updateDestinationColumnPositionAfterChangeTaskStatus(project_id, task_id);
+    }
+
+    @PutMapping("/project/{project_id}/leader/tasks/{task_id}/changePosition")
+    public void changePosition (@RequestParam int columnPosition, @PathVariable Long project_id, @PathVariable Long task_id) {
+        taskService.updateTaskColumnPosition(task_id, columnPosition);
+        taskService.updateColumnPositionAfterChangeTaskPosition(project_id, task_id);
+    }
+
     @DeleteMapping("/project/{project_id}/leader/tasks/{task_id}/delete")
-    @PreAuthorize("hasAuthority('LEADER')")
     public void deleteTask(@PathVariable Long task_id) {
         taskService.deleteTask(task_id);
-    }
-
-    @RequestMapping(
-            method = RequestMethod.POST,
-            path = "/project/{project_id}/leader/tasks/{task_id}/add"
-    )
-    @PreAuthorize("hasAuthority('LEADER')")
-    public void addAssigneeToTask(@PathVariable Long task_id, @RequestParam Long assignee_id) {
-        taskService.addAssigneeToTask(task_id, assignee_id);
-    }
-
-    @DeleteMapping("/project/{project_id}/leader/tasks/{task_id}/remove")
-    @PreAuthorize("hasAuthority('LEADER')")
-    public void removeAssigneeFromTask(@PathVariable Long task_id, @RequestParam Long assignee_id) {
-        taskService.removeAssigneeFromTask(task_id, assignee_id);
     }
 }
