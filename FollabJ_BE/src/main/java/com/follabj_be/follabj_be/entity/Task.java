@@ -16,18 +16,20 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    @Column(nullable = false)
     private String title;
-
+    @Column(nullable = false)
     private String description;
 
     private String label;
-
+    @Column(nullable = false)
     private Date startDate;
-
+    @Column(nullable = false)
     private Date endDate;
     @Column(columnDefinition = "integer default 1")
     private int statusId;
+
+    private int columnPosition;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

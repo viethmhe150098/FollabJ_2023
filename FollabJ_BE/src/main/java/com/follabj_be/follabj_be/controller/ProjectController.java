@@ -49,6 +49,8 @@ public class ProjectController {
         res.put("status", HttpStatus.OK.toString());
         res.put("message", message);
 
+        userDTO.setId(userService.getUserByEmail(userDTO.getEmail()).getId());
+
         Invitation invitation = invitationService.getInvitationByReceiverIdAndProjectId(userDTO.getId(), p_id);
         InvitationDTO invitationDTO = modelMapper.map(invitation, InvitationDTO.class);
         res.put("content", invitationDTO);

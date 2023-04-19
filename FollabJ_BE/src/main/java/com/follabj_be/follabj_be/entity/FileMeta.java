@@ -19,12 +19,11 @@ public class FileMeta {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "FILE_NAME")
+    @Column(name = "FILE_NAME", nullable = false)
     private String fileName;
-
-    @Column(name = "FILE_PATH")
+    @Column(name = "FILE_PATH", nullable = false)
     private String filePath;
-
+    @Column(nullable = false)
     private String uploadDate;
 
     @ManyToOne

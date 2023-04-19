@@ -20,8 +20,11 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String des;
+    @Column(nullable = false)
     private String createdDate;
 
     @Column(columnDefinition = "varchar(255) default 'ACTIVE'")

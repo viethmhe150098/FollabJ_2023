@@ -117,11 +117,11 @@ const UserInfo = styled.span`
 
 const Button = styled.button`
   display: block;
-  min-width: 200px;
+  width: 150px;
   margin: 50px 45px 50px 0;
-  padding: 10px 20px;
+  padding: 10px 10px;
   border-radius: 6px;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
   cursor: pointer;
 `;

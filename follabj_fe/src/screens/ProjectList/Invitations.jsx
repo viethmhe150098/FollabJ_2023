@@ -73,7 +73,6 @@ const Invitations = () => {
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>Project Name</TableCell>
-                                        <TableCell align="left">Project Leader's Mail</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody style={{ color: "white" }}>

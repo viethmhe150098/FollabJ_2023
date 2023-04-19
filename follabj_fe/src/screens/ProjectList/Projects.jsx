@@ -2,12 +2,14 @@
 import styled from "styled-components";
 // Components
 import ProjectBox from "../../components/Elements/ProjectBox";
-import FullButton from "../../components/Buttons/FullButton";
 // Assets
 import ProjectImg1 from "../../assets/img/projects/1.png";
-
+import { useMediaQuery } from '@material-ui/core';
+import FullButton from '../../components/Buttons/FullButton';
+import SendLeaderRequestModal from '../../components/Modals/SendLeaderRequest';
+import Content from '../../components/Modals/CreateProject';
 import { useDispatch } from "react-redux";
-import { setCurrentProjectId, setCurrentProjectUserRole } from "../../Redux/project/projectSlice";
+import { setCurrentProjectDescription, setCurrentProjectId, setCurrentProjectName, setCurrentProjectUserRole } from "../../Redux/project/projectSlice";
 import { getProjectMembersByProjectId, getProjectsByUserId } from "../../Redux/project/projectActions";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -23,13 +25,11 @@ const Projects = () => {
 
   const dispatch = useDispatch();
   const history = useHistory();
-
   const user_id = useSelector((state) => state.auth.login.currentUser.id)
-
   const projects = useSelector((state) => state.project.projects.allProjects)
-
   const members = useSelector((state) => state.project.currentProject.members)
-
+  const isPhone = useMediaQuery('(max-width:600px)');
+  const roles = localStorage.getItem("role_name")
   const [currentPage, setCurrentPage] = useState(1);
   const [projectsPerPage, setProjectsPerPage] = useState(6);
 
@@ -44,16 +44,16 @@ const Projects = () => {
   const fetchImages = async () => {
     const images = new Array(projects.length)
 
-    const imageRequests = 
+    const imageRequests =
       new Array(projects.length)
         .fill("https://random.imagecdn.app/500/500")
-            
+
     imageRequests.map(async (request) => {
       const response = await axios.get(request)
       images.push(response.request.responseURL)
     })
-    
-    setImages(images)       
+
+    setImages(images)
   }
 
   useEffect(() => {
@@ -63,18 +63,20 @@ const Projects = () => {
     fetchImages()
 
     // console.log(images)
-    
-  },[])
+
+  }, [])
 
   const openProjectModal = (project) => {
-    const button = document.getElementById("project_"+project.id)
+    const button = document.getElementById("project_" + project.id)
 
     button.click()
   }
 
-  const setCurrentProject = (project_id) => {
+  const setCurrentProject = (project_id, project_name, project_description) => {
 
     dispatch(setCurrentProjectId(project_id));
+    dispatch(setCurrentProjectName(project_name));
+    dispatch(setCurrentProjectDescription(project_description));
 
     dispatch(getProjectMembersByProjectId(project_id)).unwrap().then((result) => {
       if (result != []) {
@@ -97,6 +99,38 @@ const Projects = () => {
       <div >
 
         <div className="container" style={{ paddingTop: "150px", minHeight: "709px" }}>
+          {isPhone && (
+            <>
+              {roles.includes('LEADER') && (
+                <UlWrapperRight className="flexNullCenter">
+                  <Popup
+                    modal
+                    trigger={
+                      <li className="semiBold pointer font15 flexCenter">
+                        <FullButton title="Create Project" />
+                      </li>
+                    }
+                  >
+                    {close => <Content close={close} />}
+                  </Popup>
+                </UlWrapperRight>
+              )}
+              {!roles.includes('LEADER') && (
+                <UlWrapperRight className="flexNullCenter">
+                  <Popup
+                    modal
+                    trigger={
+                      <li>
+                        <FullButton title="Send Leader Request" />
+                      </li>
+                    }
+                  >
+                    {close => <SendLeaderRequestModal close={close} />}
+                  </Popup>
+                </UlWrapperRight>
+              )}
+            </>
+          )}
           <HeaderInfo>
             <h1 className="font30 extraBold textCenter">My Projects</h1>
           </HeaderInfo>
@@ -105,17 +139,17 @@ const Projects = () => {
             <div className="row textCenter">
               {
                 currentProjects.map((project) =>
-                <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4" key={project.id.toString()}>
+                  <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4" key={project.id.toString()}>
                     <ProjectBox
                       img={ProjectImg1}
                       title={project.name}
-                      action={() => { setCurrentProject(project.id) }}
-                      rightClickAction={() => {openProjectModal(project)}}
+                      action={() => { setCurrentProject(project.id, project.name, project.des) }}
+                      rightClickAction={() => { openProjectModal(project) }}
                     />
-                    <Popup modal trigger={<button id={"project_"+project.id}></button>}>
-                      {close => <ViewProjectModal close={close} project={project} type="readonly"/>}
+                    <Popup modal trigger={<button id={"project_" + project.id}></button>}>
+                      {close => <ViewProjectModal close={close} project={project} type={"readonly"} />}
                     </Popup>
-                </div>)
+                  </div>)
               }
             </div>
           }
@@ -178,5 +212,8 @@ const EmptyMessage = styled.div`
   font-size: 24px;
   font-weight: bold;
   color: #888;
+`;
+const UlWrapperRight = styled.ul`
+
 `;
 export default Projects

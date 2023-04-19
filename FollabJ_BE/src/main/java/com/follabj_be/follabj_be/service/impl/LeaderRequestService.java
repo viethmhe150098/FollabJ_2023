@@ -71,7 +71,7 @@ public class LeaderRequestService implements LeaderRequestInterface {
     @Override
     public Page<LeaderRequest> getListRequest(int page, LeaderRequest.requestStatus status) {
         Pageable paging = PageRequest.of(page,7);
-        return leaderRequestRepository.getRequestsByStatus(paging, status);
+        return leaderRequestRepository.getRequestsByStatus(status, paging);
     }
 
 

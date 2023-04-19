@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -7,6 +7,8 @@ import LeaveGroupModal from '../../../components/Modals/LeaveGroup';
 import { leaveProject } from '../../../Redux/project/projectActions';
 import InviteUser from './InviteUser';
 import MemberList from './MemberList';
+import styled from 'styled-components';
+import ViewProjectModal from '../../../components/Modals/ViewProject';
 
 // Sections
 export default function AboutProject() {
@@ -20,8 +22,10 @@ export default function AboutProject() {
     const user_role = useSelector((state) => state.project.currentProject.userRole)
 
     const user_id = useSelector((state) => state.auth.login.currentUser.id)
-
+    const project = useSelector((state) => state.project.currentProject);
     const project_id = useSelector((state) => state.project.currentProject.id);
+    const project_name = useSelector((state) => state.project.currentProject.name);
+    const project_des = useSelector((state) => state.project.currentProject.des);
 
     const handleMemberLeave = () => {
         dispatch(leaveProject({
@@ -34,6 +38,15 @@ export default function AboutProject() {
 
     return (
         <>
+            <Popup modal trigger={
+                <Container>
+                    <Content className='animate'>Project Name: <span style={{ fontWeight: "normal" }}>{project_name}</span> </Content>
+                    <Content className='animate'>Project Description: <span style={{ fontWeight: "normal" }}>{project_des}</span></Content>
+                </Container>
+            }>
+                {close => <ViewProjectModal close={close} project={project} type={"readonly"} />}
+            </Popup>
+
             {user_role == "LEADER" && <InviteUser />}
             <div className="invite-user-container">
                 <MemberList />
@@ -48,7 +61,7 @@ export default function AboutProject() {
                     </div>)
                 }
                 {user_role == "LEADER" && (
-                    <div className='extraBold ' style={{marginTop: '80px', color:'red', fontSize:'14px'}}>
+                    <div className='extraBold ' style={{ marginTop: '80px', color: 'red', fontSize: '14px' }}>
                         <p>You cannot leave the project at the moment as you are the only member in the project </p>
                     </div>)
                 }
@@ -64,4 +77,19 @@ export default function AboutProject() {
 
 }
 
+const Container = styled.div`
+  margin: 20px;
+  cursor: pointer;
+`;
+const Content = styled.h2`
+  font-size: 1.17em;
+  font-weight: normal;
+  color: #333;
+  line-height: 1.5;
+  font-weight: bold;
+  margin-bottom: 20px;
+  &:hover {
+    color: #f58025; 
+  }
+`;
 
