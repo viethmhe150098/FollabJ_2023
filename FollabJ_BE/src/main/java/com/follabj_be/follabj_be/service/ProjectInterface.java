@@ -29,5 +29,5 @@ public interface ProjectInterface {
 
     String count(String by);
 
-    Page<Project> getAll(int page);
+    List<Project> getAll();
 }

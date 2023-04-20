@@ -10,7 +10,7 @@ const projectSlice = createSlice({
             userRole: null,
             members: [],
             name: "",
-            des: "eqwewqeqưe"
+            des: ""
         },
         projects: {
             allProjects: [],

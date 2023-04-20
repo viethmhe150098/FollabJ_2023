@@ -57,4 +57,7 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
 
     @Query(nativeQuery = true, value = "select count(*) > 0 from project_members pm where project_id=?1 and user_id=?2")
     int existsByProjectsId(Long project_id, Long user_id);
+    
+    @Query("Select ap from AppUser ap where ap.phone_number = ?1")
+    Optional<AppUser> findAppUserByPhone_number(String phone_number);
 }

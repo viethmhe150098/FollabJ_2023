@@ -32,9 +32,9 @@ public class Task {
 
     @Size(max = 50)
     private String label;
-
+    @Column(nullable = false)
     private Date startDate;
-
+    @Column(nullable = false)
     private Date endDate;
 
     @Min(1)
