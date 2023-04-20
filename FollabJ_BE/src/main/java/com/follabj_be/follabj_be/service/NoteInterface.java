@@ -17,4 +17,6 @@ public interface NoteInterface {
 
     void deleteNote(Long id);
 
+    boolean checkIfNoteBelongToUser(Long note_id, Long user_id);
+
 }

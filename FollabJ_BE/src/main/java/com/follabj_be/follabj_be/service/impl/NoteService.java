@@ -40,4 +40,9 @@ public class NoteService implements NoteInterface {
     public void deleteNote(Long id) {
         noteRepository.deleteById(id);
     }
+
+    @Override
+    public boolean checkIfNoteBelongToUser(Long note_id, Long user_id) {
+        return noteRepository.existsByIdAndCreatorId(note_id, user_id);
+    }
 }

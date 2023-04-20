@@ -23,4 +23,6 @@ public interface EventInterface {
     void addParticipantToEvent(Long event_id, Long participant_id);
 
     void removeParticipantFromEvent(Long event_id, Long participant_id);
+
+    boolean checkIfEventExistInProject(Long projectId, Long eventId);
 }
