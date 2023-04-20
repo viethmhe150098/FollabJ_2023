@@ -30,4 +30,5 @@ public interface TaskInterface {
 
     void removeAssigneeFromTask(Long task_id, Long assignee_id);
 
+    boolean checkIfTaskExistInProject(Long project_id, Long task_id);
 }

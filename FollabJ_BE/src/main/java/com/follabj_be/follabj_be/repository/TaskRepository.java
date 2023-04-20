@@ -37,4 +37,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     @Modifying
     @Query(value = "update task set column_position= column_position-1 where project_id=?1 and status_id=(select status_id from (SELECT * FROM task) as status where id=?2) and column_position <= (select column_position from (SELECT * FROM task) as position where id=?2) and id != ?2", nativeQuery = true)
     void updateColumnPositionAfterChangeTaskPosition(Long projectId, Long task_id);
+
+    boolean existsByProjectIdAndId(Long project_id, Long task_id);
 }

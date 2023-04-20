@@ -1,8 +1,12 @@
 package com.follabj_be.follabj_be.service.impl;
 
 import com.follabj_be.follabj_be.entity.Task;
+import com.follabj_be.follabj_be.errorMessge.CustomErrorMessage;
+import com.follabj_be.follabj_be.exception.GroupException;
+import com.follabj_be.follabj_be.repository.ProjectRepository;
 import com.follabj_be.follabj_be.repository.TaskAssigneeRepository;
 import com.follabj_be.follabj_be.repository.TaskRepository;
+import com.follabj_be.follabj_be.repository.UserRepository;
 import com.follabj_be.follabj_be.service.TaskInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +22,9 @@ public class TaskService implements TaskInterface {
 
     @Autowired
     TaskAssigneeRepository taskAssigneeRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public List<Task> getAllTasks() {
@@ -85,6 +92,11 @@ public class TaskService implements TaskInterface {
     @Override
     public void removeAssigneeFromTask(Long task_id, Long assignee_id) {
         taskAssigneeRepository.removeAssigneeFromTask(task_id, assignee_id);
+    }
+
+    @Override
+    public boolean checkIfTaskExistInProject(Long project_id, Long task_id) {
+        return taskRepository.existsByProjectIdAndId(project_id, task_id);
     }
 
 }
