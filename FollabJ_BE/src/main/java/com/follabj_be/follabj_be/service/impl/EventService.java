@@ -97,4 +97,9 @@ public class EventService implements EventInterface {
     public void removeParticipantFromEvent(Long event_id, Long participant_id) {
         eventParticipantRepository.removeParticipantFromEvent(event_id, participant_id);
     }
+
+    @Override
+    public boolean checkIfEventExistInProject(Long projectId, Long eventId) {
+        return eventRepository.findByIdAndProjectId(eventId, projectId) != null;
+    }
 }

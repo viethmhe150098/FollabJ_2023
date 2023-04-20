@@ -12,25 +12,32 @@ import java.util.List;
 @Setter
 @Builder
 public class CreateEventDTO {
-    @NotEmpty(message = "Not empty")
-    @Max(value = 30, message = "Not match pattern")
-    @Min(value = 1, message = "Not match pattern")
+    @NotBlank(message = "Title is mandatory")
+    @Size(max=30)
     private String title;
-    @NotEmpty(message = "Not empty")
-    @Max(value = 100, message = "Not match pattern")
+    @Size(max=100)
     private String description;
 
-    @Pattern(regexp = "[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (2[0-3]|[01][0-9]):[0-5][0-9]:[0-5][0-9]", message = "Not match pattern")
-    @NotEmpty
     private Date startDate;
 
-    @Pattern(regexp = "[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (2[0-3]|[01][0-9]):[0-5][0-9]:[0-5][0-9]", message = "Not match pattern")
-    @NotEmpty
     private Date endDate;
 
-    @NotEmpty
-    @Pattern(regexp = "[0-9]+", message = "Not match pattern")
     private Long projectId;
     @NotEmpty
     private List<UserDTO> participantList;
+
+    @AssertTrue(message = "Date is null or Unsupported Date Format")
+    // Any method name is ok als long it begins with `is`
+    private boolean isDateValid() {
+        return this.startDate != null && this.endDate != null;
+    }
+
+    @AssertTrue(message = "Field `endDate` value must be after  field `startDate` value")
+    // Any method name is ok als long it begins with `is`
+    private boolean isEndDateValid() {
+        if(isDateValid()) {
+            return this.endDate.after(this.startDate);
+        } else
+            return isDateValid();
+    }
 }

@@ -8,7 +8,7 @@ const leaderEventUrl = (project_id) => "/project/"+project_id+"/leader/events";
 export const fetchEventsByProjectId = (project_id) => instance.get(eventUrl(project_id));
 
 export const fetchEventsByUserId = (user_id) => 
-    instance.get("/events?user_id="+user_id);
+    instance.get("/events");
 
 export const fetchEventById = (project_id, event_id) => instance.get(eventUrl(project_id)+"/"+event_id);
 

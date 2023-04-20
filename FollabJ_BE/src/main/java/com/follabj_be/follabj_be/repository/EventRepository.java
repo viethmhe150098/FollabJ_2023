@@ -14,4 +14,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     @Query(value = "Select e from Event e where e.project.id=?1")
     List<Event> findByProjectId(Long p_id);
+
+    Event findByIdAndProjectId(Long id, Long project_id);
 }

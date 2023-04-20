@@ -4,11 +4,15 @@ import com.follabj_be.follabj_be.dto.CreateEventDTO;
 import com.follabj_be.follabj_be.dto.EventDTO;
 import com.follabj_be.follabj_be.entity.Event;
 import com.follabj_be.follabj_be.entity.Project;
+import com.follabj_be.follabj_be.entity.Task;
+import com.follabj_be.follabj_be.errorMessge.CustomErrorMessage;
 import com.follabj_be.follabj_be.service.impl.EventService;
+import com.follabj_be.follabj_be.service.impl.UserService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,6 +27,9 @@ public class EventController {
 
     @Autowired
     final EventService eventService;
+
+    @Autowired
+    UserService userService;
     private ModelMapper modelMapper;
 
     @GetMapping("/project/{project_id}/events")
@@ -40,7 +47,10 @@ public class EventController {
     }
 
     @GetMapping("/events")
-    public List<EventDTO> getEventsByUserId(@RequestParam Long user_id) {
+    public List<EventDTO> getEventsByUserId(Authentication authentication) {
+
+        Long user_id = userService.getUserByEmail(authentication.getPrincipal().toString()).getId();
+
         List<Event> eventList = eventService.getEventsByUserId(user_id);
 
         List<EventDTO> eventDTOList = new ArrayList<>();
@@ -55,6 +65,10 @@ public class EventController {
 
     @PostMapping("/project/{project_id}/leader/events")
     public EventDTO addEvent(@Valid  @RequestBody CreateEventDTO createEventDTO, @PathVariable Long project_id) {
+        createEventDTO.getParticipantList().forEach(member -> {
+            if(userService.checkIfUserExistInProject(project_id, member.getId()) == 0)
+                throw new RuntimeException("[participantList] " + CustomErrorMessage.NOT_TEAMMEMBER.getMessage());
+        });
         createEventDTO.setProjectId(project_id);
         Event event = eventService.addEvent(createEventDTO);
         EventDTO eventDTO = modelMapper.map(event, EventDTO.class);
@@ -72,7 +86,9 @@ public class EventController {
             method = RequestMethod.PUT,
             path = "/project/{project_id}/leader/events/{event_id}/update"
     )
-    public EventDTO updateEvent(@RequestBody Event event, @PathVariable Long project_id, @PathVariable Long event_id) {
+    public EventDTO updateEvent(@Valid @RequestBody Event event, @PathVariable Long project_id, @PathVariable Long event_id) {
+        checkIfEventBelongToProject(event_id, project_id);
+        checkIfParticipantAssigneeListValid(event, project_id);
         event.setProject(new Project());
         event.getProject().setId(project_id);
         Event updatedEvent = eventService.updateEvent(event_id, event);
@@ -85,7 +101,22 @@ public class EventController {
             method = RequestMethod.DELETE,
             path = "/project/{project_id}/leader/events/{event_id}/delete"
     )
-    public void deleteEvent(@PathVariable Long event_id) {
-        eventService.deleteEvent(event_id);
+    public void deleteEvent(@PathVariable Long project_id, @PathVariable Long event_id) {
+        checkIfEventBelongToProject(event_id, project_id);
+        eventService.deleteEvent(event_id)
+        ;
+    }
+
+    public void checkIfEventBelongToProject(Long event_id, Long project_id) {
+        if(!eventService.checkIfEventExistInProject(project_id, event_id)) {
+            throw new RuntimeException("Event id not existed in project");
+        }
+    }
+
+    public void checkIfParticipantAssigneeListValid(Event event, Long project_id) {
+        event.getParticipantList().forEach(member -> {
+            if(userService.checkIfUserExistInProject(project_id, member.getId()) == 0)
+                throw new RuntimeException("[participantList] " +CustomErrorMessage.NOT_TEAMMEMBER.getMessage());
+        });
     }
 }
