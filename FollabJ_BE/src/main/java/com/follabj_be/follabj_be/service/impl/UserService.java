@@ -234,6 +234,11 @@ public class UserService implements UserDetailsService, UserInterface {
         return "We have sent you a new password via "+email;
     }
 
+    @Override
+    public int checkIfUserExistInProject(Long project_id, Long user_id) {
+        return userRepository.existsByProjectsId(project_id, user_id);
+    }
+
     public AppUserDTO getUserProfile(Long u_id){
         AppUser appUser = userRepository.findById(u_id).orElseThrow(() -> new ObjectNotFoundException("Not found user", u_id.toString()));
         return new AppUserDTO(appUser.getId(), appUser.getEmail(), appUser.getUsername(), appUser.getStatus(),appUser.getFullname(), appUser.getPhone_number());

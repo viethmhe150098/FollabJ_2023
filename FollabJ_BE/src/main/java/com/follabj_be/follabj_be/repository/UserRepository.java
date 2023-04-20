@@ -54,4 +54,7 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
 
     @Query(nativeQuery = true, value = "select COUNT(id) from app_user where DAY(str_to_date(created_at, '%Y/%m/%d %T')) = ?1")
     String countByDay(int day);
+
+    @Query(nativeQuery = true, value = "select count(*) > 0 from project_members pm where project_id=?1 and user_id=?2")
+    int existsByProjectsId(Long project_id, Long user_id);
 }

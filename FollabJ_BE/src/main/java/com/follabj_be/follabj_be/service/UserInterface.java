@@ -9,6 +9,7 @@ import com.follabj_be.follabj_be.entity.Invitation;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public interface UserInterface {
     String signUpUser(AppUser appUser);
@@ -26,7 +27,6 @@ public interface UserInterface {
     List<AppUser> getAllUsers();
 
     AppUser getUserByEmail(String email);
-
     List<AppUser> getInvitedUserByProjectId(Long project_id);
     AppUserDTO updateStatus(int status, Long u_id);
 
@@ -36,4 +36,6 @@ public interface UserInterface {
 
     String count(String by);
     String forgetPassword(String email);
+
+    int checkIfUserExistInProject(Long project_id, Long user_id);
 }
