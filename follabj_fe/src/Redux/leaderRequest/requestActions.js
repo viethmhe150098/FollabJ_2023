@@ -11,9 +11,9 @@ export const getRequests = createAsyncThunk("FETCH_REQUESTS", async (page_number
     }
 })
 
-export const getRequestByUserId = createAsyncThunk("GET_REQUEST_BY_USER_ID", async (user_id)=>{
+export const getRequestByUserId = createAsyncThunk("GET_REQUEST_BY_USER_ID", async ()=>{
     try {
-        const response = await requestAPI.getRequestByUserId(user_id)
+        const response = await requestAPI.getRequestByUserId()
         return response.data
     } catch (error) {
         throw error

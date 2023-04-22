@@ -38,13 +38,14 @@ const SendLeaderRequestModal = ({close}) => {
 
     useEffect(() => {
 
-    fetchUserRequest(user_id)
+    fetchUserRequest()
 
     },[])
 
-    const fetchUserRequest = async (user_id) => {
-        dispatch(getRequestByUserId(user_id)).unwrap().then((result) => 
+    const fetchUserRequest = async () => {
+        dispatch(getRequestByUserId()).unwrap().then((result) => 
             {
+                if (result.content === null) return;
                 setRequest(result.content)
                 setMessage(result.content.message)
                 setType("readonly")

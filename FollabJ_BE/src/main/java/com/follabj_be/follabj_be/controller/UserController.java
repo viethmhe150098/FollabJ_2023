@@ -1,14 +1,18 @@
 package com.follabj_be.follabj_be.controller;
 
+import com.amazonaws.services.quicksight.model.User;
 import com.follabj_be.follabj_be.dto.*;
+import com.follabj_be.follabj_be.entity.AppUser;
 import com.follabj_be.follabj_be.entity.Invitation;
 import com.follabj_be.follabj_be.entity.LeaderRequest;
 import com.follabj_be.follabj_be.service.impl.LeaderRequestService;
 import com.follabj_be.follabj_be.service.impl.UserService;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,6 +26,8 @@ import java.util.Map;
 public class UserController {
     private final UserService userService;
     private final LeaderRequestService leaderRequestService;
+
+    ModelMapper modelMapper;
 
     @GetMapping("/find")
     @PreAuthorize("hasAnyAuthority('LEADER', 'ADMIN')")
@@ -37,21 +43,31 @@ public class UserController {
 //        return new ResponseEntity<>(list, HttpStatus.OK);
 //    }
 
-    @GetMapping("/{u_id}/request")
+    @GetMapping("/request")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
-    public ResponseEntity<Map<Object, Object>> getUserRequest(@PathVariable Long u_id){
+    public ResponseEntity<Map<Object, Object>> getUserRequest(Authentication authentication){
         Map<Object, Object> res = new HashMap<>();
-        LeaderRequest request = leaderRequestService.getRequestByUserId(u_id);
+        Long user_id = getUserId(authentication);
 
+        LeaderRequest request = leaderRequestService.getRequestByUserId(user_id);
+        if (request != null) {
+            LeaderRequestDTO requestDTO = modelMapper.map(request, LeaderRequestDTO.class);
+            res.put("content", requestDTO);
+        } else {
+            res.put("content", null);
+        }
         res.put("status", HttpStatus.OK);
-        res.put("content", request);
 
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @PostMapping("/request")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
-    public ResponseEntity<String> sendRequest(@RequestBody LeaderRequestDTO leaderRequestDTO) {
+    public ResponseEntity<String> sendRequest(Authentication authentication, @Valid @RequestBody LeaderRequestDTO leaderRequestDTO) {
+        Long user_id = getUserId(authentication);
+        UserDTO user = new UserDTO();
+        user.setId(user_id);
+        leaderRequestDTO.setUser(user);
         String message = leaderRequestService.saveRequest(leaderRequestDTO);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
@@ -89,5 +105,9 @@ public class UserController {
         res.put("status", "200");
         res.put("message", message);
         return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    public Long getUserId(Authentication authentication) {
+        return userService.getUserByEmail(authentication.getPrincipal().toString()).getId();
     }
 }
