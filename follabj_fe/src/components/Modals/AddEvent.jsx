@@ -14,11 +14,16 @@ const CreateEventForm = ({ type, close, event }) => {
   const [description, setDescription] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [participantList, setParticipantList] = useState([]);
+  const user_id = useSelector((state) => state.auth.login.currentUser.id)
+
+  const [participantList, setParticipantList] = useState([{
+    id: user_id
+  }]);
 
   const [modalType, setType] = useState(type)
 
-  const user_id = useSelector((state) => state.auth.login.currentUser.id)
+  
+
   const members = useSelector((state) => state.project.currentProject.members);
 
   const project_id = useSelector((state) => state.project.currentProject.id);
@@ -47,7 +52,8 @@ const CreateEventForm = ({ type, close, event }) => {
   }, [])
 
   const handleCheckboxChange = (event) => {
-    const selectedParticipantId = event.target.value;
+    const selectedParticipantId = event.target.value
+    if (selectedParticipantId === user_id) return;
     if (event.target.checked) {
       //console.log("checked");
       setParticipantList([...participantList, { id: selectedParticipantId }]);
@@ -58,6 +64,7 @@ const CreateEventForm = ({ type, close, event }) => {
       //console.log("unchecked");
       setParticipantList(filteredParticipantList);
     }
+    console.log(participantList)
   };
 
   const handleSubmit = (e) => {
@@ -228,9 +235,9 @@ const CreateEventForm = ({ type, close, event }) => {
                   type="checkbox"
                   id={`participant-${member.id}`}
                   value={member.id}
-                  onChange={handleCheckboxChange}
+                  onChange={(e) => {handleCheckboxChange(e)}}
                   // checked={assigneeList.includes(teamMember.id)}
-                  checked={participantList.some((participant) => participant.id === member.id) || member.id === user_id}
+                  checked={participantList.some((participant) => participant.id == member.id) || member.id === user_id}
                 />
                 <label htmlFor={`assignee-${member.id}`}>
                   {member.username}
