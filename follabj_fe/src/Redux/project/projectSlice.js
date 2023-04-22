@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { acceptInvitation } from "../invitation/invitationActions";
 import { assignLeader, deleteMember, deleteProject, fetchAllProjects, getProjectMembersByProjectId, getProjectsByUserId, getProjectStatistics, inviteMember, leaveProject, updateProject, } from "./projectActions";
+import { toast } from "react-toastify";
 
 const projectSlice = createSlice({
     name: "project",
@@ -77,7 +78,7 @@ const projectSlice = createSlice({
                 state.currentProject.members = action.payload
             })
             .addCase(updateProject.fulfilled, (state, action) => {
-                state.currentProject.allProjects = state.currentProject.allProjects.map((project) => project.id == action.payload.id ? action.payload : project)
+                state.projects.allProjects = state.projects.allProjects.filter((project) => project.id != action.payload.id)
             })
             .addCase(deleteProject.fulfilled, (state, action) => {
                 state.currentProject.allProjects = state.currentProject.allProjects.filter((project) => project.id != action.payload)

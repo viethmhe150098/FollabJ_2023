@@ -25,7 +25,7 @@ export const leaveProject = (project_id,u_id) => instance.post(projectUrl(projec
     }
 })
 
-export const assignLeader = (project_id,u_id) => instance.post(projectUrl(project_id)+"/assign", null, {
+export const assignLeader = (project_id,u_id) => instance.post(projectUrl(project_id)+"/leader/assign", null, {
     params: {
         u_id
     }

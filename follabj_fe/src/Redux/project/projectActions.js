@@ -18,7 +18,7 @@ export const getProjectStatistics = createAsyncThunk("GET_PROJECT_STATISTICS", a
         //console.log(response)
         return response.data
     } catch (error) {
-        toast.error('some thing wron')
+        //toast.error('some thing wron')
         console.log(error);
     }
 })
@@ -39,7 +39,7 @@ export const getProjectMembersByProjectId = createAsyncThunk("FETCH_PROJECT_MEMB
         //console.log(response)
         return response.data
     } catch (error) {
-        toast.error('some thing wron')
+        //toast.error('some thing wron')
         console.log(error);
     }
 })
@@ -60,7 +60,7 @@ export const updateProject = createAsyncThunk("UPDATE_PROJECT", async({project_i
         const response = await projectAPI.updateProject(project_id, project)
         toast.success('Edit project information successfully!')
         //console.log(response)
-        return response
+        return project
     } catch (error) {
         console.log(error);
     }
