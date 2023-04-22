@@ -1,17 +1,13 @@
 import instance from "../axiosInstance";
-const noteUrl = (user_id) => "/notes/"+user_id;
+const noteUrl = () => "/notes";
 
-export const fetchNotesByUserId = (user_id) => 
-instance.get("/notes/"+user_id);
+export const fetchNotesByUserId = () => 
+instance.get("/notes");
 
-export const fetchNotesByNoteId = (user_id, note_id) => instance.get(noteUrl(user_id)+"/"+note_id);
+export const fetchNotesByNoteId = (note_id) => instance.get(noteUrl()+"/"+note_id);
 
-export const addNote = (user_id, post) => instance.post(noteUrl(user_id),post);
+export const addNote = (post) => instance.post(noteUrl(),post);
 
-export const updateNote = (user_id, post) => instance.put(noteUrl(user_id),post);
+export const updateNote = (post) => instance.put(noteUrl()+"/"+post.id,post);
 
-export const deleteNote = (user_id,note_id) => instance.delete(noteUrl(user_id),{
-    params :{
-        note_id
-    }
-});
+export const deleteNote = (note_id) => instance.delete(noteUrl()+"/"+ note_id);

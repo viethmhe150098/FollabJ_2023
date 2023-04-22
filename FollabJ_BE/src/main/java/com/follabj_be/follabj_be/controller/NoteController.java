@@ -78,7 +78,7 @@ public class NoteController {
         user.setId(user_id);
         note.setCreator(user);
         Note updatedNote = noteService.updateNote(note);
-        response.sendRedirect("/notes/"+note_id);
+        //response.sendRedirect("/notes/"+note_id);
     }
 
     @DeleteMapping("/notes/{note_id}")

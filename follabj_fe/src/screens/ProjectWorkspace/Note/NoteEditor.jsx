@@ -32,9 +32,7 @@ const NoteEditor = () => {
       content: editorState.getCurrentContent().getPlainText(),
       creator: {
         id: user_id
-      },
-      createdDate : new Date(note.createdDate),
-      updatedDate: new Date()
+      }
     }
 
     dispatch(updateNote({ user_id, note: updatedNote }))
