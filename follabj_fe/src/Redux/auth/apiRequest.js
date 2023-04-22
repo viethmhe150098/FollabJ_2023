@@ -4,6 +4,7 @@ import { loginFailed, loginStart, loginSuccess, registerFailed, registerStart, r
 import { createProjectFailed, createProjectStart, createProjectSuccess, getProjectStart, setCurrentProjectId } from "../project/projectSlice";
 import { toast } from "react-toastify";
 import { getProjectMembersByProjectId } from "../project/projectActions";
+import instance from "../axiosInstance";
 
 export const loginUser = async (user, dispatch, navigate) => {
     dispatch(loginStart());
@@ -95,13 +96,8 @@ export const createProject = async (project, access_token, dispatch, navigate) =
     const role_name = localStorage.getItem("role_name");
     if (role_name.includes('LEADER')) {
         try {
-            const res = await axios.post("http://localhost:8080/createproject",
-                project,
-                {
-                    headers: {
-                        Authorization: `Bearer ${access_token}`
-                    }
-                });
+            const res = await instance.post("http://localhost:8080/createproject",
+                project);
             dispatch(createProjectSuccess(res.data));
             toast.success('Create project successfully!')
             dispatch(setCurrentProjectId(res.data.id))
@@ -109,7 +105,7 @@ export const createProject = async (project, access_token, dispatch, navigate) =
             navigate.push("/aboutProject");
         } catch (error) {
             dispatch(createProjectFailed());
-            toast.error(error.response.data.message);
+            //toast.error(error.response.data.message);
 
         }
     }

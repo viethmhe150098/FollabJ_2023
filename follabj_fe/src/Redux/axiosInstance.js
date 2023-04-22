@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const instance = axios.create({
     baseURL: 'http://localhost:8080',
@@ -53,13 +54,19 @@ instance.interceptors.response.use(function (response) {
 
                 return instance(originalConfig)
 
-            }   else return;
+            }   else {
+                toast.error(error.response.data.error)
+                toast.error(error.response.data.message)
+                return;
+            }
         default:
+            toast.error(error.response.data.error)
+            toast.error(error.response.data.message)
             break;
     }
     //console.log(typeof(error.response.data.error))
 
-    console.log(error);
+    //console.log(error);
 
     return Promise.reject(error);
 });
