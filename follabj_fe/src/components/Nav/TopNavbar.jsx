@@ -23,7 +23,6 @@ export default function TopNavbar() {
   }, [y]);
   const renderContent = () => {
     if (isLoggedIn()) {
-      console.log("aaaaaa")
       const roles = localStorage.getItem("role_name");
       if (roles.includes("ADMIN")) {
         return (

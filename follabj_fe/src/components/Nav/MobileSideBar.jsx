@@ -112,12 +112,9 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }) {
             <li className="semiBold font15 pointer">
               <RouterLink
                 onClick={() => toggleSidebar(!sidebarOpen)}
-                activeClass="active"
                 className="whiteColor"
                 style={{ padding: "10px 15px" }}
                 to="/projects"
-                spy={true}
-                smooth={true}
                 offset={-60}
               >
                 My Projects
@@ -126,12 +123,9 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }) {
             <li className="semiBold font15 pointer">
               <RouterLink
                 onClick={() => toggleSidebar(!sidebarOpen)}
-                activeClass="active"
                 className="whiteColor"
                 style={{ padding: "10px 15px" }}
                 to="/profile"
-                spy={true}
-                smooth={true}
                 offset={-60}
               >
                 Profile
@@ -143,12 +137,9 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }) {
             <li className="semiBold font15 pointer">
               <RouterLink
                 onClick={() => toggleSidebar(!sidebarOpen)}
-                activeClass="active"
                 className="whiteColor"
                 style={{ padding: "10px 15px" }}
                 to="/signup"
-                spy={true}
-                smooth={true}
                 offset={-60}
               >
                 Sign Up
@@ -157,12 +148,9 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }) {
             <li className="semiBold font15 pointer">
               <RouterLink
                 onClick={() => toggleSidebar(!sidebarOpen)}
-                activeClass="active"
                 className="whiteColor"
                 style={{ padding: "10px 15px" }}
-                to="/login"
-                spy={true}
-                smooth={true}
+                to="/login"                
                 offset={-60}
               >
                 Login
