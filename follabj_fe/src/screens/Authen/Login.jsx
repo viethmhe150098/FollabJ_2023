@@ -8,10 +8,11 @@ import FullButton from "../../components/Buttons/FullButton";
 import AuthenNavbar from "../../components/Nav/AuthenNavbar";
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { isLoggedIn } from "../../Redux/auth/auth";
 
 const Login = () => {
   const navigate = useHistory();
-  // isLoggedIn && navigate.push("/");
+  if (isLoggedIn()) navigate.push("/");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ email: '', password: '' });

@@ -71,7 +71,7 @@ export default function App() {
           </AuthenciatedRoute>
 
           <Route path="/login">
-            {isLoggedIn() ? <Landing /> : <Login />}
+            <Login />
           </Route>
           {/* Register */}
           <Route path="/signup">
