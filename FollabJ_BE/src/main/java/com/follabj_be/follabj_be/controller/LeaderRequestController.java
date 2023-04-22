@@ -1,18 +1,17 @@
 package com.follabj_be.follabj_be.controller;
 
+import com.follabj_be.follabj_be.dto.LeaderRequestDTO;
 import com.follabj_be.follabj_be.entity.LeaderRequest;
 import com.follabj_be.follabj_be.service.impl.LeaderRequestService;
 import lombok.AllArgsConstructor;
-import org.apache.http.protocol.HTTP;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -20,14 +19,12 @@ public class LeaderRequestController {
     private final LeaderRequestService leaderRequestService;
     @GetMapping("/admin/request")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Map<Object, Object>> getIsPending(@RequestParam int page, @RequestParam(required=false, defaultValue="PENDING") String status){
+    public ResponseEntity<Map<Object, Object>> getIsPending( @RequestParam(required=false, defaultValue="PENDING") String status){
         Map<Object, Object> res = new HashMap<>();
         LeaderRequest.requestStatus requestStatus = LeaderRequest.requestStatus.valueOf(status);
-        Page<LeaderRequest> pageRequest = leaderRequestService.getListRequest(page, requestStatus);
+        List<LeaderRequestDTO> pageRequest = leaderRequestService.getListRequest(requestStatus);
         res.put("status", HttpStatus.OK);
         res.put("content", pageRequest);
-        res.put("curr_Page", pageRequest.getNumber());
-        res.put("total", pageRequest.getTotalPages());
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 

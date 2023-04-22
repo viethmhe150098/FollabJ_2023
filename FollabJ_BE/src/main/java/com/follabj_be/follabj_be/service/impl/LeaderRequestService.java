@@ -1,6 +1,7 @@
 package com.follabj_be.follabj_be.service.impl;
 
 import com.follabj_be.follabj_be.dto.LeaderRequestDTO;
+import com.follabj_be.follabj_be.dto.UserDTO;
 import com.follabj_be.follabj_be.entity.AppUser;
 import com.follabj_be.follabj_be.entity.LeaderRequest;
 import com.follabj_be.follabj_be.repository.LeaderRequestRepository;
@@ -13,6 +14,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -33,7 +37,6 @@ public class LeaderRequestService implements LeaderRequestInterface {
             l.setStatus(LeaderRequest.requestStatus.ACCEPT);
             userRepository.promoteLeader(l.getUser().getId());
             //emailSender.sendEmail(l.getUser().getEmail(), buildEmail.becomeLeader(l.getUser().getUsername()));
-
         }else{
 
             l.setStatus(LeaderRequest.requestStatus.REJECT);
@@ -69,9 +72,20 @@ public class LeaderRequestService implements LeaderRequestInterface {
     }
 
     @Override
-    public Page<LeaderRequest> getListRequest(int page, LeaderRequest.requestStatus status) {
-        Pageable paging = PageRequest.of(page,7);
-        return leaderRequestRepository.getRequestsByStatus(status, paging);
+    public Page<LeaderRequestDTO> getListRequest(int page, LeaderRequest.requestStatus status) {
+        return null;
+    }
+
+    @Override
+    public List<LeaderRequestDTO> getListRequest(LeaderRequest.requestStatus status) {
+//        Pageable paging = PageRequest.of(page,7);
+//        return leaderRequestRepository.getRequestsByStatus(status, paging);
+        List<LeaderRequestDTO> leaderRequests= leaderRequestRepository.getLeaderRequestByStatus(status).stream().map(leaderRequest
+                -> new LeaderRequestDTO(leaderRequest.getId(), leaderRequest.getMessage(),
+                new UserDTO(leaderRequest.getUser().getId(),
+                        leaderRequest.getUser().getEmail(),
+                        leaderRequest.getUser().getUsername()),leaderRequest.getStatus())).toList();
+        return leaderRequests;
     }
 
 

@@ -16,6 +16,8 @@ public class RegistrationRequest {
     @NotEmpty(message = "Not empty")
     private String username;
     @Email(message = "Not match pattern")
+    @Size(min = 2)
+    @Size(max = 30)
     @NotEmpty(message = "Not empty")
     private String email;
     @Pattern(regexp = "^(?=.*\\d)[a-zA-Z0-9]{8,}$", message = "Not match pattern")
