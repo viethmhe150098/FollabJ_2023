@@ -16,4 +16,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findByProjectId(Long p_id);
 
     Event findByIdAndProjectId(Long id, Long project_id);
+
+    void deleteByIdAndParticipantListId(Long id, Long participant_id);
 }

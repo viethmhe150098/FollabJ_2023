@@ -39,4 +39,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     void updateColumnPositionAfterChangeTaskPosition(Long projectId, Long task_id);
 
     boolean existsByProjectIdAndId(Long project_id, Long task_id);
+
+    void deleteByIdAndAssigneeListId(Long id, Long assignee_id);
 }
