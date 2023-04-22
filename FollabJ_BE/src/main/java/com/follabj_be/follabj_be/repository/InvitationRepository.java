@@ -26,4 +26,6 @@ public interface InvitationRepository extends JpaRepository<Invitation, Long> {
     void updateStatus(int status, Long in_id);
 
     boolean existsByReceiverIdAndProjectId(Long receiver_id, Long project_id);
+
+    boolean existsByIdAndReceiverId(Long id, Long receiver_id);
 }

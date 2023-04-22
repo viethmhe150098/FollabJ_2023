@@ -17,4 +17,6 @@ public interface InvitationInterface  {
     List<Invitation> getInvitationsByUserId(Long user_id);
 
     void updateStatus(int status, Long i_id);
+
+    boolean checkIfInvitationBelongToUser(Long invitation_id, Long user_id);
 }

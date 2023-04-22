@@ -55,4 +55,8 @@ public class InvitationService implements InvitationInterface {
         Invitation i = invitationRepository.findById(i_id).orElseThrow(() -> new ObjectNotFoundException("Not found invitation", i_id.toString()));
         invitationRepository.updateStatus(status, i_id);
     }
+
+    public boolean checkIfInvitationBelongToUser(Long invitation_id, Long user_id) {
+        return invitationRepository.existsByIdAndReceiverId(invitation_id, user_id);
+    }
 }

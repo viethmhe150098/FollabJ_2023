@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -47,9 +48,10 @@ public class InvitationController {
         return invitationDTOList;
     }
 
-    @GetMapping("/user/{user_id}/invitation")
+    @GetMapping("/invitation")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
-    public List<InvitationDTO> getAllInvitationByUserId(@PathVariable Long user_id) {
+    public List<InvitationDTO> getAllInvitationByUserId(Authentication authentication) {
+        Long user_id = getUserId(authentication);
         List<Invitation> invitationList = invitationService.getInvitationsByUserId(user_id);
         List<InvitationDTO> invitationDTOList = new ArrayList<>();
 
@@ -61,20 +63,36 @@ public class InvitationController {
         return invitationDTOList;
     }
 
-    @PostMapping("/user/{user_id}/invitation/accept")
+    @PostMapping("/invitation/accept")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
-    public ProjectDTO acceptInvitationAndJoinProject(@RequestBody Invitation invitation) {
+    public ProjectDTO acceptInvitationAndJoinProject(Authentication authentication, @RequestBody Invitation invitation) {
 //        invitationService.updateStatus(1, invitation.getId());
+        Long user_id = getUserId(authentication);
+        checkIfInvitationBelongToUser(invitation.getId(), user_id);
+
+        Project joinedProject =  projectService.addMember(invitation.getProject().getId(), user_id);
         invitationService.deleteInvitation(invitation.getId());
-        Project joinedProject =  projectService.addMember(invitation.getProject().getId(), invitation.getReceiver().getId());
+
         ProjectDTO projectDTO = modelMapper.map(joinedProject, ProjectDTO.class);
 
         return projectDTO;
     }
 
-    @DeleteMapping("/user/{user_id}/invitation/{invitation_id}")
+    @DeleteMapping("/invitation/{invitation_id}")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
-    public void rejectInvitation(@PathVariable Long invitation_id) {
+    public void rejectInvitation(Authentication authentication, @PathVariable Long invitation_id) {
+        Long user_id = getUserId(authentication);
+        checkIfInvitationBelongToUser(invitation_id, user_id);
         invitationService.deleteInvitation(invitation_id);
+    }
+
+    public Long getUserId(Authentication authentication) {
+        return userService.getUserByEmail(authentication.getPrincipal().toString()).getId();
+    }
+
+    public void checkIfInvitationBelongToUser(Long invitation_id, Long user_id) {
+        if(!invitationService.checkIfInvitationBelongToUser(invitation_id, user_id)) {
+            throw new RuntimeException("Invitation not belong to user");
+        }
     }
 }

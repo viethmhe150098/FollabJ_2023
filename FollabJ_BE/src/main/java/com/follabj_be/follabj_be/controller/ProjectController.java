@@ -15,6 +15,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -44,17 +45,20 @@ public class ProjectController {
 
     @PostMapping(value = "/project/{p_id}/addmembers/leader")
     @PreAuthorize("hasAuthority('LEADER')")
-    public ResponseEntity<Map<String, Object>> sendInvitation(@RequestBody UserDTO userDTO, @PathVariable("p_id") Long p_id) {
+    public ResponseEntity<Map<String, Object>> sendInvitation(@Valid @RequestBody UserDTO userDTO, @PathVariable("p_id") Long p_id) {
         String message = projectService.sendInvitation(userDTO, p_id);
         Map<String, Object> res = new HashMap<>();
         res.put("status", HttpStatus.OK.toString());
         res.put("message", message);
 
-        userDTO.setId(userService.getUserByEmail(userDTO.getEmail()).getId());
+        if (message.equals("success")) {
+            userDTO.setId(userService.getUserByEmail(userDTO.getEmail()).getId());
 
-        Invitation invitation = invitationService.getInvitationByReceiverIdAndProjectId(userDTO.getId(), p_id);
-        InvitationDTO invitationDTO = modelMapper.map(invitation, InvitationDTO.class);
-        res.put("content", invitationDTO);
+            Invitation invitation = invitationService.getInvitationByReceiverIdAndProjectId(userDTO.getId(), p_id);
+
+            InvitationDTO invitationDTO = modelMapper.map(invitation, InvitationDTO.class);
+            res.put("content", invitationDTO);
+        }
 
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
@@ -98,7 +102,12 @@ public class ProjectController {
     @PutMapping(value = "/project/{p_id}/leader/member/{u_id}")
     @PreAuthorize("hasAuthority('LEADER')")
     public ResponseEntity<Map<Object, Object>> deleteMember(@PathVariable Long p_id, @PathVariable Long u_id) {
-        projectService.deleteMember(p_id, u_id);
+        try {
+            projectService.deleteMember(p_id, u_id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
         Map<Object, Object> res = new HashMap<>();
         res.put("status", HttpStatus.OK);
         res.put("message", "Deleted member with Id: " + u_id);
@@ -117,16 +126,20 @@ public class ProjectController {
 
     @PostMapping(value = "/project/{p_id}/leave")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
-    public ResponseEntity<Map<Object, Object>> leave(@PathVariable Long p_id, @RequestParam Long u_id){
+    public ResponseEntity<Map<Object, Object>> leave(Authentication authentication,  @PathVariable Long p_id){
+        Long u_id = getUserId(authentication);
         Map<Object, Object> res = projectService.leaveGroup(p_id, u_id);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/project/{p_id}/assign")
+    @PostMapping(value = "/project/{p_id}/leader/assign")
     @PreAuthorize("hasAuthority('LEADER')")
     public ResponseEntity<Map<Object, Object>> assignNewLeader(@PathVariable Long p_id, @RequestParam Long u_id){
         projectService.assignNewLeader(p_id, u_id);
         return new ResponseEntity<>(projectService.assignNewLeader(p_id, u_id), HttpStatus.OK);
     }
 
+    public Long getUserId(Authentication authentication) {
+        return userService.getUserByEmail(authentication.getPrincipal().toString()).getId();
+    }
 }
