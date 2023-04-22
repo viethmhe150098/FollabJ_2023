@@ -20,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -66,19 +67,21 @@ public class ProjectService implements ProjectInterface {
     public String sendInvitation(UserDTO user, Long project_id) {
         Project p = projectRepository.findById(project_id).orElseThrow(()-> new ObjectNotFoundException("Not found project", project_id.toString()));
         AppUser to = userRepository.findByEmail(user.getEmail());
+
+        if(to == null){
+            return "Not found user"; //Not found user
+        }
+
         boolean invitationExisted = invitationRepository.existsByReceiverIdAndProjectId(to.getId(),p.getId());
+        if(invitationExisted) {
+            return "already invited";// This email has already been invited!
+        }
 
         boolean existed  = p.getMembers().contains(to);
         if(existed) {
             return "already in project"; //Can not invite yourself or members already in your project!
         }
-        if(invitationExisted) {
-            return "already invited";// This email has already been invited!
-        }
 
-        if(to == null){
-            return "Not found user"; //Not found user
-        }
         //check existed user
 
 //        String content = p.getName();
@@ -156,7 +159,9 @@ public class ProjectService implements ProjectInterface {
     @Override
     public Project addMember(Long p_id, Long u_id) {
         Project p = projectRepository.findById(p_id).orElseThrow(() -> new ObjectNotFoundException("Not found project", p_id.toString()));
-
+        if(userRepository.existsByProjectsId(p_id, u_id) > 0) {
+            throw new RuntimeException("User already in project");
+        }
         AppUser newMember = new AppUser();
         newMember.setId(u_id);
         p.getMembers().add(newMember);
@@ -164,19 +169,22 @@ public class ProjectService implements ProjectInterface {
 
         return projectRepository.save(p);
     }
-
     @Transactional
     @Override
     public void deleteMember(Long p_id, Long u_id) {
         Project p = projectRepository.findById(p_id).orElseThrow(() -> new ObjectNotFoundException("Not found project", p_id.toString()));
+        if(!p.getMembers().stream().anyMatch(m -> m.getId().equals(u_id))) throw new EntityNotFoundException("Not found user in project");
         p.setMembers(p.getMembers().stream().filter(m -> !(m.getId().equals(u_id))).collect(Collectors.toSet()));
         List<Event> events = eventRepository.findByProjectId(p_id);
         List<Task> tasks = taskRepository.findByProjectId(p_id);
-        events.forEach(event -> event.setParticipantList(event.getParticipantList().stream().filter(e -> e.getId().equals(u_id)).collect(Collectors.toList())));
-        tasks.forEach(task -> task.setAssigneeList(task.getAssigneeList().stream().filter(t -> t.getId().equals(u_id)).collect(Collectors.toList())));
+//        events.forEach(event -> event.setParticipantList(event.getParticipantList().stream().filter(e -> e.getId().equals(u_id)).collect(Collectors.toList())));
+//        tasks.forEach(task -> task.setAssigneeList(task.getAssigneeList().stream().filter(t -> t.getId().equals(u_id)).collect(Collectors.toList())));
+//
+//        events.forEach(event -> eventRepository.save(event));
+//        tasks.forEach(task -> taskRepository.save(task));
 
-        events.forEach(event -> eventRepository.save(event));
-        tasks.forEach(task -> taskRepository.save(task));
+        events.forEach(event -> eventRepository.deleteByIdAndParticipantListId(event.getId(), u_id));
+        tasks.forEach(task -> taskRepository.deleteByIdAndAssigneeListId(task.getId(), u_id));
         projectRepository.save(p);
     }
 
@@ -215,7 +223,8 @@ public class ProjectService implements ProjectInterface {
         return projectRepository.findAll();
     }
 
-    public Map<Object, Object> leaveGroup(Long p_id, Long u_id){
+    @Transactional
+        public Map<Object, Object> leaveGroup(Long p_id, Long u_id){
         String userEmail = userRepository.findById(u_id).orElseThrow(()-> new ObjectNotFoundException("Not found project", p_id.toString())).getEmail();
         Map<Object, Object> res = new HashMap<>();
 //        if(currentUser().getUsername().equals(userEmail)){
