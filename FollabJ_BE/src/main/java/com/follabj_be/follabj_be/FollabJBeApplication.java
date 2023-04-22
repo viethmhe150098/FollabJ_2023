@@ -16,13 +16,18 @@ public class FollabJBeApplication {
         return new ModelMapper();
     }
 
-    @Autowired
-    private static RoleRepository roleRepository;
+
+    private static  RoleRepository roleRepository;
     public static void main(String[] args) {
         SpringApplication.run(FollabJBeApplication.class, args);
         roleRepository.save(new Role(0L, "INACTIVE"));
         roleRepository.save(new Role(1L, "ACTIVE_USER"));
         roleRepository.save(new Role(2L, "LEADER"));
         roleRepository.save(new Role(3L, "ADMIN"));
+    }
+
+    @Autowired
+    public void setRoleRepository(RoleRepository roleRepository){
+        FollabJBeApplication.roleRepository = roleRepository;
     }
 }
