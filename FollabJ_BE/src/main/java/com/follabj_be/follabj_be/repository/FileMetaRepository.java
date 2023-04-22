@@ -16,4 +16,6 @@ public interface FileMetaRepository extends JpaRepository<FileMeta, Long> {
 
     List<FileMeta> findByProjectId(Long p_id);
 
+    FileMeta findByIdAndProjectId(Long id, Long project_id);
+
 }

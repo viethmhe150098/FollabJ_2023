@@ -3,7 +3,7 @@ import * as fileAPI from "./fileAPI";
 import { toast } from 'react-toastify';
 export const getFiles = createAsyncThunk("GET_FILES", async ({project_id, page_number}) => {
     try {
-        const response = await fileAPI.fetchFiles(project_id, page_number)
+        const response = await fileAPI.fetchFiles(project_id)
         //console.log(response)
         return response.data
     } catch (error) {

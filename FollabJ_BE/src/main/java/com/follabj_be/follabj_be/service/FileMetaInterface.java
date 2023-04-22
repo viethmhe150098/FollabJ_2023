@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface FileMetaInterface {
     FileMeta upload(MultipartFile file, Long p_id, Long u_id) throws IOException;
@@ -13,4 +14,6 @@ public interface FileMetaInterface {
     S3Object download(Long id, Long p_id);
 
     Page<FileMeta> list(Long p_id, int page);
+
+    List<FileMeta> listAllByProject(Long p_id);
 }

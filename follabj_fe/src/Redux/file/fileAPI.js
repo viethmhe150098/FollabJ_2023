@@ -1,8 +1,8 @@
 import instance from "../axiosInstance";
 
-const fileURL = (project_id) => "/project/"+project_id
+const fileURL = (project_id) => "/project/"+project_id+"/files"
 
-export const fetchFiles = (project_id, page_number) => instance.get(fileURL(project_id)+"?page="+page_number)
+export const fetchFiles = (project_id) => instance.get(fileURL(project_id))
 
 export const uploadFile = (project_id, data) => instance.post(fileURL(project_id)+"/upload",data, {
     headers : {

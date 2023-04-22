@@ -65,7 +65,10 @@ public class FileMetaService implements FileMetaInterface {
 
     @Override
     public S3Object download(Long id, Long p_id) {
-        FileMeta fileMeta = fileMetaRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        FileMeta fileMeta = fileMetaRepository.findByIdAndProjectId(id, p_id);
+        if(fileMeta == null) {
+            throw new EntityNotFoundException("File Not Found");
+        }
         return amazonS3Service.download(fileMeta.getFilePath(), fileMeta.getFileName());
     }
 
@@ -74,4 +77,11 @@ public class FileMetaService implements FileMetaInterface {
         Pageable paging = PageRequest.of(page, 6);
         return fileMetaRepository.findFileMetaByProjectIdAndPage(p_id, paging);
     }
+
+    @Override
+    public List<FileMeta> listAllByProject(Long p_id) {
+        return fileMetaRepository.findByProjectId(p_id);
+    }
+
+
 }

@@ -30,7 +30,7 @@ const initialState = []
 export const fileReducer = createReducer(initialState, (builder) => {
     builder
         .addCase(getFiles.fulfilled, (state, action) => {
-            return action.payload.data.content
+            return action.payload.data
         })
         .addCase(uploadFile.fulfilled, (state, action) => {
             state.push(action.payload)
