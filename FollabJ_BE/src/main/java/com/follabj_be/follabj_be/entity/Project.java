@@ -34,7 +34,6 @@ public class Project {
     @JoinColumn(
             name = "leader_id"
     )
-    @JsonIgnore
     private AppUser leader;
 
     @ManyToMany(fetch = FetchType.EAGER)
