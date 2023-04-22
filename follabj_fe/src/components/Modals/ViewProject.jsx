@@ -6,10 +6,14 @@ import styled from "styled-components";
 import { deleteProject, getProjectsByUserId, updateProject } from "../../Redux/project/projectActions";
 import { LENGTH30, LENGTH100 } from './regexs.js';
 import { toast } from "react-toastify";
+import { useHistory } from "react-router";
+import { setCurrentProjectDescription, setCurrentProjectName } from "../../Redux/project/projectSlice";
 
 const ViewProjectModal = ({ type, close, project }) => {
 
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const [name, setName] = useState("");
   const [des, setDescription] = useState("")
   const user_id = useSelector((state) => state.auth.login.currentUser.id)
@@ -32,6 +36,8 @@ const ViewProjectModal = ({ type, close, project }) => {
   const handleDelete = (project_id) => {
     dispatch(deleteProject(project_id))
     close()
+    if (window.location.pathname == "/aboutProject") 
+      history.push("/projects")
   }
 
   const handleCommitUpdate = (e) => {
@@ -49,13 +55,17 @@ const ViewProjectModal = ({ type, close, project }) => {
       p_name: name.trim(),
       p_des: des.trim()
     }
-    dispatch(updateProject({ project_id: project.id, project: projectData }))
+    dispatch(updateProject({ project_id: project.id, project: projectData })).unwrap().then((result) => {
+      dispatch(getProjectsByUserId(user_id))
+      dispatch(setCurrentProjectName(result.p_name))
+      dispatch(setCurrentProjectDescription(result.p_des))
+    })
     close()
   }
 
-  useEffect(() => {
-    dispatch(getProjectsByUserId(user_id))
-  }, [updateProject])
+  // useEffect(() => {
+  //   dispatch(getProjectsByUserId(user_id))
+  // }, [])
 
   useEffect(() => {
     if (type == "readonly") {
@@ -72,6 +82,8 @@ const ViewProjectModal = ({ type, close, project }) => {
     }
 
   }, [])
+
+  console.log(project.members)
 
   return (
     <>
@@ -99,17 +111,16 @@ const ViewProjectModal = ({ type, close, project }) => {
               />
             </div>
             <div>
-              {modalType === "update" && project.members[0].id === user_id && (
+              {(modalType === "update" && project.leader.id === user_id) && (
                 <>
-                  <UpdateButton onClick={() => handleCommitUpdate()} className='animate'>Commit Update</UpdateButton>
+                  <UpdateButton className='animate'>Commit Update</UpdateButton>
                   <DeleteButton onClick={() => close()} className='animate'>Cancel Update</DeleteButton>
 
                 </>
               )}
-              {modalType === "readonly" && project.members[0].id === user_id && (<>
+              {(modalType === "readonly" && project.leader.id === user_id) && (<>
                 {
                   (<>
-
                     <UpdateButton className="animate" onClick={() => handleUpdate()}>Update</UpdateButton>
                     <DeleteButton className="animate" onClick={() => handleDelete(project.id)}>Delete</DeleteButton>
                   </>)}
