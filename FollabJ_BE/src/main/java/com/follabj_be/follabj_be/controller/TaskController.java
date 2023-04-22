@@ -79,9 +79,9 @@ public class TaskController {
         return taskDTO;
     }
 
-    @PutMapping("/project/{project_id}/leader/tasks/{task_id}/changeColumn")
+    @PutMapping("/project/{project_id}/tasks/{task_id}/changeColumn")
     public void changeColumn(@RequestParam int status, @RequestParam int columnPosition, @PathVariable Long project_id, @PathVariable Long task_id) {
-        checkIfTaskBelongToProject(project_id, task_id);
+        checkIfTaskBelongToProject(task_id, project_id);
         taskService.updateSourceColumnPositionBeforeChangeTaskStatus( project_id, task_id);
         taskService.updateTaskColumnPosition(task_id, columnPosition);
         taskService.updateTaskStatus(task_id, status);
@@ -89,9 +89,9 @@ public class TaskController {
     }
     
 
-    @PutMapping("/project/{project_id}/leader/tasks/{task_id}/changePosition")
+    @PutMapping("/project/{project_id}/tasks/{task_id}/changePosition")
     public void changePosition (@RequestParam int columnPosition, @PathVariable Long project_id, @PathVariable Long task_id) {
-        checkIfTaskBelongToProject(project_id, task_id);
+        checkIfTaskBelongToProject(task_id, project_id);
         taskService.updateTaskColumnPosition(task_id, columnPosition);
         taskService.updateColumnPositionAfterChangeTaskPosition(project_id, task_id);
     }
