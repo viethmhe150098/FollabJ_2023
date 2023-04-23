@@ -31,12 +31,16 @@ public class LeaderRequestController {
     @PostMapping("/admin/request/{req_id}")
     public ResponseEntity<Map<Object, Object>> updateRequestStatus(@PathVariable Long req_id, @RequestParam int status){
         Map<Object, Object> res = new HashMap<>();
-        leaderRequestService.updateRequestStatus(req_id, status);
+
         res.put("status", HttpStatus.OK);
         if(status == 1) {
+            leaderRequestService.updateRequestStatus(req_id, status);
             res.put("message", "Update status to accept for request id "+ req_id);
-        }else{
+        }else if (status == 2){
+            leaderRequestService.updateRequestStatus(req_id, status);
             res.put("message", "Update status to decline for request id "+ req_id);
+        }else {
+            res.put("message", "Invalid status code");
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
