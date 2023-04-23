@@ -1,6 +1,7 @@
 package com.follabj_be.follabj_be.service;
 
 import com.follabj_be.follabj_be.dto.CreateProjectDTO;
+import com.follabj_be.follabj_be.dto.ProjectDTO;
 import com.follabj_be.follabj_be.dto.UserDTO;
 import com.follabj_be.follabj_be.entity.Project;
 import com.follabj_be.follabj_be.exception.GroupException;

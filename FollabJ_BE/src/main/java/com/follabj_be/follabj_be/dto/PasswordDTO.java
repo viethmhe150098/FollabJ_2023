@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +17,5 @@ public class PasswordDTO {
     @Pattern(regexp = "^(?=.*\\d)[a-zA-Z0-9]{8,}$")
     private String new_password;
     @NotEmpty(message = "Not empty")
-    @Pattern(regexp = "^(?=.*\\d)[a-zA-Z0-9]{8,}$")
     private String old_password;
 }

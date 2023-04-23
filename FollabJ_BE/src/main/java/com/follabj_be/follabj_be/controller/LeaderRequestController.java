@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,15 +34,20 @@ public class LeaderRequestController {
     public ResponseEntity<Map<Object, Object>> updateRequestStatus(@PathVariable Long req_id, @RequestParam int status){
         Map<Object, Object> res = new HashMap<>();
 
-        res.put("status", HttpStatus.OK);
+
         if(status == 1) {
             leaderRequestService.updateRequestStatus(req_id, status);
             res.put("message", "Update status to accept for request id "+ req_id);
+            res.put("status", HttpStatus.OK);
         }else if (status == 2){
+
             leaderRequestService.updateRequestStatus(req_id, status);
+            res.put("status", HttpStatus.OK);
             res.put("message", "Update status to decline for request id "+ req_id);
         }else {
+            res.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
             res.put("message", "Invalid status code");
+            return new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }

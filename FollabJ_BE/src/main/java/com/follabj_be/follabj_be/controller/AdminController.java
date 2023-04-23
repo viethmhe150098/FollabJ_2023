@@ -61,6 +61,7 @@ public class AdminController {
         }else{
             res.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
             res.put("message", "Something went wrong");
+            return new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }

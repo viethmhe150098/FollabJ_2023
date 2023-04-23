@@ -2,19 +2,17 @@ package com.follabj_be.follabj_be.service.impl;
 
 import com.follabj_be.follabj_be.dto.CreateProjectDTO;
 import com.follabj_be.follabj_be.dto.ProjectCountDTO;
+import com.follabj_be.follabj_be.dto.ProjectDTO;
 import com.follabj_be.follabj_be.dto.UserDTO;
 import com.follabj_be.follabj_be.entity.*;
 import com.follabj_be.follabj_be.errorMessge.CustomErrorMessage;
 import com.follabj_be.follabj_be.exception.GroupException;
 import com.follabj_be.follabj_be.repository.*;
-import com.follabj_be.follabj_be.service.EmailSender;
 import com.follabj_be.follabj_be.service.ProjectInterface;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ObjectNotFoundException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -37,12 +35,7 @@ public class ProjectService implements ProjectInterface {
     private final InvitationRepository invitationRepository;
     private final EventRepository eventRepository;
     private final TaskRepository taskRepository;
-
-    private final FileMetaRepository fileMetaRepository;
-    private final MeetingRepository meetingRepository;
-
-    private final BuildEmail buildEmail;
-    private final EmailSender emailSender;
+    private final ModelMapper modelMapper;
     @Override
     public Project createPrj(CreateProjectDTO createProjectDTO) throws GroupException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -123,9 +116,10 @@ public class ProjectService implements ProjectInterface {
         projects_id.stream().map(projectRepository::findById).toList().forEach(
                 project -> {
                     if(project.isPresent())
-                    projects.add(project.get());
+                        projects.add(project.get());
                 }
         );
+
         return projects;
     }
 

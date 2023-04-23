@@ -2,6 +2,7 @@ package com.follabj_be.follabj_be.controller;
 
 import com.follabj_be.follabj_be.dto.CreateProjectDTO;
 import com.follabj_be.follabj_be.dto.InvitationDTO;
+import com.follabj_be.follabj_be.dto.ProjectDTO;
 import com.follabj_be.follabj_be.dto.UserDTO;
 import com.follabj_be.follabj_be.entity.AppUser;
 import com.follabj_be.follabj_be.entity.Invitation;
@@ -37,10 +38,12 @@ public class ProjectController {
 
     @PostMapping(value = "/createproject")
     @PreAuthorize("hasAuthority('LEADER')")
-    public ResponseEntity<Project> createProject(@Valid @RequestBody CreateProjectDTO createProjectDTO) throws GroupException {
+    public ResponseEntity<ProjectDTO> createProject(@Valid @RequestBody CreateProjectDTO createProjectDTO) throws GroupException {
 
         Project p = projectService.createPrj(createProjectDTO);
-        return new ResponseEntity<>(p, HttpStatus.CREATED);
+        ProjectDTO projectDTO = modelMapper.map(p, ProjectDTO.class);
+        projectDTO.setMember(p.getMembers().stream().map(m -> new UserDTO(m.getId(), m.getEmail(), m.getUsername(), m.getFullname(), m.getPhone_number(), m.getStatus())).toList());
+        return new ResponseEntity<>(projectDTO, HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/project/{p_id}/addmembers/leader")
@@ -91,7 +94,7 @@ public class ProjectController {
 
     @PutMapping(value = "/project/{p_id}/leader")
     @PreAuthorize("hasAuthority('LEADER')")
-    public ResponseEntity<Map<Object, Object>> editProject(@PathVariable Long p_id, @RequestBody CreateProjectDTO createProjectDTO) {
+    public ResponseEntity<Map<Object, Object>> editProject(@PathVariable Long p_id,@Valid @RequestBody CreateProjectDTO createProjectDTO) {
         projectService.editProject(p_id, createProjectDTO);
         Map<Object, Object> res = new HashMap<>();
         res.put("status", HttpStatus.OK);

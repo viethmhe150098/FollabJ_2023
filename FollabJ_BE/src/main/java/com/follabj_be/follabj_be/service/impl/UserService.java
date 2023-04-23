@@ -235,7 +235,7 @@ public class UserService implements UserDetailsService, UserInterface {
         String password = random();
         ap.setPassword(passwordEncoder.bCryptPasswordEncoder().encode(password));
         userRepository.save(ap);
-        emailSender.sendEmail(email, buildEmail.forgotPassword(password, email));
+        emailSender.sendEmail(email, buildEmail.forgotPassword(password, email), "FollabJ new password");
         return "We have sent you a new password via "+email;
     }
 

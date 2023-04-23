@@ -58,7 +58,7 @@ public class RegistrationService implements RegistrationInterface {
             //Since, we are running the spring boot application in localhost, we are hardcoding the
             //url of the server. We are creating a POST request with token param
             String link = "http://localhost:3000/confirm/" + tokenForNewUser;
-            emailSender.sendEmail(email, buildEmail.registrationEmail(email, link));
+            emailSender.sendEmail(email, buildEmail.registrationEmail(email, link), "Confirm yout account");
             return tokenForNewUser;
     }
 

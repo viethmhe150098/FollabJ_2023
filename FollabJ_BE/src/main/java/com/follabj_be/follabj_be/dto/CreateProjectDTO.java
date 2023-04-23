@@ -11,9 +11,10 @@ import javax.validation.constraints.*;
 @Builder
 public class CreateProjectDTO {
     private String id;
-
-    @Size(min=1, max=30)
+    @NotEmpty
+    @Size(min=1, max=50)
     private String p_name;
+    @NotEmpty
     @Size(min=1, max=100)
     private String p_des;
 
