@@ -70,7 +70,7 @@ const Requests = () => {
                             <TableHead>
                                 <TableRow>
                                     <TableCell>User Name</TableCell>
-                                    <TableCell align="left">User Mail</TableCell>
+                                    <TableCell align="left">Message</TableCell>
                                     <TableCell align="left">User options</TableCell>
 
                                 </TableRow>
@@ -82,7 +82,7 @@ const Requests = () => {
                                             {item.user.username}
                                         </TableCell>
                                         <TableCell component="th" scope="row">
-                                            {item.user.email}
+                                            {item.message}
                                         </TableCell>
 
                                         <TableCell align="left">

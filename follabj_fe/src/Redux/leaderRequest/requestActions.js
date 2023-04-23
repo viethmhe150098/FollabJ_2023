@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 export const getRequests = createAsyncThunk("FETCH_REQUESTS", async (page_number)=>{
     try {
-        const response = await requestAPI.fetchRequest(page_number)
+        const response = await requestAPI.fetchRequest()
         return response.data
     } catch (error) {
         throw error
