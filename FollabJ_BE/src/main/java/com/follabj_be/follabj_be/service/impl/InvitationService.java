@@ -1,8 +1,6 @@
 package com.follabj_be.follabj_be.service.impl;
 
-import com.follabj_be.follabj_be.entity.AppUser;
 import com.follabj_be.follabj_be.entity.Invitation;
-import com.follabj_be.follabj_be.entity.Project;
 import com.follabj_be.follabj_be.repository.InvitationRepository;
 import com.follabj_be.follabj_be.repository.ProjectRepository;
 import com.follabj_be.follabj_be.repository.UserRepository;

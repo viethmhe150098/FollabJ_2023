@@ -1,7 +1,6 @@
 package com.follabj_be.follabj_be.utils;
 
 
-
 import org.json.simple.JSONObject;
 
 import javax.crypto.Cipher;
@@ -16,53 +15,34 @@ public class TokenServerAssistant {
     static final private String VERSION_FLAG = "04";
     static final private int IV_LENGTH = 16;
     static final private String TRANSFORMATION = "AES/CBC/PKCS5Padding";
-
-    /**
-     * 通过此变量控制在生成鉴权 token 过程中是否打印控制台信息
-     */
     static public boolean VERBOSE = false;
 
-    /**
-     * 权限位定义
-     */
     static final public String PrivilegeKeyLogin = "1"; // 登录
 
     static final public String PrivilegeKeyPublish = "2"; // 推流
 
-    /**
-     * 权限开关定义
-     */
+
     static final public int PrivilegeEnable = 1; // 开启
 
     static final public int PrivilegeDisable = 0; // 关闭
 
     static public enum ErrorCode {
-        /**
-         * 生成鉴权 token 成功
-         */
+
         SUCCESS(0),
-        /**
-         * 传入 appId 参数错误
-         */
+
         ILLEGAL_APP_ID(1),
-        /**
-         * 传入 userId 参数错误
-         */
+
         ILLEGAL_USER_ID(3),
-        /**
-         * 传入 secret 参数错误
-         */
+
         ILLEGAL_SECRET(5),
-        /**
-         * 传入 effectiveTimeInSeconds 参数错误
-         */
+
         ILLEGAL_EFFECTIVE_TIME(6),
-        /**
-         * 其它未定义错误
-         */
+
         OTHER(-1);
 
-        private ErrorCode(int code) { this.value = code; }
+        private ErrorCode(int code) {
+            this.value = code;
+        }
 
         public int value;
     }
@@ -82,21 +62,17 @@ public class TokenServerAssistant {
         }
     }
 
-    /**
-     * token 结构体
-     */
+
     static public class TokenInfo {
-        /**
-         * 根据提供的内容生成的 token 主体
-         */
+
         public String data = "";
 
-        /**
-         * 错误信息
-         */
+
         public ErrorInfo error;
 
-        TokenInfo() { this.error = new ErrorInfo(); }
+        TokenInfo() {
+            this.error = new ErrorInfo();
+        }
 
         @Override
         public String toString() {
@@ -104,19 +80,12 @@ public class TokenServerAssistant {
         }
     }
 
-    private TokenServerAssistant() {}
+    private TokenServerAssistant() {
+    }
 
-    /**
-     * 根据所提供的参数列表生成用于与即构服务端通信的鉴权 token
-     *
-     * @param appId                  Zego派发的数字ID, 各个开发者的唯一标识
-     * @param userId                 用户 ID
-     * @param secret                 由即构提供的与 appId 对应的密钥，请妥善保管，切勿外泄
-     * @param effectiveTimeInSeconds token 的有效时长，单位：秒
-     * @return 返回 token 内容，在使用前，请检查 error 字段是否为 SUCCESS
-     */
+
     static public TokenInfo generateToken04(long appId, String userId, String secret,
-                                          int effectiveTimeInSeconds, String payload) {
+                                            int effectiveTimeInSeconds, String payload) {
         TokenInfo token = new TokenInfo();
 
         // check the appId
@@ -205,7 +174,7 @@ public class TokenServerAssistant {
         }
 
         if (content == null) {
-            content = new byte[] {};
+            content = new byte[]{};
         }
         SecretKeySpec key = new SecretKeySpec(secretKey, "AES");
         IvParameterSpec iv = new IvParameterSpec(ivBytes);
@@ -217,7 +186,7 @@ public class TokenServerAssistant {
     }
 
     static private void packBytes(byte[] buffer, ByteBuffer target) {
-        target.putShort((short)buffer.length);
+        target.putShort((short) buffer.length);
         target.put(buffer);
     }
 

@@ -74,7 +74,7 @@ public class BuildEmail {
     }
 
 
-    public String forgotPassword(String password, String name){
+    public String forgotPassword(String password, String name) {
         return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
                 "\n" +
                 "<span style=\"display:none;font-size:1px;color:#fff;max-height:0\"></span>\n" +
@@ -142,8 +142,9 @@ public class BuildEmail {
                 "\n" +
                 "</div></div>";
     }
-    public String becomeLeader(String name){
-        return "<p>Dear "+name +"</p>" +
+
+    public String becomeLeader(String name) {
+        return "<p>Dear " + name + "</p>" +
                 "</br>" +
                 "You have become a team leader, from now on you can create and manage your group" +
                 "</br>" +
