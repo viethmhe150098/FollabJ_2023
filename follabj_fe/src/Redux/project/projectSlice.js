@@ -11,7 +11,8 @@ const projectSlice = createSlice({
             userRole: null,
             members: [],
             name: "",
-            des: ""
+            des: "",
+            leader: null
         },
         projects: {
             allProjects: [],
@@ -60,6 +61,9 @@ const projectSlice = createSlice({
         },
         setCurrentProjectDescription: (state, action) => {
             state.currentProject.des = action.payload;
+        },
+        setCurrentProjectLeader: (state, action) => {
+            state.currentProject.leader = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -111,6 +115,7 @@ export const {
     setCurrentProjectUserRole,
     setCurrentProjectName,
     setCurrentProjectDescription,
+    setCurrentProjectLeader
 } = projectSlice.actions;
 
 export default projectSlice.reducer;

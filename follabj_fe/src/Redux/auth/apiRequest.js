@@ -1,7 +1,7 @@
 import axios from "axios";
 import jwtDecode from 'jwt-decode';
 import { loginFailed, loginStart, loginSuccess, registerFailed, registerStart, registerSuccess } from "./authSlice";
-import { createProjectFailed, createProjectStart, createProjectSuccess, getProjectStart, setCurrentProjectId } from "../project/projectSlice";
+import { createProjectFailed, createProjectStart, createProjectSuccess, getProjectStart, setCurrentProjectDescription, setCurrentProjectId, setCurrentProjectLeader, setCurrentProjectName } from "../project/projectSlice";
 import { toast } from "react-toastify";
 import { getProjectMembersByProjectId } from "../project/projectActions";
 import instance from "../axiosInstance";
@@ -102,6 +102,9 @@ export const createProject = async (project, access_token, dispatch, navigate) =
             toast.success('Create project successfully!')
             dispatch(setCurrentProjectId(res.data.id))
             dispatch(getProjectMembersByProjectId(res.data.id))
+            dispatch(setCurrentProjectName(res.data.name))
+            dispatch(setCurrentProjectDescription(res.data.des))
+            dispatch(setCurrentProjectLeader(res.data.leader))
             navigate.push("/aboutProject");
         } catch (error) {
             dispatch(createProjectFailed());
