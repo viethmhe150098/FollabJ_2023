@@ -65,7 +65,7 @@ export default function BasicTable() {
                 <TableCell component="th" scope="row">
                   {row.name}
                 </TableCell>
-                <TableCell align="left">{row.members[0].email}</TableCell>
+                <TableCell align="left">{row.leader.email}</TableCell>
                 <TableCell align="left">{row.createdDate}</TableCell>
                 <TableCell align="left">
                   <button className="status" style={makeStyle(row.status)}>{row.status}</button>
