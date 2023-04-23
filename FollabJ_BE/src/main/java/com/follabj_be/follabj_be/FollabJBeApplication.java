@@ -1,7 +1,5 @@
 package com.follabj_be.follabj_be;
 
-
-import com.follabj_be.follabj_be.entity.Role;
 import com.follabj_be.follabj_be.repository.RoleRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
