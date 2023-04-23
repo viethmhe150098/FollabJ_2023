@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -69,16 +71,17 @@ public class NoteController {
         return noteDTO;
     }
 
-    @PutMapping("/notes/{note_id}")
-    public void updateNote(HttpServletResponse response, Authentication authentication ,@Valid @RequestBody Note note, @PathVariable Long note_id) throws IOException {
+    @PutMapping("/notes/{note_id}/update")
+    public NoteDTO updateNote(Authentication authentication , @Valid @RequestBody Note note, @PathVariable Long note_id) throws IOException, ServletException {
         Long user_id = getUserId(authentication);
         checkIfNoteBelongToUser(note_id, user_id);
         note.setId(note_id);
         AppUser user = new AppUser();
         user.setId(user_id);
         note.setCreator(user);
-        Note updatedNote = noteService.updateNote(note);
-        //response.sendRedirect("/notes/"+note_id);
+        noteService.updateNote(note);
+
+        return getNoteByNoteId(authentication, note_id);
     }
 
     @DeleteMapping("/notes/{note_id}")
