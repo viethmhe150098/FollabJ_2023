@@ -37,11 +37,11 @@ public class LeaderRequestService implements LeaderRequestInterface {
             l.setStatus(LeaderRequest.requestStatus.ACCEPT);
             userRepository.promoteLeader(l.getUser().getId());
             //emailSender.sendEmail(l.getUser().getEmail(), buildEmail.becomeLeader(l.getUser().getUsername()));
+            leaderRequestRepository.save(l);
         }else{
-
             l.setStatus(LeaderRequest.requestStatus.REJECT);
+            leaderRequestRepository.deleteById(req_id);
         }
-        leaderRequestRepository.save(l);
     }
 
     @Override
