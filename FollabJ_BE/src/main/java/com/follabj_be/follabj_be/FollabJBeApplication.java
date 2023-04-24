@@ -9,19 +9,21 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class FollabJBeApplication {
+    @Autowired
+    private RoleRepository roleRepository;
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
 
-    private static RoleRepository roleRepository;
-
     public static void main(String[] args) {
         SpringApplication.run(FollabJBeApplication.class, args);
     }
 
-    @Autowired
-    public void setRoleRepository(RoleRepository roleRepository) {
-        FollabJBeApplication.roleRepository = roleRepository;
+    public void initRole() {
+        roleRepository.save(new Role(0L, "INACTIVE"));
+        roleRepository.save(new Role(1L, "ACTIVE_USER"));
+        roleRepository.save(new Role(2L, "LEADER"));
+        roleRepository.save(new Role(3L, "ADMIN"));
     }
 }
