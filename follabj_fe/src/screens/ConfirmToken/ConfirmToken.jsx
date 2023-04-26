@@ -1,29 +1,36 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 
 const ConfirmToken = () => {
-  const[message, setMeassage] = useState('')
+  const [message, setMessage] = useState('');
   const { token } = useParams();
-  useEffect(()=> {
-    const fetch = async () => {
-      try{
-        const res = await axios.get(`http://localhost:8080/confirm?token=${token}`);
-        // const data = res.data.message;
-        
-          setMeassage(res.data.message)
-        
-      }catch(err){
-        setMeassage(err.response.data.message);
-      }
-    }
-    fetch()
-  }, [])   
-  
-  console.log(token);
-  return (
-    <div>{message}</div>
-  )
-}
 
-export default ConfirmToken
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8080/confirm?token=${token}`);
+        setMessage(res.data.message);
+      } catch (err) {
+        setMessage(err.response.data.message);
+      }
+    };
+    fetch();
+  }, []);
+
+  return (
+    <div style={{ 
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      height: '100vh', 
+      fontSize: '2rem', 
+      fontWeight: 'bold', 
+      color: '#333' 
+    }}>
+      {message}
+    </div>
+  );
+};
+
+export default ConfirmToken;
