@@ -1,10 +1,7 @@
-import axios from "axios";
-import { Result } from "postcss";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { LENGTH30 } from './regexs.js';
 
 import styled from "styled-components";
 import { getUserProfileByUserId, updateUserProfile } from "../../Redux/userProfile/userProfileAction";
@@ -22,7 +19,7 @@ const UpdateProfileModal = ({ close }) => {
   const dispatch = useDispatch();
 
   //   // Regex to validate password
-  const phoneRegex = /^0\d{8}$/
+  const phoneRegex = /^0\d{9}$/
   const usernameRegex = /^\s*[a-zA-Z0-9]{5,30}\s*$/
   const fullnameRegex = /^\s*[a-zA-Z]{2,}(?:\s+[a-zA-Z]+){1,4}\s*$/
   const handleSubmit = (e) => {
@@ -40,7 +37,7 @@ const UpdateProfileModal = ({ close }) => {
       return;
     }
     if (!phoneRegex.test(phone_number)) {
-      toast.warn("Phone number must have 9 numerics and start with '0'");
+      toast.warn("Phone number must have 10 numerics and start with '0'");
       return;
     }
     const updateDataProfile = {
@@ -53,7 +50,6 @@ const UpdateProfileModal = ({ close }) => {
       user_id,
       updateDataProfile
     })).unwrap().then((result) => { dispatch(getUserProfileByUserId(user_id)) });
-    toast.success('Updated informations successfully!')
     close();
   }
 

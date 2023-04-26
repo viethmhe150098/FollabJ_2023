@@ -28,6 +28,7 @@ th {
 
 .Details {
   color: #00b5ff !important;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 1200px) {

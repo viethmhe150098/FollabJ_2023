@@ -116,7 +116,8 @@ export const deactiveProject = createAsyncThunk("DEACTIVE_PROJECT", async(projec
     try {
         const response = await projectAPI.deactiveProject(project_id)
         //console.log(response)
-        return response.data
+        toast.success(response.data.message)
+        return project_id
     } catch (error) {
         console.log(error);
     }

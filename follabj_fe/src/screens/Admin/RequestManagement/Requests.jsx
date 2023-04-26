@@ -44,6 +44,7 @@ const Requests = () => {
                 cursor: 'pointer',
                 minWidth: '10%',
                 width: '83px',
+                marginRight: '20px'
             }
         }
         else if (status === 'Decline') {

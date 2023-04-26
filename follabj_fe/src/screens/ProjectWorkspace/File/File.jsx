@@ -125,9 +125,6 @@ const FileWorkspace = () => {
                                         <TableCell align="left">
                                             <button onClick={() => { handleDownload(item.id, item.fileName) }} className="status" style={makeStyle('Download')}>Download</button>
                                         </TableCell>
-                                        <TableCell align="left">
-                                            <button className="status" style={makeStyle('Delete')}>Delete</button>
-                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

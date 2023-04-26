@@ -33,4 +33,4 @@ export const assignLeader = (project_id,u_id) => instance.post(projectUrl(projec
 
 export const deleteMember= (project_id,member_id) => instance.put(projectUrl(project_id)+"/leader/member/"+member_id)
 
-export const deactiveProject = (project_id) => instance.post(projectUrl(project_id)+"/leader/deactive")
+export const deactiveProject = (project_id) => instance.post(projectUrl(project_id)+"/leader/deactivate")

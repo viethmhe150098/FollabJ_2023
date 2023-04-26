@@ -54,7 +54,7 @@ export const loginUser = async (user, dispatch, navigate) => {
             localStorage.clear()
         }
         if (role_name.includes("ADMIN")) {
-            navigate.push("/admin/dashboard")
+            navigate.push("/admin")
         }
     } catch (error) {
         //console.log(error)
@@ -106,6 +106,7 @@ export const createProject = async (project, access_token, dispatch, navigate) =
             dispatch(setCurrentProjectDescription(res.data.des))
             dispatch(setCurrentProjectLeader(res.data.leader))
             navigate.push("/aboutProject");
+            
         } catch (error) {
             dispatch(createProjectFailed());
             //toast.error(error.response.data.message);

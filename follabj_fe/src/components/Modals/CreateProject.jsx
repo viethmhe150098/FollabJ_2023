@@ -7,7 +7,7 @@ import { LENGTH30, LENGTH100 } from './regexs.js';
 import { toast } from "react-toastify";
 import FullButton from "../Buttons/FullButton"
 
-const CreateProject = () => {
+const CreateProject = ({ close }) => {
     const [prjID, setPrjID] = useState("");
     const [prjName, setPrjName] = useState("");
     const [prjDes, setPrjDes] = useState("");
@@ -35,7 +35,6 @@ const CreateProject = () => {
             p_des: prjDes.trim()
         };
         createProject(newProject, access_token, dispatch, navigate);
-
         //Code create Task here
         console.log(prjID, prjName, prjDes);
     };

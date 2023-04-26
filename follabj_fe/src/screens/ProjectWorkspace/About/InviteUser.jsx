@@ -36,7 +36,7 @@ const InviteUser = () => {
 
     dispatch(inviteMember({ project_id, userdto })).unwrap().then((result) => {
       const message = result.message
-
+      console.log(result.message)
       switch (message) {
         case 'already in project':
           toast.warn('Can not invite yourself or members already in your project!')
@@ -46,6 +46,9 @@ const InviteUser = () => {
           break;
         case 'success':
           toast.success('Invitation sent. Wait for user acceptance!')
+          break;
+        case 'Not found user':
+          toast.warn('Can not found user with this email!')
           break;
         default:
           break;

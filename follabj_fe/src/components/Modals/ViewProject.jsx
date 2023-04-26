@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { deleteProject, getProjectsByUserId, updateProject } from "../../Redux/project/projectActions";
+import { deactiveProject, deleteProject, getProjectsByUserId, updateProject } from "../../Redux/project/projectActions";
 import { LENGTH30, LENGTH100 } from './regexs.js';
 import { toast } from "react-toastify";
 import { useHistory } from "react-router";
@@ -34,7 +34,7 @@ const ViewProjectModal = ({ type, close, project }) => {
   }
 
   const handleDelete = (project_id) => {
-    dispatch(deleteProject(project_id))
+    dispatch(deactiveProject(project_id))
     close()
     if (window.location.pathname == "/aboutProject") 
       history.push("/projects")
@@ -122,7 +122,7 @@ const ViewProjectModal = ({ type, close, project }) => {
                 {
                   (<>
                     <UpdateButton className="animate" onClick={() => handleUpdate()}>Update</UpdateButton>
-                    <DeleteButton className="animate" onClick={() => handleDelete(project.id)}>Delete</DeleteButton>
+                    <DeleteButton className="animate" onClick={() => handleDelete(project.id)}>Deactive</DeleteButton>
                   </>)}
               </>)}
             </div>
