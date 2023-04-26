@@ -32,7 +32,8 @@ const NoteEditor = () => {
       content: editorState.getCurrentContent().getPlainText(),
       creator: {
         id: user_id
-      }
+      },
+      createdDate: new Date(note.createdDate),
     }
 
     dispatch(updateNote({ user_id, note: updatedNote }))
@@ -42,7 +43,6 @@ const NoteEditor = () => {
     //console.log(convertToRaw(editorState.getCurrentContent()))
     //console.log(updatedNote)
   }
-  
 
   const handleDelete = () =>{
     dispatch(deleteNote({
