@@ -99,6 +99,7 @@ public class TaskController {
     @DeleteMapping("/project/{project_id}/leader/tasks/{task_id}/delete")
     public void deleteTask(@PathVariable Long project_id,@PathVariable Long task_id) {
         checkIfTaskBelongToProject(task_id, project_id);
+        taskService.updateSourceColumnPositionBeforeChangeTaskStatus(project_id, task_id);
         taskService.deleteTask(task_id);
     }
 
