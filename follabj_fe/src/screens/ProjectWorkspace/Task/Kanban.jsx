@@ -118,7 +118,7 @@ const Kanban = () => {
             columnArray[sourceColIndex].tasks = sourceTasks
             columnArray[destinationColIndex].tasks = destinationTasks
         } else {
-            const columnIndex = columnArray.findIndex(e => e.id === destination.droppableId);
+            const columnIndex = columnArray.findIndex(e => e.id ===  parseInt(destination.droppableId));
 
             const column = columnArray[columnIndex]
 

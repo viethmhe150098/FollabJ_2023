@@ -59,8 +59,8 @@ export const eventReducer = createReducer(initialState, (builder) => {
                 project: action.payload.project,
                 participantList: action.payload.participantList
             }
-            return state.map((event) => event.id == converted.id ? converted : event)
+            return state.map((event) => event.id === converted.id ? converted : event)
         }).addCase(deleteEvent.fulfilled, (state, action) => {
-            return state.filter((event) => event.id != action.payload)
+            return state.filter((event) => event.id !== action.payload)
         })
 })

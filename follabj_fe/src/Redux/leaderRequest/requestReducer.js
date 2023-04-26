@@ -10,9 +10,9 @@ export const requestReducer = createReducer(initialState,(builder)=>{
         return action.payload.content
     })
     .addCase(acceptRequest.fulfilled, (state,action) => {
-        return state.filter((request) => request.id != action.payload)
+        return state.filter((request) => request.id !== action.payload)
     })
     .addCase(declineRequest.fulfilled, (state,action) => {
-        return state.filter((request) => request.id != action.payload)
+        return state.filter((request) => request.id !== action.payload)
     })
 })

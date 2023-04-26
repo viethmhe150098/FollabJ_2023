@@ -33,7 +33,7 @@ const CreateEventForm = ({ type, close, event }) => {
   const userRole = useSelector((state) => state.project.currentProject.userRole);
 
   useEffect(() => {
-    if (type == "readonly") {
+    if (type === "readonly") {
       var form = document.getElementById('eventForm');
       var elements = form.elements;
       for (var i = 0, len = elements.length; i < len; ++i) {
@@ -59,7 +59,7 @@ const CreateEventForm = ({ type, close, event }) => {
       setParticipantList([...participantList, { id: selectedParticipantId }]);
     } else {
       const filteredParticipantList = participantList.filter(
-        (participant) => participant.id != selectedParticipantId ? participant : null
+        (participant) => participant.id !== selectedParticipantId ? participant : null
       );
       //console.log("unchecked");
       setParticipantList(filteredParticipantList);
@@ -163,9 +163,9 @@ const CreateEventForm = ({ type, close, event }) => {
       <a className="close" onClick={close}>
         &times;
       </a>
-      {modalType == "readonly" && (<>
+      {modalType === "readonly" && (<>
         <h2>View Event</h2>
-        {user_id == event.project.leader.id &&
+        {user_id === event.project.leader.id &&
           (
             <div style={{ marginBottom: '20px' }}>
               <span onClick={() => handleUpdate()} className="status" style={makeStyle('Update')}>Update event</span>
@@ -173,7 +173,7 @@ const CreateEventForm = ({ type, close, event }) => {
             </div>
           )}
       </>)}
-      {modalType == "update" && (
+      {modalType === "update" && (
         <div style={{ marginBottom: '20px' }}>
           <h2>Update Event</h2>
           <span onClick={() => handleCommitUpdate()} className="status" style={makeStyle('Update')}>Commit Update event</span>
@@ -205,7 +205,7 @@ const CreateEventForm = ({ type, close, event }) => {
             <DatePicker
               id="start-date"
               selected={startDate}
-              disabled={modalType == "readonly"}
+              disabled={modalType === "readonly"}
               onChange={(date) => setStartDate(date)}
               dateFormat="dd/MM/yyyy hh:mm a"
               showTimeSelect
@@ -215,7 +215,7 @@ const CreateEventForm = ({ type, close, event }) => {
             <DatePicker
               id="end-date"
               selected={endDate}
-              disabled={modalType == "readonly"}
+              disabled={modalType === "readonly"}
               onChange={(date) => setEndDate(date)}
               dateFormat="dd/MM/yyyy hh:mm a"
               showTimeSelect
@@ -231,13 +231,13 @@ const CreateEventForm = ({ type, close, event }) => {
             <label>Participants: </label>
             {members.map((member) => (
               <div key={member.id}>
-                <input disabled={modalType == "readonly"}
+                <input disabled={modalType === "readonly"}
                   type="checkbox"
                   id={`participant-${member.id}`}
                   value={member.id}
                   onChange={(e) => {handleCheckboxChange(e)}}
                   // checked={assigneeList.includes(teamMember.id)}
-                  checked={participantList.some((participant) => participant.id == member.id) || member.id === user_id}
+                  checked={participantList.some((participant) => participant.id === member.id) || member.id === user_id}
                 />
                 <label htmlFor={`assignee-${member.id}`}>
                   {member.username}

@@ -33,6 +33,7 @@ export default function Note() {
 
   useEffect(() => {
     dispatch(getNotesByUserId(user_id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleNote = (note) => {

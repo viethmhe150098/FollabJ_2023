@@ -82,22 +82,22 @@ const projectSlice = createSlice({
                 state.currentProject.members = action.payload
             })
             .addCase(updateProject.fulfilled, (state, action) => {
-                state.projects.allProjects = state.projects.allProjects.filter((project) => project.id != action.payload.id)
+                state.projects.allProjects = state.projects.allProjects.filter((project) => project.id !== action.payload.id)
             })
             .addCase(deactiveProject.fulfilled, (state, action) => {
-                state.projects.allProjects = state.projects.allProjects.filter((project) => project.id != action.payload)
+                state.projects.allProjects = state.projects.allProjects.filter((project) => project.id !== action.payload)
             })
             .addCase(acceptInvitation.fulfilled, (state, action) => {
                 state.projects.allProjects.push(action.payload.joinedProject)
             })
             .addCase(leaveProject.fulfilled, (state, action) => {
-                state.projects.allProjects = state.projects.allProjects.filter((project) => project.id != action.payload)
+                state.projects.allProjects = state.projects.allProjects.filter((project) => project.id !== action.payload)
             })
             .addCase(assignLeader.fulfilled, (state, action) => {
 
             })
             .addCase(deleteMember.fulfilled, (state, action) => {
-                state.currentProject.members = state.currentProject.members.filter((member) => member.id != action.payload)
+                state.currentProject.members = state.currentProject.members.filter((member) => member.id !== action.payload)
             })
     },
 })

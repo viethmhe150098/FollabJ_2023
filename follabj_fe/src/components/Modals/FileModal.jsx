@@ -43,7 +43,7 @@ const FileModal = ({ type, close }) => {
         <a className="close" onClick={close}>
           &times;
         </a>
-        {type == "update" && (
+        {type === "update" && (
           <>
             <h2>File Detail</h2>
             <button onClick={() => { }} className='greenBg font25 radius6 lightColor tag'>Download</button>

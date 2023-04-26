@@ -48,7 +48,7 @@ const AddTaskModal = ({ type, close, statusId = 1, task, columnPosition}) => {
     }
   }
   useEffect(() => {
-    if (type == "readonly") {
+    if (type === "readonly") {
       var form = document.getElementById('taskForm');
       var elements = form.elements;
       for (var i = 0, len = elements.length; i < len; ++i) {
@@ -74,7 +74,7 @@ const AddTaskModal = ({ type, close, statusId = 1, task, columnPosition}) => {
       setAssigneeList([...assigneeList, { id: selectedAssigneeId }]);
     } else {
       const filteredAssigneeList = assigneeList.filter(
-        (assignee) => assignee.id != selectedAssigneeId ? assignee : null
+        (assignee) => assignee.id !== selectedAssigneeId ? assignee : null
       );
       //console.log("unchecked");
       setAssigneeList(filteredAssigneeList);
@@ -174,15 +174,15 @@ const AddTaskModal = ({ type, close, statusId = 1, task, columnPosition}) => {
         {/* <a className="close" onClick={close}>
           &times;
         </a> */}
-        {modalType == "readonly" && (<>
+        {modalType === "readonly" && (<>
           <h2>View Task</h2>
-          {userRole == "LEADER" &&
+          {userRole === "LEADER" &&
             (<div style={{ marginBottom: '20px' }}>
               <span onClick={() => handleUpdate()} className="status" style={makeStyle('Update')}>Update task</span>
               <span onClick={() => handleDelete()} className="status" style={makeStyle('Delete')}>Delete task</span>
             </div>)}
         </>)}
-        {modalType == "update" && (
+        {modalType === "update" && (
           <div style={{ marginBottom: '20px' }}>
             <h2>Update Task</h2>
             <button onClick={() => handleCommitUpdate()} className="status" style={makeStyle('Update')}>Commit Update</button>
@@ -221,7 +221,7 @@ const AddTaskModal = ({ type, close, statusId = 1, task, columnPosition}) => {
             <DatePicker
               id="startDate"
               selected={startDate}
-              disabled={modalType == "readonly"}
+              disabled={modalType === "readonly"}
               showTimeSelect
               onChange={(date) => setStartDate(date)}
               dateFormat="dd/MM/yyyy hh:mm a"
@@ -231,7 +231,7 @@ const AddTaskModal = ({ type, close, statusId = 1, task, columnPosition}) => {
             <DatePicker
               id="endDate"
               selected={endDate}
-              disabled={modalType == "readonly"}
+              disabled={modalType === "readonly"}
               // value={task != null ? moment(task.endDate).format("DD/MM/yyyy hh:mm a") : new Date()}
               showTimeSelect
               onChange={(date) => setEndDate(date)}
@@ -243,13 +243,13 @@ const AddTaskModal = ({ type, close, statusId = 1, task, columnPosition}) => {
             <label>Assignees</label>
             {members.map((member) => (
               <div key={member.id}>
-                <input disabled={modalType == "readonly"}
+                <input disabled={modalType === "readonly"}
                   type="checkbox"
                   id={`assignee-${member.id}`}
                   value={member.id}
                   onChange={handleCheckboxChange}
                   // checked={assigneeList.includes(teamMember.id)}
-                  checked={assigneeList.some((assignee) => assignee.id == member.id)}
+                  checked={assigneeList.some((assignee) => assignee.id === member.id)}
                 />
                 <label htmlFor={`assignee-${member.id}`}>
                   {member.username}

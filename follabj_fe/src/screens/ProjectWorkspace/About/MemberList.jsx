@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
 import { deleteMember } from '../../../Redux/project/projectActions';
 //table libraby
 import Table from "@mui/material/Table";
@@ -17,8 +16,6 @@ import ConfirmationModal from "../../../components/Modals/ConfirmationModal";
 export default function MemberList() {
 
     const dispatch = useDispatch();
-
-    const history = useHistory();
 
     const members = useSelector((state) => state.project.currentProject.members)
     //console.log(members)

@@ -10,7 +10,7 @@
         builder
         .addCase(getNotesByUserId.fulfilled,(state,action)=>{
             const newState = []
-            action.payload.map((note)=>{
+            action.payload.forEach((note)=>{
                 const converted = {
                     id : note.id,
                     title: note.title,
@@ -34,9 +34,16 @@
             return state
         })
         .addCase(updateNote.fulfilled, (state, action) => {
-            return state.map((note) => note.id == action.payload.id ? action.payload : note)
+            const converted = {
+                id : action.payload.id,
+                title: action.payload.title,
+                content : action.payload.content,
+                createdDate : moment(action.payload.createdDate).format("yyyy-MM-DD hh:mm:ss"),
+                updatedDate : moment(action.payload.updatedDate).format("yyyy-MM-DD hh:mm:ss")
+            }
+            return state.map((note) => note.id === action.payload.id ? converted : note)
         })
         .addCase(deleteNote.fulfilled,(state, action)=>{
-            return state.filter((note)=>note.id != action.payload)
+            return state.filter((note)=>note.id !== action.payload)
         })
     })
