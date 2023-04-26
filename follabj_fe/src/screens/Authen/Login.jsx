@@ -46,6 +46,7 @@ const Login = () => {
     }
 
     setErrors({ email: usernameError, password: passwordError });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email, password]);
 
 

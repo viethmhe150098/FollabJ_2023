@@ -26,7 +26,7 @@ export default function Calendar() {
         <h1 className="font30 extraBold">Events Calendar</h1>
       </HeaderInfo>
       <div className="">
-        {userRole == "LEADER" &&
+        {userRole === "LEADER" &&
           <Popup modal trigger={<div style={{
             width: "100px"
           }}>

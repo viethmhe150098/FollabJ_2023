@@ -8,7 +8,7 @@ import enUS from 'date-fns/locale/en-US'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useDispatch, useSelector } from 'react-redux'
 import { getEventsByUserId } from '../../../Redux/event/eventActions'
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import CreateEventForm from '../../../components/Modals/AddEvent';
 import { useState } from 'react'
@@ -49,32 +49,33 @@ const CalendarView = () => {
       // if (events.length == 0)
       dispatch(getEventsByUserId(user_id));
       // notify();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
-    const message = useSelector((state) => state.responseMessage)
+    // const message = useSelector((state) => state.responseMessage)
 
-    const notify = () => {
-      if (message.success != "") {
-          toast.success(message.success, {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              progress: undefined,
-              theme: "light",
-          });;
-      }
-      if (message.error != "") {
-          toast.error(message.error, {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              progress: undefined,
-              theme: "light",
-          });;
-      }
-    } 
+    // const notify = () => {
+    //   if (message.success != "") {
+    //       toast.success(message.success, {
+    //           position: "top-right",
+    //           autoClose: 3000,
+    //           hideProgressBar: false,
+    //           closeOnClick: true,
+    //           progress: undefined,
+    //           theme: "light",
+    //       });;
+    //   }
+    //   if (message.error != "") {
+    //       toast.error(message.error, {
+    //           position: "top-right",
+    //           autoClose: 3000,
+    //           hideProgressBar: false,
+    //           closeOnClick: true,
+    //           progress: undefined,
+    //           theme: "light",
+    //       });;
+    //   }
+    // } 
     
     const openEventModal = (event) => {
       setSelectedEvent(event);

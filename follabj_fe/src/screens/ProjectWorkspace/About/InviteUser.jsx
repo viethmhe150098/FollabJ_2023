@@ -13,12 +13,13 @@ const InviteUser = () => {
 
   const project_id = useSelector((state) => state.project.currentProject.id);
 
-  const project_invitations = useSelector((state) => state.invitation.project_invitations)
+  //const project_invitations = useSelector((state) => state.invitation.project_invitations)
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getInvitationsByProjectId(project_id))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleInputChange = (e) => {

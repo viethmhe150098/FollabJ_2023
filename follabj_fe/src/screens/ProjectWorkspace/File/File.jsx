@@ -3,7 +3,6 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { BsFileTextFill } from "react-icons/bs";
 import styled from "styled-components";
 import { getFiles } from "../../../Redux/file/fileActions";
 import FullButton from "../../../components/Buttons/FullButton";
@@ -33,6 +32,7 @@ const FileWorkspace = () => {
 
     useEffect(() => {
         dispatch(getFiles({ project_id, page_number }));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const files = useSelector((state) => state.file)
 

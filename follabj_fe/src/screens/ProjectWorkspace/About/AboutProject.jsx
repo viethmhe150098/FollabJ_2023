@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -47,10 +47,10 @@ export default function AboutProject() {
                 {close => <ViewProjectModal close={close} project={project} type={"readonly"} />}
             </Popup>
 
-            {user_role == "LEADER" && <InviteUser />}
+            {user_role === "LEADER" && <InviteUser />}
             <div className="invite-user-container">
                 <MemberList />
-                {user_role == "LEADER" && members.length > 1 && (
+                {user_role === "LEADER" && members.length > 1 && (
                     <div style={{ width: '300px', height: '200px' }}>
                         <Popup modal trigger={
                             <button
@@ -60,14 +60,14 @@ export default function AboutProject() {
                         </Popup>
                     </div>)
                 }
-                {user_role == "LEADER" && (
+                {user_role === "LEADER" && (
                     <div className='extraBold ' style={{ marginTop: '80px', color: 'red', fontSize: '14px' }}>
                         <p>You cannot leave the project at the moment as you are the only member in the project </p>
                     </div>)
                 }
 
 
-                {user_role != "LEADER" &&
+                {user_role !== "LEADER" &&
                     <button onClick={() => { handleMemberLeave() }} style={{ width: '10%', height: '50px', marginTop: '50px' }} className='status red-btn animate font18 extraBold'>Leave project</button>
                 }
             </div>

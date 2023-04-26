@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 // Screens
 import ProjectList from "./screens/ProjectList/ProjectList"
 import Login from "./screens/Authen/Login.jsx";
 import SignUp from './screens/Authen/SignUp.jsx';
-import AboutProject from './screens/ProjectWorkspace/About/AboutProject'
 import ProjectManagement from "./screens/ProjectWorkspace/ProjectManagement";
 import UserProfile from './screens/UserProfile';
 import Meeting from './screens/ProjectWorkspace/Meeting/Meeting';
@@ -22,7 +21,7 @@ import Landing from './screens/Landing/Landing';
 import AdminDashboard from './screens/Admin/AdminDashboard';
 import AdminRoute from './components/Routes/AdminRoute';
 import AuthenciatedRoute from './components/Routes/AuthenciatedRoute';
-import { ToastContainer} from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ConfirmToken from './screens/ConfirmToken/ConfirmToken';
 

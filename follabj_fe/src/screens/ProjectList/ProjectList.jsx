@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
-import Popup from "reactjs-popup";
-import styled from "styled-components";
+import React from 'react';
 
 // Sections
 import PrjTopNavBar from "../../components/Nav/PrjTopNavBar";

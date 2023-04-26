@@ -24,6 +24,7 @@ const Requests = () => {
 
     useEffect(() => {
         dispatch(getRequests(page_number));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleAccept = (request) => {

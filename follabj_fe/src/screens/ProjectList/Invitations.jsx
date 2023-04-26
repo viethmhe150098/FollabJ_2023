@@ -24,6 +24,7 @@ const Invitations = () => {
 
     useEffect(() => {
         dispatch(getInvitationsByUserId(user_id))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleAccept = (invitation) => {

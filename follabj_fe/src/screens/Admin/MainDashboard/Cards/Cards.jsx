@@ -2,15 +2,13 @@ import React from "react";
 import "./Cards.css";
 import {
   UilClipboardAlt,
-  UilUsdSquare,
-  UilMoneyWithdrawal,
 } from "@iconscout/react-unicons";
 
 import Card from "../Card/Card";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { fetchAllProjects, getProjectStatistics } from "../../../../Redux/project/projectActions";
+import { getProjectStatistics } from "../../../../Redux/project/projectActions";
 import { useState } from "react";
 
 
@@ -19,7 +17,7 @@ const Cards = () => {
 
   const projectStatistic = useSelector((state) => state.project.statistics)
 
-  const [page_number, setPageNumber] = useState(0)
+  // const [page_number, setPageNumber] = useState(0)
 
   function getDaysInMonth() {
     var date = new Date();
@@ -98,6 +96,7 @@ const Cards = () => {
 
   useEffect(() => {
     dispatch(getProjectStatistics())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 
@@ -156,6 +155,7 @@ const Cards = () => {
           categories: [2019, 2020, 2021, 2022, 2023]
         },
       ]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectStatistic])
 
   return (

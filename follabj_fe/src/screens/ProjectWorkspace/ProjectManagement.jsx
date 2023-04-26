@@ -6,7 +6,6 @@ import MeetingCreation from "../ProjectWorkspace/Meeting/MeetingCreation";
 import Calendar from "../ProjectWorkspace/Event/Calendar";
 import Note from "./Note/Note";
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";

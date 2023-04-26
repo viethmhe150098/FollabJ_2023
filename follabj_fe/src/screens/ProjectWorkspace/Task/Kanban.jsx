@@ -50,19 +50,21 @@ const Kanban = () => {
         //     fetchDataIntoColumn(result)
         // });
         dispatch(getTasksByProjectId(projectId))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
-        console.log("useEffect after tasks")
+        //console.log("useEffect after tasks")
         fetchDataIntoColumn(tasks)
+         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [tasks])
 
     const fetchDataIntoColumn = (data) => {
         const newArray = columnArray.map(column => {
             const newTasks = []
-            data.map((task) => {
+            data.forEach((task) => {
                 //console.log(column)
-                if (task.statusId == column.id ) {
+                if (task.statusId === column.id ) {
                     newTasks.push(task) 
                 }
             })
@@ -92,10 +94,10 @@ const Kanban = () => {
         const { source, destination } = result;
 
         //move to task to other column
-        if (source.droppableId != destination.droppableId) {
+        if (source.droppableId !== destination.droppableId) {
 
-            const sourceColIndex = columnArray.findIndex(e => e.id == source.droppableId)
-            const destinationColIndex = columnArray.findIndex(e => e.id == destination.droppableId)
+            const sourceColIndex = columnArray.findIndex(e => e.id === parseInt(source.droppableId))
+            const destinationColIndex = columnArray.findIndex(e => e.id === parseInt(destination.droppableId))
 
             const sourceCol = columnArray[sourceColIndex]
             const destinationCol = columnArray[destinationColIndex]
@@ -116,7 +118,7 @@ const Kanban = () => {
             columnArray[sourceColIndex].tasks = sourceTasks
             columnArray[destinationColIndex].tasks = destinationTasks
         } else {
-            const columnIndex = columnArray.findIndex(e => e.id == destination.droppableId);
+            const columnIndex = columnArray.findIndex(e => e.id === destination.droppableId);
 
             const column = columnArray[columnIndex]
 
@@ -160,7 +162,7 @@ const Kanban = () => {
                                         {...provided.droppableProps}
                                     >
                                         <SectionTitle>{column.title}</SectionTitle>
-                                        {userRole == "LEADER" &&
+                                        {userRole === "LEADER" &&
                                             <Popup modal trigger={<Card style={{ cursor: "pointer" }}><p className="extraBold" style={{ color: "#434242" }}>+ Add Task</p></Card>}>
                                                 {close => <AddTaskModal close={close} statusId={column.id} columnPosition={column.tasks.length}/>}
                                             </Popup>

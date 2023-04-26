@@ -6,7 +6,7 @@ const Message = ({ message }) => {
   const uid = useSelector((state) => state.auth.login.currentUser.id)
 
   const messageClass =
-    message.uid == uid
+    message.uid === uid
       ? inlineStyle.sent
       : inlineStyle.received
 

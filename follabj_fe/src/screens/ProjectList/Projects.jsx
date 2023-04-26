@@ -27,7 +27,7 @@ const Projects = () => {
   const history = useHistory();
   const user_id = useSelector((state) => state.auth.login.currentUser.id)
   const projects = useSelector((state) => state.project.projects.allProjects)
-  const members = useSelector((state) => state.project.currentProject.members)
+  //const members = useSelector((state) => state.project.currentProject.members)
   const isPhone = useMediaQuery('(max-width:600px)');
   const roles = localStorage.getItem("role_name")
   const [currentPage, setCurrentPage] = useState(1);
@@ -63,7 +63,7 @@ const Projects = () => {
     fetchImages()
 
     // console.log(images)
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const openProjectModal = (project) => {
@@ -79,8 +79,8 @@ const Projects = () => {
     dispatch(setCurrentProjectDescription(project_description));
 
     dispatch(getProjectMembersByProjectId(project_id)).unwrap().then((result) => {
-      if (result != []) {
-        if (user_id == result[0].id) {
+      if (result !== []) {
+        if (user_id === result[0].id) {
           dispatch(setCurrentProjectUserRole("LEADER"))
         } else {
           dispatch(setCurrentProjectUserRole("ACTIVE_USER"))

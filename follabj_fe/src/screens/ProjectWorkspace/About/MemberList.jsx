@@ -73,7 +73,7 @@ export default function MemberList() {
                                     </TableCell>
 
                                     <Popup modal trigger={
-                                        user_role == "LEADER" && user_id != item.id && (
+                                        user_role === "LEADER" && user_id !== item.id && (
                                             <TableCell align="left">
                                                 <button className="status red-btn animate">
                                                     Delete

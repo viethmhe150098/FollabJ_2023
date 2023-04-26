@@ -49,6 +49,7 @@ const Users = () => {
 
     useEffect(() => {
         dispatch(getUsers());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -124,13 +125,13 @@ const Users = () => {
             </div>
             {selectedUser && (
                 <div>
-                    <h3>Selected User: {selectedUser.username} &nbsp; {selectedUser.status == 1 &&
+                    <h3>Selected User: {selectedUser.username} &nbsp; {selectedUser.status === 1 &&
                         <button className="status" style={makeStyle('Unban')}>Active User</button>
                     }
-                        {selectedUser.status == 2 &&
+                        {selectedUser.status === 2 &&
                             <button className="status" style={makeStyle('Ban')}>Inactive User</button>
                         }
-                        {selectedUser.status == 0 &&
+                        {selectedUser.status === 0 &&
                             <button className="status" style={makeStyle('Verify')}>Verifing</button>
                         }</h3>
                     <p>User ID: {selectedUser.id}</p>
@@ -172,7 +173,7 @@ const Users = () => {
                                             </TableCell>
                                             <TableCell align="left">
 
-                                                {user.status == 1 && (
+                                                {user.status === 1 && (
                                                     <Popup modal trigger={
                                                         <button className="status" style={makeStyle('Ban')}>Ban User</button>
                                                     }>
@@ -181,7 +182,7 @@ const Users = () => {
                                                             onCancel={close} />}
                                                     </Popup>)
                                                 }
-                                                {user.status == 2 && (
+                                                {user.status === 2 && (
                                                     <Popup modal trigger={
                                                         <button className="status" style={makeStyle('Unban')}>Unban User</button>
                                                     }>
@@ -190,7 +191,7 @@ const Users = () => {
                                                             onCancel={close} />}
                                                     </Popup>)
                                                 }
-                                                {user.status == 0 &&
+                                                {user.status === 0 &&
                                                     <button className="status" style={makeStyle('Verify')}>Verifing</button>
                                                 }
                                             </TableCell>
@@ -233,7 +234,7 @@ const Users = () => {
 
                                     <TableCell align="left">
 
-                                        {user.status == 1 && (
+                                        {user.status === 1 && (
                                             <Popup modal trigger={
                                                 <button className="status" style={makeStyle('Ban')}>Ban User</button>
                                             }>
@@ -242,7 +243,7 @@ const Users = () => {
                                                     onCancel={close} />}
                                             </Popup>)
                                         }
-                                        {user.status == 2 && (
+                                        {user.status === 2 && (
                                             <Popup modal trigger={
                                                 <button className="status" style={makeStyle('Unban')}>Unban User</button>
                                             }>
@@ -251,7 +252,7 @@ const Users = () => {
                                                     onCancel={close} />}
                                             </Popup>)
                                         }
-                                        {user.status == 0 &&
+                                        {user.status === 0 &&
                                             <button className="status" style={makeStyle('Verify')}>Verifing</button>
                                         }
                                     </TableCell>

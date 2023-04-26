@@ -37,6 +37,7 @@ export default function BasicTable() {
   const projects = useSelector((state) => state.project.projects.allProjects)
   useEffect(() => {
     dispatch(fetchAllProjects());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
