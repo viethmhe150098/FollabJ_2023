@@ -79,6 +79,7 @@ const AddTaskModal = ({ type, close, statusId = 1, task, columnPosition}) => {
       //console.log("unchecked");
       setAssigneeList(filteredAssigneeList);
     }
+    //console.log(assigneeList)
   };
 
   const handleCreateTask = (event) => {
@@ -247,9 +248,9 @@ const AddTaskModal = ({ type, close, statusId = 1, task, columnPosition}) => {
                   type="checkbox"
                   id={`assignee-${member.id}`}
                   value={member.id}
-                  onChange={handleCheckboxChange}
+                  onChange={(e) => {handleCheckboxChange(e)}}
                   // checked={assigneeList.includes(teamMember.id)}
-                  checked={assigneeList.some((assignee) => assignee.id === member.id)}
+                  checked={assigneeList.some((assignee) => parseInt(assignee.id) === member.id)}
                 />
                 <label htmlFor={`assignee-${member.id}`}>
                   {member.username}

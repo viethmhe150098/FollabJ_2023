@@ -28,4 +28,6 @@ public interface InvitationRepository extends JpaRepository<Invitation, Long> {
     boolean existsByReceiverIdAndProjectId(Long receiver_id, Long project_id);
 
     boolean existsByIdAndReceiverId(Long id, Long receiver_id);
+
+    void deleteByProjectId(Long project_id);
 }

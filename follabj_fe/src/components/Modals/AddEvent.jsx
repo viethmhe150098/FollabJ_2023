@@ -64,7 +64,7 @@ const CreateEventForm = ({ type, close, event }) => {
       //console.log("unchecked");
       setParticipantList(filteredParticipantList);
     }
-    console.log(participantList)
+    //console.log(participantList)
   };
 
   const handleSubmit = (e) => {
@@ -237,7 +237,7 @@ const CreateEventForm = ({ type, close, event }) => {
                   value={member.id}
                   onChange={(e) => {handleCheckboxChange(e)}}
                   // checked={assigneeList.includes(teamMember.id)}
-                  checked={participantList.some((participant) => participant.id === member.id) || member.id === user_id}
+                  checked={participantList.some((participant) => parseInt(participant.id) === member.id) || member.id === user_id}
                 />
                 <label htmlFor={`assignee-${member.id}`}>
                   {member.username}

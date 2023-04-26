@@ -187,6 +187,7 @@ public class ProjectService implements ProjectInterface {
     public void dactivateProject(Long p_id) {
         Project p = projectRepository.findById(p_id).orElseThrow(()-> new ObjectNotFoundException("Not found project", p_id.toString()));
         p.setStatus(Project.ProjectStatus.DEACTIVATE);
+        invitationRepository.deleteByProjectId(p_id);
         projectRepository.save(p);
     }
 
