@@ -18,7 +18,9 @@ public interface TaskInterface {
 
     void updateTaskColumnPosition(Long id, int columnPosition);
 
-    void updateColumnPositionAfterChangeTaskPosition(Long project_id, Long task_id);
+    void updateColumnPositionWhenChangeTaskPositionDown(Long project_id, Long task_id, int columnPosition);
+
+    void updateColumnPositionWhenChangeTaskPositionUp(Long project_id, Long task_id, int columnPosition);
 
     void updateSourceColumnPositionBeforeChangeTaskStatus(Long project_id, Long task_id);
 

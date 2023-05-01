@@ -64,8 +64,14 @@ public class TaskService implements TaskInterface {
     }
 
     @Override
-    public void updateColumnPositionAfterChangeTaskPosition(Long project_id, Long task_id) {
-        taskRepository.updateColumnPositionAfterChangeTaskPosition(project_id, task_id);
+    public void updateColumnPositionWhenChangeTaskPositionDown(Long project_id, Long task_id, int columnPosition) {
+        taskRepository.updateColumnPositionWhenChangeTaskPositionDown(project_id, task_id, columnPosition);
+    }
+
+    @Override
+    public void updateColumnPositionWhenChangeTaskPositionUp(Long project_id, Long task_id, int columnPosition) {
+        taskRepository.updateColumnPositionWhenChangeTaskPositionUp(project_id, task_id, columnPosition);
+
     }
 
     @Override

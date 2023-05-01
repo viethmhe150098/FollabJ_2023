@@ -80,20 +80,37 @@ public class TaskController {
     }
 
     @PutMapping("/project/{project_id}/tasks/{task_id}/changeColumn")
-    public void changeColumn(@RequestParam int status, @RequestParam int columnPosition, @PathVariable Long project_id, @PathVariable Long task_id) {
+    public ResponseEntity<Map<String, Object>> changeColumn(@RequestParam int status, @RequestParam int columnPosition, @PathVariable Long project_id, @PathVariable Long task_id) {
         checkIfTaskBelongToProject(task_id, project_id);
         taskService.updateSourceColumnPositionBeforeChangeTaskStatus( project_id, task_id);
         taskService.updateTaskColumnPosition(task_id, columnPosition);
         taskService.updateTaskStatus(task_id, status);
         taskService.updateDestinationColumnPositionAfterChangeTaskStatus(project_id, task_id);
+
+        Map<String, Object> res = new HashMap<>();
+        res.put("message", "Change task column successfully");
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
     
 
     @PutMapping("/project/{project_id}/tasks/{task_id}/changePosition")
-    public void changePosition (@RequestParam int columnPosition, @PathVariable Long project_id, @PathVariable Long task_id) {
+    public ResponseEntity<Map<String, Object>> changePosition (@RequestParam int columnPosition, @PathVariable Long project_id, @PathVariable Long task_id) {
         checkIfTaskBelongToProject(task_id, project_id);
+        Task task = taskService.getTaskById(task_id).get();
+
+        if(task.getColumnPosition() > columnPosition) {
+            taskService.updateColumnPositionWhenChangeTaskPositionUp(project_id, task_id, columnPosition);
+        } else {
+            taskService.updateColumnPositionWhenChangeTaskPositionDown(project_id, task_id, columnPosition);
+        }
         taskService.updateTaskColumnPosition(task_id, columnPosition);
-        taskService.updateColumnPositionAfterChangeTaskPosition(project_id, task_id);
+
+        //taskService.updateColumnPositionAfterChangeTaskPosition(project_id, task_id);
+
+        Map<String, Object> res = new HashMap<>();
+        res.put("message", "Change task position successfully");
+        return new ResponseEntity<>(res, HttpStatus.OK);
+
     }
 
     @DeleteMapping("/project/{project_id}/leader/tasks/{task_id}/delete")

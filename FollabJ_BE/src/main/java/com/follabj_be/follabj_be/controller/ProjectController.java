@@ -71,7 +71,6 @@ public class ProjectController {
         return projectService.getMembersByProjectId(p_id);
     }
 
-
     @GetMapping(value = "/{u_id}")
     @PreAuthorize("hasAuthority('ACTIVE_USER')")
     public ResponseEntity<Map<Object, Object>> getProjectByUserId(@PathVariable Long u_id) {
