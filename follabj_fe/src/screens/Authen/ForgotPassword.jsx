@@ -1,16 +1,18 @@
 
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 import '../../style/authen.css'
 import FullButton from "../../components/Buttons/FullButton";
 import AuthenNavbar from "../../components/Nav/AuthenNavbar";
 import { useState, useEffect } from 'react';
 import { toast } from "react-toastify";
 import axios from "axios";
+import { isLoggedIn } from "../../Redux/auth/auth";
 
 const ForgotPassword = () => {
+  const navigate = useHistory();
+  if (isLoggedIn()) navigate.push("/");
 
   const [email, setEmail] = useState('');
-
 
   // Regex to validate email
   const emailRegex = /^\s*([a-zA-Z0-9_.-]{1,60})@([a-zA-Z0-9_.-]+\.[a-zA-Z0-9_.-]+)\s*$/;

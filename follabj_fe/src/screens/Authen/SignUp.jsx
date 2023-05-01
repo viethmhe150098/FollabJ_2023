@@ -7,8 +7,13 @@ import '../../style/authen.css'
 import FullButton from "../../components/Buttons/FullButton";
 import AuthenNavbar from "../../components/Nav/AuthenNavbar"
 import { toast } from 'react-toastify';
+import { isLoggedIn } from '../../Redux/auth/auth';
 
 const SignUp = () => {
+
+  const navigate = useHistory();
+  if (isLoggedIn()) navigate.push("/");
+
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -17,7 +22,6 @@ const SignUp = () => {
   const [disableRegister, setDisableRegister] = useState(true);
 
   const dispatch = useDispatch();
-  const navigate = useHistory();
 
   // Regex to validate email
   const emailRegex = /^\s*([a-zA-Z0-9_.-]{1,60})@([a-zA-Z0-9_.-]+\.[a-zA-Z0-9_.-]+)\s*$/;

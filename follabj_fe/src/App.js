@@ -74,10 +74,10 @@ export default function App() {
           </Route>
           {/* Register */}
           <Route path="/signup">
-            {isLoggedIn() ? <Landing /> : <SignUp />}
+            <SignUp />
           </Route>
           <Route path="/forgot">
-            {isLoggedIn() ? <Landing /> : <ForgotPassword />}
+            <ForgotPassword />
           </Route>
           <AuthenciatedRoute path="/profile">
             <UserProfile />
