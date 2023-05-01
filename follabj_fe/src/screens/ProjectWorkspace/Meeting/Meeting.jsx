@@ -1,23 +1,21 @@
 import React from 'react';
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 import { useSelector } from 'react-redux';
+import instance from '../../../Redux/axiosInstance';
 
 const generateToken = async (tokenServerUrl, userID, channelId) => {
     try {
-        const res = await fetch(
+        const res = await instance.get(
             `${tokenServerUrl}/?channelId=${channelId}&userId=${userID}&expired_ts=7200`,
             {
-                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
                 },
             }
         );
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.message);
-        return data;
+        if (!res.data) throw new Error("Token generate error");
+        return res.data.token;
     } catch (error) {
         console.error(error);
     }
@@ -62,7 +60,7 @@ const Meeting = () => {
         );
         console.log(token)
         const kitToken = ZegoUIKitPrebuilt.generateKitTokenForProduction(
-            910761865,
+            1760349843,
             token.token,
             roomID,
             userID,
