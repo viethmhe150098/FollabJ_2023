@@ -7,7 +7,7 @@ import { deactiveProject, deleteProject, getProjectsByUserId, updateProject } fr
 import { LENGTH30, LENGTH100 } from './regexs.js';
 import { toast } from "react-toastify";
 import { useHistory } from "react-router";
-import { setCurrentProjectDescription, setCurrentProjectName } from "../../Redux/project/projectSlice";
+import { setCurrentProjectDescription, setCurrentProjectLeader, setCurrentProjectName } from "../../Redux/project/projectSlice";
 
 const ViewProjectModal = ({ type, close, project }) => {
 
@@ -64,7 +64,8 @@ const ViewProjectModal = ({ type, close, project }) => {
   }
 
   // useEffect(() => {
-  //   dispatch(getProjectsByUserId(user_id))
+  //   //dispatch(getProjectsByUserId(user_id))
+  //   dispatch(setCurrentProjectLeader(project.leader))
   // }, [])
 
   useEffect(() => {

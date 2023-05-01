@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { deleteMember } from '../../../Redux/project/projectActions';
+import { deleteMember, getProjectMembersByProjectId } from '../../../Redux/project/projectActions';
 //table libraby
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -43,6 +43,11 @@ export default function MemberList() {
             }
         }
     }
+
+    useEffect(() => {
+        dispatch(getProjectMembersByProjectId(project_id))
+    }, [])
+
     return (
         <>
             <div className="Table">
