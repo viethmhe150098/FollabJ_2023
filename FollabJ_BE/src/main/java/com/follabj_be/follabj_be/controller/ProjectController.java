@@ -47,7 +47,6 @@ public class ProjectController {
     }
 
     @PostMapping(value = "/project/{p_id}/addmembers/leader")
-    @PreAuthorize("hasAuthority('LEADER')")
     public ResponseEntity<Map<String, Object>> sendInvitation(@Valid @RequestBody UserDTO userDTO, @PathVariable("p_id") Long p_id) {
         String message = projectService.sendInvitation(userDTO, p_id);
         Map<String, Object> res = new HashMap<>();
@@ -82,7 +81,6 @@ public class ProjectController {
     }
 
     @DeleteMapping(value = "/project/{p_id}/leader")
-    @PreAuthorize("hasAuthority('LEADER')")
     public ResponseEntity<Map<Object, Object>> deleteProject(@PathVariable Long p_id) {
         Map<Object, Object> res = new HashMap<>();
         res.put("status", HttpStatus.OK);
@@ -92,7 +90,6 @@ public class ProjectController {
     }
 
     @PutMapping(value = "/project/{p_id}/leader")
-    @PreAuthorize("hasAuthority('LEADER')")
     public ResponseEntity<Map<Object, Object>> editProject(@PathVariable Long p_id,@Valid @RequestBody CreateProjectDTO createProjectDTO) {
         projectService.editProject(p_id, createProjectDTO);
         Map<Object, Object> res = new HashMap<>();
@@ -102,7 +99,6 @@ public class ProjectController {
     }
 
     @PutMapping(value = "/project/{p_id}/leader/member/{u_id}")
-    @PreAuthorize("hasAuthority('LEADER')")
     public ResponseEntity<Map<Object, Object>> deleteMember(@PathVariable Long p_id, @PathVariable Long u_id) {
         try {
             projectService.deleteMember(p_id, u_id);
@@ -117,7 +113,6 @@ public class ProjectController {
     }
 
     @PostMapping(value = "/project/{p_id}/leader/deactivate")
-    @PreAuthorize("hasAuthority('LEADER')")
     public ResponseEntity<Map<String, String>> deactivatePrj (@PathVariable Long p_id){
         projectService.dactivateProject(p_id);
         Map<String, String> res = new HashMap<>();
@@ -135,7 +130,6 @@ public class ProjectController {
     }
 
     @PostMapping(value = "/project/{p_id}/leader/assign")
-    @PreAuthorize("hasAuthority('LEADER')")
     public ResponseEntity<Map<Object, Object>> assignNewLeader(@PathVariable Long p_id, @RequestParam Long u_id){
         projectService.assignNewLeader(p_id, u_id);
         return new ResponseEntity<>(projectService.assignNewLeader(p_id, u_id), HttpStatus.OK);

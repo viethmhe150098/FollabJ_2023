@@ -1,7 +1,7 @@
 import axios from "axios";
 import jwtDecode from 'jwt-decode';
 import { loginFailed, loginStart, loginSuccess, registerFailed, registerStart, registerSuccess } from "./authSlice";
-import { createProjectFailed, createProjectStart, createProjectSuccess, getProjectStart, setCurrentProjectDescription, setCurrentProjectId, setCurrentProjectLeader, setCurrentProjectName } from "../project/projectSlice";
+import { createProjectFailed, createProjectStart, createProjectSuccess, getProjectStart, setCurrentProjectDescription, setCurrentProjectId, setCurrentProjectLeader, setCurrentProjectName, setCurrentProjectUserRole } from "../project/projectSlice";
 import { toast } from "react-toastify";
 import { getProjectMembersByProjectId } from "../project/projectActions";
 import instance from "../axiosInstance";
@@ -44,7 +44,7 @@ export const loginUser = async (user, dispatch, navigate) => {
         //console.log(res)
         if (res.data.status === "1") {
             dispatch(loginSuccess(res.data));
-            toast.success('Welcome back! 🧡')
+            //toast.success('Welcome back! 🧡')
             navigate.push("/")
         } else if (res.data.status === "0") {
             toast.info("You need to active your account first with the code sent to your email address!")
@@ -101,10 +101,11 @@ export const createProject = async (project, access_token, dispatch, navigate) =
             dispatch(createProjectSuccess(res.data));
             toast.success('Create project successfully!')
             dispatch(setCurrentProjectId(res.data.id))
-            dispatch(getProjectMembersByProjectId(res.data.id))
+            // dispatch(getProjectMembersByProjectId(res.data.id))
             dispatch(setCurrentProjectName(res.data.name))
             dispatch(setCurrentProjectDescription(res.data.des))
             dispatch(setCurrentProjectLeader(res.data.leader))
+            dispatch(setCurrentProjectUserRole("LEADER"))
             navigate.push("/aboutProject");
             
         } catch (error) {

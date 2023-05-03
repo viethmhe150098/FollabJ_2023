@@ -40,6 +40,7 @@ public class AdminController {
         List<UserDTO> dtoList = new ArrayList<>();
 
         for( AppUser user: userList) {
+            if (user.getRoles().stream().anyMatch(role -> role.getName().equals("ADMIN"))) continue;
             UserDTO userDTO = modelMapper.map(user, UserDTO.class);
 
             dtoList.add(userDTO);

@@ -15,7 +15,7 @@ const generateToken = async (tokenServerUrl, userID, channelId) => {
             }
         );
         if (!res.data) throw new Error("Token generate error");
-        return res.data.token;
+        return res.data;
     } catch (error) {
         console.error(error);
     }
@@ -60,7 +60,7 @@ const Meeting = () => {
         );
         console.log(token)
         const kitToken = ZegoUIKitPrebuilt.generateKitTokenForProduction(
-            1760349843,
+            813631669,
             token.token,
             roomID,
             userID,

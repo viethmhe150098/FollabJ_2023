@@ -72,9 +72,9 @@ const projectSlice = createSlice({
             .addCase(fetchAllProjects.fulfilled, (state, action) => {
                 state.projects.allProjects = action.payload.data
             })
-            .addCase(getProjectStatistics.fulfilled, (state, action) => {
-                state.statistics = action.payload
-            })
+            // .addCase(getProjectStatistics.fulfilled, (state, action) => {
+            //     state.statistics = action.payload
+            // })
             .addCase(getProjectsByUserId.fulfilled, (state, action) => {
                 state.projects.allProjects = action.payload.projects
             })
