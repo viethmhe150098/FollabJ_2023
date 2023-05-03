@@ -12,9 +12,9 @@ const UpdateProfileModal = ({ close }) => {
   const oldfullname = useSelector((state) => state.userProfile.userInfo.fullname);
   const oldphonenumber = useSelector((state) => state.userProfile.userInfo.phone_number);
 
-  const [fullname, setFullname] = useState(oldfullname);
-  const [username, setUsername] = useState(oldusername);
-  const [phone_number, setPhonenumber] = useState(oldphonenumber);
+  const [fullname, setFullname] = useState(oldfullname || "");
+  const [username, setUsername] = useState(oldusername );
+  const [phone_number, setPhonenumber] = useState(oldphonenumber || "");
 
   const dispatch = useDispatch();
 

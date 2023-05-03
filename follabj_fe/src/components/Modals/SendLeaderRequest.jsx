@@ -32,15 +32,16 @@ const SendLeaderRequestModal = ({close}) => {
   
       instance.post("/user/request", leaderRequestDTO).then((response) => {
           toast.success(response.data);
+          fetchUserRequest();
       })
       
     }
 
-    useEffect(() => {
+    // useEffect(() => {
 
-    fetchUserRequest()
+    // fetchUserRequest()
 
-    },[])
+    // },[])
 
     const fetchUserRequest = async () => {
         dispatch(getRequestByUserId()).unwrap().then((result) => 

@@ -1,5 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { getUserProfileByUserId, updateUserProfile } from "./userProfileAction";
+import { toast } from "react-toastify";
 
 const initialState = {}; 
 
@@ -9,6 +10,9 @@ export const userProfileReducer = createReducer(initialState,(builder)=>{
         return action.payload
     })
     .addCase(updateUserProfile.fulfilled,(state,action)=>{
-        console.log(action.payload);
+        if(action.payload.status === "200")
+            toast.success(action.payload.message)
+        else 
+            toast.error(action.payload.message)
     })
 })

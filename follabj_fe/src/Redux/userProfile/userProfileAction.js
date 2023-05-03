@@ -15,7 +15,6 @@ export const getUserProfileByUserId = createAsyncThunk("FETCH_USER_PROFILE_BY_US
 export const updateUserProfile = createAsyncThunk("UPDATE_USER_PROFILE_BY_USER_ID",async({user_id,updateDataProfile}) =>{
     try {
         const response = await userProfileApi.updateUserProfile(user_id,updateDataProfile)
-        toast.success('Update information successfully!')
         return response.data
     } catch (error) {
         console.log(error)
