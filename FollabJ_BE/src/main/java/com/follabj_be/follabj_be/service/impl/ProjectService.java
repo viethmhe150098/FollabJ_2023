@@ -171,14 +171,14 @@ public class ProjectService implements ProjectInterface {
         p.setMembers(p.getMembers().stream().filter(m -> !(m.getId().equals(u_id))).collect(Collectors.toSet()));
         List<Event> events = eventRepository.findByProjectId(p_id);
         List<Task> tasks = taskRepository.findByProjectId(p_id);
-//        events.forEach(event -> event.setParticipantList(event.getParticipantList().stream().filter(e -> e.getId().equals(u_id)).collect(Collectors.toList())));
-//        tasks.forEach(task -> task.setAssigneeList(task.getAssigneeList().stream().filter(t -> t.getId().equals(u_id)).collect(Collectors.toList())));
-//
-//        events.forEach(event -> eventRepository.save(event));
-//        tasks.forEach(task -> taskRepository.save(task));
+        events.forEach(event -> event.setParticipantList(event.getParticipantList().stream().filter(e -> !e.getId().equals(u_id)).collect(Collectors.toList())));
+        tasks.forEach(task -> task.setAssigneeList(task.getAssigneeList().stream().filter(t -> !t.getId().equals(u_id)).collect(Collectors.toList())));
 
-        events.forEach(event -> eventRepository.deleteByIdAndParticipantListId(event.getId(), u_id));
-        tasks.forEach(task -> taskRepository.deleteByIdAndAssigneeListId(task.getId(), u_id));
+        events.forEach(event -> eventRepository.save(event));
+        tasks.forEach(task -> taskRepository.save(task));
+
+//        events.forEach(event -> eventRepository.deleteByIdAndParticipantListId(event.getId(), u_id));
+//        tasks.forEach(task -> taskRepository.deleteByIdAndAssigneeListId(task.getId(), u_id));
         projectRepository.save(p);
     }
 
