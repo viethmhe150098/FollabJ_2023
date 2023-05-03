@@ -27,6 +27,7 @@ public class Note {
     @Size(max=30)
     private String title;
 
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String content;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)

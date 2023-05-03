@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Editor } from "react-draft-wysiwyg";
-import { ContentState, convertToRaw, EditorState } from "draft-js";
+import { ContentState, convertFromRaw, convertToRaw, EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useHistory, useLocation } from 'react-router';
 import { useDispatch } from 'react-redux';
@@ -19,23 +19,28 @@ const NoteEditor = () => {
   //console.log(state)
   const dispatch = useDispatch()
 
-  const [editorState, setEditorState] = useState(() =>
-    EditorState.createWithContent(ContentState.createFromText(note.content))
-    //EditorState.createEmpty()
-  );
+  const [editorState, setEditorState] = useState(() => {
+    try {
+      return EditorState.createWithContent(convertFromRaw(JSON.parse(note.content)))
+    } catch (error) {
+      return EditorState.createWithContent(ContentState.createFromText(""))
+    }
+  });
 
   const handleUpdate = () => {
     //console.log(editorState.getCurrentContent().getPlainText())
     const updatedNote = {
       id: note.id,
       title: note.title,
-      content: editorState.getCurrentContent().getPlainText(),
+      // content: editorState.getCurrentContent().getPlainText(),
+      content: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
       creator: {
         id: user_id
       },
       createdDate: new Date(note.createdDate),
     }
 
+    //console.log(convertToRaw(editorState.getCurrentContent()))
     dispatch(updateNote({ user_id, note: updatedNote }))
 
     history.push("/notes")
