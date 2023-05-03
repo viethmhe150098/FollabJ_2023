@@ -10,9 +10,6 @@ export const userProfileReducer = createReducer(initialState,(builder)=>{
         return action.payload
     })
     .addCase(updateUserProfile.fulfilled,(state,action)=>{
-        if(action.payload.status === "200")
-            toast.success(action.payload.message)
-        else 
-            toast.error(action.payload.message)
+        toast.success(action.payload.message)
     })
 })

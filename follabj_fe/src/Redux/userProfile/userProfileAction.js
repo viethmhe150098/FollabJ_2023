@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import * as userProfileApi from "./userProfileApi";
-import { toast } from "react-toastify";
 
 
 export const getUserProfileByUserId = createAsyncThunk("FETCH_USER_PROFILE_BY_USER_ID", async(user_id)=>{
@@ -12,12 +11,12 @@ export const getUserProfileByUserId = createAsyncThunk("FETCH_USER_PROFILE_BY_US
     }
 })
 
-export const updateUserProfile = createAsyncThunk("UPDATE_USER_PROFILE_BY_USER_ID",async({user_id,updateDataProfile}) =>{
+export const updateUserProfile = createAsyncThunk("UPDATE_USER_PROFILE_BY_USER_ID",async({user_id,updateDataProfile}, { rejectWithValue }) =>{
     try {
         const response = await userProfileApi.updateUserProfile(user_id,updateDataProfile)
         return response.data
     } catch (error) {
-        console.log(error)
-        toast.error(error.response.data.message);
+        return rejectWithValue(error.response.data)
+        // toast.error(error.response.data.message);
     }
 })

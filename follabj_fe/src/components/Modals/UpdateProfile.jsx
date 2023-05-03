@@ -49,7 +49,10 @@ const UpdateProfileModal = ({ close }) => {
     dispatch(updateUserProfile({
       user_id,
       updateDataProfile
-    })).unwrap().then((result) => { dispatch(getUserProfileByUserId(user_id)) });
+    }))
+      .unwrap()
+      .then((result) => { dispatch(getUserProfileByUserId(user_id)) })
+      .catch((error) => {});
     close();
   }
 
