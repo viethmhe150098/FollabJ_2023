@@ -7,6 +7,7 @@ import AddTaskModal from "../../../components/Modals/AddTask";
 import { useDispatch } from "react-redux";
 import { getTasksByProjectId, changeColumn, changePosition } from "../../../Redux/task/taskActions";
 import { useSelector } from "react-redux";
+import { deleteEvent, updateEvent } from "../../../Redux/event/eventActions";
 // import { ShowTasksApi} from "../../Redux/actions"
 
 
@@ -19,6 +20,8 @@ const Kanban = () => {
     const projectId = useSelector((state) => state.project.currentProject.id);
 
     const userRole = useSelector((state) => state.project.currentProject.userRole);
+
+    const [isColumnPositionChanged, setIsColumnPositionChanged] = useState(false)
 
     if (projectId == null) {
         // history.push("/projects")
@@ -46,12 +49,15 @@ const Kanban = () => {
     ])
 
     useEffect(() => {
-        // dispatch(getTasksByProjectId(projectId)).unwrap().then((result) => {
-        //     fetchDataIntoColumn(result)
-        // });
         dispatch(getTasksByProjectId(projectId))
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    useEffect(() => {
+        if(isColumnPositionChanged)
+            dispatch(getTasksByProjectId(projectId))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [updateEvent, deleteEvent])
 
     useEffect(() => {
         //console.log("useEffect after tasks")
@@ -140,8 +146,9 @@ const Kanban = () => {
 
             columnArray[columnIndex].tasks = columnTasks
         }
-    }
 
+        setIsColumnPositionChanged(true);
+    }
 
     return (
         <Wrapper id='tasks'>

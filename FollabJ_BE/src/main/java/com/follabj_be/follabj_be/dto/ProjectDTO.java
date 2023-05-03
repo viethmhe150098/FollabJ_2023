@@ -22,18 +22,18 @@ public class ProjectDTO {
     private String status;
     private UserDTO leader;
 
-    private List<UserDTO> member;
+    private List<UserDTO> members;
     public ProjectDTO(Long id, String name, UserDTO leader) {
         this.id = id;
         this.name = name;
         this.leader = leader;
     }
 
-    public ProjectDTO(Long id, String name, String des, UserDTO leader, List<UserDTO> member) {
+    public ProjectDTO(Long id, String name, String des, UserDTO leader, List<UserDTO> members) {
         this.id = id;
         this.name = name;
         this.des = des;
         this.leader = leader;
-        this.member = member;
+        this.members = members;
     }
 }

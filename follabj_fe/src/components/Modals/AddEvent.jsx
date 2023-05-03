@@ -14,6 +14,8 @@ const CreateEventForm = ({ type, close, event }) => {
   const [description, setDescription] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [project ,setProject] = useState(null);
+
   const user_id = useSelector((state) => state.auth.login.currentUser.id)
 
   const [participantList, setParticipantList] = useState([{
@@ -47,6 +49,7 @@ const CreateEventForm = ({ type, close, event }) => {
       setStartDate(new Date(event.start))
       setEndDate(new Date(event.end))
       setParticipantList(event.participantList)
+      setProject(event.project)
     }
 
   }, [])
@@ -229,7 +232,7 @@ const CreateEventForm = ({ type, close, event }) => {
           }
           <div className="form-group">
             <label>Participants: </label>
-            {members.map((member) => (
+            {project !== null && project.members.map((member) => (
               <div key={member.id}>
                 <input disabled={modalType === "readonly"}
                   type="checkbox"

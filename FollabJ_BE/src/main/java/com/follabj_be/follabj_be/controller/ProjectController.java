@@ -42,7 +42,7 @@ public class ProjectController {
 
         Project p = projectService.createPrj(createProjectDTO);
         ProjectDTO projectDTO = modelMapper.map(p, ProjectDTO.class);
-        projectDTO.setMember(p.getMembers().stream().map(m -> new UserDTO(m.getId(), m.getEmail(), m.getUsername(), m.getFullname(), m.getPhone_number(), m.getStatus())).toList());
+        projectDTO.setMembers(p.getMembers().stream().map(m -> new UserDTO(m.getId(), m.getEmail(), m.getUsername(), m.getFullname(), m.getPhone_number(), m.getStatus())).toList());
         return new ResponseEntity<>(projectDTO, HttpStatus.CREATED);
     }
 
