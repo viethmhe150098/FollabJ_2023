@@ -16,7 +16,7 @@ export default function ProjectBox({ img, title, action, rightClickAction }) {
 
       }}>
         <h3 className="font20 extraBold" style={{
-          paddingTop: '40px'
+          paddingTop: '80px'
         }}>{title}</h3>
       </div>
     </ImgBtn>

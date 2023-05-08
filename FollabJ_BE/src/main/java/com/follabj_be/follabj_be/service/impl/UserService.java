@@ -189,8 +189,8 @@ public class UserService implements UserDetailsService, UserInterface {
     public Map<String, String> updateUser(UpdateUserDTO userDTO, Long u_id) {
         Map<String, String> res = new HashMap<>();
         AppUser appUser = userRepository.findById(u_id).orElseThrow(() -> new ObjectNotFoundException("Not found user", u_id.toString()));
-        if(u_id == userDTO.getU_id()){
-            if(!userRepository.findAppUserByPhone_number(userDTO.getPhone_number()).isPresent() || appUser.getPhone_number().equals(userDTO.getPhone_number())) {
+        if(Objects.equals(u_id,userDTO.getU_id())){
+            if(!userRepository.findAppUserByPhone_number(userDTO.getPhone_number()).isPresent() || (appUser.getPhone_number() != null && appUser.getPhone_number().equals(userDTO.getPhone_number()))) {
                 appUser.setFullname(userDTO.getFullname());
                 appUser.setPhone_number(userDTO.getPhone_number());
                 appUser.setUsername(userDTO.getUsername());

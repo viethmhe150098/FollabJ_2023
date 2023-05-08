@@ -53,11 +53,11 @@ const Kanban = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    useEffect(() => {
-        if(isColumnPositionChanged)
-            dispatch(getTasksByProjectId(projectId))
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [updateEvent, deleteEvent])
+    // useEffect(() => {
+    //     dispatch(getTasksByProjectId(projectId)).unwrap().then((result) => {
+    //         fetchDataIntoColumn(result)
+    //     })
+    // }, [])
 
     useEffect(() => {
         //console.log("useEffect after tasks")
@@ -75,6 +75,22 @@ const Kanban = () => {
                 }
             })
             newTasks.sort(compare)
+            return {
+                ...column,
+                tasks: newTasks
+            }
+        })
+        setColumnArray(newArray)
+    }
+
+    const updateDataInColumn = () => {
+        const newArray = columnArray.map(column => {
+            const newTasks = column.tasks.map((task, index) => {
+                return {
+                    ...task,
+                    columnPosition: index
+                }
+            })
             return {
                 ...column,
                 tasks: newTasks
@@ -147,7 +163,9 @@ const Kanban = () => {
             columnArray[columnIndex].tasks = columnTasks
         }
 
-        setIsColumnPositionChanged(true);
+        updateDataInColumn();
+
+        console.log(columnArray)
     }
 
     return (

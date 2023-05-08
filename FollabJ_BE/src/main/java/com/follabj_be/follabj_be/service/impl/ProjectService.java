@@ -168,6 +168,7 @@ public class ProjectService implements ProjectInterface {
     public void deleteMember(Long p_id, Long u_id) {
         Project p = projectRepository.findById(p_id).orElseThrow(() -> new ObjectNotFoundException("Not found project", p_id.toString()));
         if(!p.getMembers().stream().anyMatch(m -> m.getId().equals(u_id))) throw new EntityNotFoundException("Not found user in project");
+        if(p.getMembers().size() == 1) throw new EntityNotFoundException("Can not leave when project have one member left");
         p.setMembers(p.getMembers().stream().filter(m -> !(m.getId().equals(u_id))).collect(Collectors.toSet()));
         List<Event> events = eventRepository.findByProjectId(p_id);
         List<Task> tasks = taskRepository.findByProjectId(p_id);
